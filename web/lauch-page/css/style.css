@@ -1,0 +1,79 @@
+@font-face{
+    src: url("../fonts/Oxygen-Bold.ttf");
+    font-family: "Oxygen-Bold";
+    font-weight: bold;
+}
+body{
+    background-color: #E5E5E5;
+}
+#nome, #email,  #area, #interesse{
+    background-color: white;
+    border: 2px solid #696969;
+    border-radius: 7px;
+    display: grid;
+    margin: 5px 0px 10px 0px;
+    width: 90%;
+    height: 40px;
+}
+h6{
+    margin-left: 7%;
+}
+#celular, #telefone, #cidade, #uf{
+    background-color: white;
+    border: 2px solid #696969;
+    border-radius: 7px;
+    margin: 5px 0px 10px 0px;
+    display: grid;
+    width: 80%;
+    height: 40px;
+}
+label{
+    font-size: large;
+}
+#destaque{
+    color: #DF660F;
+    font-family: "Oxygen-Bold";
+}
+#texto{
+    text-align: justify;
+}
+h1{
+    color: #4F4F4F;
+    margin-bottom: 7%;
+    margin-top: 3%;
+    font-family: "Oxygen-Bold";
+}
+#enviar{
+    background-color:  #FA902E;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border: 3px solid  #DF660F;
+    border-radius: 7px;
+    padding: .5rem 1rem;
+    margin-left: 30%;
+    width: 30%;
+    margin-bottom: 25px;
+    margin-top: 15px;
+}
+#navbar{
+    background: #07889B 77%;
+    width: 100%;
+    height: 140px;
+    align-items: center;
+}
+#titulo{
+    position: absolute;
+    font-size: 260%;
+    margin-left: 385px;
+    margin-top: 32px;
+    color: white;
+    font-family: "Oxygen-Bold";
+}
+#logo{
+    position: absolute;
+    width: 22%;
+    height: 22%;
+    left: 760px;  
+    clip-path: inset(0% 0% 16% 0%);
+}
