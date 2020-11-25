@@ -1,13 +1,15 @@
 <?php
 require_once 'includes/header.php';
 get_header();
+
+$texto = "Formulário de pré-cadastro";
 ?>
 <body>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-6">
-            <h1>Formulário de pré-cadastro</h1>
+            <h1 id="texto"> <?php echo $texto?></h1>
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -26,25 +28,23 @@ get_header();
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-5">
-            <form class="cadastro" action="sucess.php">
+            <form class="precadastro" name="precadastro" method="post">
                 <div class="row">
                     <div class="col">
                         <label>Nome Completo</label>
-                        <div class="break"></div>
-                        <input type="text" name="txtnome" id="nome"/>
+                        <input type="text" name="txtnome" id="nome" required/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label>Email</label>
-                        <div class="break"></div>
-                        <input type="email" name="txtemail" id="email"/>
+                        <input type="email" name="txtemail" id="email" required/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label>Celular</label>
-                        <input type="tel" name="txtcelular" id="celular"/>
+                        <input type="tel" name="txtcelular" id="celular" minlength="11" maxlength="11" required/>
                     </div>
                     <div class="col">
                         <label>Telefone</label>
@@ -54,11 +54,11 @@ get_header();
                 <div class="row">
                     <div class="col">
                         <label>Cidade</label>
-                        <input type="text" name="txtcidade" id="cidade"/>
+                        <input type="text" name="txtcidade" id="cidade"required/>
                     </div>
                     <div class="col">
                         <label>UF</label>
-                        <select name="txtuf" id="uf">
+                        <select name="txtuf" id="uf" required>
                             <option value="">Selecione</option>
                             <option value="AC">AC</option>
                             <option value="AL">AL</option>
@@ -93,7 +93,7 @@ get_header();
                 <div class="row">
                     <div class="col">
                         <label>Área de Atuação</label>
-                        <input type="text" name="txtarea" id="area"/>
+                        <input type="text" name="txtarea" id="area" required/>
                     </div>
                 </div>
                 <div class="row">
@@ -108,7 +108,7 @@ get_header();
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <input type="submit" name="btnenviar" id="enviar" value="Enviar" />
+                    <input onclick=texto() type="submit" id="enviar" value="Enviar"/>
                 </div>
             </form>
         </div>
