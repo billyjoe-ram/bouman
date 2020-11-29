@@ -48,13 +48,14 @@
         ?>
     </title>
 
-    <link rel="sortcut icon" href="imagem/logo.ico" type="image/x-icon"/>
+    <link rel="icon" href="imagem/logo.ico"/>
 </head>
 
 <?php
     require_once 'includes/navbar.php';
+    
+    get_header($cssCaminho = '', $jsCaminho = '', $title='Pré-Cadastro do Bouman');
 ?>
-
 <body>
 
     <?php
