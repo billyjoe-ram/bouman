@@ -38,23 +38,23 @@ $texto = "Formulário de pré-cadastro";
                 <div class="row">
                     <div class="col">
                         <label>Email</label>
-                        <input type="email" name="txtemail" id="email" required/>
+                        <input type="email" name="txtemail" id="email" required />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label>Celular</label>
-                        <input type="tel" name="txtcelular" id="celular" minlength="11" maxlength="11" required/>
+                        <input type="tel" name="txtcelular" id="celular" minlength="11" maxlength="11" required data-js="celu"/>
                     </div>
                     <div class="col">
                         <label>Telefone</label>
-                        <input type="tel" name="txttelefone" id="telefone"/>
+                        <input type="tel" name="txttelefone" id="telefone" minlength="10" maxlength="10" data-js="tele"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label>Cidade</label>
-                        <input type="text" name="txtcidade" id="cidade"required/>
+                        <input type="text" name="txtcidade" id="cidade" required/>
                     </div>
                     <div class="col">
                         <label>UF</label>
