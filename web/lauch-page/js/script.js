@@ -31,9 +31,10 @@ const mascara = {
 
 // Obtendo dados dos inputs
 document.querySelectorAll('input').forEach(($input) => {
-    const campo = $input.dataset.js    
+    const campo = $input.dataset.js
+
     $input.addEventListener('input', (e) => {
-        e.target = mascara[campo](e.target.value);
+        e.target.value = mascara[campo](e.target.value)
     }, false)
 
 })

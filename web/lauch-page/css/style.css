@@ -1,11 +1,77 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    width: 100vw;    
+    background-color: #E5E5E5;    
+}
+
 @font-face{
     src: url("../fonts/Oxygen-Bold.ttf");
     font-family: "Oxygen-Bold";
     font-weight: bold;
 }
 
-body{
-    background-color: #E5E5E5;
+header{
+    background: #07889B 77%;
+    width: 100vw;
+    height: 20vh;    
+}
+
+#titulo{    
+    font-size: 260%;    
+    color: white;    
+}
+
+#logo{    
+    width: 22vw;
+    height: 22vh;
+    clip-path: inset(0% 0% 16% 0%);
+}
+
+main {
+    display: flex !important;
+    height: 80vh;    
+}
+
+.titulo-pag {
+    margin: 3vh 0;
+}
+
+.info {
+    position: absolute;
+    left: 0;
+    width: 25vw;            
+    text-align: justify;
+    margin-left: 12vw;
+}
+
+.destaque {
+    color: #DF660F;    
+}
+
+.precadastro {
+    position: absolute;
+    right: 0;
+    margin-right: 12vw;
+    width: 35vw;
+    height: 60vh;        
+}
+
+#enviar{
+    background-color:  #FA902E;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border: 3px solid  #DF660F;
+    border-radius: 7px;
+    padding: .5rem 1rem;
+    margin-left: 30%;
+    width: 30%;    
 }
 
 #nome, #email,  #area, #interesse{
@@ -36,58 +102,8 @@ label{
     font-size: large;
 }
 
-.destaque{
-    color: #DF660F;
-    font-family: "Oxygen-Bold";
-}
-
-#texto{
-    text-align: justify;
-}
-
 h1{
-    color: #4F4F4F;
-    margin-bottom: 7%;
-    margin-top: 3%;
-    font-family: "Oxygen-Bold";
-}
-
-#enviar{
-    background-color:  #FA902E;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    border: 3px solid  #DF660F;
-    border-radius: 7px;
-    padding: .5rem 1rem;
-    margin-left: 30%;
-    width: 30%;
-    margin-bottom: 25px;
-    margin-top: 15px;
-}
-
-#navbar{
-    background: #07889B 77%;
-    width: 100%;
-    height: 140px;
-    align-items: center;
-}
-
-#titulo{
-    position: absolute;
-    font-size: 260%;
-    margin-left: 385px;
-    margin-top: 32px;
-    color: white;
-    font-family: "Oxygen-Bold";
-}
-
-#logo{
-    position: absolute;
-    width: 22%;
-    height: 22%;
-    left: 760px;  
-    clip-path: inset(0% 0% 16% 0%);
+    color: #4F4F4F;        
 }
 
 @media (max-width: 400px){
