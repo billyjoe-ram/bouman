@@ -40,7 +40,7 @@ document.querySelectorAll('input').forEach(($input) => {
 })
 
 function texto(){
-    //mudança do texto h1 para "Pré-cadastro realizado com sucesso!"
 
-    document.getElementById("texto").innerHTML = "Pré-cadastro realizado com sucesso!";    
+    //mudança do texto h1 para "Pré-cadastro realizado com sucesso!"
+    document.querySelector('.titulo-pag').innerHTML = "Pré-cadastro realizado com sucesso!";
 }

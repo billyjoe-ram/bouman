@@ -22,6 +22,10 @@ header{
     height: 20vh;    
 }
 
+h1, header {
+    text-align: center;
+}
+
 #titulo{    
     font-size: 260%;    
     color: white;    
