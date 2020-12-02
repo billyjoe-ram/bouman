@@ -7,19 +7,17 @@ html, body {
 body{
     height: 100vh;
     width: 100vw;    
-    background-color: #E5E5E5;    
-}
-
-@font-face{
-    src: url("../fonts/Oxygen-Bold.ttf");
-    font-family: "Oxygen-Bold";
-    font-weight: bold;
+    background-color: #F8F8F8;   
+    font-family: 'Oxygen', sans-serif; 
 }
 
 header{
-    background: #07889B 77%;
     width: 100vw;
-    height: 20vh;    
+    height: 14vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90.35deg, #2CA8BA 0.31%, #18ADC4 99.86%);
 }
 
 h1, header {
@@ -47,23 +45,26 @@ main {
 }
 
 .info {
-    position: absolute;
-    left: 0;
-    width: 25vw;            
+    width: 39vw;
     text-align: justify;
-    margin-left: 12vw;
+    margin-left: 6.8vw;
+    margin-right: 5.2vw
 }
 
 .destaque {
+    font-weight: bold;
     color: #DF660F;    
 }
 
-.precadastro {
-    position: absolute;
-    right: 0;
-    margin-right: 12vw;
-    width: 35vw;
-    height: 60vh;        
+p {
+    margin-block: 0;
+    margin-inline: 0;   
+}
+
+.precadastro {    
+    width: 40vw;    
+    margin-right: 4.3vw;
+    margin-left: 5.2vw;   
 }
 
 #enviar{
@@ -78,14 +79,18 @@ main {
     width: 30%;    
 }
 
+.row {
+    display: flex;
+}
+
 #nome, #email,  #area, #interesse{
     background-color: white;
     border: 2px solid #696969;
     border-radius: 7px;
     display: grid;
     margin: 5px 0px 10px 0px;
-    width: 90%;
-    height: 40px;
+    width: 36vw;
+    height: 5.1vh;
 }
 
 h6{
@@ -98,16 +103,28 @@ h6{
     border-radius: 7px;
     margin: 5px 0px 10px 0px;
     display: grid;
-    width: 80%;
-    height: 40px;
+    width: 17vw;
+    height: 5.1vh;
+}
+
+#celular, #cidade {
+    margin-right: 1.4vw;
 }
 
 label{
-    font-size: large;
+    font-size: 1.25rem;
+    margin-bottom: 0 !important;
 }
 
 h1{
     color: #4F4F4F;        
+}
+
+@media (min-width: 1440px) {
+    #logo {
+        width: 18vw;
+        height: 20.5vh;
+    }
 }
 
 @media (max-width: 400px){
@@ -121,6 +138,11 @@ h1{
         font-size: 150%;
         margin-left: 30px;
         margin-top: 35px;        
+    }
+
+    label{
+        font-size: 1.2rem;
+        margin-bottom: 0 !important;
     }
 
     #navbar{                
