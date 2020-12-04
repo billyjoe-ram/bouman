@@ -1,7 +1,10 @@
 <?php
     include_once 'include/header.php';
-    var_dump($_POST);
+    include_once 'include/db/dbconnection.php';
+    include_once 'include/rules/verificacao.php';  
 
+    var_dump($conn);
+    
 ?>
 <body>
     
