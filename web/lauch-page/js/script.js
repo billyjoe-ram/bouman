@@ -39,8 +39,29 @@ document.querySelectorAll('input').forEach(($input) => {
 
 })
 
-function texto(){
+// function texto(){
 
-    //mudança do texto h1 para "Pré-cadastro realizado com sucesso!"
-    document.querySelector('.titulo-pag').innerHTML = "Pré-cadastro realizado com sucesso!";
-}
+//     //mudança do texto h1 para "Pré-cadastro realizado com sucesso!"
+//     document.querySelector('.titulo-pag').innerHTML = "Pré-cadastro realizado com sucesso!";
+// }
+
+/* */
+
+    window.alert("olá");
+    $(document).ready(function() { 
+        
+        $("#uf").on("change", function(){
+            
+            var vl = $("#uf").val();
+            $.post("include/crud/crudformulario.php", { cd_estado: vl})
+            .done(function (data) {
+                $('#cidade').html(data);
+            });
+
+
+        });
+    
+
+    });
+
+    
