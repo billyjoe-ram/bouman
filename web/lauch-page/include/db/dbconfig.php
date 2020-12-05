@@ -6,4 +6,4 @@
     define ('DBPORT', 3307);
     define ('DBUSERNAME', 'root');
     define ('DBPASSWORD', 'usbw');
-    define ('DBNAME', 'db_boumanv1');
+    define ('DBNAME', 'db_bouman');
