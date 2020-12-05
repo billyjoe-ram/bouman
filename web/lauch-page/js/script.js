@@ -47,21 +47,30 @@ document.querySelectorAll('input').forEach(($input) => {
 
 /* */
 
-    window.alert("olá");
+    /*--------------Jquery--------------*/
+
     $(document).ready(function() { 
-        
+
+        /*Tabela cidade*/
         $("#uf").on("change", function(){
-            
-            var vl = $("#uf").val();
-            $.post("include/crud/crudformulario.php", { cd_estado: vl})
+
+            var vl = $("#uf").val();//Atribuindo o valor de retorno da tag selection com um valor estiver selecionado
+
+            //Código Ajax
+            $.post("include/crud/crudformulario.php", { cd_estado: vl}) // metodo post, pagina para envio dos dados
+
             .done(function (data) {
-                $('#cidade').html(data);
+                alert(vl);
+                if(vl == null || vl ==""){ //verificando se o valor de vl é nulo ou vazio
+                    alert(vl);
+                    $('#cidade').html('<option value="">Selecione</option>'); // se for vazio
+                }else{
+                    $('#cidade').html(data); // se não for vazio vou trazer os dados da requisição da pagina php pelo banco
+                }
+
             });
-
-
         });
-    
-
+        /*Fim Tabela Cidade */
     });
-
+    /*------------Fim Jquery------------*/
     
