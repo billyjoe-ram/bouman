@@ -26,8 +26,8 @@ h1, header {
 }
 
 .vector-mid {
-    width: 60vw;
-    height: 20vh;
+    width: 100vw;
+    height: 60vh;
 }
 
 #titulo{    
@@ -44,6 +44,16 @@ h1, header {
 main {
     display: flex !important;
     height: 80vh;    
+}
+
+.display{
+    flex-direction: column;
+}
+
+.conteudo{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .titulo-pag {
