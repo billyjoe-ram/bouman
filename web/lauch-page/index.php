@@ -1,6 +1,7 @@
 <?php
     include_once 'include/header.php'; //INCLUINDO O HEADER HTML 
     include_once 'include/db/dbconnection.php'; //INCLUINDO A CONEXÃO
+    include_once 'include/crud/crud.php';
     include_once 'include/rules/verificacao.php';  //INCLUINDO A VERIFICAÇÃO DOS DADOS VIA PHP
     /*
     _________________________________________________________
@@ -13,7 +14,7 @@
     | DENIS HOLANDA                                           |  
     |_________________________________________________________|    
     */
-    var_dump($conn);   
+    // var_dump($conn);   
 ?>
 
 <body>

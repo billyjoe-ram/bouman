@@ -4,7 +4,7 @@
 
     //verificando se as variaveis estão definidas
     if(isset($_POST['txtcidade'], $_POST['txtnome'],$_POST['txtemail'],
-    $_POST['txtcelular'],$_POST['txttelefone'],$_POST['txtuf'],$_POST['txtarea'],$_POST['txtinteresse'])){
+    $_POST['txtcelular'],$_POST['txttelefone'],$_POST['txtuf'],$_POST['txtarea'])){
 
         //atribuindo valores e retirando os espaços
 
@@ -20,10 +20,11 @@
         if(!empty($nome) && !empty($email) && !empty($celular)
          && !empty($cidade) && !empty($uf) && !empty($area)){
 
+
              
            if(strlen($celular) == 15){
-                var_dump($_POST);
-                
+                insert($nome,$email,$cidade,$uf,$area,$conn);
+                echo 'lula ladrão';
            }
              
             
