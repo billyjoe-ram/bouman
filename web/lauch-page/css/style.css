@@ -1,11 +1,86 @@
-@font-face{
-    src: url("../fonts/Oxygen-Bold.ttf");
-    font-family: "Oxygen-Bold";
-    font-weight: bold;
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body{
-    background-color: #E5E5E5;
+    height: 100vh;
+    width: 100vw;    
+    background-color: #F8F8F8;   
+    font-family: 'Oxygen', sans-serif; 
+}
+
+header{
+    width: 100vw;
+    height: 14vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90.35deg, #2CA8BA 0.31%, #18ADC4 99.86%);
+}
+
+h1, header {
+    text-align: center;
+}
+
+#titulo{    
+    font-size: 260%;    
+    color: white;    
+}
+
+#logo{    
+    width: 22vw;
+    height: 22vh;
+    clip-path: inset(0% 0% 16% 0%);
+}
+
+main {
+    display: flex !important;
+    height: 80vh;    
+}
+
+.titulo-pag {
+    margin: 3vh 0;
+}
+
+.info {
+    width: 39vw;
+    text-align: justify;
+    margin-left: 6.8vw;
+    margin-right: 5.2vw
+}
+
+.destaque {
+    font-weight: bold;
+    color: #DF660F;    
+}
+
+p {
+    margin-block: 0;
+    margin-inline: 0;   
+}
+
+.precadastro {    
+    width: 40vw;    
+    margin-right: 4.3vw;
+    margin-left: 5.2vw;   
+}
+
+#enviar{
+    background-color:  #FA902E;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border: 3px solid  #DF660F;
+    border-radius: 7px;
+    padding: .5rem 1rem;
+    margin-left: 30%;
+    width: 30%;    
+}
+
+.row {
+    display: flex;
 }
 
 #nome, #email,  #area, #interesse{
@@ -14,8 +89,8 @@ body{
     border-radius: 7px;
     display: grid;
     margin: 5px 0px 10px 0px;
-    width: 90%;
-    height: 40px;
+    width: 36vw;
+    height: 5.1vh;
 }
 
 h6{
@@ -28,66 +103,28 @@ h6{
     border-radius: 7px;
     margin: 5px 0px 10px 0px;
     display: grid;
-    width: 80%;
-    height: 40px;
+    width: 17vw;
+    height: 5.1vh;
+}
+
+#celular, #cidade {
+    margin-right: 1.4vw;
 }
 
 label{
-    font-size: large;
-}
-
-.destaque{
-    color: #DF660F;
-    font-family: "Oxygen-Bold";
-}
-
-#texto{
-    text-align: justify;
+    font-size: 1.25rem;
+    margin-bottom: 0 !important;
 }
 
 h1{
-    color: #4F4F4F;
-    margin-bottom: 7%;
-    margin-top: 3%;
-    font-family: "Oxygen-Bold";
+    color: #4F4F4F;        
 }
 
-#enviar{
-    background-color:  #FA902E;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    border: 3px solid  #DF660F;
-    border-radius: 7px;
-    padding: .5rem 1rem;
-    margin-left: 30%;
-    width: 30%;
-    margin-bottom: 25px;
-    margin-top: 15px;
-}
-
-#navbar{
-    background: #07889B 77%;
-    width: 100%;
-    height: 140px;
-    align-items: center;
-}
-
-#titulo{
-    position: absolute;
-    font-size: 260%;
-    margin-left: 385px;
-    margin-top: 32px;
-    color: white;
-    font-family: "Oxygen-Bold";
-}
-
-#logo{
-    position: absolute;
-    width: 22%;
-    height: 22%;
-    left: 760px;  
-    clip-path: inset(0% 0% 16% 0%);
+@media (min-width: 1440px) {
+    #logo {
+        width: 18vw;
+        height: 20.5vh;
+    }
 }
 
 @media (max-width: 400px){
@@ -101,6 +138,11 @@ h1{
         font-size: 150%;
         margin-left: 30px;
         margin-top: 35px;        
+    }
+
+    label{
+        font-size: 1.2rem;
+        margin-bottom: 0 !important;
     }
 
     #navbar{                
