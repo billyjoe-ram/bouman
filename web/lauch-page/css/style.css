@@ -25,6 +25,11 @@ h1, header {
     text-align: center;
 }
 
+.vector-mid {
+    width: 60vw;
+    height: 20vh;
+}
+
 #titulo{    
     font-size: 260%;    
     color: white;    
