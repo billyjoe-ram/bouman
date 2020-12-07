@@ -6,7 +6,8 @@ html, body {
 
 body{
     height: 100vh;
-    width: 100vw;    
+    width: 100vw;   
+    overflow: hidden; 
     background-color: #F8F8F8;   
     font-family: 'Oxygen', sans-serif; 
 }
@@ -41,7 +42,7 @@ main {
 }
 
 .titulo-pag {
-    margin: 3vh 0;
+    margin: 1.2vh 0;
 }
 
 .info {
@@ -67,14 +68,17 @@ p {
     margin-left: 5.2vw;   
 }
 
+.check {
+    font-size: .8rem;
+}
+
 #enviar{
     background-color:  #FA902E;
     color: white;
     font-size: 20px;
     font-weight: bold;
     border: 3px solid  #DF660F;
-    border-radius: 7px;
-    padding: .5rem 1rem;
+    border-radius: 7px;    
     margin-left: 30%;
     width: 30%;    
 }
@@ -93,6 +97,11 @@ p {
     height: 5.1vh;
 }
 
+#interesse {
+    width: 12vw;
+    height: 3vh;
+}
+
 h6{
     margin-left: 7%;
 }
@@ -105,6 +114,11 @@ h6{
     display: grid;
     width: 17vw;
     height: 5.1vh;
+}
+
+select option {
+    height: 4.8vh;
+    width: 17.5vw;
 }
 
 #celular, #cidade {

@@ -133,7 +133,7 @@
 
             <!--INICIO INTERESSE BOUMAN-->
             <div class="row">                
-                <label>
+                <label class="check">
                     Tenho interesse em me cadastrar no Bouman e receber no meu e-mail os Termos de Uso.
                 </label>                
                 <input type="checkbox" id="interesse" name="txtinteresse">                
