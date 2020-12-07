@@ -25,9 +25,7 @@
                  
                 $id_usuario = $conn-> prepare("SELECT max(cd_pre_usuario) FROM tb_pre_usuario");
                 $id_usuario->execute();
-                $row=$id_usuario->fetchAll();
-
-               echo 'Passou ? sim, então vai lá na linha 30 do arquivo crud.php e apaga o comando echo ;)';
+                $row=$id_usuario->fetchAll();               
 
                 $insert_usuario = " INSERT INTO tb_contato (cd_pre_usuario, ds_telefone, ds_celular) "; 
                 $insert_usuario = $insert_usuario . " VALUES "; 

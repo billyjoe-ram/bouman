@@ -59,8 +59,7 @@ document.querySelectorAll('input').forEach(($input) => {
             //Código Ajax
             $.post("include/crud/crudformulario.php", { cd_estado: vl}) // metodo post, pagina para envio dos dados
 
-            .done(function (data) {
-                alert(vl);
+            .done(function (data) {                
                 if(vl == null || vl ==""){ //verificando se o valor de vl é nulo ou vazio
                     $('#cidade').html('<option value="">Selecione</option>'); // se for vazio
                 }else{
