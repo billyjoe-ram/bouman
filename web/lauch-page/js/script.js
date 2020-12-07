@@ -62,7 +62,6 @@ document.querySelectorAll('input').forEach(($input) => {
             .done(function (data) {
                 alert(vl);
                 if(vl == null || vl ==""){ //verificando se o valor de vl é nulo ou vazio
-                    alert(vl);
                     $('#cidade').html('<option value="">Selecione</option>'); // se for vazio
                 }else{
                     $('#cidade').html(data); // se não for vazio vou trazer os dados da requisição da pagina php pelo banco
@@ -73,4 +72,3 @@ document.querySelectorAll('input').forEach(($input) => {
         /*Fim Tabela Cidade */
     });
     /*------------Fim Jquery------------*/
-    
