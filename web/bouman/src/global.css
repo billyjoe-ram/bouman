@@ -1,7 +1,22 @@
 /* MAIN STYLES */
 
-html {
+header, main, footer {
     font-family: 'Oxygen', sans-serif !important;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.center {
+    align-items: center;
+    justify-content: center;
 }
 
 /* NAVBAR */
@@ -11,7 +26,7 @@ html {
 }
 
 form.search-bouman {
-    margin: 0 25vw;
+    margin: 0 20vw;
 }
 
 input.search-bouman {
@@ -31,6 +46,33 @@ input.search-bouman::placeholder {
     font-weight: bold;
     text-align: center;
     
+}
+
+#logo-home {
+    width: 3.47vw;
+    height: 4.4vh;
+}
+
+#logo-projeto {
+    width: 4.4vw;
+    height: 4.4vh;
+}
+
+#logo-people {
+    width: 3.3vw;
+    height: 4.7vh;
+}
+
+#logo-notify {
+    width: 2.6vw;
+    height: 4vh;
+}
+
+#profile-example {
+    width: 4.7vw;
+    height: 9.75vh;
+    border: 1px solid #5C5C5C;
+    border-radius: 38px;
 }
 
 .navbar {
