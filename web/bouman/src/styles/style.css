@@ -1,0 +1,14 @@
+.empty-feed {
+    width: 54vw;
+    height: 38vh;
+
+    font-size: 3rem;
+    color: #5E5E5E;
+    font-weight: bold;
+
+    text-align: center;
+}
+
+.empty-feed span {
+    font-size: 9rem;
+}
