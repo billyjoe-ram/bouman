@@ -1,0 +1,7 @@
+{
+  "name": "ion-bouman",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

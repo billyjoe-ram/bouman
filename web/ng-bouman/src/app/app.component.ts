@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public pagina: string = 'recipe';
+  public loadedFeature: string = 'recipe';
 
-  mudarPag(feature: string) {
-    this.pagina = feature;
+  onNavigate(feature: string) {
+    this.loadedFeature = feature;
   }
 }
