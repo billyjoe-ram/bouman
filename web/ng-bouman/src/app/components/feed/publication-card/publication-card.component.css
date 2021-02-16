@@ -1,7 +1,111 @@
 .container {
-    position: absolute;
+    position: relative;
     width: 842px;
-    height: 408px;
-    left: 70px;
-    top: 31px;
+    height: 408px;    
+    top: 60vh;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));    
+}
+
+.card {     
+    background: #FFFFFF;
+
+    border-radius: 0px 0px 8px 8px;
+}
+
+.card .card-header {
+    height: 36px;
+
+    display: flex;    
+    align-items: center;
+
+    padding-left: 10px;
+
+    background: #FFFFFF;
+    border: 2px solid #FA902E;
+    box-sizing: border-box;
+    border-radius: 2px;
+
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 15px;        
+
+    color: #DF660F;    
+}
+
+.card .profile-details {
+    display: flex;    
+}
+
+.card .profile-details img {
+    position: relative;
+    width: 56px;
+    height: 56px;
+
+    border: 1px solid #000000;
+    border-radius: 28px;
+
+    margin: 7px 18px;
+}
+
+.card .profile-details .profile-info {
+    display: flex;
+    flex-direction: column;
+
+    margin: 7px 0;
+
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.card .profile-details .profile-info span{    
+    font-size: 12px;
+
+    color: #A4A4A4;
+}
+
+.card .card-body {
+    width: 736px;
+    margin-left: 26px;
+}
+
+.card .card-body .card-text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card .card-body .card-text .publication-picture{
+    width: 280px;
+    height: 165px;
+
+    margin: 16px;
+}
+
+.card .card-footer {
+    height: 62px;
+
+    background: #FA902E;
+    border-radius: 0px 0px 8px 8px;
+}
+
+.card .card-footer p{
+    padding-left: 10px;
+
+    font-weight: bold;
+    font-size: 12px;    
+}
+
+.card .card-footer .interactions{
+    margin-left: 26px;
+
+    font-weight: bold;
+    font-size: 12px;  
+}
+
+.card .interactions img{
+    margin: 0 16px;
+}
+
+.card .interactions label{
+    color: white;
 }
