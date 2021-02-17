@@ -1,11 +1,13 @@
-<app-header (featureSelected)="onNavigate($event)" [ngStyle]="{'display': loadedFeature === 'signup' ? 'none' : 'block' }"></app-header>
-<secondary-header [ngStyle]="{'display': loadedFeature === 'signup' ? 'block' : 'none' }" (returnHome)="onNavigate($event)"></secondary-header>
+<app-header (featureSelected)="onNavigate($event)" [ngStyle]="{'display': loadedFeature === 'signup' || loadedFeature === 'login' ? 'none' : 'block' }"></app-header>
+<secondary-header [ngStyle]="{'display': loadedFeature === 'signup' || loadedFeature === 'login' ? 'block' : 'none' }" (returnHome)="onNavigate($event)"></secondary-header>
+
 <div class="container">
   <div class="row">
     <div class="col-md-12">
       <profile-page *ngIf="loadedFeature === 'profile-page' "></profile-page>
       <feed *ngIf="loadedFeature === 'feed' "></feed>
       <signup *ngIf="loadedFeature === 'signup' "></signup>
+      <login *ngIf="loadedFeature === 'login' "></login>
     </div>
   </div>
 </div>

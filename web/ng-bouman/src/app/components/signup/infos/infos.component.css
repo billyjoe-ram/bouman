@@ -52,6 +52,8 @@
 
   background: linear-gradient(180deg, #df660f 0%, #fa902e 100%);
   border-radius: 12px;
+
+  padding: 1.4rem;
 }
 
 .bouman-form label {

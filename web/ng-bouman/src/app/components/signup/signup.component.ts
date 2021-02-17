@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
 
-  public signed: boolean = false;  
+  public signed: boolean = false;
 
   constructor() { }
 
@@ -15,10 +15,7 @@ export class SignupComponent implements OnInit {
   }
 
   checkSigned(state: string) {
-    state === 'true' ? this.signed = true : false;
-    console.log(state);
-    console.log(this.signed);
-    
+    state === 'true' ? this.signed = true : false;      
   }
 
 }

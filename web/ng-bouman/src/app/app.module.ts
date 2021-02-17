@@ -20,6 +20,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ConfigurateComponent } from './components/signup/configurate/configurate.component';
 import { SecondaryHeaderComponent } from './components/secondary-header/secondary-header.component';
 import { InfosComponent } from './components/signup/infos/infos.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { InfosComponent } from './components/signup/infos/infos.component';
     SignupComponent,
     ConfigurateComponent,
     SecondaryHeaderComponent,
-    InfosComponent
+    InfosComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
