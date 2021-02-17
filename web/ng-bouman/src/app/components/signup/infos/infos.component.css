@@ -1,0 +1,117 @@
+.content {
+  display: flex;
+}
+
+.bouman-info {
+  display: flex;
+  flex-direction: column;
+
+  margin-right: 20px;
+
+  justify-content: space-between;
+}
+
+.bouman-info .bouman-details {
+  width: 38vw;
+  height: 25vh;
+
+  font-weight: bold;
+
+  text-align: justify;
+}
+
+.bouman-info .bouman-details span {
+  font-size: 38px;
+
+  color: #df660f;
+}
+
+.bouman-info .bouman-details p {
+  font-size: 20px;
+
+  color: #3a3a3a;
+}
+
+.bouman-info img {
+  width: 25vw;
+  height: 30vh;
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+  margin: 0 auto;
+}
+
+.bouman-form {
+  display: flex;
+  flex-direction: column;
+
+  width: 40vw;
+  height: 75vh;
+
+  margin-left: 20px;
+
+  filter: drop-shadow(4px 8px 4px rgba(0, 0, 0, 0.25));
+
+  background: linear-gradient(180deg, #df660f 0%, #fa902e 100%);
+  border-radius: 12px;
+}
+
+.bouman-form label {
+  font-size: 24px;
+
+  color: #ffffff;
+
+  padding-left: 10px;
+}
+
+.bouman-form input {
+  width: 36vw;
+  height: 7vh;
+
+  background: #ffffff;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  margin: 0 0 10px 10px;
+}
+
+.bouman-form span {
+  width: 90%;
+
+  font-weight: bold;
+  font-size: 16px;
+
+  display: flex;
+  align-items: center;
+
+  padding-left: 16px;
+
+  color: #ffffff;
+}
+
+.bouman-form p {
+  width: 80%;
+
+  margin: 0 auto;
+}
+
+.bouman-form button {
+  display: flex;
+  align-items: center;
+
+  width: 228px;
+  height: 50.52px;
+
+  justify-content: center;
+  align-items: center;
+
+  font-weight: bold;
+  font-size: 24px;
+
+  color: #ffffff;
+
+  background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+
+  margin: 0 auto;
+}

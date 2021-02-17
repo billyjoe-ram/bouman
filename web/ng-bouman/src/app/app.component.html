@@ -1,9 +1,11 @@
-<app-header (featureSelected)="onNavigate($event)"></app-header>
+<app-header (featureSelected)="onNavigate($event)" [ngStyle]="{'display': loadedFeature === 'signup' ? 'none' : 'block' }"></app-header>
+<secondary-header [ngStyle]="{'display': loadedFeature === 'signup' ? 'block' : 'none' }" (returnHome)="onNavigate($event)"></secondary-header>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
       <profile-page *ngIf="loadedFeature === 'profile-page' "></profile-page>
       <feed *ngIf="loadedFeature === 'feed' "></feed>
+      <signup *ngIf="loadedFeature === 'signup' "></signup>
     </div>
   </div>
 </div>

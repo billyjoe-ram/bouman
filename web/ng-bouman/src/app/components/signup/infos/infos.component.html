@@ -1,0 +1,39 @@
+<div class="content" *ngIf="!signed">
+    <div class="bouman-info">
+        <div class="bouman-details">
+            <span>O que é o Bouman</span>
+            <p>
+                O Bouman é a mais nova plataforma pensada e adaptada para os cientistas e inventores brasileiros,
+                oferecendo diversas ferramentas que facilitam o desenvolvimento de pesquisas e o trabalho em grupo.
+                Pensando no senso de comunidade, oferecemos a opção dos usuários contribuirem em trabalhos de outros
+                pesquisadores, oferecendo sugestões e análises.
+            </p>
+        </div>
+
+        <img src="/assets/undraw_medical_research_qg4d.svg" alt="Ilustração">
+    </div>
+
+    <div class="bouman-form">
+        <label for="name">Nome Completo</label>
+        <input type="text" name="user" id="name" required>
+
+        <label for="email">E-mail</label>
+        <input type="email" name="user" id="email" required>
+
+        <label for="area">Área de Atuação</label>
+        <input type="text" name="user" id="area" required>
+
+        <label for="userkey">Senha</label>
+        <input type="password" name="user" id="userkey" required>
+
+        <span>
+            A senha precisa ter pelo menos 8 caracteres, sendo um especial (@, #, ! etc.)
+        </span>
+
+        <button (click)="onSelect('true')">Cadastrar</button>
+
+        <p>
+            Ao se cadastrar, você concorda com nossos “Termos de Serviço e Privacidade”, e receber emails nossos.
+        </p>
+    </div>
+</div>

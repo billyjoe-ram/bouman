@@ -16,6 +16,10 @@ import { ProfileCardComponent } from './components/profile-page/profile-card/pro
 import { PublicationCardComponent } from './components/feed/publication-card/publication-card.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { FeedComponent } from './components/feed/feed.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { ConfigurateComponent } from './components/signup/configurate/configurate.component';
+import { SecondaryHeaderComponent } from './components/secondary-header/secondary-header.component';
+import { InfosComponent } from './components/signup/infos/infos.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import { FeedComponent } from './components/feed/feed.component';
     ProfileCardComponent,
     PublicationCardComponent,
     ProfilePageComponent,
-    FeedComponent
+    FeedComponent,
+    SignupComponent,
+    ConfigurateComponent,
+    SecondaryHeaderComponent,
+    InfosComponent
   ],
   imports: [
     BrowserModule,
