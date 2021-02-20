@@ -1,14 +1,24 @@
 .container{
-    margin-top: 10%;
+    margin-top: 5%;
     align-items: center;
 }
 .bouman-user{
-    margin-bottom: 5%;
+    margin-bottom: 4%;
     width: 30%;
-    margin-left: 52%;
+    margin-left: 33%;
+}
+.bouman-form label, a{
+    color: #df660f;
+}
+.bouman-form button, label{
+    font-size: 24px;
+}
+.bouman-form p{
+    font-size: 15px;
+    font-weight: bold;
 }
 .bouman-form input{
-    width: 30vw;
+    width: 95%;
     height: 5vh;
     background: #ffffff;
     border: 1px solid #000000;
@@ -16,9 +26,6 @@
     border-radius: 8px;
     margin-bottom: 5%;
     box-shadow: 3px 3px 3px #a3a3a3;
-}
-.bouman-form label, a{
-    color: #df660f;
 }
 .bouman-form button{
     border-radius: 8px;
@@ -28,11 +35,5 @@
     width: 40%;
     height: 100%;
     font-weight: bold;
-    margin-left: 47%;
-}
-.bouman-form button, label{
-    font-size: 24px;
-}
-.bouman-form p{
-    font-size: 15px;
+    margin-left: 27%;
 }
