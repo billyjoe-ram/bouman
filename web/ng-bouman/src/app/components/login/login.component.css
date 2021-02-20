@@ -1,0 +1,38 @@
+.container{
+    margin-top: 10%;
+    align-items: center;
+}
+.bouman-user{
+    margin-bottom: 5%;
+    width: 30%;
+    margin-left: 52%;
+}
+.bouman-form input{
+    width: 30vw;
+    height: 5vh;
+    background: #ffffff;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 5%;
+    box-shadow: 3px 3px 3px #a3a3a3;
+}
+.bouman-form label, a{
+    color: #df660f;
+}
+.bouman-form button{
+    border-radius: 8px;
+    border-color: #df660f;
+    background-color: #fa902e;
+    color: #ffffff;
+    width: 40%;
+    height: 100%;
+    font-weight: bold;
+    margin-left: 47%;
+}
+.bouman-form button, label{
+    font-size: 24px;
+}
+.bouman-form p{
+    font-size: 15px;
+}
