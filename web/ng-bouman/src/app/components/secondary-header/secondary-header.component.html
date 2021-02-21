@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">            
-            <a class="navbar-brand" (click)="onSelectHome('feed')">
+            <a class="navbar-brand" routerLink="/feed" (click)="onSelectHome('feed')">
                 <img src="/assets/logo.png" alt="Logo Bouman">
             </a>            
         </div>
@@ -11,9 +11,9 @@
             <span>Bem-vindo ao Bouman</span>
             
             <div class="page-toggle">
-                <button (click)="onSelectHome('login')">Login</button>
+                <button (click)="onSelectHome('login')" routerLink="/login">Login</button>
 
-                <button (click)="onSelectHome('signup')">Cadastro</button>
+                <button (click)="onSelectHome('signup')" routerLink="/signup">Cadastro</button>
             </div>
         </div>
     </div>

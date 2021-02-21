@@ -4,7 +4,7 @@
             <button type="button" class="navbar-toggle" (click)="collapsed = !collapsed">
                 <span class="icon-bar" *ngFor="let iconBar of [1, 2, 3]"></span>
             </button>
-            <a routerLink="/" class="navbar-brand">
+            <a routerLink="/feed" class="navbar-brand" (click)="onSelect('feed')">
                 <img src="/assets/logo.png" alt="Logo Bouman">
             </a>
             <input type="text" name="Pesquisar" id="pesquisar-input" placeholder="Pesquisar">
@@ -14,25 +14,25 @@
 
             <ul class="nav navbar-nav">                
                 <li>
-                    <a href="#" (click)="onSelect('feed')">
+                    <a routerLink="/feed" (click)="onSelect('feed')">
                         <img src="/assets/home.svg" alt="Página Inicial">
                         Início
                     </a>
                 </li>
                 <li>
-                    <a href="#" (click)="onSelect('shopping-list')">
+                    <a>
                         <img src="/assets/testplan.svg" alt="Seus projetos">
                         Projetos
                     </a>
                 </li>
                 <li>
-                    <a href="#" (click)="onSelect('shopping-list')">
+                    <a>
                         <img src="/assets/people.svg" alt="Apoio">
                         Apoio
                     </a>
                 </li>
                 <li>
-                    <a href="#" (click)="onSelect('shopping-list')">
+                    <a>
                         <img src="/assets/notification.svg" alt="Notificação">
                         Notificações
                     </a>
@@ -46,10 +46,10 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" (click)="onSelect('profile-page')">Perfil</a></li>
+                        <li><a href="#" routerLink="/profile" (click)="onSelect('profile')">Perfil</a></li>
                         <li><a href="#">Configurações</a></li>
                         <li><a href="#">Suporte</a></li>
-                        <li><a href="#" (click)="onSelect('signup')">Sair</a></li>
+                        <li><a href="#" routerLink="/signup" (click)="onSelect('signup')">Sair</a></li>
                     </ul>
                 </li>
             </ul>
