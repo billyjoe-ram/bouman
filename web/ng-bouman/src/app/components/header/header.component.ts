@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ export class HeaderComponent implements OnInit {
   
   collapsed = true;
   
-  constructor() { }
+  constructor(private authService:AuthService) { }
 
   ngOnInit(): void {
   }
@@ -20,4 +21,7 @@ export class HeaderComponent implements OnInit {
     this.featureSelected.emit(feature);
   }
 
+  logOut(){
+    this.authService.logout();
+  }
 }
