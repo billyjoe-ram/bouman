@@ -1,5 +1,5 @@
 {
-  "name": "shopping-n-recipe",
+  "name": "bouman-project",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -29,7 +29,7 @@
   "devDependencies": {
     "@angular-devkit/architect": ">= 0.900 < 0.1200",
     "@angular-devkit/build-angular": "~0.1100.6",
-    "@angular/cli": "~11.0.6",
+    "@angular/cli": "^11.2.1",
     "@angular/compiler-cli": "~11.0.6",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
