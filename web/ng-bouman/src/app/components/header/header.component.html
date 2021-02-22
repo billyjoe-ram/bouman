@@ -41,15 +41,15 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" appDropdown>
-                    <a href="#" class="dropdown-toggle" role="button">
+                    <a class="dropdown-toggle" role="button">
                         <img src="/assets/profile-example.jpg" alt="Seu perfil" id="profile-picture">
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" routerLink="/profile" (click)="onSelect('profile')">Perfil</a></li>
-                        <li><a href="#">Configurações</a></li>
-                        <li><a href="#">Suporte</a></li>
-                        <li><a href="#" routerLink="/signup" (click)="onSelect('signup')">Sair</a></li>
+                        <li><a routerLink="/profile" (click)="onSelect('profile')">Perfil</a></li>
+                        <li><a>Configurações</a></li>
+                        <li><a>Suporte</a></li>
+                        <li><a routerLink="/signup" (click)="onSelect('signup')">Sair</a></li>
                     </ul>
                 </li>
             </ul>

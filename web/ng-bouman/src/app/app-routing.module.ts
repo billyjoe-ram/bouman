@@ -9,9 +9,8 @@ import { InfosComponent } from './components/signup/infos/infos.component';
 const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },
   { path: 'feed', component: FeedComponent },
-  { path: 'signup', component: InfosComponent, children: [
-    { path: 'config',  component: ConfigurateComponent }
-  ]},
+  { path: 'signup', component: InfosComponent },
+  { path: 'config',  component: ConfigurateComponent },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfilePageComponent},
 ];
