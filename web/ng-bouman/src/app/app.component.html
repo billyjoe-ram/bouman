@@ -1,10 +1,3 @@
-<app-header (featureSelected)="onNavigate($event)" [ngStyle]="{'display': loadedFeature === 'signup' || loadedFeature === 'login' ? 'none' : 'block' }"></app-header>
-<secondary-header [ngStyle]="{'display': loadedFeature === 'signup' || loadedFeature === 'login' ? 'block' : 'none' }" (returnHome)="onNavigate($event)"></secondary-header>
-
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">      
-      <router-outlet></router-outlet>
-    </div>
-  </div>
+  <router-outlet></router-outlet>  
 </div>
