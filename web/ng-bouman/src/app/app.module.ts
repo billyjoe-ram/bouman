@@ -21,6 +21,10 @@ import { ConfigurateComponent } from './components/signup/configurate/configurat
 import { SecondaryHeaderComponent } from './components/secondary-header/secondary-header.component';
 import { InfosComponent } from './components/signup/infos/infos.component';
 import { LoginComponent } from './components/login/login.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,10 @@ import { LoginComponent } from './components/login/login.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

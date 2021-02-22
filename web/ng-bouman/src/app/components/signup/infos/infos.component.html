@@ -15,22 +15,22 @@
 
     <div class="bouman-form">
         <label for="name">Nome Completo</label>
-        <input type="text" name="user" id="name" placeholder="Seu nome" required>
+        <input type="text" name="user" id="name" placeholder="Seu nome" required [(ngModel)]="userRegister.name">
 
         <label for="email">E-mail</label>
-        <input type="email" name="user" id="email" placeholder="Ex.: bouman@email.com" required>
+        <input type="email" name="user" id="email" placeholder="Ex.: bouman@email.com" required [(ngModel)]="userRegister.email">
 
         <label for="area">Área de Atuação</label>
-        <input type="text" name="user" id="area" placeholder="Ex.: Ciências Biológicas" required>
+        <input type="text" name="user" id="area" placeholder="Ex.: Ciências Biológicas" [(ngModel)]="userRegister.area">
 
         <label for="userkey">Senha</label>
-        <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required>
+        <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required [(ngModel)]="userRegister.password">
 
         <span>
             A senha precisa ter pelo menos 8 caracteres, sendo um especial (@, #, ! etc.)
         </span>
 
-        <button (click)="onSelect('true')" routerLink="/config">Cadastrar</button>
+        <button (click)="signup()">Cadastrar</button>
 
         <p>
             Ao se cadastrar, você concorda com nossos “Termos de Serviço e Privacidade”, e receber emails nossos.

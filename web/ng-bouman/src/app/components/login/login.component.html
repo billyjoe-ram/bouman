@@ -7,14 +7,14 @@
         </div>
         <div class="bouman-form">
             <label for="email">Endereço de e-mail</label>
-            <input type="email" name="user" id="email" placeholder="Ex.: bouman@email.com" required>
+            <input type="email" name="user" id="email" placeholder="Ex.: bouman@email.com" required [(ngModel)]="userLogin.email">
     
             <label for="userkey">Senha</label>
-            <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required>
+            <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required [(ngModel)]="userLogin.password">
     
             <p>Esqueceu a sua senha? <a href="#">Clique aqui</a></p>
     
-            <button id="btnLogin" routerLink="/profile">Login</button>
+            <button id="btnLogin" (click)="login()">Login</button>
         </div>
     </div>
     <div class="col-md-3"></div>
