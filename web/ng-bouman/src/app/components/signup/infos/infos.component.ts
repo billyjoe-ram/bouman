@@ -26,11 +26,11 @@ export class InfosComponent implements OnInit {
 
     try {
       const newUser = await this.authService.register(this.userRegister);
-      await this.store.collection("Users").doc(newUser.user?.uid).set(userObject);
-      await this.authService.addUser(this.userRegister);
-      this.router.navigate(["/config"]);
+      await this.store.collection("Users").doc(newUser.user?.uid).set(userObject);            
     } catch (error) {
       console.error(error);      
+    } finally {
+      this.router.navigate(["/config"]);
     }
 
   }

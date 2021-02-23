@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },
   { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [LoginGuard] },
-  { path: 'config',  component: ConfigurateComponent, canActivate: [LoginGuard] },
+  { path: 'config',  component: ConfigurateComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] }
 ];
