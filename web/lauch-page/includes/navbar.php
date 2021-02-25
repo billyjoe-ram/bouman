@@ -1,1 +1,0 @@
-<header id="navbar"><span id="titulo">Projeto Bouman</span> <img src="imagem/logo.png" id="logo"></header>
