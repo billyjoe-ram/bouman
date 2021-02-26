@@ -12,6 +12,12 @@
   color: #5a5a5a;
 }
 
+span{
+  font-weight: lighter;
+  font-size: 1.3rem;
+  padding: 2%;
+}
+
 .profile-conf {
   width: 708px;
   height: 70vh;
@@ -46,7 +52,10 @@
 }
 
 .profile-conf label {
-  margin: 0.5rem 0;
+  font-size: 1.8rem;
+}
+.profile-conf #profile-label{
+  margin-top: 20px;
 }
 
 .profile-conf textarea {
@@ -56,11 +65,14 @@
   border: 1px solid rgb(211, 226, 229);
   border-radius: 20px;
   padding: 8px;
-  margin: 10px 0px;
   resize: none;
 }
 
-.profile-conf input {
+.profile-conf input{
+  margin-right: 5%;
+}
+
+.profile-conf select {
   width: 100%;
   height: 7vh;
   background-color: rgb(245, 248, 250);

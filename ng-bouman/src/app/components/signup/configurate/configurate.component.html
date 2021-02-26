@@ -6,17 +6,47 @@
         <hr>
 
         <div class="bouman-form">
-            <label for="profile-about">Sobre <span>Máximo de 300 caracteres</span></label>
+            <label for="profile-about" id="profile-label">Sobre<span>Máximo de 300 caracteres</span></label>
             <textarea name="profile-config" id="profile-about" maxlength="300" placeholder="Descreva um pouco de quem você é e do seu trabalho para a comunidade"></textarea>
 
-            <label for="profile-picture">Sua foto de perfil</label>
-            <input name="profile-config" id="profile-picture" placeholder="Faça o upload da foto aqui">            
+            <div class="row">
+                <div class="col-md-7">
+                    <label for="profile-city" id="profile-label">Cidade</label>
+                    <select class="bouman-select">
+                        <option selected>Selecione uma opção</option>
+                    </select>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <label for="profile-uf" id="profile-label">UF</label>
+                    <select class="bouman-select">
+                        <option selected>Selecione uma opção</option>
+                    </select>
+                </div>
+            </div>
 
-            <label for="profile-wpp">Que tal um papel de parede?</label>
-            <input name="profile-config" id="profile-wpp" placeholder="Faça o upload da imagem aqui">
+            <label for="profile-gender" id="profile-label">Sexo</label>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <input class="bouman-check" name="bouman-check" type="radio">
+                    <label id="label-check">Feminino</label>
+                </div>
+                <div class="col-md-4">
+                    <input class="bouman-check" name="bouman-check" type="radio">
+                    <label id="label-check">Masculino</label>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
             
             <button routerLink="/profile">Confirmar</button>
         </div>
 
     </div>
 </div>
+
+        <!-- <label for="profile-picture">Sua foto de perfil</label>
+            <input name="profile-config" id="profile-picture" placeholder="Faça o upload da foto aqui">            
+
+            <label for="profile-wpp">Que tal um papel de parede?</label>
+            <input name="profile-config" id="profile-wpp" placeholder="Faça o upload da imagem aqui"> -->
