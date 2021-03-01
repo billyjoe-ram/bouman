@@ -20,7 +20,7 @@ span{
 
 .profile-conf {
   width: 708px;
-  height: 70vh;
+  height: fit-content;
 
   background: #fa902e;
   border-radius: 20px;
