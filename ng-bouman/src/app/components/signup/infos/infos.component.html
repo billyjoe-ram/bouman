@@ -14,55 +14,27 @@
     </div>
 
     <div class="bouman-form">
-        <label for="name">Nome Completo</label>
-        <input type="text" name="user" id="name" placeholder="Seu nome" required [(ngModel)]="userRegister.name">
+        <form #boumanForm="ngForm" (ngSubmit)="signup()">
+            <label for="username">Nome Completo</label>
+            <input type="text" name="name" id="username" placeholder="Seu nome" ngModel required>
 
-        <label for="email">E-mail</label>
-        <input type="email" name="user" id="email" placeholder="Ex.: bouman@email.com" required [(ngModel)]="userRegister.email">
+            <label for="usermail">E-mail</label>
+            <input type="email" name="email" id="usermail" placeholder="Ex.: bouman@email.com" ngModel required>
 
-        <label for="area">Área de Atuação</label>
-        <!--<input type="text" name="user" id="area" placeholder="Ex.: Ciências Biológicas" [(ngModel)]="userRegister.area">-->
-        <select class="bouman-select">
-            <option selected>Selecione uma opção</option>
-            <option value="1">Administração</option>
-            <option value="2">Arquitetura e Urbanismo</option>
-            <option value="3">Ciências Biológicas</option>
-            <option value="4">Ciências Contábeis</option>
-            <option value="5">Ciências Econômicas</option>
-            <option value="6">Computação e Informática</option>
-            <option value="7">Comunicação Social</option>
-            <option value="8">Design</option>
-            <option value="9">Direito</option>
-            <option value="10">Ecologia</option>
-            <option value="11">Educação Física</option>
-            <option value="12">Engenharias</option>
-            <option value="13">Fármacia</option>
-            <option value="14">Filosofia</option>
-            <option value="15">Física</option>
-            <option value="16">Fisioterapia</option>
-            <option value="17">Geografia</option>
-            <option value="18">Geologia</option>
-            <option value="19">História</option>
-            <option value="20">Letras</option>
-            <option value="21">Matemática</option>
-            <option value="22">Meteorologia</option>
-            <option value="23">Oceanografia</option>
-            <option value="24">Odontologia</option>
-            <option value="25">Pedagogia</option>
-            <option value="26">Psicologia</option>
-            <option value="27">Química</option>
-            <option value="28">Serviço Social</option>
-            <option>Outros</option>
-        </select>
+            <label for="area">Área de Atuação</label>
+            <select class="bouman-select" id="area" name="area" ngModel required>
+                <option *ngFor="let area of areas" [value]="area.value">{{ area.name }}</option>
+            </select>
 
-        <label for="userkey">Senha</label>
-        <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required [(ngModel)]="userRegister.password">
+            <label for="userkey">Senha</label>
+            <input type="password" name="passkey" id="userkey" placeholder="Ex.: @Bouman2021" ngModel required>
 
-        <span>
-            A senha precisa ter pelo menos 8 caracteres, sendo um especial (@, #, ! etc.)
-        </span>
+            <span>
+                A senha precisa ter pelo menos 8 caracteres, sendo um especial (@, #, ! etc.)
+            </span>
 
-        <button (click)="signup()">Cadastrar</button>
+            <button type="submit" [disabled]="!boumanForm.valid">Cadastrar</button>
+        </form>
 
         <p>
             Ao se cadastrar, você concorda com nossos “Termos de Serviço e Privacidade”, e receber emails nossos.

@@ -45,7 +45,7 @@
   flex-direction: column;
 
   width: 40vw;
-  height: 75vh;
+  height: fit-content;
 
   margin-left: 20px;
 
