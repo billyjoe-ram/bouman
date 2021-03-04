@@ -3,33 +3,75 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { IbgeService } from 'src/app/services/ibge.service';
 
 @Component({
   selector: 'configurate',
   templateUrl: './configurate.component.html',
-  styleUrls: ['./configurate.component.css']
+  styleUrls: ['./configurate.component.css'],
 })
-export class ConfigurateComponent implements OnInit {    
+export class ConfigurateComponent implements OnInit {
   @ViewChild('boumanForm') form!: NgForm;
-  
+
   public genders: string[] = ['Masculino', 'Feminino'];
-  
-  constructor(private authService: AuthService, private store: AngularFirestore, private router: Router) { }
+  public states: { id: number, sigla: string }[] = [];  
+  public cities: { id: number, nome: string }[] = [];  
+
+  constructor(
+    private authService: AuthService,
+    private store: AngularFirestore,
+    private router: Router,
+    private ibgeService: IbgeService
+  ) {}
 
   ngOnInit(): void {
+    this.getStates();
   }
 
   async config() {
-    const user = await this.authService.getAuth().currentUser;        
+    const user = await this.authService.getAuth().currentUser;
     const description = this.form.value.desc;
     const gender = this.form.value.gender;
+    const state = this.form.value.state;
+    const city = this.form.value.city;
     try {
-      await this.store.collection("Users").doc(user?.uid).update({ desc: description, sex: gender });
-    } catch(error) {
+      await this.store
+        .collection('Users')
+        .doc(user?.uid)
+        .update({ desc: description, sex: gender, state: state, city: city });
+    } catch (error) {
       console.error(error);
     } finally {
       this.router.navigate(['/profile']);
     }
   }
 
+  public getStates() {
+    this.ibgeService.getStates().subscribe((res) => {
+      const data: any = res as any;
+      
+      data.forEach((element: any) => {
+        const id: number = element.id;
+        const sigla: string = element.sigla;
+        this.states.push({ id, sigla });
+      });          
+    });
+  }
+
+  public fillCities() {
+    const id = this.form.value.state;
+    this.cities = [];
+    
+    this.ibgeService.getCities(id).subscribe(res => {
+      const data: any = res as any;
+
+      data.forEach((element: any) => {
+        const id: number = element.id;
+        const nome: string = element.nome;
+
+        this.cities.push({ id, nome });
+      });
+    });
+    
+  }
 }
