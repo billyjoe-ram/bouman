@@ -7,34 +7,40 @@
 
         <div class="bouman-form">
             <form #boumanForm="ngForm" (ngSubmit)="config()">
-                <label for="profile-about" id="profile-label">Sobre<span>Máximo de 300 caracteres</span></label>
+                <label for="profile-about" class="profile-label">Sobre<span>Máximo de 300 caracteres</span></label>
                 <textarea name="about" id="profile-about" maxlength="300"
                     placeholder="Descreva um pouco de quem você é e do seu trabalho para a comunidade" name="desc" ngModel
                     required></textarea>
 
                 <div class="row">
                     <div class="col-md-7">
-                        <label for="profile-city" id="profile-label">Cidade</label>
+                        <label for="profile-city" class="profile-label">Cidade</label>
                         <select class="bouman-select" name="city" placeholder="Selecione uma cidade" ngModel required>
                             <option *ngFor="let city of cities"[value]="city.id">{{ city.nome }}</option>
                         </select>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
-                        <label for="profile-uf" id="profile-label">UF</label>
+                        <label for="profile-uf" class="profile-label">UF</label>
                         <select class="bouman-select" name="state" placeholder="Selecione um estado" (change)="fillCities()" ngModel required>
                             <option *ngFor="let state of states" [value]="state.id">{{ state.sigla }}</option>
                         </select>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="profile-date" class="profile-label">Data de nascimento</label>
+                        <input type="date" id="bouman-input"/>
+                    </div>
+                </div>
 
-                <span id="profile-label">Sexo</span>
+                <!--<span id="profile-label">Sexo</span>
                 <div class="radio" *ngFor="let gender of genders">
                     <label>
                         <input type="radio" name="gender" ngModel [value]="gender">
                         {{ gender }}
                     </label>
-                </div>
+                </div>-->
                 <!-- <div class="row">                    
                     <div class="col-md-2"></div>
                     <div class="col-md-4">
