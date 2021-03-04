@@ -15,15 +15,15 @@
                 <div class="row">
                     <div class="col-md-7">
                         <label for="profile-city" id="profile-label">Cidade</label>
-                        <select class="bouman-select">
-                            <option selected>Selecione uma opção</option>
+                        <select class="bouman-select" name="city" placeholder="Selecione uma cidade" ngModel required>
+                            <option *ngFor="let city of cities"[value]="city.id">{{ city.nome }}</option>
                         </select>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
                         <label for="profile-uf" id="profile-label">UF</label>
-                        <select class="bouman-select">
-                            <option selected>Selecione uma opção</option>
+                        <select class="bouman-select" name="state" placeholder="Selecione um estado" (change)="fillCities()" ngModel required>
+                            <option *ngFor="let state of states" [value]="state.id">{{ state.sigla }}</option>
                         </select>
                     </div>
                 </div>

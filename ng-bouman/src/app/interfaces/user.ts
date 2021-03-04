@@ -5,5 +5,7 @@ export interface User {
     area?: string;
     description?: string;
     sex?: string;
+    state?: string;
+    city?: string;
     password: string;
 }
