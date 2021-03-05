@@ -20,7 +20,7 @@
 
 .card .card-body img.profile-picture {
     position: absolute;
-    bottom: 78px;
+    bottom: 0px;
     left: 60px;    
 
     width: 180px;
