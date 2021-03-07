@@ -44,6 +44,38 @@ export class ConfigurateComponent implements OnInit {
     } finally {
       this.router.navigate(['/profile']);
     }
+
+    this.validaData();
+  }
+
+  validaData(){
+    var data = this.form.value.date;
+    var dataAtual = new Date();
+    var nascimento = new Date(data)
+    var ano = dataAtual.getFullYear() - nascimento.getFullYear();
+ 
+    if(ano == 18){
+      if(dataAtual.getMonth() == nascimento.getMonth()){
+        if(dataAtual.getDay() <= nascimento.getDay()){
+          //menor de idade
+        }
+        else{
+          //maior de idade
+        }
+      }
+      else if(dataAtual.getMonth() < nascimento.getMonth()){
+        //menor de idade
+      }
+      else{
+        //maior de idade
+      }
+    }
+    else if(ano < 18){
+      //menor de idade
+    }
+    else{
+      //maior de idade
+    }
   }
 
   public getStates() {

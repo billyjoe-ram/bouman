@@ -30,7 +30,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="profile-date" class="profile-label">Data de nascimento</label>
-                        <input type="date" id="bouman-input"/>
+                        <input type="date" name="date" id="bouman-input" ngModel required/>
+                        <p *ngIf="validaData()">Por favor, informe uma data válida.</p>
                     </div>
                 </div>
 

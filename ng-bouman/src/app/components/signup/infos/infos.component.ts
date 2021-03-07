@@ -40,6 +40,40 @@ export class InfosComponent implements OnInit {
       this.router.navigate(["/config"]);
     }
 
+    this.validaForm();
+    this.validaSenha();
+  }
+
+  validaSenha(){
+    if(!this.form.valid){
+      this.form.value.passkey.markAsTouched();
+    
+      if(this.form.value.passkey.invalid){
+        this.form.value.passkey.focus();
+        return this.exibeErro('passkey');
+      }
+    }
+    return false;
+  }
+
+  validaForm(nome: string){
+    if(!this.form.valid){
+      this.form.value[nome].markAsTouched();
+
+      if(this.form.value[nome].invalid){
+        this.form.value[nome].focus();
+        return this.exibeErro(nome);
+      }
+      return;
+    }
+    return false;
+  }
+
+  exibeErro(nome: string){
+    if(!this.form.value[nome]){
+      return false;
+    }
+    return this.form.value[nome].touched && this.form.value[nome].invalid;
   }
 
 }

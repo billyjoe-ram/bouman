@@ -17,9 +17,12 @@
         <form #boumanForm="ngForm" (ngSubmit)="signup()">
             <label for="username">Nome Completo</label>
             <input type="text" name="name" id="username" placeholder="Seu nome" ngModel required>
+            <p *ngIf="exibeErro('name')">Por favor, preencha o campo corretamente.</p>
 
             <label for="usermail">E-mail</label>
-            <input type="email" name="email" id="usermail" placeholder="Ex.: bouman@email.com" ngModel required email>
+            <input type="email" name="email" id="usermail" placeholder="Ex.: bouman@email.com" 
+            ngModel required email>
+            <p *ngIf="exibeErro('email')">Por favor, insira um e-mail válido.</p>
 
             <label for="area">Área de Atuação</label>
             <select class="bouman-select" id="area" name="area" ngModel required>
@@ -27,7 +30,9 @@
             </select>
 
             <label for="userkey">Senha</label>
-            <input type="password" name="passkey" id="userkey" placeholder="Ex.: @Bouman2021" ngModel required>
+            <input type="password" name="passkey" id="userkey" placeholder="Ex.: @Bouman2021" 
+            ngModel required minlength="8">
+            <p *ngIf="exibeErro('passkey')">Por favor, insira uma senha válida.</p>
 
             <span>
                 A senha precisa ter pelo menos 8 caracteres, sendo um especial (@, #, ! etc.)
