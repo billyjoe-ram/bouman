@@ -1,8 +1,12 @@
 <div class="card">
     <div class="card-body">
-        <img src="https://th.bing.com/th/id/OIP.51ybEcfxyHr0Qcrmvj-6wQHaEo?pid=ImgDet&rs=1" alt="Papel de parede" class="profile-background">
 
-        <img src="/assets/profile-example.jpg" alt="Foto de perfil" class="profile-picture">
+        <input type="file" id="FotoPerfil" (change)="upload($event)" accept="*.jpg.png">        
+        <button (click)="profilePic()">ALTERAR FOTO DE PERFIL</button>
+        <button (click)="wallpaPic()">ALTERAR FOTO DE FUNDO</button>
+        <img [src]="this.wallpImg" alt="Papel de parede" class="profile-background">
+
+        <img [src]="this.profileImg" alt="Foto de perfil" class="profile-picture">
         <div class="profile-card-content">
             <div class="text-content">
                 <h1 class="card-title">Eleonor Pena</h1>
