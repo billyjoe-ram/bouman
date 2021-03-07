@@ -118,3 +118,8 @@
 
   margin: 0 auto;
 }
+
+.bouman-form input.ng-invalid.ng-touched {
+  border-color: darkred;
+  background-color: rgb(255, 158, 158);
+}

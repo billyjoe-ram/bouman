@@ -30,42 +30,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="profile-date" class="profile-label">Data de nascimento</label>
-                        <input type="date" name="date" id="bouman-input" ngModel required/>
-                        <p *ngIf="validaData()">Por favor, informe uma data válida.</p>
+                        <input type="date" name="date" id="bouman-input" ngModel required #birth="ngModel">
+                        <p *ngIf="!birth.valid && birth.touched">Por favor, informe uma data válida.</p>
                     </div>
-                </div>
+                </div>                
 
-                <!--<span id="profile-label">Sexo</span>
-                <div class="radio" *ngFor="let gender of genders">
-                    <label>
-                        <input type="radio" name="gender" ngModel [value]="gender">
-                        {{ gender }}
-                    </label>
-                </div>-->
-                <!-- <div class="row">                    
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4">
-
-                        <input class="bouman-check" name="gender" type="radio">
-                        <label id="label-check">Feminino</label>
-                    </div>
-                    <div class="col-md-4">
-                        <input class="bouman-check" name="gender" type="radio">
-                        <label id="label-check">Masculino</label>
-                    </div>
-                    <div class="col-md-2"></div>
-                </div> -->
-
-                <button type="submit">Confirmar</button>
+                <button type="submit" [disabled]="!boumanForm.valid">Confirmar</button>
             </form>
 
         </div>
 
     </div>
 </div>
-
-<!-- <label for="profile-picture">Sua foto de perfil</label>
-            <input name="profile-config" id="profile-picture" placeholder="Faça o upload da foto aqui">            
-
-            <label for="profile-wpp">Que tal um papel de parede?</label>
-            <input name="profile-config" id="profile-wpp" placeholder="Faça o upload da imagem aqui"> -->

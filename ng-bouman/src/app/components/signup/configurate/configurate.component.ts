@@ -31,21 +31,24 @@ export class ConfigurateComponent implements OnInit {
   async config() {
     const user = await this.authService.getAuth().currentUser;
     const description = this.form.value.desc;
-    const gender = this.form.value.gender;
+    const date = this.form.value.date;
     const state = this.form.value.state;
     const city = this.form.value.city;
-    try {
-      await this.store
-        .collection('Users')
-        .doc(user?.uid)
-        .update({ desc: description, sex: gender, state: state, city: city });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      this.router.navigate(['/profile']);
-    }
 
-    this.validaData();
+    if (this.form.valid) {
+      try {
+        await this.store
+          .collection('Users')
+          .doc(user?.uid)
+          .update({ desc: description, birth: date, state: state, city: city });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.router.navigate(['/profile']);
+      }
+    }    
+
+    // this.validaData();
   }
 
   validaData(){
