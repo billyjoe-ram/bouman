@@ -3,10 +3,15 @@
   flex-direction: column;
 }
 
-.content h1 {
-  font-size: 3.5rem;
-  font-weight: bold;
+.profile-conf .bouman-form {
+  display: flex;
+  flex-direction: column;
+}
 
+.content h1 {
+  font-size: 3.2rem;
+  font-weight: bold;
+  margin-bottom: 3vh;
   text-align: center;
 
   color: #5a5a5a;
@@ -15,11 +20,11 @@
 span{
   font-weight: lighter;
   font-size: 1.3rem;
-  padding: 2%;
+  padding-left: 1vw
 }
 
 .profile-conf {
-  width: 708px;
+  width: 50vw;
   height: fit-content;
 
   background: #fa902e;
@@ -31,15 +36,8 @@ span{
   padding: 0 6rem;
 }
 
-.profile-conf .bouman-form {
-  display: flex;
-  flex-direction: column;
-}
-
 .profile-conf h3 {
-  padding-left: 8px;
-
-  font-size: 32px;
+  font-size: 3rem;
   font-weight: bold;
 
   text-align: start;
@@ -54,8 +52,8 @@ span{
 .profile-conf label {
   font-size: 1.8rem;
 }
-.profile-conf #profile-label{
-  margin-top: 20px;
+.profile-conf .profile-label{
+  margin-top: 2vh;
 }
 
 .profile-conf textarea {
@@ -64,25 +62,19 @@ span{
   background-color: rgb(245, 248, 250);
   border: 1px solid rgb(211, 226, 229);
   border-radius: 20px;
-  padding: 8px;
   resize: none;
 }
 
-.profile-conf input{
-  margin-right: 5%;
-}
-
-.profile-conf select {
+.profile-conf select, input {
   width: 100%;
-  height: 7vh;
+  height: 6vh;
   background-color: rgb(245, 248, 250);
   border: 1px solid rgb(211, 226, 229);
   border-radius: 20px;
-  padding: 8px;
 }
 
 .profile-conf button {
-  width: 35%;
+  width: 20vw;
   height: 7.75vh;
 
   display: block;
@@ -96,4 +88,9 @@ span{
   background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
+}
+
+.bouman-form input.ng-invalid.ng-touched {
+  border-color: darkred;
+  background-color: rgb(255, 158, 158);
 }
