@@ -62,3 +62,14 @@
     line-height: 20px;
     text-align: justify;
 }
+
+.card .card-body #editPen, #button-save{
+    padding-top: 50%;
+}
+.card .card-body #button-save{
+    border-radius: 8px;
+    border-color: #df660f;
+    background-color: #fa902e;
+    color: #ffffff;
+    font-weight: bold;
+}

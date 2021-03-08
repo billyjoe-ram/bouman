@@ -1,18 +1,27 @@
 <div class="card">
-    <div class="card-body">
-
-        <input type="file" id="FotoPerfil" (change)="upload($event)" accept="*.jpg.png">        
-        <button (click)="profilePic()">ALTERAR FOTO DE PERFIL</button>
-        <button (click)="wallpaPic()">ALTERAR FOTO DE FUNDO</button>
+    <div class="card-body">  
+        <div #btnFundo></div> 
         <img [src]="this.wallpImg" alt="Papel de parede" class="profile-background">
 
-        <img [src]="this.profileImg" alt="Foto de perfil" class="profile-picture">
+        <!--<input type="file" id="FotoPerfil" (change)="upload($event)" accept="*.jpg.png"/>
+        <input type="file" id="FotoFundo" (change)="upload($event)" accept="*.jpg.png"/>
+    
+        <button (click)="profilePic()">ALTERAR FOTO DE PERFIL</button>
+        <button (click)="wallpaPic()">ALTERAR FOTO DE FUNDO</button>-->
+
         <div class="profile-card-content">
-            <div class="text-content">
-                <h1 class="card-title">Eleonor Pena</h1>
-                <p class="card-text">Professora no Ensino Médio | MSc. em Física de Partículas, pesquisadora na área de Psicologia Educaional, Engenheira Mecãnica pela USP.</p>
+            <div class="col-md-11">
+                <div #btnPerfil></div> 
+                <img [src]="this.profileImg" alt="Foto de perfil" class="profile-picture">
+                <div class="text-content">
+                    <h1 class="card-title">Eleonor Pena</h1>
+                    <p class="card-text">Professora no Ensino Médio | MSc. em Física de Partículas, pesquisadora na área de Psicologia Educaional, Engenheira Mecãnica pela USP.</p>
+                </div>
             </div>
-            
+            <div class="col-md-1">
+                <img ng-hide="esconder" ng-show="!esconder" role="button" (click)="altFoto()" id="editPen" src="../../../../assets/pen.svg">
+                <button ng-hide="!esconder" ng-show="esconder" id="button-save">Salvar</button>
+            </div>
         </div>
 
     </div>

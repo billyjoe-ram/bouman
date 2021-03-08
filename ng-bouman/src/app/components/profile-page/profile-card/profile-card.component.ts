@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -12,8 +12,15 @@ export class ProfileCardComponent implements OnInit {
   private imgPath: string = "";
   public profileImg: any = "/assets/profile-example.png";
   public wallpImg: any = "/assets/wallpaper-example.jpg";
+  public esconder: boolean = false;
 
-  constructor(private storage: AngularFireStorage, private auth: AuthService) { }
+  @ViewChild('btnPerfil') private divPerfil!: ElementRef;
+  @ViewChild('btnFundo') private divFundo!: ElementRef;
+
+  constructor(
+    private storage: AngularFireStorage, 
+    private auth: AuthService, 
+    private renderer: Renderer2) { }
     
   ngOnInit(): void {
   }
@@ -42,6 +49,22 @@ export class ProfileCardComponent implements OnInit {
     fileRef.getDownloadURL().subscribe(url => {
       this.wallpImg = url;
     });    
+  }
+
+  altFoto(){
+    const inputPerfil = this.renderer.createElement('input');
+    this.renderer.setAttribute(inputPerfil, 'type', 'file');
+    this.renderer.setAttribute(inputPerfil, 'id', 'fotoPerfil');
+    this.renderer.setAttribute(inputPerfil, 'accept', '*.jpg.png');
+    this.renderer.appendChild(this.divPerfil.nativeElement, inputPerfil);
+
+    const inputFundo = this.renderer.createElement('input');
+    this.renderer.setAttribute(inputFundo, 'type', 'file');
+    this.renderer.setAttribute(inputFundo, 'id', 'fotoFundo');
+    this.renderer.setAttribute(inputFundo, 'accept', '*.jpg.png');
+    this.renderer.appendChild(this.divFundo.nativeElement, inputFundo);
+
+    this.esconder = true;
   }
 
 }
