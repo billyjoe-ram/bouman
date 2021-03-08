@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body">  
-        <div #btnFundo></div> 
+        <div *ngIf="esconder" #btnFundo></div> 
         <img [src]="this.wallpImg" alt="Papel de parede" class="profile-background">
 
         <!--<input type="file" id="FotoPerfil" (change)="upload($event)" accept="*.jpg.png"/>
@@ -11,7 +11,7 @@
 
         <div class="profile-card-content">
             <div class="col-md-11">
-                <div #btnPerfil></div> 
+                <div *ngIf="esconder" #btnPerfil></div> 
                 <img [src]="this.profileImg" alt="Foto de perfil" class="profile-picture">
                 <div class="text-content">
                     <h1 class="card-title">Eleonor Pena</h1>
@@ -19,8 +19,8 @@
                 </div>
             </div>
             <div class="col-md-1">
-                <img ng-hide="esconder" ng-show="!esconder" role="button" (click)="altFoto()" id="editPen" src="../../../../assets/pen.svg">
-                <button ng-hide="!esconder" ng-show="esconder" id="button-save">Salvar</button>
+                <img *ngIf="!esconder" role="button" (click)="altFoto()" id="editPen" src="../../../../assets/pen.svg">
+                <button *ngIf="esconder" id="button-save">Salvar</button>
             </div>
         </div>
 
