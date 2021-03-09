@@ -27,7 +27,8 @@ export class ProfileCardComponent implements OnInit, OnChanges {
   constructor(
     private storage: AngularFireStorage, 
     private auth: AuthService, 
-    private renderer: Renderer2, private user: UsersService) { }
+    private renderer: Renderer2,
+    private user: UsersService) { }
     
   ngOnInit(): void {        
     this.user.getCollection().then(data => {
@@ -35,7 +36,7 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     });
     // usando o service de usuario para pegar as imagens
     this.profileImg = this.user.getProfilePicture();
-    this.wallpImg = this.user.getWallpaper();    
+    this.wallpImg = this.user.getWallpaper();
   }
 
 
