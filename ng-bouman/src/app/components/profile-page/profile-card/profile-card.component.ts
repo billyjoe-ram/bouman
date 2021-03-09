@@ -21,6 +21,7 @@ export class ProfileCardComponent implements OnInit {
 
   @ViewChild('btnPerfil') private divPerfil!: ElementRef;
   @ViewChild('btnFundo') private divFundo!: ElementRef;
+  @ViewChild('opacidade') private fotoOpacidade!: ElementRef;
 
   constructor(
     private storage: AngularFireStorage, 
@@ -61,6 +62,8 @@ export class ProfileCardComponent implements OnInit {
     if (!this.esconder) {
       // criando o elemento input para foto de perfil
       const inputPerfil = this.renderer.createElement('input');
+      //adicionando classe de estilo
+      this.renderer.addClass(inputPerfil, 'fotoPerfil');
       // adicionado atributos
       this.renderer.setAttribute(inputPerfil, 'type', 'file');
       this.renderer.setAttribute(inputPerfil, 'id', 'fotoPerfil');
@@ -79,8 +82,19 @@ export class ProfileCardComponent implements OnInit {
       // adicionando ao elemento pai
       this.renderer.appendChild(this.divPerfil.nativeElement, inputPerfil);
 
-      // criando o elemento input para foto de perfil
+      /* Criando label para representar o Input de Perfil
+      const lblPerfil = this.renderer.createElement('label');
+      const txtPerfil = this.renderer.createText('Clique aqui para enviar um papel de parede');
+      const textLabelP = this.renderer.appendChild(lblPerfil, txtPerfil);
+      this.renderer.setAttribute(textLabelP, 'id', 'labelPerfil');
+      this.renderer.setAttribute(textLabelP, 'for', 'fotoPerfil');
+      this.renderer.appendChild(this.divFundo.nativeElement, textLabelP);
+      */
+
+      // criando o elemento input para foto de fundo
       const inputFundo = this.renderer.createElement('input');
+      //adicionando classe de estilo
+      this.renderer.addClass(inputFundo, 'fotoFundo');
       // adicionado atributos
       this.renderer.setAttribute(inputFundo, 'type', 'file');
       this.renderer.setAttribute(inputFundo, 'id', 'fotoFundo');
@@ -93,12 +107,25 @@ export class ProfileCardComponent implements OnInit {
         // criando em const só para o caso
         const ref = this.storage.upload(filePath, this.imgPath);
       });
+
       // adicionando ao elemento pai
-      this.renderer.appendChild(this.divFundo.nativeElement, inputFundo);      
+      this.renderer.appendChild(this.divFundo.nativeElement, inputFundo);  
+      
+      /* Criando label para representar o Input de Fundo
+      const lblFundo = this.renderer.createElement('label');
+      const txtFundo = this.renderer.createText('Clique aqui para enviar um papel de parede');
+      const textLabelF = this.renderer.appendChild(lblFundo, txtFundo);
+      this.renderer.setAttribute(textLabelF, 'id', 'labelFundo');
+      this.renderer.setAttribute(textLabelF, 'for', 'fotoFundo');
+      this.renderer.appendChild(this.divFundo.nativeElement, textLabelF);
+      */
     }
 
     // finalmente, alterando o estado do booleano
     this.esconder = !this.esconder;
+
+    //Criando opacidade para o background e a foto de perfil:
+    this.renderer.setStyle(this.fotoOpacidade, 'opacity', '0.4');
   }
 
   saveFotos() {
@@ -118,6 +145,9 @@ export class ProfileCardComponent implements OnInit {
 
     // finalmente, alterando o estado do booleano
     this.esconder = !this.esconder;
+
+    //Removendo opacidade no background e na foto de perfil:
+    this.renderer.removeStyle(this.fotoOpacidade, 'opacity');
   }
 
 }

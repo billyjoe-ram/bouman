@@ -62,14 +62,57 @@
     line-height: 20px;
     text-align: justify;
 }
-
-.card .card-body #editPen, #button-save{
-    padding-top: 50%;
+.card .card-body #editPen{
+    margin-left: 55%;
 }
 .card .card-body #button-save{
     border-radius: 8px;
     border-color: #df660f;
     background-color: #fa902e;
+
     color: #ffffff;
     font-weight: bold;
+    font-size: 1.7rem;
+
+    height: 30px;
+    width: 90%;
+}
+.card .card-body .fotoPerfil{
+    position: absolute;
+    display: none;
+}
+.card .card-body #labelPerfil{
+    background-color: rgba(223, 102, 15, 0.6);
+    border: 2px solid #df660f;
+    border-radius: 6px;
+
+    width: 24%;
+    margin-left: 7%;
+    margin-bottom: 50%;
+    
+    z-index: 30;
+    position: absolute;
+
+    font-size: 1.3rem;
+    text-align: center;
+
+    cursor: pointer;
+}
+.card .card-body .fotoFundo{
+    position: absolute;
+    display: none;
+}
+.card .card-body #labelFundo{
+    font-size: 2.8rem;
+    text-align: center;
+    color: white;
+
+    z-index: 5;
+    position: absolute;
+    margin-top: 9%;
+
+    cursor: pointer;
+}
+#btnFotos{
+    margin-top: 3%;
 }
