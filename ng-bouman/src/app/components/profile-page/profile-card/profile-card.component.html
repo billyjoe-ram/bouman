@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body">  
-        <div *ngIf="esconder" #btnFundo></div> 
+        <div #btnFundo></div> 
         <img [src]="this.wallpImg" alt="Papel de parede" class="profile-background">
 
         <!--<input type="file" id="FotoPerfil" (change)="upload($event)" accept="*.jpg.png"/>
@@ -11,16 +11,16 @@
 
         <div class="profile-card-content">
             <div class="col-md-11">
-                <div *ngIf="esconder" #btnPerfil></div> 
+                <div #btnPerfil></div> 
                 <img [src]="this.profileImg" alt="Foto de perfil" class="profile-picture">
                 <div class="text-content">
-                    <h1 class="card-title">Eleonor Pena</h1>
-                    <p class="card-text">Professora no Ensino Médio | MSc. em Física de Partículas, pesquisadora na área de Psicologia Educaional, Engenheira Mecãnica pela USP.</p>
+                    <h1 class="card-title">{{ userData.name }}</h1>
+                    <p class="card-text">{{ userData.desc }}</p>
                 </div>
             </div>
             <div class="col-md-1">
                 <img *ngIf="!esconder" role="button" (click)="altFoto()" id="editPen" src="../../../../assets/pen.svg">
-                <button *ngIf="esconder" id="button-save">Salvar</button>
+                <button *ngIf="esconder" id="button-save" (click)="saveFotos()">Salvar</button>
             </div>
         </div>
 

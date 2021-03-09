@@ -17,6 +17,8 @@ export class ProfileCardComponent implements OnInit {
 
   public esconder: boolean = false;
 
+  public userData: {name: string, desc: string} = { name: '', desc: ''};
+
   @ViewChild('btnPerfil') private divPerfil!: ElementRef;
   @ViewChild('btnFundo') private divFundo!: ElementRef;
 
@@ -26,14 +28,16 @@ export class ProfileCardComponent implements OnInit {
     private renderer: Renderer2, private user: UsersService) { }
     
   ngOnInit(): void {
-    // apenas para fins de teste, para testar os ngifs
-    console.log('ngOnInit: ' + this.esconder);
+    
     // usando o service de usuario para pegar as imagens
     this.profileImg = this.user.getProfilePicture();
     this.wallpImg = this.user.getWallpaper();
     console.log('Link da foto de perfil: ' + this.user.getProfilePicture());        
 
     console.log('Link do wallpaper: ' + this.user.getWallpaper());
+    this.user.getCollection().then(data => {
+      this.userData = data;
+    });
   }
 
   async upload($event: any) {
@@ -41,15 +45,20 @@ export class ProfileCardComponent implements OnInit {
   }  
 
   wallpaPic() {
-    const user = this.user.getId();
+    let user;
+    this.user.getId().then(data => {
+      user = data;
+    });
         
     const filePath = `wallpaper-pictures/${user}`;
     const ref = this.storage.upload(filePath, this.imgPath);    
   }
 
   altFoto(){
+    // apenas para fins de teste, para testar os ngifs
+    console.log('Esconder: ' + this.esconder);
     // verificando se o botão está como editar ou salvar
-    if (this.esconder) {
+    if (!this.esconder) {
       // criando o elemento input para foto de perfil
       const inputPerfil = this.renderer.createElement('input');
       // adicionado atributos
@@ -63,6 +72,8 @@ export class ProfileCardComponent implements OnInit {
         const filePath = `profile-pictures/${user}`;
         // criando em const só para o caso
         const ref = this.storage.upload(filePath, this.imgPath);
+        
+        const inputPerfil = document.getElementById('fotoPerfil');
       });
       
       // adicionando ao elemento pai
@@ -84,19 +95,28 @@ export class ProfileCardComponent implements OnInit {
       });
       // adicionando ao elemento pai
       this.renderer.appendChild(this.divFundo.nativeElement, inputFundo);      
-    } else {
-      // obtendo os elementos criados na parte truthy do condicional
+    }
+
+    // finalmente, alterando o estado do booleano
+    this.esconder = !this.esconder;
+  }
+
+  saveFotos() {
+    // apenas para fins de teste, para testar os ngifs
+    console.log('Esconder: ' + this.esconder);
+    if (this.esconder) {
+      // obtendo os elementos criados no editar
       const inputPerfil = document.getElementById('fotoPerfil');
       const inputFundo = document.getElementById('fotoFundo');
       // verificando se vieram
       console.log('O input de perfil: ' + inputPerfil);
-      console.log('O input de fundo' + inputFundo);
+      console.log('O input de fundo: ' + inputFundo);
       // removendo-os
       this.renderer.removeChild(this.divPerfil.nativeElement, inputPerfil);
-      this.renderer.removeChild(this.divPerfil.nativeElement, inputFundo);
+      this.renderer.removeChild(this.divFundo.nativeElement, inputFundo);
     }
 
-    // finalmente, alterando o estado do booleano para quando a funcao for executada novamente
+    // finalmente, alterando o estado do booleano
     this.esconder = !this.esconder;
   }
 
