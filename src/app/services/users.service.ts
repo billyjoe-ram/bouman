@@ -45,6 +45,15 @@ export class UsersService {
     const fileRef = this.storage.ref(filePath);
     let picWlpp;
 
+    /*
+    const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
+      const refWlpp = this.storage.upload(wlppImgPath, this.backgroundPath);
+      const wlppImg = this.storage.ref(wlppImgPath);
+      wlppImg.getDownloadURL().subscribe(url => {
+        this.wallpImg = url;
+      });
+    */
+
     fileRef.getDownloadURL().subscribe(async url => {
       picWlpp = await url;
     }); 

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnChanges, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -8,9 +8,10 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './profile-card.component.html',
   styleUrls: ['./profile-card.component.css']
 })
-export class ProfileCardComponent implements OnInit {
+export class ProfileCardComponent implements OnInit, OnChanges {
 
-  private imgPath: string = "";
+  private imgPath: any = "";
+  private backgroundPath: any = "";
   
   public profileImg: any = "";
   public wallpImg: any = "";
@@ -21,38 +22,32 @@ export class ProfileCardComponent implements OnInit {
 
   @ViewChild('btnPerfil') private divPerfil!: ElementRef;
   @ViewChild('btnFundo') private divFundo!: ElementRef;
+  @ViewChild('opacidade') private fotoOpacidade!: ElementRef;
 
   constructor(
     private storage: AngularFireStorage, 
     private auth: AuthService, 
-    private renderer: Renderer2, private user: UsersService) { }
+    private renderer: Renderer2,
+    private user: UsersService) { }
     
-  ngOnInit(): void {
-    
+  ngOnInit(): void {        
+    this.user.getCollection().then(data => {
+      this.userData = data;
+    });
+    // usando o service de usuario para pegar as imagens
+    this.profileImg = this.user.getProfilePicture();
+    this.wallpImg = this.user.getWallpaper();
+  }
+
+
+  ngOnChanges()   {
     // usando o service de usuario para pegar as imagens
     this.profileImg = this.user.getProfilePicture();
     this.wallpImg = this.user.getWallpaper();
     console.log('Link da foto de perfil: ' + this.user.getProfilePicture());        
 
     console.log('Link do wallpaper: ' + this.user.getWallpaper());
-    this.user.getCollection().then(data => {
-      this.userData = data;
-    });
-  }
-
-  async upload($event: any) {
-    this.imgPath = $event.target.files[0];
   }  
-
-  wallpaPic() {
-    let user;
-    this.user.getId().then(data => {
-      user = data;
-    });
-        
-    const filePath = `wallpaper-pictures/${user}`;
-    const ref = this.storage.upload(filePath, this.imgPath);    
-  }
 
   altFoto(){
     // apenas para fins de teste, para testar os ngifs
@@ -61,63 +56,84 @@ export class ProfileCardComponent implements OnInit {
     if (!this.esconder) {
       // criando o elemento input para foto de perfil
       const inputPerfil = this.renderer.createElement('input');
+      //adicionando classe de estilo
+      this.renderer.addClass(inputPerfil, 'fotoPerfil');
       // adicionado atributos
       this.renderer.setAttribute(inputPerfil, 'type', 'file');
       this.renderer.setAttribute(inputPerfil, 'id', 'fotoPerfil');
       this.renderer.setAttribute(inputPerfil, 'accept', '*.jpg.png');
       // ouvindo evento
-      this.renderer.listen(inputPerfil, 'click', () => {
-        const user = this.user.getId();
-
-        const filePath = `profile-pictures/${user}`;
-        // criando em const só para o caso
-        const ref = this.storage.upload(filePath, this.imgPath);
+      this.renderer.listen(inputPerfil, 'change', ($event: any) => {
         
-        const inputPerfil = document.getElementById('fotoPerfil');
+        console.log('Input Perfil');
+        this.imgPath = $event.target.files[0];
       });
       
       // adicionando ao elemento pai
-      this.renderer.appendChild(this.divPerfil.nativeElement, inputPerfil);
+      this.renderer.appendChild(this.divPerfil.nativeElement, inputPerfil);      
 
-      // criando o elemento input para foto de perfil
+      // criando o elemento input para foto de fundo
       const inputFundo = this.renderer.createElement('input');
+      //adicionando classe de estilo
+      this.renderer.addClass(inputFundo, 'fotoFundo');
       // adicionado atributos
       this.renderer.setAttribute(inputFundo, 'type', 'file');
       this.renderer.setAttribute(inputFundo, 'id', 'fotoFundo');
       this.renderer.setAttribute(inputFundo, 'accept', '*.jpg.png');
       // ouvindo evento
-      this.renderer.listen(inputPerfil, 'click', () => {
-        const user = this.user.getId();
-
-        const filePath = `wallpaper-pictures/${user}`;
-        // criando em const só para o caso
-        const ref = this.storage.upload(filePath, this.imgPath);
+      this.renderer.listen(inputFundo, 'change', ($event: any) => {
+        
+        console.log('Input Wallpaper');
+        this.backgroundPath = $event.target.files[0];        
       });
+
       // adicionando ao elemento pai
-      this.renderer.appendChild(this.divFundo.nativeElement, inputFundo);      
+      this.renderer.appendChild(this.divFundo.nativeElement, inputFundo);  
+            
     }
 
     // finalmente, alterando o estado do booleano
     this.esconder = !this.esconder;
+    
   }
 
-  saveFotos() {
+  async saveFotos() {
+    const user = await this.auth.getAuth().currentUser;    
+
     // apenas para fins de teste, para testar os ngifs
-    console.log('Esconder: ' + this.esconder);
+    console.log('Esconder: ' + this.esconder);                
+
     if (this.esconder) {
+      const profImgPath = `profile-pictures/${user?.uid}`;
+      const refProf = this.storage.upload(profImgPath, this.imgPath);
+      const profImg = this.storage.ref(profImgPath);
+      profImg.getDownloadURL().subscribe(url => {
+        this.profileImg = url;   
+      });
+
+      const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
+      const refWlpp = this.storage.upload(wlppImgPath, this.backgroundPath);
+      const wlppImg = this.storage.ref(wlppImgPath);
+      wlppImg.getDownloadURL().subscribe(url => {
+        this.wallpImg = url;
+      });
+
+      console.log(this.profileImg);
+      console.log(this.wallpImg);
+
+      
       // obtendo os elementos criados no editar
       const inputPerfil = document.getElementById('fotoPerfil');
       const inputFundo = document.getElementById('fotoFundo');
-      // verificando se vieram
-      console.log('O input de perfil: ' + inputPerfil);
-      console.log('O input de fundo: ' + inputFundo);
+      
       // removendo-os
       this.renderer.removeChild(this.divPerfil.nativeElement, inputPerfil);
-      this.renderer.removeChild(this.divFundo.nativeElement, inputFundo);
+      this.renderer.removeChild(this.divFundo.nativeElement, inputFundo);      
     }
 
     // finalmente, alterando o estado do booleano
     this.esconder = !this.esconder;
+    
   }
 
 }

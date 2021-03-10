@@ -28,10 +28,11 @@ export class InfosComponent implements OnInit {
   }
 
   async signup() {
-    const userObject = Object.assign({}, this.userRegister);
+    const userObject = this.userRegister;
 
     delete userObject.email;
     delete userObject.password;
+    
     // this.validaForm();
     // this.validaSenha();
     if (this.form.valid) {
@@ -40,19 +41,25 @@ export class InfosComponent implements OnInit {
         email: this.form.value.email,
         area: this.form.value.area,
         password: this.form.value.passkey,
-      };      
+      };                  
 
       try {
         const newUser = await this.authService.register(this.userRegister);
+
+        delete this.userRegister.email;
+        delete this.userRegister.password;
+
+        console.log(this.userRegister);     
+
         await this.store
           .collection('Users')
           .doc(newUser.user?.uid)
-          .set(userObject);
-        userObject.id = newUser.user?.uid;
+          .set(this.userRegister);
+        this.userRegister.id = newUser.user?.uid;
         await this.store
           .collection('Users')
           .doc(newUser.user?.uid)
-          .update(userObject);
+          .update(this.userRegister);
       } catch (error) {
         console.error(error);
       } finally {
