@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -11,6 +12,7 @@ export class UsersService {
   public profileImg: any = "/assets/profile-example.png";
   public wallpImg: any = "/assets/wallpaper-example.jpg";
   private userId: string | undefined = "";
+  private downloadURL!: Observable<string>;
   
   constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore) {
     this.getId();
@@ -23,46 +25,40 @@ export class UsersService {
     return this.userId
   }
 
-  getProfilePicture() {
-    const filePath = `profile-pictures/${this.userId}`;
-    const fileRef = this.storage.ref(filePath);
-    let picUrl;
+  async getProfilePicture() {
+    const filePath = `profile-pictures/${this.userId}`;    
 
-    fileRef.getDownloadURL().subscribe(async url => {
-      picUrl = await url;
+    const fileRef = this.storage.ref(filePath);
+    let picUrl; 
+  
+    await fileRef.getDownloadURL().subscribe(url => {
+      picUrl = url;
     });
     
-    if (picUrl != undefined) {
+    if (picUrl !== undefined) {
       return picUrl;
-    } else {
+    } else {      
       return this.profileImg;
     }
     
   }
 
-  getWallpaper() {
+  async getWallpaper() {
     const filePath = `wallpaper-pictures/${this.userId}`;
+
     const fileRef = this.storage.ref(filePath);
     let picWlpp;
 
-    /*
-    const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
-      const refWlpp = this.storage.upload(wlppImgPath, this.backgroundPath);
-      const wlppImg = this.storage.ref(wlppImgPath);
-      wlppImg.getDownloadURL().subscribe(url => {
-        this.wallpImg = url;
-      });
-    */
+    await fileRef.getDownloadURL().subscribe(url => {
+      picWlpp = url;
+    });
 
-    fileRef.getDownloadURL().subscribe(async url => {
-      picWlpp = await url;
-    }); 
-    
-    if (picWlpp != undefined) {
+    if (picWlpp !== undefined) {
       return picWlpp;
-    } else {
+    } else {      
       return this.wallpImg;
     }
+
   }
 
   async getCollection() {
@@ -75,7 +71,7 @@ export class UsersService {
     }
     
     collection?.subscribe((data: any) => {
-      // console.log(data);      
+      // console.log(data); 
       userObject.name = data.name;
       userObject.desc = data.desc;
     });
