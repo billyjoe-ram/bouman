@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnChanges, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -13,7 +14,7 @@ export class ProfileCardComponent implements OnInit, OnChanges {
   private imgPath: any = "";
   private backgroundPath: any = "";
   
-  public profileImg: any = "";
+  public profileImg: any = "";  
   public wallpImg: any = "";
 
   public esconder: boolean = false;
@@ -38,7 +39,6 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     this.profileImg = this.user.getProfilePicture();
     this.wallpImg = this.user.getWallpaper();
   }
-
 
   ngOnChanges()   {
     // usando o service de usuario para pegar as imagens
@@ -101,26 +101,21 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     const user = await this.auth.getAuth().currentUser;    
 
     // apenas para fins de teste, para testar os ngifs
-    console.log('Esconder: ' + this.esconder);                
+    console.log('Esconder: ' + this.esconder);
 
     if (this.esconder) {
       const profImgPath = `profile-pictures/${user?.uid}`;
-      const refProf = this.storage.upload(profImgPath, this.imgPath);
-      const profImg = this.storage.ref(profImgPath);
-      profImg.getDownloadURL().subscribe(url => {
-        this.profileImg = url;   
-      });
+      const refProf = await this.storage.upload(profImgPath, this.imgPath);      
+      
+      this.profileImg = await this.user.getProfilePicture();
 
       const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
-      const refWlpp = this.storage.upload(wlppImgPath, this.backgroundPath);
-      const wlppImg = this.storage.ref(wlppImgPath);
-      wlppImg.getDownloadURL().subscribe(url => {
-        this.wallpImg = url;
-      });
+      const refWlpp = await this.storage.upload(wlppImgPath, this.backgroundPath);
+      
+      this.wallpImg = await this.user.getWallpaper();
 
       console.log(this.profileImg);
       console.log(this.wallpImg);
-
       
       // obtendo os elementos criados no editar
       const inputPerfil = document.getElementById('fotoPerfil');

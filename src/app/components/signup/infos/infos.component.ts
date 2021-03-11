@@ -27,39 +27,35 @@ export class InfosComponent implements OnInit {
     this.areas = this.areasService.getAreas();
   }
 
-  async signup() {
-    const userObject = this.userRegister;
-
-    delete userObject.email;
-    delete userObject.password;
-    
-    // this.validaForm();
-    // this.validaSenha();
+  async signup() {            
     if (this.form.valid) {
       this.userRegister = {
         name: this.form.value.name,
         email: this.form.value.email,
         area: this.form.value.area,
         password: this.form.value.passkey,
-      };                  
+      };
+
+      const userObject = Object.assign({}, this.userRegister);      
+
+      delete userObject.email;
+      delete userObject.password;      
 
       try {
-        const newUser = await this.authService.register(this.userRegister);
-
-        delete this.userRegister.email;
-        delete this.userRegister.password;
-
-        console.log(this.userRegister);     
+        const newUser = await this.authService.register(this.userRegister);        
 
         await this.store
           .collection('Users')
           .doc(newUser.user?.uid)
-          .set(this.userRegister);
-        this.userRegister.id = newUser.user?.uid;
+          .set(userObject);
+
+        userObject.id = newUser.user?.uid;
+
         await this.store
           .collection('Users')
           .doc(newUser.user?.uid)
-          .update(this.userRegister);
+          .update(userObject);
+
       } catch (error) {
         console.error(error);
       } finally {
