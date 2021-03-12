@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnChanges, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,13 +9,15 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './profile-card.component.html',
   styleUrls: ['./profile-card.component.css']
 })
-export class ProfileCardComponent implements OnInit, OnChanges {
+export class ProfileCardComponent implements OnInit, OnDestroy {
 
   private imgPath: any = "";
   private backgroundPath: any = "";
   
   public profileImg: any = "";  
   public wallpImg: any = "";
+  private profile!: Subscription;
+  private wallpaper!: Subscription;
 
   public esconder: boolean = false;
 
@@ -36,17 +38,20 @@ export class ProfileCardComponent implements OnInit, OnChanges {
       this.userData = data;
     });
     // usando o service de usuario para pegar as imagens
-    this.profileImg = this.user.getProfilePicture();
-    this.wallpImg = this.user.getWallpaper();
+    this.profile = this.user.getProfilePicture().subscribe(url=>{
+      console.log(url);
+      this.profileImg = url;
+    });
+    this.wallpaper = this.user.getWallpaper().subscribe(url=>{
+      console.log(url);
+      this.wallpImg = url;
+    })
   }
 
-  ngOnChanges()   {
-    // usando o service de usuario para pegar as imagens
-    this.profileImg = this.user.getProfilePicture();
-    this.wallpImg = this.user.getWallpaper();
-    console.log('Link da foto de perfil: ' + this.user.getProfilePicture());        
-
-    console.log('Link do wallpaper: ' + this.user.getWallpaper());
+  ngOnDestroy()   {
+    // destroi
+    this.profile.unsubscribe();
+    this.wallpaper.unsubscribe();
   }  
 
   altFoto(){
@@ -105,14 +110,10 @@ export class ProfileCardComponent implements OnInit, OnChanges {
 
     if (this.esconder) {
       const profImgPath = `profile-pictures/${user?.uid}`;
-      const refProf = await this.storage.upload(profImgPath, this.imgPath);      
-      
-      this.profileImg = await this.user.getProfilePicture();
+      const refProf = await this.storage.upload(profImgPath, this.imgPath);          
 
       const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
       const refWlpp = await this.storage.upload(wlppImgPath, this.backgroundPath);
-      
-      this.wallpImg = await this.user.getWallpaper();
 
       console.log(this.profileImg);
       console.log(this.wallpImg);
@@ -130,5 +131,4 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     this.esconder = !this.esconder;
     
   }
-
 }
