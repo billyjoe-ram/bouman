@@ -25,39 +25,18 @@ export class UsersService {
     return this.userId
   }
 
-  async getProfilePicture() {
+  getProfilePicture() {
     const filePath = `profile-pictures/${this.userId}`;    
 
     const fileRef = this.storage.ref(filePath);
-    let picUrl; 
-  
-    await fileRef.getDownloadURL().subscribe(url => {
-      picUrl = url;
-    });
-    
-    if (picUrl !== undefined) {
-      return picUrl;
-    } else {      
-      return this.profileImg;
-    }
-    
+    return fileRef.getDownloadURL(); ;
   }
 
-  async getWallpaper() {
+  getWallpaper() {
     const filePath = `wallpaper-pictures/${this.userId}`;
 
     const fileRef = this.storage.ref(filePath);
-    let picWlpp;
-
-    await fileRef.getDownloadURL().subscribe(url => {
-      picWlpp = url;
-    });
-
-    if (picWlpp !== undefined) {
-      return picWlpp;
-    } else {      
-      return this.wallpImg;
-    }
+    return fileRef.getDownloadURL();
 
   }
 
