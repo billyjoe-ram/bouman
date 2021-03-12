@@ -1,4 +1,3 @@
-import { LEADING_TRIVIA_CHARS } from '@angular/compiler/src/render3/view/template';
 import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Subscription } from 'rxjs';
@@ -111,14 +110,10 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
     if (this.esconder) {
       const profImgPath = `profile-pictures/${user?.uid}`;
-      const refProf = await this.storage.upload(profImgPath, this.imgPath);      
-      
-      this.profileImg = await this.user.getProfilePicture();
+      const refProf = await this.storage.upload(profImgPath, this.imgPath);          
 
       const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
       const refWlpp = await this.storage.upload(wlppImgPath, this.backgroundPath);
-      
-      this.wallpImg = await this.user.getWallpaper();
 
       console.log(this.profileImg);
       console.log(this.wallpImg);
