@@ -1,114 +1,100 @@
-.content {
-  display: flex;
-  justify-content: center;
+.container{
+  margin-top: 3%;
 }
-
 .bouman-info {
   display: flex;
   flex-direction: column;
-
-  margin-right: 20px;
-
-  justify-content: space-between;
 }
 
-.bouman-info .bouman-details {
-  width: 38vw;
-  height: 25vh;
-
+.bouman-info {
   font-weight: bold;
 
   text-align: justify;
 }
 
-.bouman-info .bouman-details span {
-  font-size: 38px;
-
+.bouman-info span {
+  font-size: 3rem;
   color: #df660f;
 }
 
-.bouman-info .bouman-details p {
-  font-size: 20px;
+.bouman-info p {
+  font-size: 1.8rem;
 
   color: #3a3a3a;
 }
 
 .bouman-info img {
-  width: 25vw;
-  height: 30vh;
+  width: 55%;
+  height: 60%;
   filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
-  margin: 0 auto;
+  margin: 3% auto;
 }
 
 .bouman-form {
   display: flex;
   flex-direction: column;
 
-  width: 40vw;
+  padding: 3%;
+  width: fit-content;
   height: fit-content;
 
-  margin-left: 20px;
-
   filter: drop-shadow(4px 8px 4px rgba(0, 0, 0, 0.25));
-
   background: linear-gradient(180deg, #df660f 0%, #fa902e 100%);
-  border-radius: 12px;
 
-  padding: 1.4rem;
+  border-radius: 12px;
 }
 
 .bouman-form label {
-  font-size: 24px;
+  font-size: 2rem;
 
   color: #ffffff;
 
-  padding-left: 10px;
+  padding-left: 2%;
 }
 
 .bouman-form input, .bouman-form select {
-  width: 36vw;
-  height: 7vh;
+  width: 95%;
+  height: 6vh;
 
   background: #ffffff;
   border: 1px solid #000000;
   box-sizing: border-box;
   border-radius: 8px;
 
-  margin: 0 0 10px 10px;
+  margin: 0 0 3% 3%;
 }
 
 .bouman-form span {
-  width: 90%;
-
   font-weight: bold;
-  font-size: 16px;
+  font-size: 1.5rem;
+
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 2%;
 
   display: flex;
   align-items: center;
-
-  padding-left: 16px;
 
   color: #ffffff;
 }
 
 .bouman-form p {
   width: 80%;
-
   margin: 0 auto;
+  margin-top: 3%;
 }
 
 .bouman-form button {
   display: flex;
   align-items: center;
 
-  width: 228px;
-  height: 50.52px;
+  width: 50%;
 
   justify-content: center;
   align-items: center;
 
   font-weight: bold;
-  font-size: 24px;
+  font-size: 2.1rem;
 
   color: #ffffff;
 

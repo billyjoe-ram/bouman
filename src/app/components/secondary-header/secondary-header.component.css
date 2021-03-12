@@ -1,6 +1,7 @@
 nav.navbar {
   background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
   border: none;
+  height: 9vh;
   border-radius: 0;
 }
 
@@ -12,8 +13,8 @@ nav .container-fluid .navbar-header {
 }
 
 a.navbar-brand {
-  padding-top: 10px;
-  padding-left: 10px;
+  padding-top: 1%;
+  padding-left: 1%;
 
   cursor: pointer;
 }
@@ -34,9 +35,28 @@ nav .container-fluid .navbar-collapse {
 span {
     font-style: normal;
     font-weight: bold;
-    font-size: 42px;
+    font-size: 3.4rem;
 
     color: #FFFEFE;
+}
+
+nav .container-fluid .navbar-collapse button {    
+  width: fit-content;
+  height: fit-content;
+
+  background-color: #FA902E;
+  border: 2px solid #FFFFFF;
+  
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+
+  font-size: 1.6rem;
+  text-align: center;
+
+  color: #FFFFFF;
+
+  padding: 0.4rem 1.6rem;
+  margin: 0 2.4rem;
 }
 
 @media (min-width: 768px) {
@@ -61,25 +81,6 @@ span {
   nav .container-fluid .page-toggle {    
     position: absolute;
     right: 0;
-  }
-
-  nav .container-fluid .navbar-collapse button {    
-    width: fit-content;
-    height: fit-content;
-
-    background-color: #FA902E;
-    border: 2px solid #FFFFFF;
-    
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 6px;
-
-    font-size: 1.6rem;
-    text-align: center;
-
-    color: #FFFFFF;
-
-    padding: 0.4rem 1.6rem;
-    margin: 0 2.4rem;
   }
 
   nav .container-fluid .navbar-collapse button:hover {

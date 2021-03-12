@@ -1,20 +1,30 @@
-.content {
+.container{
   display: flex;
   flex-direction: column;
 }
 
-.profile-conf .bouman-form {
+/*.bouman-form {
   display: flex;
   flex-direction: column;
-}
+}*/
 
-.content h1 {
-  font-size: 3.2rem;
+.container h1 {
+  font-size: 3rem;
   font-weight: bold;
-  margin-bottom: 3vh;
+  margin-bottom: 2%;
   text-align: center;
 
   color: #5a5a5a;
+}
+
+.bouman-form h3 {
+  font-size: 2.8rem;
+  font-weight: bold;
+
+  text-align: start;
+  padding-left: 1%;
+
+  color: #ffffff;
 }
 
 span{
@@ -23,8 +33,12 @@ span{
   padding-left: 1vw
 }
 
-.profile-conf {
-  width: 50vw;
+hr {
+  margin: 1rem 0;
+}
+
+.bouman-form {
+  width: 100%;
   height: fit-content;
 
   background: #fa902e;
@@ -33,30 +47,19 @@ span{
   filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.5));
 
   margin: 0 auto;
-  padding: 0 6rem;
+
+  padding: 3% 4% 3% 4%;
 }
 
-.profile-conf h3 {
-  font-size: 3rem;
-  font-weight: bold;
-
-  text-align: start;
-
-  color: #ffffff;
-}
-
-.profile-conf hr {
-  margin: 1rem 0;
-}
-
-.profile-conf label {
+.bouman-form label {
   font-size: 1.8rem;
 }
-.profile-conf .profile-label{
+
+.profile-label{
   margin-top: 2vh;
 }
 
-.profile-conf textarea {
+.bouman-form textarea {
   width: 100%;
   height: 12vh;
   background-color: rgb(245, 248, 250);
@@ -65,21 +68,21 @@ span{
   resize: none;
 }
 
-.profile-conf select, input {
+.bouman-form select, input {
   width: 100%;
-  height: 6vh;
+  height: 5vh;
   background-color: rgb(245, 248, 250);
   border: 1px solid rgb(211, 226, 229);
   border-radius: 20px;
 }
 
-.profile-conf button {
-  width: 20vw;
-  height: 7.75vh;
+.bouman-form button {
+  width: 50%;
+  height: 6vh;
 
   display: block;
 
-  margin: 3rem auto 1.2rem auto;
+  margin: 3% auto 2% auto;
 
   font-weight: bold;
   font-size: 2rem;
