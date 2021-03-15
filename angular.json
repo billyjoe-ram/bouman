@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "shopping-n-recipe": {
+    "project-bouman": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/shopping-n-recipe",
+            "outputPath": "dist/project-bouman",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "shopping-n-recipe:build"
+            "browserTarget": "project-bouman:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "shopping-n-recipe:build:production"
+              "browserTarget": "project-bouman:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "shopping-n-recipe:build"
+            "browserTarget": "project-bouman:build"
           }
         },
         "test": {
@@ -114,16 +114,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "shopping-n-recipe:serve"
+            "devServerTarget": "project-bouman:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "shopping-n-recipe:serve:production"
+              "devServerTarget": "project-bouman:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "shopping-n-recipe"
+  "defaultProject": "project-bouman"
 }
