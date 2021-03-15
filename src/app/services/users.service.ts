@@ -12,7 +12,7 @@ export class UsersService {
   public profileImg: any = "/assets/profile-example.png";
   public wallpImg: any = "/assets/wallpaper-example.jpg";
   private userId: string | undefined = "";
-  private downloadURL!: Observable<string>;
+  // private downloadURL!: Observable<string>;
   
   constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore) {
     this.getId();
@@ -29,14 +29,26 @@ export class UsersService {
     const filePath = `profile-pictures/${this.userId}`;    
 
     const fileRef = this.storage.ref(filePath);
-    return fileRef.getDownloadURL(); ;
+    try {
+      return fileRef.getDownloadURL();
+    } catch (error) {
+      console.error(error);
+      return this.profileImg;
+    }
+    
   }
 
   getWallpaper() {
     const filePath = `wallpaper-pictures/${this.userId}`;
 
     const fileRef = this.storage.ref(filePath);
-    return fileRef.getDownloadURL();
+    
+    try {
+      return fileRef.getDownloadURL();
+    } catch (error) {
+      console.error(error);
+      return this.wallpImg;
+    }    
 
   }
 
@@ -49,8 +61,7 @@ export class UsersService {
       console.error(error);        
     }
     
-    collection?.subscribe((data: any) => {
-      // console.log(data); 
+    collection?.subscribe((data: any) => {      
       userObject.name = data.name;
       userObject.desc = data.desc;
     });

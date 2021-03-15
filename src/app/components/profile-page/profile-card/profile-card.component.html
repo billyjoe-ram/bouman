@@ -1,34 +1,43 @@
 <div class="card">
     <div class="card-body">  
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6" #btnFundo>
-                <label for="fotoFundo" id="labelFundo" *ngIf="esconder">Clique aqui para enviar um papel de parede</label>
+        
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" #btnFundo>
+                    <label for="fotoFundo" id="labelFundo" *ngIf="esconder">
+                        Clique aqui para enviar um papel de parede
+                        <input type="file" id="fotoFundo" class="fotoFundo" *ngIf="esconder" accept="*.jpg.png" (change)="getWallpImg($event)"> 
+                    </label>                    
+                </div>
+                <div class="col-md-3"></div>
             </div>
-            <div class="col-md-3"></div>
-        </div>
-        <img [src]="wallpImg" alt="Papel de parede" class="profile-background">
+        
+            <img [src]="wallpImg" alt="Papel de parede" class="profile-background img-responsive">
 
-        <div class="profile-card-content">
-            <div class="col-md-10">
-                <img [src]="profileImg" alt="Foto de perfil" class="profile-picture">
-                <div #btnPerfil>
-                    <label for="fotoPerfil" id="labelPerfil" *ngIf="esconder">Clique aqui para enviar uma foto de perfil</label>
-                </div> 
-                <div class="text-content">
-                    <h1 class="card-title">{{ userData.name }}</h1>
-                    <p class="card-text">{{ userData.desc }}</p>
+            <div class="profile-card-content">
+                <div class="col-md-10">
+                    <img [src]="profileImg" alt="Foto de perfil" class="profile-picture img-responsive">
+                    <div #btnPerfil>
+                        <label for="fotoPerfil" id="labelPerfil" *ngIf="esconder">
+                            Clique aqui para enviar uma foto de perfil
+                            <input type="file" id="fotoPerfil" class="fotoPerfil" *ngIf="esconder" accept="*.jpg.png" (change)="getProfileImg($event)">
+                        </label>
+                                                
+                    </div> 
+                    <div class="text-content">
+                        <h1 class="card-title">{{ userData.name }}</h1>
+                        <p class="card-text">{{ userData.desc }}</p>
+                    </div>
+                </div>
+                <div class="col-md-2" id="btnFotos">
+                    <div *ngIf="!esconder; else elseBloco">
+                        <img role="button" (click)="esconder = !esconder" id="editPen" src="../../../../assets/pen.svg">
+                    </div>
+                    <ng-template #elseBloco>
+                        <button id="button-save" type="button" (click)="saveFotos()">Salvar</button>
+                    </ng-template>
                 </div>
             </div>
-            <div class="col-md-2" id="btnFotos">
-                <div *ngIf="!esconder; else elseBloco">
-                    <img role="button" (click)="altFoto()" id="editPen" src="../../../../assets/pen.svg">
-                </div>
-                <ng-template #elseBloco>
-                    <button id="button-save" (click)="saveFotos()">Salvar</button>
-                </ng-template>
-            </div>
-        </div>
-
+        
     </div>
 </div>
