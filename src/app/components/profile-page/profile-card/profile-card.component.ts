@@ -42,13 +42,11 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     });
 
     // usando o service de usuario para pegar as imagens
-    this.profile = this.user.getProfilePicture().subscribe(url=>{
-      console.log(url);
+    this.profile = this.user.getProfilePicture().subscribe((url: any) =>{      
       this.profileImg = url;
     });
 
-    this.wallpaper = this.user.getWallpaper().subscribe(url=>{
-      console.log(url);
+    this.wallpaper = this.user.getWallpaper().subscribe((url: any)=>{      
       this.wallpImg = url;
     });    
   }
@@ -57,12 +55,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     // destroi
     this.profile.unsubscribe();
     this.wallpaper.unsubscribe();
-  }  
-
-  // altFoto(){    
-  //   // finalmente, alterando o estado do booleano
-  //   this.esconder = !this.esconder;    
-  // }
+  }
 
   getProfileImg(event: any) {
     console.log('Input Perfil');
