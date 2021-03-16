@@ -1,6 +1,5 @@
-import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -10,9 +9,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './profile-card.component.html',
   styleUrls: ['./profile-card.component.css']
 })
-export class ProfileCardComponent implements OnInit, OnDestroy {
-
-  public reactiveForm!: FormGroup;
+export class ProfileCardComponent implements OnInit, OnDestroy {  
   
   public esconder: boolean = false;
 
@@ -27,18 +24,15 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
   private profile!: Subscription;
   private wallpaper!: Subscription;  
 
-  @ViewChild('btnPerfil') private divPerfil!: ElementRef;
-  @ViewChild('btnFundo') private divFundo!: ElementRef;  
-
   constructor(
     private storage: AngularFireStorage, 
-    private auth: AuthService, 
-    private renderer: Renderer2,
+    private auth: AuthService,    
     private user: UsersService) { }
     
   ngOnInit(): void {
     this.user.getCollection().then(data => {
-      this.userData = data;
+      this.userData.name = data.name;
+      this.userData.desc = data.desc;
     });
 
     // usando o service de usuario para pegar as imagens
