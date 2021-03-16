@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DocsService } from 'src/app/services/docs.service';
 
 @Component({
   selector: 'project-overview',
@@ -8,14 +7,9 @@ import { DocsService } from 'src/app/services/docs.service';
 })
 export class ProjectOverviewComponent implements OnInit {
 
-  public projects: any[] = [];
-  
-  constructor(private docServ: DocsService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.projects = this.docServ.listProjects();
-
-    console.log(this.projects);
   }
 
 }

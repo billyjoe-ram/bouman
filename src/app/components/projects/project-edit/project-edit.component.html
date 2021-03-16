@@ -1,11 +1,11 @@
-<form  [formGroup]="docForm" (ngSubmit)="onSubmit()">
+<form>
     <div class="row">        
         <div class="form-group col-xs-8">
-            <input type="text" placeholder="Nome do seu projeto"  class="form-control" formControlName="title">
+            <input type="text" placeholder="Nome do seu projeto">
         </div>
 
         <div class="col-xs-4">
-            <button type="submit" class="btn btn-bouman">Salvar</button>
+            <button type="submit">Salvar</button>
         </div>        
     </div>    
 
@@ -24,7 +24,7 @@
       'undo redo | formatselect | bold italic | \
       alignleft aligncenter alignright alignjustify | \
       bullist numlist outdent indent | help'
-  }" formControlName="content" >
+  }">
         </editor>
     </div>
 </form>
