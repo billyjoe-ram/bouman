@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-
+import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -10,7 +10,9 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './profile-card.component.html',
   styleUrls: ['./profile-card.component.css']
 })
-export class ProfileCardComponent implements OnInit, OnDestroy {  
+export class ProfileCardComponent implements OnInit, OnDestroy {
+
+  public reactiveForm!: FormGroup;
   
   public esconder: boolean = false;
 
@@ -30,13 +32,13 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
   constructor(
     private storage: AngularFireStorage, 
-    private auth: AuthService,
+    private auth: AuthService, 
+    private renderer: Renderer2,
     private user: UsersService) { }
     
   ngOnInit(): void {
     this.user.getCollection().then(data => {
-      this.userData.name = data.name;
-      this.userData.desc = data.desc;
+      this.userData = data;
     });
 
     // usando o service de usuario para pegar as imagens
@@ -83,7 +85,10 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
     refWlpp.ref.getDownloadURL().then(url => {
       this.wallpImg = url;
-    });        
+    });
+    
+    console.log(this.profileImg);
+    console.log(this.wallpImg);
 
     // finalmente, alterando o estado do booleano
     this.esconder = !this.esconder;
