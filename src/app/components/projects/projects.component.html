@@ -1,0 +1,11 @@
+<app-header></app-header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <router-outlet></router-outlet>
+        </div>
+        <div class="col-md-4">
+            <button class="btn-bouman" (click)="toggleComponent()">{{ editMode ? 'Salvar' : 'Criar projeto'}}</button>
+        </div>
+    </div>    
+</div>

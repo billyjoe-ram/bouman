@@ -1,0 +1,9 @@
+button.btn-bouman {    
+    width: 22vw;
+    height: 5vh;
+
+    background: #FA902E;
+    border: 2px solid #DF660F;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
