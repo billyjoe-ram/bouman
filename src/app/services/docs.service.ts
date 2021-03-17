@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Project } from '../interfaces/project';
+import { AuthService } from './auth.service';
 
 import { UsersService } from './users.service';
 
@@ -12,18 +13,18 @@ export class DocsService {
   private docsCollection = this.store.collection<Project>('Projects');
   private projects: any[] = [];
 
-  constructor(private store: AngularFirestore, private user: UsersService) { }
+  constructor(private store: AngularFirestore, private auth: AuthService) { }
 
-  listProjects() {    
-    const owner = this.user.getId();
+  async listProjects() {
+    const owner = await this.auth.getAuth().currentUser;
     // Create a reference to the cities collection
     const projectsRef = this.docsCollection.ref;
 
     // Create a query against the collection.
-    const query = projectsRef.where("ownerId", "==", `${owner}`);
-    console.log(query);
-    this.projects.push(query);
-    return this.projects.slice();
+    const query = projectsRef.where("ownerId", "==", `${owner?.uid}`).get();
+    // console.log(query);
+    // this.projects.push(query);
+    return query;
   }
   
   addProject(project: Project) {

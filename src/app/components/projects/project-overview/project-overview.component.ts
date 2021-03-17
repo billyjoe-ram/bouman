@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DocsService } from 'src/app/services/docs.service';
 
 @Component({
   selector: 'project-overview',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectOverviewComponent implements OnInit {
 
-  constructor() { }
+  public projects: any[] = [];
+  
+  constructor(private docServ: DocsService) { }
 
   ngOnInit(): void {
+    this.docServ.listProjects().then(data => {
+      data.forEach((query) => {
+        this.projects.push(query.data());
+      })
+
+      // console.log(this.projects);
+    });
+    
+    
   }
 
 }
