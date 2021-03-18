@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/interfaces/user';
+// import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  @ViewChild('pass') inputPass!: ElementRef;
+  
   public userLogin: any = {};
   
   constructor(private authService: AuthService, private router: Router) { }
@@ -26,6 +28,25 @@ export class LoginComponent implements OnInit {
       console.error(error);      
     }
 
+  }
+
+  getKey(event: any) {
+    
+    if (event.keyCode === 13) {
+      event.preventDefault();
+
+      this.login();
+    }
+  }
+
+  showPassword() {
+    const password: HTMLInputElement = this.inputPass.nativeElement;
+
+    if (password.type === "password") {
+      password.type = "text";
+    } else {
+      password.type = "password";
+    }
   }
 
 }

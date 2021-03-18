@@ -1,6 +1,5 @@
 export interface Project {
-    ownerId: string | undefined;
-    docId: string;
+    ownerId: string | undefined;    
     title: string;
     content: string;
     createdAt: Date;

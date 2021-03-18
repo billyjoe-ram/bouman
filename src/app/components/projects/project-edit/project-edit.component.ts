@@ -23,11 +23,11 @@ export class ProjectEditComponent implements OnInit {
   }
 
   async onSubmit() {
-    const user = await this.auth.getAuth().currentUser;    
+    const user = await this.auth.getAuth().currentUser;
     const submitted = this.docForm.value;
     const date = new Date();
         
-    const project: Project = { ownerId: user?.uid, docId: date.getTime().toString(), title: submitted.title, content: submitted.content, createdAt: date };
+    const project: Project = { ownerId: user?.uid, title: submitted.title, content: submitted.content, createdAt: date };
     
     this.docServ.addProject(project);
   }
