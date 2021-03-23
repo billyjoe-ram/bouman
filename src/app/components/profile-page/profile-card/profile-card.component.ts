@@ -38,8 +38,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log("testando quero apenas ver se isso vai aparecer no console depois do get bla bla bla")
     this.user.getCollection().then(data => {
-      this.userData.name = data.name;
-      this.userData.desc = data.desc;
+      this.userData = data;
     });
 
     // usando o service de usuario para pegar as imagens
@@ -49,7 +48,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
     this.wallpaper = this.user.getWallpaper().subscribe((url: any)=>{      
       this.wallpImg = url;
-    });    
+    });
   }
 
   ngOnDestroy()   {
