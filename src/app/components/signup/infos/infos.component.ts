@@ -36,7 +36,7 @@ export class InfosComponent implements OnInit {
         password: this.form.value.passkey,
       };
 
-      const userObject = Object.assign({}, this.userRegister);
+      const userObject = Object.assign({}, this.userRegister);      
 
       delete userObject.email;
       delete userObject.password;      
@@ -63,5 +63,43 @@ export class InfosComponent implements OnInit {
       }
     }
   }
-  
+
+  // NÃO TÁ FUNCIONANDO
+  // validaSenha(passkey: NgModel): boolean {
+  //   const senha: string = passkey.viewModel;
+  //   let valida: boolean = false;
+
+  //   if (!passkey.valid && passkey.touched) {
+  //     if (senha.length >= 8) {
+  //       valida = true;
+  //     } else {
+  //       valida = false;
+  //     }
+  //   }
+  //   return valida;
+  // }
+
+  // NÃO TÁ FUNCIONANDO
+  // validaForm(){
+  //   if(!this.form.valid){
+  //     this.form.value[nome].markAsTouched();
+
+  //     if(this.form.value[nome].invalid){
+  //       this.form.value[nome].focus();
+  //       return this.exibeErro(nome);
+  //     }
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+
+  // }
+
+  // NÃO TÁ FUNCIONANDO
+  // exibeErro(nome: string){
+  //   if(!this.form.value[nome]){
+  //     return false;
+  //   }
+  //   return this.form.value[nome].touched && this.form.value[nome].invalid;
+  // }
 }

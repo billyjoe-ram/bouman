@@ -10,7 +10,7 @@ import { UsersService } from './users.service';
 })
 export class DocsService {
 
-  private docsCollection = this.store.collection<Project>('Users/Projects');
+  private docsCollection = this.store.collection<Project>('Projects');
   private projects: any[] = [];
 
   constructor(private store: AngularFirestore, private auth: AuthService) { }
@@ -27,35 +27,8 @@ export class DocsService {
     return query;
   }
   
-  async addProject(project: Project) {
-    const owner = await this.auth.getAuth().currentUser;
-    /*
-    try {
-        const newUser = await this.authService.register(this.userRegister);        
-
-        await this.store
-          .collection('Users')
-          .doc(newUser.user?.uid)
-          .set(userObject);
-
-        userObject.id = newUser.user?.uid;
-
-        await this.store
-          .collection('Users')
-          .doc(newUser.user?.uid)
-          .update(userObject);
-    */
-    const newDoc = this.docsCollection.doc(owner?.uid).set(project);
-    
-    const projectRef = this.docsCollection.doc(owner?.uid);
-
-    projectRef.get().subscribe(data => {
-      project.docId = data.id;
-    });
-
-    console.log(project);
-    
-    projectRef.update(project);
+  addProject(project: Project) {
+    return this.docsCollection.add(project);
   }
 
 }
