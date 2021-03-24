@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -16,6 +17,9 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
   public profileImg: any = "";  
   public wallpImg: any = "";
+  
+  private profile!: Subscription;
+  private wallpaper!: Subscription; 
   
   private imgPath: any = "";
   private imgcheck: boolean = false;
@@ -35,22 +39,19 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
     // usando o service de usuario para pegar as imagens    
 
-    this.profileImg = this.user.getProfilePicture();
-    this.wallpImg = this.user.getWallpaper();
+    this.profile = this.user.getProfilePicture().subscribe((url:any) => {
+      this.profileImg = url;
+    });
 
-    if (!this.profileImg) {
-      this.profileImg = "/assets/profile-example.png";
-    }
-
-    if (!this.wallpImg) {
-      this.wallpImg = "/assets/wallpaper-example.jpg";
-    }    
+    this.wallpaper = this.user.getWallpaper().subscribe((url: any)=>{      
+      this.wallpImg = url;
+    });
 
   }
 
-  ngOnDestroy()   {
-    // destroi
-    console.log('Destruído!');
+  ngOnDestroy()   {    
+    this.profile.unsubscribe();
+    this.wallpaper.unsubscribe();
   }
 
   getProfileImg(event: any) {        

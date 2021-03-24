@@ -10,6 +10,9 @@ import { AuthService } from './auth.service';
 export class UsersService {
     
   private userId: string | undefined = "";
+
+  private profileImg: any = "/assets/profile-example.png";
+  private wallpImg: any = "/assets/wallpaper-example.jpg";
   
   // private downloadURL!: Observable<string>;
   
@@ -29,10 +32,12 @@ export class UsersService {
 
     const fileRef = this.storage.ref(filePath);
 
-    fileRef.getDownloadURL().subscribe(url => {
-      
-      return url;
-    });
+    try {
+      return fileRef.getDownloadURL();
+    } catch (error) {
+      console.error(error);
+      return this.profileImg;
+    }
     
   }
 
@@ -41,10 +46,12 @@ export class UsersService {
 
     const fileRef = this.storage.ref(filePath);
     
-    fileRef.getDownloadURL().subscribe(url => {
-
-      return url;
-    });
+    try {
+      return fileRef.getDownloadURL();
+    } catch (error) {
+      console.error(error);
+      return this.wallpImg;
+    }
 
   }
 
