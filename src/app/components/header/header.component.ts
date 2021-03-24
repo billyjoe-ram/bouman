@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, OnDestroy, Output } from '@angular/cor
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Injectable } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,9 @@ import { Injectable } from '@angular/core';
 
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  public profileImg: any = "";   
+  public profileImg: any = "";
+
+  private profile!: Subscription;
   
   @Output() featureSelected = new EventEmitter<string>();
   
@@ -24,16 +27,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authService:AuthService, private user: UsersService) { } 
 
   ngOnInit(): void {
-    this.profileImg = this.user.getProfilePicture();
 
-    if (!this.profileImg) {
-      this.profileImg = "/assets/profile-example.png";
-    }
+    this.profile = this.user.getProfilePicture().subscribe((url: any) =>{      
+      this.profileImg = url;
+    });
     
   }
 
   ngOnDestroy() {
-    console.log('Destroyed!!');    
+    this.profile.unsubscribe();
   }  
 
   onSelect(feature: string) {
