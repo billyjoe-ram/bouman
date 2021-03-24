@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { NgForm, NgModel } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -64,42 +64,4 @@ export class InfosComponent implements OnInit {
     }
   }
 
-  // NÃO TÁ FUNCIONANDO
-  // validaSenha(passkey: NgModel): boolean {
-  //   const senha: string = passkey.viewModel;
-  //   let valida: boolean = false;
-
-  //   if (!passkey.valid && passkey.touched) {
-  //     if (senha.length >= 8) {
-  //       valida = true;
-  //     } else {
-  //       valida = false;
-  //     }
-  //   }
-  //   return valida;
-  // }
-
-  // NÃO TÁ FUNCIONANDO
-  // validaForm(){
-  //   if(!this.form.valid){
-  //     this.form.value[nome].markAsTouched();
-
-  //     if(this.form.value[nome].invalid){
-  //       this.form.value[nome].focus();
-  //       return this.exibeErro(nome);
-  //     }
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-
-  // }
-
-  // NÃO TÁ FUNCIONANDO
-  // exibeErro(nome: string){
-  //   if(!this.form.value[nome]){
-  //     return false;
-  //   }
-  //   return this.form.value[nome].touched && this.form.value[nome].invalid;
-  // }
 }
