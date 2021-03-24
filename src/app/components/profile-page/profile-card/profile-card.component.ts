@@ -1,7 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -10,9 +8,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './profile-card.component.html',
   styleUrls: ['./profile-card.component.css']
 })
-export class ProfileCardComponent implements OnInit, OnDestroy {
-
-  public reactiveForm!: FormGroup;
+export class ProfileCardComponent implements OnInit, OnDestroy {  
   
   public esconder: boolean = false;
 
@@ -22,49 +18,49 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
   public wallpImg: any = "";
   
   private imgPath: any = "";
-  private backgroundPath: any = "";  
-
-  private profile!: Subscription;
-  private wallpaper!: Subscription;  
-
-  @ViewChild('btnPerfil') private divPerfil!: ElementRef;
-  @ViewChild('btnFundo') private divFundo!: ElementRef;  
+  private imgcheck: boolean = false;
+  private backgroundPath: any = "";
+  private backcheck: boolean = false;  
 
   constructor(
     private storage: AngularFireStorage, 
     private auth: AuthService, 
     private renderer: Renderer2,
-    private user: UsersService) { }
+    private user: UsersService){ }
     
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.user.getCollection().then(data => {
       this.userData = data;
     });
 
-    // usando o service de usuario para pegar as imagens
-    this.profile = this.user.getProfilePicture().subscribe((url: any) =>{      
-      this.profileImg = url;
-    });
+    // usando o service de usuario para pegar as imagens    
 
-    this.wallpaper = this.user.getWallpaper().subscribe((url: any)=>{      
-      this.wallpImg = url;
-    });    
+    this.profileImg = this.user.getProfilePicture();
+    this.wallpImg = this.user.getWallpaper();
+
+    if (!this.profileImg) {
+      this.profileImg = "/assets/profile-example.png";
+    }
+
+    if (!this.wallpImg) {
+      this.wallpImg = "/assets/wallpaper-example.jpg";
+    }    
+
   }
 
   ngOnDestroy()   {
     // destroi
-    this.profile.unsubscribe();
-    this.wallpaper.unsubscribe();
+    console.log('Destruído!');
   }
 
-  getProfileImg(event: any) {
-    console.log('Input Perfil');
+  getProfileImg(event: any) {        
     this.imgPath = event.target.files[0];
+    this.imgcheck = true;
   }
 
-  getWallpImg(event: any) {
-    console.log('Input Wallpaper');
+  getWallpImg(event: any) {        
     this.backgroundPath = event.target.files[0];
+    this.backcheck = true
   }
 
   async saveFotos() {
@@ -72,20 +68,23 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
     // apenas para fins de teste, para testar os ngifs
     console.log('Esconder: ' + this.esconder);
-
+    console.log("profile input:"+ this.imgPath)
+    console.log("background input:"+ this.backgroundPath);
+    
     const profImgPath = `profile-pictures/${user?.uid}`;
-    const refProf = await this.storage.upload(profImgPath, this.imgPath);
-
-    refProf.ref.getDownloadURL().then(url => {
+    const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
+    if (this.imgcheck == true){
+    const refProf = await this.storage.upload(profImgPath, this.imgPath); 
+    refProf.ref.getDownloadURL().then(url => {      
       this.profileImg = url;
     });
-
-    const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
+  }
+    if ( this.backcheck == true){
     const refWlpp = await this.storage.upload(wlppImgPath, this.backgroundPath);
-
-    refWlpp.ref.getDownloadURL().then(url => {
+    refWlpp.ref.getDownloadURL().then(url => {      
       this.wallpImg = url;
     });
+  }
     
     console.log(this.profileImg);
     console.log(this.wallpImg);

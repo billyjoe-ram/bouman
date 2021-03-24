@@ -1,0 +1,61 @@
+<!-- FINAL REPORT - WE MUST STYLE BY OURSELFS -->
+
+<!-- DOESN'T WORK -->
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let project of projects">
+        <div class="card">
+            <div class="card-header">
+                {{ project.title }}
+            </div>
+            <div class="card-body">
+                {{ project.content }}
+            </div>
+        </div>
+    </li>
+</ul>
+
+<!-- DOESN'T WORK -->
+<!-- <ul>
+    <li *ngFor="let project of projects">
+        <div class="card">
+            <div class="card-header">
+                {{ project.title }}
+            </div>
+            <div class="card-body">
+                {{ project.content }}
+            </div>
+        </div>
+    </li>
+</ul> -->
+
+<!-- DOESN'T WORK -->
+<!-- <div class="card">
+    <div class="card-header">
+        {{ projects[0].title }}
+    </div>
+    <div class="card-body">
+        {{ projects[0].content }}
+    </div>
+</div> -->
+
+<!-- DOESN'T WORK -->
+<!-- <div class="card">
+    <div class="card-header">
+        i'm a header
+    </div>
+    <div class="card-body">
+        i'm a body
+    </div>
+</div> -->
+
+<!-- NOT WORKING (BUT THE BUTTON CLASS IS) -->
+<!-- <div class="card">
+  <div class="card-header">
+    Featured
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">It's a broader card with text below as a natural lead-in to extra content. This content is a little longer.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div> -->

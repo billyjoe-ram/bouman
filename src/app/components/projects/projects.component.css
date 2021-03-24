@@ -1,0 +1,15 @@
+button.btn-bouman {    
+    width: 22vw;
+    height: 5vh;
+
+    background: #FA902E;
+    border: 1px solid #DF660F;
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: white;
+    transition: 0.3s;
+}
+
+button.btn-bouman:hover {
+    background: #DF660F;
+}

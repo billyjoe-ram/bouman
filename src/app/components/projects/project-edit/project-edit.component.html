@@ -1,0 +1,30 @@
+<form [formGroup]="docForm" (ngSubmit)="onSubmit()">
+    <div class="row">        
+        <div class="form-group col-xs-8">
+            <input type="text" class="form-control" placeholder="Nome do seu projeto" formControlName="title">
+        </div>
+
+        <div class="col-xs-4">
+            <button class="btn btn-bouman" type="submit">Salvar</button>
+        </div>        
+    </div>    
+
+    <div class="form-group">
+        <editor apiKey="ev4g56smvhsnkmpywgn1vivztx2cbfnfsb5eqvx01b7igylv"
+            initialValue="<p>Initial content of the editor</p>" [init]="{    
+    height: 500,
+    menubar: false,
+    plugins: [
+      'advlist autolink lists link image charmap print',
+      'preview anchor searchreplace visualblocks code',
+      'fullscreen insertdatetime media table paste',
+      'help wordcount'
+    ],
+    toolbar:
+      'undo redo | formatselect | bold italic | \
+      alignleft aligncenter alignright alignjustify | \
+      bullist numlist outdent indent | help'
+  }" formControlName="content">
+        </editor>
+    </div>
+</form>
