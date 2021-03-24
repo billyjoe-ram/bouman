@@ -8,10 +8,9 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class UsersService {
-  
-  public profileImg: any = "/assets/profile-example.png";
-  public wallpImg: any = "/assets/wallpaper-example.jpg";
+    
   private userId: string | undefined = "";
+  
   // private downloadURL!: Observable<string>;
   
   constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore) {
@@ -29,12 +28,11 @@ export class UsersService {
     const filePath = `profile-pictures/${this.userId}`;    
 
     const fileRef = this.storage.ref(filePath);
-    try {
-      return fileRef.getDownloadURL();
-    } catch (error) {
-      console.error(error);
-      return this.profileImg;
-    }
+
+    fileRef.getDownloadURL().subscribe(url => {
+      
+      return url;
+    });
     
   }
 
@@ -43,12 +41,10 @@ export class UsersService {
 
     const fileRef = this.storage.ref(filePath);
     
-    try {
-      return fileRef.getDownloadURL();
-    } catch (error) {
-      console.error(error);
-      return this.wallpImg;
-    }    
+    fileRef.getDownloadURL().subscribe(url => {
+
+      return url;
+    });
 
   }
 

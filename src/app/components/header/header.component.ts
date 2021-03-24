@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, OnChanges, OnDestroy, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, OnInit, OnDestroy, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Injectable } from '@angular/core';
@@ -11,43 +10,31 @@ import { Injectable } from '@angular/core';
 })
 
 @Injectable({
-  providedIn: 'root', // <---- Adiciona isto ao serviço
+  providedIn: 'root',
 })
 
-export class HeaderComponent implements OnChanges, OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
 
-  public profileImg: any = ""; 
-
-  private profile!: Subscription;
+  public profileImg: any = "";   
   
   @Output() featureSelected = new EventEmitter<string>();
   
   collapsed = true;
   
-  constructor(private authService:AuthService, private user: UsersService) { }
-
-  ngOnChanges(){
-
-  }
+  constructor(private authService:AuthService, private user: UsersService) { } 
 
   ngOnInit(): void {
-    console.log(54)
-    this.profile = this.user.getProfilePicture().subscribe((url:any) => {
-      this.profileImg = url;
-    });
+    this.profileImg = this.user.getProfilePicture();
+
+    if (!this.profileImg) {
+      this.profileImg = "/assets/profile-example.png";
+    }
+    
   }
 
   ngOnDestroy() {
-    console.log(21)
-    this.profile.unsubscribe();
-  }
-  changeprof(){
-    
-    this.profile = this.user.getProfilePicture().subscribe((url:any) => {
-      this.profileImg = url;
-      console.log(url);
-    })
-  }
+    console.log('Destroyed!!');    
+  }  
 
   onSelect(feature: string) {
     this.featureSelected.emit(feature);
