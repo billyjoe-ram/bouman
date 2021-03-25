@@ -3,17 +3,18 @@
         <form [formGroup]="docForm" (ngSubmit)="onSubmit()">
             <div class="row">        
                 <div class="form-group col-xs-8">
-                    <input type="text" class="form-control" placeholder="Nome do seu projeto" formControlName="title">
+                    <input type="text" class="form-control" placeholder="Nome do seu projeto" formControlName="title" [value]="docForm.value.title">
                 </div>
         
                 <div class="col-xs-4">
-                    <button class="btn btn-bouman-secondary" type="submit">Salvar</button>                        
-                </div>        
+                    <button class="btn btn-bouman-secondary" type="submit">Salvar</button>
+                    <button class="btn btn-danger" type="button" (click)="deleteProject()">Excluir projeto</button>
+                </div>
             </div>    
         
             <div class="form-group">
                 <editor apiKey="ev4g56smvhsnkmpywgn1vivztx2cbfnfsb5eqvx01b7igylv"
-                    initialValue="<p>Initial content of the editor</p>" [init]="{    
+                    [initialValue]="docForm.value.content" [init]="{    
             height: 500,
             menubar: false,
             plugins: [
@@ -30,7 +31,9 @@
                 </editor>
             </div>
         </form>
+        
     </div>
+
     <div class="col-md-4 aside-content">
         <button class="btn btn-bouman" (click)="myProjects()">Meus projetos</button>
 
@@ -40,5 +43,6 @@
                 Você
             </div>
         </div>
+        
     </div>
 </div>

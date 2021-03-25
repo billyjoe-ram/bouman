@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
+import { User } from '../interfaces/user';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -55,21 +56,30 @@ export class UsersService {
 
   }
 
-  async getCollection() {
-    let userObject: {name: string, desc: string} = { name: '', desc: ''};
-    let collection;
-    try {
-      collection = await this.store.collection('Users').doc(this.userId).valueChanges();      
-    } catch (error) {
-      console.error(error);        
-    }
+  getCollection() {
+    let userObject: {name: string, desc: string} = { name: '', desc: ''};    
     
-    collection?.subscribe((data: any) => {      
+    const collection = this.store.collection('Users').doc(this.userId).valueChanges();          
+    
+    collection.subscribe((data: any) => {      
       userObject.name = data.name;
       userObject.desc = data.desc;
     });
 
     return userObject;
+  }
+
+  getArea() {
+    let area: string;
+
+    const collection = this.store.collection('Users').doc(this.userId).valueChanges();
+
+    collection.subscribe((data: any) => {
+
+      area = data.area;
+
+      return area;
+    });
   }
 
 }
