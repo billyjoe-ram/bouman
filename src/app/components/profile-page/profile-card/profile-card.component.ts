@@ -33,9 +33,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     private user: UsersService){ }
     
   ngOnInit(): void {    
-    this.user.getCollection().then(data => {
-      this.userData = data;
-    });
+    this.userData = this.user.getCollection();
 
     // usando o service de usuario para pegar as imagens    
 

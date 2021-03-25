@@ -30,6 +30,7 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectOverviewComponent } from './components/projects/project-overview/project-overview.component';
 import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
 import { ProjectComponent } from './components/projects/project-overview/project/project.component';
+import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ProjectComponent } from './components/projects/project-overview/project
     ProjectOverviewComponent,
     ProjectEditComponent,
     ProjectComponent,
+    ProfileConfigComponent,
   ],
   imports: [
     BrowserModule,

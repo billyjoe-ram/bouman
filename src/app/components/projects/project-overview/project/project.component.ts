@@ -44,7 +44,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
       console.log('Saved!');
     });
 
-    this.myProjects();    
+    this.myProjects();
   }
 
   loadProject() {
@@ -56,6 +56,16 @@ export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
       formData.title = project.payload.data()?.title;
       formData.content = project.payload.data()?.content;
     });
+  }
+
+  deleteProject() {
+    const docId = this.route.snapshot.params['id'];
+
+    this.docServ.deleteProject(docId).then(() => {
+      console.log('Deleted!');
+    });
+
+    this.myProjects();
   }
 
   myProjects() {    

@@ -74,8 +74,8 @@ a.navbar-brand {
 }
 
 .nav .dropdown .dropdown-toggle img#profile-picture {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
 
   border: 1px solid #5c5c5c;
   border-radius: 32px;

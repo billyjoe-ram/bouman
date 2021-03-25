@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Project } from '../interfaces/project';
-import { User } from '../interfaces/user';
 import { AuthService } from './auth.service';
-
-import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocsService {
 
-  private userCollection = this.store.collection<User>('Users');
-  
   private docsCollection = this.store.collection<Project>('Projects');  
 
   constructor(private store: AngularFirestore, private auth: AuthService) { }
@@ -36,7 +31,6 @@ export class DocsService {
   }
   
   async addProject(project: Project) {
-    const owner = await this.auth.getAuth().currentUser;
 
     const newDoc = await this.docsCollection.add(project);
 
@@ -49,6 +43,10 @@ export class DocsService {
     const updatedDoc = await this.docsCollection.doc(id).update({ title: project.title, content: project.content });
 
     return updatedDoc;
+  }
+
+  deleteProject(id: string) {
+    return this.docsCollection.doc(id).delete();
   }
 
 }
