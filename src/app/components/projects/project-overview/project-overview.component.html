@@ -3,14 +3,16 @@
 <!-- DOESN'T WORK -->
 <ul class="list-group">
     <li class="list-group-item" *ngFor="let project of projects">
-        <div class="card">
-            <div class="card-header">
+
+        <div class="project-card">
+            <div class="project-header">
                 {{ project.title }}
             </div>
-            <div class="card-body">
-                {{ project.content }}
+            <div class="project-body">
+                <!-- {{ project.content }} -->
             </div>
         </div>
+
     </li>
 </ul>
 
