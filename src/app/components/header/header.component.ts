@@ -28,8 +28,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.profile = this.user.getProfilePicture().subscribe((url: any) =>{      
+    this.profile = this.user.getProfilePicture().subscribe((url:any) => {
       this.profileImg = url;
+      }, (err:any) => {
+      this.profileImg = this.user.profasset();
     });
     
   }
