@@ -10,6 +10,7 @@ import { LoginGuard } from './guards/login.guard';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectOverviewComponent } from './components/projects/project-overview/project-overview.component';
 import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
+import { ProjectComponent } from './components/projects/project-overview/project/project.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard], children: [
     { path: 'overview', component: ProjectOverviewComponent },
-    { path: 'edit', component: ProjectEditComponent }
+    { path: ':id', component: ProjectComponent },
+    { path: 'new', component: ProjectEditComponent }
   ] },
 ];
 

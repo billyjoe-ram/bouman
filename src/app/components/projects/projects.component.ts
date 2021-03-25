@@ -17,7 +17,7 @@ export class ProjectsComponent implements OnInit {
 
   toggleComponent() {
     if (!this.editMode) {
-      this.router.navigate(["/projects/edit"]);
+      this.router.navigate(["/projects/new"]);
     } else {
       this.router.navigate(["/projects/overview"]);
     }

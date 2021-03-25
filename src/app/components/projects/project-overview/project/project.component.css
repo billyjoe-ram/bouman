@@ -1,0 +1,39 @@
+.aside-content {
+    display: flex;
+    flex-direction: column;    
+}
+
+.aside-content span {
+    margin: 1rem 0 ;
+}
+
+button.btn-bouman {
+    background: #FA902E;
+    border: 1px solid #DF660F;
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: white;
+    transition: 0.3s;
+
+    font-weight: bold;
+}
+
+button.btn-bouman:hover {
+    background: #DF660F;
+}
+
+button.btn-bouman-secondary {    
+    color: #07889B;
+
+    background: #D3E2E5;
+    border: 1px solid #07889B;
+    box-sizing: border-box;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+button.btn-bouman-secondary:hover {
+    color: #D3E2E5;    
+
+    background: #07889B;       
+}

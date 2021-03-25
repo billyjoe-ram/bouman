@@ -28,6 +28,12 @@ export class DocsService {
     // this.projects.push(query);
     return query;
   }
+
+  listProject(id: string) {
+    const projectRef = this.docsCollection.doc(id).snapshotChanges();
+
+    return projectRef;
+  }
   
   async addProject(project: Project) {
     const owner = await this.auth.getAuth().currentUser;
@@ -37,6 +43,12 @@ export class DocsService {
     newDoc.update({"docId": newDoc.id});
 
     return newDoc;
+  }
+
+  async updateProject(id: string, project: { title: string, content: string }) {
+    const updatedDoc = await this.docsCollection.doc(id).update({ title: project.title, content: project.content });
+
+    return updatedDoc;
   }
 
 }

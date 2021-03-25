@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Project } from 'src/app/interfaces/project';
 import { AuthService } from 'src/app/services/auth.service';
 import { DocsService } from 'src/app/services/docs.service';
@@ -13,7 +14,7 @@ export class ProjectEditComponent implements OnInit {
 
   public docForm!: FormGroup;
   
-  constructor(private docServ: DocsService, private auth: AuthService) { }
+  constructor(private docServ: DocsService, private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.docForm = new FormGroup({
@@ -29,7 +30,14 @@ export class ProjectEditComponent implements OnInit {
         
     const project: Project = { ownerId: user?.uid, title: submitted.title, content: submitted.content, createdAt: date };
     
-    this.docServ.addProject(project);
+    this.docServ.addProject(project).then(() => {
+      this.myProjects();
+    });
+    
+  }
+
+  myProjects() {    
+    this.router.navigate(["/projects/overview"]);
   }
 
 }

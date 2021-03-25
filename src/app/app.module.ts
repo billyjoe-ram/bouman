@@ -29,6 +29,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectOverviewComponent } from './components/projects/project-overview/project-overview.component';
 import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
+import { ProjectComponent } from './components/projects/project-overview/project/project.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ProjectEditComponent } from './components/projects/project-edit/project
     ProjectsComponent,
     ProjectOverviewComponent,
     ProjectEditComponent,
+    ProjectComponent,
   ],
   imports: [
     BrowserModule,
