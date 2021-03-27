@@ -1,13 +1,13 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
         <form [formGroup]="docForm" (ngSubmit)="onSubmit()">
             <div class="row">        
-                <div class="form-group col-xs-8">
+                <div class="form-group col-xs-9">
                     <input type="text" class="form-control" placeholder="Nome do seu projeto" formControlName="title">
                 </div>
         
-                <div class="col-xs-4">
-                    <button class="btn btn-bouman-secondary" type="submit">Salvar</button>                        
+                <div class="col-xs-3">
+                    <button class="btn btn-bouman-save" type="submit">Salvar</button>                        
                 </div>        
             </div>    
         
@@ -31,14 +31,17 @@
             </div>
         </form>
     </div>
-    <div class="col-md-4 aside-content">
-        <button class="btn btn-bouman" (click)="myProjects()">Meus projetos</button>
-
-        <span>Pessoas neste projeto: </span>
+    <div class="col-md-1"></div>
+    <div class="col-md-3 aside-content">
+        <span>Nesta equipe: </span>
         <div class="list-group">
             <div class="list-group-item">
                 Você
             </div>
         </div>
+        <span id="btn-add">+ Adicionar pessoas</span>
+    </div>
+    <div class="col-md-1">
+        <!--<button class="btn btn-bouman" (click)="myProjects()">Meus projetos</button>-->
     </div>
 </div>
