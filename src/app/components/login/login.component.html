@@ -12,8 +12,8 @@
             <label for="userkey">Senha</label>
             <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required [(ngModel)]="userLogin.password" class="bouman-input" (keyup)="getKey($event)" #pass >
 
-            <div class="show-pass">
-                <input type="checkbox" (click)="showPassword()"> Exibir senha
+            <div class="show-pass" (click)="showPassword()">
+                <input type="checkbox"> Exibir senha
             </div>            
     
             <p>Esqueceu a sua senha? <a href="#">Clique aqui</a></p>
