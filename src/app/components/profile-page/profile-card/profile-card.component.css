@@ -1,118 +1,185 @@
 .card {
-    position: absolute;
-    width: 842px;
-    height: 336px;    
+  position: absolute;
 
-    filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.5));    
+  filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.5));
 }
 
 .card .card-body {
-    display: flex;
-    flex-direction: column;    
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
 }
 
 .card .card-body img.profile-background {
-    width: 842px;
-    height: 168px;
+  width: 90vw;
+  height: 16vh;
 
-    border-radius: 8px 8px 0 0;
+  border-radius: 8px 8px 0 0;
 }
 
 .card .card-body img.profile-picture {
-    position: absolute;
-    bottom: 0px;
-    left: 60px;    
+  position: absolute;
+  bottom: 5.5rem;
 
-    width: 180px;
-    height: 180px;
-    mix-blend-mode: normal;
-    border: 3px solid #000000;
-    box-sizing: border-box;
-    border-radius: 160px;
+  width: 20vw;
+  height: 20vw;
 
-    z-index: 10;
+  border: 1px solid #000000;
+
+  border-radius: 10vw;
+
+  margin-left: 4vw
 }
 
 .card .card-body .profile-card-content {
-    height: 168px;
+  display: flex;
+  height: 18vh;
+  width: 90vw;
 
-    background: #FFFFFF;
-    border-radius: 0px 0px 8px 8px;        
+  background: #ffffff;
+  border-radius: 0px 0px 8px 8px;
 }
 
 .card .card-body .profile-card-content .text-content {
-    position: relative;
-    left: 18vw;
+  position: relative;
+  margin-left: 25vw;
 }
 
-.card .card-body .profile-card-content .text-content h1 {
-    font-weight: bold;
-    font-size: 36px;
-    line-height: 45px;
-
-    display: flex;
-    align-items: center;
-    text-align: center;
+.card .card-body .profile-card-content .text-content span {
+  font-weight: bold;
+  font-size: 1.6rem;
 }
 
-.card .card-body .profile-card-content .text-content p {    
-    width: 30vw;
+.card .card-body .profile-card-content .text-content p {
+  width: 56vw;
+  height: 10vh;
 
-    font-size: 16px;
-    line-height: 20px;
-    text-align: justify;
+  font-size: 1.14rem;
+  margin: 1rem 0;  
+  
+  text-align: justify;
 }
-.card .card-body #editPen{
-    margin-left: 55%;
-}
-.card .card-body #button-save{
-    border-radius: 8px;
-    border-color: #df660f;
-    background-color: #fa902e;
 
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 1.7rem;
-
-    height: 30px;
-    width: 90%;
+.card .card-body #editPen {
+  margin-left: 55%;
 }
-.card .card-body .fotoPerfil{
+
+.card .card-body #button-save {
+  border-radius: 8px;
+  border-color: #df660f;
+  background-color: #fa902e;
+
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.7rem;
+
+  height: 30px;
+  width: 90%;
+}
+
+.card .card-body .fotoPerfil {
+  position: absolute;
+  display: none;
+}
+
+.card .card-body #labelPerfil {
+  background-color: rgba(223, 102, 15, 0.6);
+  border: 2px solid #df660f;
+  border-radius: 6px;
+
+  width: 24%;
+  margin-left: 7%;
+  margin-bottom: 50%;
+
+  z-index: 30;
+  position: absolute;
+
+  font-size: 1.3rem;
+  text-align: center;
+
+  cursor: pointer;
+}
+
+.card .card-body .fotoFundo {
+  position: absolute;
+  display: none;
+}
+
+.card .card-body #labelFundo {
+  font-size: 2.8rem;
+  text-align: center;
+  color: white;
+
+  z-index: 5;
+  position: absolute;
+  margin-top: 9%;
+
+  cursor: pointer;
+}
+
+#btnFotos {
+  margin-top: 3%;
+}
+
+@media (min-width: 768px) {
+  .card .card-body img.profile-background {
+    width: 60vw;
+  }
+
+  .card .card-body .profile-card-content {
+    height: fit-content;
+    width: 60vw;
+  }
+
+  .card .card-body img.profile-picture {
     position: absolute;
-    display: none;
-}
-.card .card-body #labelPerfil{
-    background-color: rgba(223, 102, 15, 0.6);
-    border: 2px solid #df660f;
-    border-radius: 6px;
+    bottom: 3.5rem;
+    margin: 0 2rem;
 
-    width: 24%;
-    margin-left: 7%;
-    margin-bottom: 50%;
-    
-    z-index: 30;
+    width: 12vw;
+    height: 12vw;
+
+    border: 3px solid #000000;
+
+    border-radius: 12vw;
+  }
+
+  .card .card-body .profile-card-content .text-content {    
+    margin-left: 16vw;
+  }
+
+  .card .card-body .profile-card-content .text-content span {
+    font-size: 2rem;
+  }
+
+  .card .card-body .profile-card-content .text-content p {
+    width: 36vw;
+    font-size: 1.26rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card .card-body img.profile-background {
+    width: 45vw;
+  }
+
+  .card .card-body img.profile-picture {
     position: absolute;
+    bottom: 4.5rem;
+    width: 8vw;
+    height: 8vw;
+  }  
 
-    font-size: 1.3rem;
-    text-align: center;
+  .card .card-body .profile-card-content {
+    height: fit-content;
+    width: 45vw;
+  }
 
-    cursor: pointer;
-}
-.card .card-body .fotoFundo{
-    position: absolute;
-    display: none;
-}
-.card .card-body #labelFundo{
-    font-size: 2.8rem;
-    text-align: center;
-    color: white;
+  .card .card-body .profile-card-content .text-content {    
+    margin-left: 12vw;
+  }
 
-    z-index: 5;
-    position: absolute;
-    margin-top: 9%;
-
-    cursor: pointer;
-}
-#btnFotos{
-    margin-top: 3%;
+  .card .card-body .profile-card-content .text-content p {
+    width: 24vw;
+  }
 }

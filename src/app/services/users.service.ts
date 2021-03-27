@@ -12,8 +12,8 @@ export class UsersService {
     
   private userId: string | undefined = "";
 
-  private profileImg: any = "/assets/profile-example.png";
-  private wallpImg: any = "/assets/wallpaper-example.jpg";
+  private profileImg: String = "/assets/profile-example.png";
+  private wallpImg: String = "/assets/wallpaper-example.jpg";
   
   // private downloadURL!: Observable<string>;
   
@@ -29,31 +29,21 @@ export class UsersService {
   }
 
   getProfilePicture() {
-    const filePath = `profile-pictures/${this.userId}`;    
-
+    const filePath = `profile-pictures/${this.userId}`;
     const fileRef = this.storage.ref(filePath);
-
-    try {
-      return fileRef.getDownloadURL();
-    } catch (error) {
-      console.error(error);
-      return this.profileImg;
-    }
-    
+    return fileRef.getDownloadURL();
+  }
+  profasset(){
+    return this.profileImg;
   }
 
   getWallpaper() {
     const filePath = `wallpaper-pictures/${this.userId}`;
-
     const fileRef = this.storage.ref(filePath);
-    
-    try {
       return fileRef.getDownloadURL();
-    } catch (error) {
-      console.error(error);
-      return this.wallpImg;
-    }
-
+  }
+  wallpasset(){
+    return this.wallpImg;
   }
 
   getCollection() {

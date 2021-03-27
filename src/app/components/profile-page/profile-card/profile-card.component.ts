@@ -33,21 +33,32 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     private user: UsersService){ }
     
   ngOnInit(): void {    
+
     this.userData = this.user.getCollection();
 
-    // usando o service de usuario para pegar as imagens    
+      // usando o service de usuario para pegar as imagens
 
-    this.profile = this.user.getProfilePicture().subscribe((url:any) => {
-      this.profileImg = url;
-    });
+      this.profile = this.user.getProfilePicture().subscribe((url:any) => {
+        this.profileImg = url;
 
-    this.wallpaper = this.user.getWallpaper().subscribe((url: any)=>{      
-      this.wallpImg = url;
-    });
+        }, (err:any) => {
+        this.profileImg = this.user.profasset();
+        console.log(this.user.getProfilePicture())
 
+      });
+
+      this.wallpaper = this.user.getWallpaper().subscribe((url: any)=>{
+        this.wallpImg = url;
+
+        }, (err:any) => {
+        this.wallpImg = this.user.wallpasset();
+        console.log(this.user.getWallpaper())
+
+      });
   }
 
   ngOnDestroy()   {    
+    console.log
     this.profile.unsubscribe();
     this.wallpaper.unsubscribe();
   }
