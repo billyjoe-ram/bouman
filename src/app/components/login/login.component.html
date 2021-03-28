@@ -10,13 +10,13 @@
             <input type="email" name="user" id="email" placeholder="Ex.: bouman@email.com" required [(ngModel)]="userLogin.email" class="bouman-input">
     
             <label for="userkey">Senha</label>
-            <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required [(ngModel)]="userLogin.password" class="bouman-input" (keyup)="getKey($event)" #pass >
+            <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required [(ngModel)]="userLogin.password" class="bouman-input" (keyup)="getKey($event)" #pass>
 
             <div class="show-pass" (click)="showPassword()">
-                <input type="checkbox"> Exibir senha
-            </div>            
+                <input type="checkbox" #box> Exibir senha
+            </div>
     
-            <p>Esqueceu a sua senha? <a href="#">Clique aqui</a></p>
+            <!-- <p>Esqueceu a sua senha? <a href="#">Clique aqui</a></p> -->
     
             <button id="btnLogin" (click)="login()">Login</button>
         </div>

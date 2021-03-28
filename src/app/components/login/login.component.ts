@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   @ViewChild('pass') inputPass!: ElementRef;
+
+  @ViewChild('box') boxPass!: ElementRef;
   
   public userLogin: any = {};
   
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit {
 
     try {
       await this.authService.login(this.userLogin);
-      this.router.navigate(["/profile"]);  
+      this.router.navigate(["/feed"]);
     } catch (error) {
       console.error(error);      
     }
@@ -42,10 +44,14 @@ export class LoginComponent implements OnInit {
   showPassword() {
     const password: HTMLInputElement = this.inputPass.nativeElement;
 
+    const passbox: HTMLInputElement = this.boxPass.nativeElement;
+
     if (password.type === "password") {
       password.type = "text";
+      passbox.checked = true;
     } else {
       password.type = "password";
+      passbox.checked = false;
     }
   }
 

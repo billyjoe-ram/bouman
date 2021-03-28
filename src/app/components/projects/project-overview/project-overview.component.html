@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-8">
         <ul class="list-group">
-            <li class="list-group-item" *ngFor="let project of projects" [routerLink]="['/projects', project.docId]" style="cursor: pointer;" routerLinkActive="active">
-        
+            <li class="list-group-item" *ngFor="let project of projects" [routerLink]="['/projects', project.docId]" style="cursor: pointer;" >
+                
                 <div class="project-card">
                     <div class="project-header">
                         {{ project.title }}
