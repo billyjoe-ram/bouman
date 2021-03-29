@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Project } from '../interfaces/project';
+import { User } from '../interfaces/user';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -8,14 +9,18 @@ import { AuthService } from './auth.service';
 })
 export class DocsService {
 
-  private docsCollection = this.store.collection<Project>('Projects');  
+  private docsCollection = this.store.collection<Project>('Projects');
+
+  private usersCollection = this.store.collection<User>('Users');
 
   constructor(private store: AngularFirestore, private auth: AuthService) { }
 
   async listProjects() {
     const owner = await this.auth.getAuth().currentUser;
-    // Create a reference to the cities collection
-    const projectsRef = this.docsCollection.ref;
+    
+    const userCollec = this.usersCollection.doc(owner?.uid);
+
+    const projectsRef = await userCollec.collection<Project>('Projects').ref;
 
     // Create a query against the collection.
     const query = projectsRef.where("ownerId", "==", `${owner?.uid}`).get();
@@ -25,14 +30,25 @@ export class DocsService {
   }
 
   listProject(id: string) {
-    const projectRef = this.docsCollection.doc(id).snapshotChanges();
+    let owner
+    
+    this.auth.getAuth().currentUser.then(user => {
+      owner = user?.uid;
+    });
+
+    const userCollec = this.usersCollection.doc(owner);
+
+    const projectRef = userCollec.collection<Project>('Projects').doc(id).valueChanges();
 
     return projectRef;
   }
   
   async addProject(project: Project) {
+    const owner = await this.auth.getAuth().currentUser;
 
-    const newDoc = await this.docsCollection.add(project);
+    const userCollec = this.usersCollection.doc(owner?.uid);
+
+    const newDoc = await userCollec.collection<Project>('Projects').add(project);
 
     newDoc.update({"docId": newDoc.id});
 
@@ -40,13 +56,29 @@ export class DocsService {
   }
 
   async updateProject(id: string, project: { title: string, content: string }) {
-    const updatedDoc = await this.docsCollection.doc(id).update({ title: project.title, content: project.content });
+    const owner = await this.auth.getAuth().currentUser;
+
+    const userCollec = this.usersCollection.doc(owner?.uid);
+
+    const oldDoc = userCollec.collection<Project>('Projects').doc(id);
+
+    const updatedDoc = await oldDoc.update({ title: project.title, content: project.content });
 
     return updatedDoc;
   }
 
   deleteProject(id: string) {
-    return this.docsCollection.doc(id).delete();
+    let owner;
+    
+    this.auth.getAuth().currentUser.then(user => {
+      owner = user?.uid;
+    });
+
+    const userCollec = this.usersCollection.doc(owner);
+
+    const oldDoc = userCollec.collection<Project>('Projects').doc(id);
+
+    return oldDoc.delete();
   }
 
 }

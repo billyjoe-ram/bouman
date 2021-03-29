@@ -22,12 +22,12 @@ export class ProjectOverviewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+
     const pBody = document.querySelectorAll('.project-body');
 
     for(let index = 0; index < this.projects.length; index++) {
       pBody[index].innerHTML = this.projects[index].content;
     }
-    
   }
 
 }

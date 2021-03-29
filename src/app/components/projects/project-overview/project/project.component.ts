@@ -23,11 +23,13 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     this.docForm = new FormGroup({
       'title': new FormControl(null, [Validators.required, Validators.minLength(1)]),
       'content': new FormControl(null, [Validators.required, Validators.minLength(1)])
-    });        
+    });
+
+    this.loadProject();
   }
 
-  ngAfterViewInit() {
-    this.loadProject();
+  ngAfterViewInit() {    
+    console.log(this.docForm.value);
   }
 
   ngOnDestroy() {
@@ -53,8 +55,12 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     const formData = this.docForm.value;
 
     this.docSubs = this.docServ.listProject(docId).subscribe(project => {
-      formData.title = project.payload.data()?.title;
-      formData.content = project.payload.data()?.content;
+      console.log(project);
+
+      formData.title = project?.title;
+      formData.content = project?.content;
+
+      console.log(formData);
     });
   }
 
