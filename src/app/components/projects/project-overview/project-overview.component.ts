@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DocsService } from 'src/app/services/docs.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { DocsService } from 'src/app/services/docs.service';
   templateUrl: './project-overview.component.html',
   styleUrls: ['./project-overview.component.css']
 })
-export class ProjectOverviewComponent implements OnInit, AfterViewChecked {
+export class ProjectOverviewComponent implements OnInit, AfterViewInit {
   
   public projects: any[] = [];
   
@@ -21,7 +21,7 @@ export class ProjectOverviewComponent implements OnInit, AfterViewChecked {
     
   }
 
-  ngAfterViewChecked() {
+  ngAfterViewInit() {
     const pBody = document.querySelectorAll('.project-body');
 
     for(let index = 0; index < this.projects.length; index++) {

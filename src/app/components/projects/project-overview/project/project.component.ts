@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { DocsService } from 'src/app/services/docs.service';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css']
 })
-export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public docForm!: FormGroup;
 
@@ -26,7 +26,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
     });        
   }
 
-  ngAfterViewChecked() {
+  ngAfterViewInit() {
     this.loadProject();
   }
 
