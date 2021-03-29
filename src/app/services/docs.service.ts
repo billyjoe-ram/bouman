@@ -30,11 +30,11 @@ export class DocsService {
   }
 
   listProject(id: string) {
-    let owner
-    
-    this.auth.getAuth().currentUser.then(user => {
-      owner = user?.uid;
-    });
+    let owner;
+
+    this.auth.getAuth().currentUser.then((user) => {
+      owner = user?.uid
+    });    
 
     const userCollec = this.usersCollection.doc(owner);
 

@@ -50,9 +50,11 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadProject() {
-    const docId = this.route.snapshot.params['id'];
+    const docId: string = this.route.snapshot.params['id'];
 
     const formData = this.docForm.value;
+
+    console.log(docId);
 
     this.docSubs = this.docServ.listProject(docId).subscribe(project => {
       console.log(project);
