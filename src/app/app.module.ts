@@ -10,8 +10,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { environment } from 'src/environments/environment';
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ProfileCardComponent } from './components/profile-page/profile-card/profile-card.component';
@@ -31,6 +29,7 @@ import { ProjectOverviewComponent } from './components/projects/project-overview
 import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
 import { ProjectComponent } from './components/projects/project-overview/project/project.component';
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
+import { environment } from 'src/environments/environment.prod';
 
 @NgModule({
   declarations: [
