@@ -19,6 +19,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   public projTitle: string = "";
 
   public projContent: string = "";
+
+  public newProj: boolean = false;
   
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -69,6 +71,14 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   constructor(private docServ: DocsService, private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    const docId = this.route.snapshot.params['id'];
+
+    if (docId === 'new') {
+      this.newProj = true;
+    } else {
+      this.newProj = false;
+    }
+
     this.loadProject();
   }
 
@@ -77,16 +87,30 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   async onSubmit() {
+    const user = await this.auth.getAuth().currentUser;
     const docId = this.route.snapshot.params['id'];
+    const date = new Date();
 
-    const submitted = this.projForm.value;            
-    const project = { title: submitted.title, content: submitted.content };
+    const submitted = this.projForm.value;
     
-    this.docServ.updateProject(docId, project).then(() => {
-      console.log('Saved!');
-    }).finally(() => {
-      this.myProjects();
-    });
+    if (docId === 'new') {
+      const project = { ownerId: user?.uid, title: submitted.title, content: submitted.content, createdAt: date};
+
+      this.docServ.addProject(project).then(() => {
+        console.log('Added');
+      }).finally(() => {
+        this.myProjects;
+      });
+
+    } else {
+      const project = { title: submitted.title, content: submitted.content };
+
+      this.docServ.updateProject(docId, project).then(() => {
+        console.log('Saved!');
+      }).finally(() => {
+        this.myProjects();
+      });
+    }      
     
   }
 
@@ -98,6 +122,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
       });
     });
   }
+
   deleteProject() {
     const docId = this.route.snapshot.params['id'];
 

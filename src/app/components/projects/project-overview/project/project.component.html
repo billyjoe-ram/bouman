@@ -8,7 +8,7 @@
         
                 <div class="col-xs-4">
                     <button class="btn btn-bouman-secondary" type="submit">Salvar</button>
-                    <button class="btn btn-danger" type="button" (click)="deleteProject()">Excluir projeto</button>
+                    <button class="btn btn-danger" type="button" (click)="deleteProject()" [ngStyle]="{'display': newProj ? 'none' : 'inline-block' }">Excluir projeto</button>
                 </div>
             </div>
         
