@@ -29,11 +29,11 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {    
-    console.log(this.docForm.value);
+    
   }
 
   ngOnDestroy() {
-    this.docSubs.unsubscribe();
+    // this.docSubs.unsubscribe();
   }
 
   async onSubmit() {
@@ -44,25 +44,23 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     
     this.docServ.updateProject(docId, project).then(() => {
       console.log('Saved!');
+    }).finally(() => {
+      this.myProjects();
     });
-
-    this.myProjects();
+    
   }
 
   loadProject() {
     const docId: string = this.route.snapshot.params['id'];
 
-    const formData = this.docForm.value;
+    // const formData = this.docForm.value;
 
-    console.log(docId);
+    this.docServ.listProject(docId).then((project) => {
+      project.forEach(query => {
+        this.docForm.value.title = query.data().title;
+        this.docForm.value.content = query.data().content;
+      });
 
-    this.docSubs = this.docServ.listProject(docId).subscribe(project => {
-      console.log(project);
-
-      formData.title = project?.title;
-      formData.content = project?.content;
-
-      console.log(formData);
     });
   }
 
@@ -71,9 +69,9 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.docServ.deleteProject(docId).then(() => {
       console.log('Deleted!');
-    });
-
-    this.myProjects();
+    }).finally(() => {
+      this.myProjects();
+    });;    
   }
 
   myProjects() {    
