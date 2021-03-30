@@ -1,25 +1,24 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/interfaces/project';
 import { AuthService } from 'src/app/services/auth.service';
 import { DocsService } from 'src/app/services/docs.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
- 
- 
-
 
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css']
 })
-export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProjectComponent implements OnInit, AfterViewInit {
 
-  public docForm!: FormGroup;
+  @ViewChild('projForm') projForm!: NgForm;
+  
+  public projTitle: string = "";
 
-  private docSubs!: Subscription;
+  public projContent: string = "";
   
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -70,26 +69,17 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private docServ: DocsService, private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.docForm = new FormGroup({
-      'title': new FormControl(null, [Validators.required, Validators.minLength(1)]),
-      'content': new FormControl(null, [Validators.required, Validators.minLength(1)])
-    });
-
 
   }
 
   ngAfterViewInit() {    
-        this.loadProject();
-  }
-
-  ngOnDestroy() {
-    // this.docSubs.unsubscribe();
+    this.loadProject();
   }
 
   async onSubmit() {
     const docId = this.route.snapshot.params['id'];
 
-    const submitted = this.docForm.value;            
+    const submitted = this.projForm.value;            
     const project = { title: submitted.title, content: submitted.content };
     
     this.docServ.updateProject(docId, project).then(() => {
@@ -107,9 +97,9 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.docServ.listProject(docId).then((project) => {
       project.forEach(query => {
-        this.docForm.value.title = query.data().title;
-        this.docForm.value.content = query.data().content;
-        console.log(this.docForm)
+        this.projForm.value.title = query.data().title;
+        this.projForm.value.content = query.data().content;
+        console.log(this.projForm)
       });
     });
   }
