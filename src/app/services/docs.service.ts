@@ -9,8 +9,6 @@ import { AuthService } from './auth.service';
 })
 export class DocsService {
 
-  private docsCollection = this.store.collection<Project>('Projects');
-
   private usersCollection = this.store.collection<User>('Users');
 
   constructor(private store: AngularFirestore, private auth: AuthService) { }
@@ -29,18 +27,18 @@ export class DocsService {
     return query;
   }
 
-  listProject(id: string) {
-    let owner;
+  async listProject(id: string) {
+    const owner = await this.auth.getAuth().currentUser;
 
-    this.auth.getAuth().currentUser.then((user) => {
-      owner = user?.uid
-    });    
-
-    const userCollec = this.usersCollection.doc(owner);
+    const userCollec = this.usersCollection.doc(owner?.uid);
 
     const projectRef = userCollec.collection<Project>('Projects').doc(id).valueChanges();
 
-    return projectRef;
+    const queryRef = userCollec.collection<Project>('Projects').ref;
+
+    const query = queryRef.where("docId", "==", id).get();
+
+    return query;
   }
   
   async addProject(project: Project) {
@@ -67,18 +65,16 @@ export class DocsService {
     return updatedDoc;
   }
 
-  deleteProject(id: string) {
-    let owner;
-    
-    this.auth.getAuth().currentUser.then(user => {
-      owner = user?.uid;
-    });
+  async deleteProject(id: string) {
+    const owner = await this.auth.getAuth().currentUser;
 
-    const userCollec = this.usersCollection.doc(owner);
+    const userCollec = this.usersCollection.doc(owner?.uid);
 
     const oldDoc = userCollec.collection<Project>('Projects').doc(id);
 
-    return oldDoc.delete();
+    const deletedDoc = oldDoc.delete();
+
+    return deletedDoc;
   }
 
 }
