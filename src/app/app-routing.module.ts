@@ -23,7 +23,6 @@ const routes: Routes = [
   { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard], children: [
     { path: 'overview', component: ProjectOverviewComponent },
-    { path: 'new', component: ProjectEditComponent },
     { path: ':id', component: ProjectComponent }
   ] },
 ];
