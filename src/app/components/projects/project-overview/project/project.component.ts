@@ -5,6 +5,10 @@ import { Subscription } from 'rxjs';
 import { Project } from 'src/app/interfaces/project';
 import { AuthService } from 'src/app/services/auth.service';
 import { DocsService } from 'src/app/services/docs.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+ 
+ 
+
 
 @Component({
   selector: 'app-project',
@@ -17,6 +21,52 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private docSubs!: Subscription;
   
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+      spellcheck: true,
+      height: 'auto',
+      minHeight: '0',
+      maxHeight: 'auto',
+      width: 'auto',
+      minWidth: '0',
+      translate: 'yes',
+      enableToolbar: true,
+      showToolbar: true,
+      placeholder: 'Enter text here...',
+      defaultParagraphSeparator: '',
+      defaultFontName: '',
+      defaultFontSize: '',
+      fonts: [
+        {class: 'arial', name: 'Arial'},
+        {class: 'times-new-roman', name: 'Times New Roman'},
+        {class: 'calibri', name: 'Calibri'},
+        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      ],
+      customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: 'v1/image',
+    uploadWithCredentials: false,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['bold', 'italic'],
+      ['fontSize']
+    ]
+};
+  
   constructor(private docServ: DocsService, private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -25,11 +75,11 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
       'content': new FormControl(null, [Validators.required, Validators.minLength(1)])
     });
 
-    this.loadProject();
+
   }
 
   ngAfterViewInit() {    
-    
+        this.loadProject();
   }
 
   ngOnDestroy() {
@@ -59,8 +109,8 @@ export class ProjectComponent implements OnInit, AfterViewInit, OnDestroy {
       project.forEach(query => {
         this.docForm.value.title = query.data().title;
         this.docForm.value.content = query.data().content;
+        console.log(this.docForm)
       });
-
     });
   }
 
