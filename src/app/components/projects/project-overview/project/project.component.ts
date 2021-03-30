@@ -69,11 +69,11 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   constructor(private docServ: DocsService, private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
+    this.loadProject();
   }
 
   ngAfterViewInit() {    
-    this.loadProject();
+
   }
 
   async onSubmit() {
@@ -92,18 +92,12 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   loadProject() {
     const docId: string = this.route.snapshot.params['id'];
-
-    // const formData = this.docForm.value;
-
     this.docServ.listProject(docId).then((project) => {
       project.forEach(query => {
-        this.projForm.value.title = query.data().title;
-        this.projForm.value.content = query.data().content;
-        console.log(this.projForm)
+        this.projForm.setValue({'title':query.data().title, 'content':query.data().content})
       });
     });
   }
-
   deleteProject() {
     const docId = this.route.snapshot.params['id'];
 
