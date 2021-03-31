@@ -81,7 +81,7 @@ hr {
   
   .container span.title {
     font-size: 1.8rem;
-    margin: 0;
+    margin-bottom: 2vh;
   }
   
   .bouman-form span.form-title {
