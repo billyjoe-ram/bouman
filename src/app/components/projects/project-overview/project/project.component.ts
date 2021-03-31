@@ -99,7 +99,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
       this.docServ.addProject(project).then(() => {
         console.log('Added');
       }).finally(() => {
-        this.myProjects;
+        this.myProjects();
       });
 
     } else {
