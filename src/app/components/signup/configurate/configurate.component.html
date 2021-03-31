@@ -1,13 +1,13 @@
 <secondary-header></secondary-header>
 <div class="container">
     <div class="row">
-        <h1>Comece configurando seu perfil</h1>
+        <span class="title">Comece configurando seu perfil</span>
     </div>
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <div class="bouman-form">
-                <h3>Dados</h3>
+        <div class="col-md-2 col-lg-3"></div>
+        <div class="col-md-8 col-lg-6">
+            <div class="bouman-form form-group">
+                <span class="form-title">Dados</span>
                 <hr>
                 <form #boumanForm="ngForm" (ngSubmit)="config()">
                     <div class="row">
@@ -16,14 +16,14 @@
                                     caracteres</span></label>
                             <textarea name="about" id="profile-about" maxlength="300"
                                 placeholder="Descreva um pouco de quem você é e do seu trabalho para a comunidade"
-                                name="desc" ngModel required>
+                                name="desc" class="form-control" ngModel required>
                             </textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <label for="profile-uf" class="profile-label">UF</label>
-                            <select class="bouman-select" name="state" placeholder="Selecione um estado"
+                            <select class="bouman-select form-control" name="state" placeholder="Selecione um estado"
                                 (change)="fillCities()" ngModel required>
                                 <option *ngFor="let state of states" [value]="state.id">{{ state.sigla }}</option>
                             </select>
@@ -31,7 +31,7 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-7">
                             <label for="profile-city" class="profile-label">Cidade</label>
-                            <select class="bouman-select" name="city" placeholder="Selecione uma cidade" ngModel
+                            <select class="bouman-select form-control class="form-control name="city" placeholder="Selecione uma cidade" ngModel
                                 required>
                                 <option *ngFor="let city of cities" [value]="city.id">{{ city.nome }}</option>
                             </select>
@@ -40,60 +40,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="profile-date" class="profile-label">Data de nascimento</label>
-                            <input type="date" name="date" id="bouman-input" ngModel required #birth="ngModel">
+                            <input type="date" name="date" id="bouman-input" class="form-control" ngModel required #birth="ngModel">
                             <p *ngIf="!birth.valid && birth.touched">Por favor, informe uma data válida.</p>
                         </div>
                         <div class="col-md-6"></div>
                     </div>
 
-                    <button type="submit" [disabled]="!boumanForm.valid">Confirmar</button>
+                    <button type="submit" class="btn" [disabled]="!boumanForm.valid">Confirmar</button>
                 </form>
             </div>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-2 col-lg-3"></div>
     </div>
 </div>
-<!--
-<div class="content">
-    <h1>Comece configurando seu perfil</h1>
-    <div class="profile-conf">
-        <h3>Dados</h3>
-        <hr>
-
-        <div class="bouman-form">
-            <form #boumanForm="ngForm" (ngSubmit)="config()">
-                <label for="profile-about" class="profile-label">Sobre<span>Máximo de 300 caracteres</span></label>
-                <textarea name="about" id="profile-about" maxlength="300"
-                    placeholder="Descreva um pouco de quem você é e do seu trabalho para a comunidade" name="desc" ngModel
-                    required></textarea>
-
-                <div class="row">
-                    <div class="col-md-7">
-                        <label for="profile-city" class="profile-label">Cidade</label>
-                        <select class="bouman-select" name="city" placeholder="Selecione uma cidade" ngModel required>
-                            <option *ngFor="let city of cities"[value]="city.id">{{ city.nome }}</option>
-                        </select>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-4">
-                        <label for="profile-uf" class="profile-label">UF</label>
-                        <select class="bouman-select" name="state" placeholder="Selecione um estado" (change)="fillCities()" ngModel required>
-                            <option *ngFor="let state of states" [value]="state.id">{{ state.sigla }}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="profile-date" class="profile-label">Data de nascimento</label>
-                        <input type="date" name="date" id="bouman-input" ngModel required #birth="ngModel">
-                        <p *ngIf="!birth.valid && birth.touched">Por favor, informe uma data válida.</p>
-                    </div>
-                </div>                
-
-                <button type="submit" [disabled]="!boumanForm.valid">Confirmar</button>
-            </form>
-
-        </div>
-
-    </div>
-</div>-->

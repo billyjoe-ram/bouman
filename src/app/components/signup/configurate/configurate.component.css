@@ -1,25 +1,19 @@
-.container{
+.container {
   display: flex;
   flex-direction: column;
 }
 
-/*.bouman-form {
-  display: flex;
-  flex-direction: column;
-}*/
-
-.container h1 {
-  font-size: 3rem;
+.container span.title {
+  font-size: 1.6rem;
   font-weight: bold;
-  margin-bottom: 2%;
-  text-align: center;
+  margin-bottom: 1%;
 
   color: #5a5a5a;
+  margin: 2vh 0;
 }
 
-.bouman-form h3 {
-  font-size: 2.8rem;
-  font-weight: bold;
+.bouman-form span.form-title {
+  font-size: 1.4rem;
 
   text-align: start;
   padding-left: 1%;
@@ -27,10 +21,10 @@
   color: #ffffff;
 }
 
-span{
+label.profile-label > span {
   font-weight: lighter;
-  font-size: 1.3rem;
-  padding-left: 1vw
+  font-size: 0.6rem;
+  padding-left: 1vw;
 }
 
 hr {
@@ -52,48 +46,83 @@ hr {
 }
 
 .bouman-form label {
-  font-size: 1.8rem;
+  font-size: 1rem;
 }
 
-.profile-label{
-  margin-top: 2vh;
-}
-
-.bouman-form textarea {
-  width: 100%;
-  height: 12vh;
-  background-color: rgb(245, 248, 250);
-  border: 1px solid rgb(211, 226, 229);
-  border-radius: 20px;
+.bouman-form textarea {  
+  height: 12vh;  
+  border: 1px solid rgb(211, 226, 229);  
   resize: none;
 }
 
 .bouman-form select, input {
-  width: 100%;
-  height: 5vh;
-  background-color: rgb(245, 248, 250);
   border: 1px solid rgb(211, 226, 229);
-  border-radius: 20px;
 }
 
 .bouman-form button {
-  width: 50%;
-  height: 6vh;
 
   display: block;
 
-  margin: 3% auto 2% auto;
+  margin: 2vh auto 0 auto;
 
-  font-weight: bold;
-  font-size: 2rem;
+  font-size: 1.4rem;
   color: #ffffff;
 
   background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
 }
 
 .bouman-form input.ng-invalid.ng-touched {
   border-color: darkred;
   background-color: rgb(255, 158, 158);
+}
+
+@media (min-width: 768px) {
+  
+  .container span.title {
+    font-size: 1.8rem;
+    margin: 0;
+  }
+  
+  .bouman-form span.form-title {
+    font-size: 1.6rem;
+  }
+
+  .bouman-form label {
+    font-size: 1.2rem;
+  }
+  
+  label.profile-label > span {    
+    font-size: 0.8rem;    
+  }
+  
+  hr {
+    margin: 0.5rem 0;
+  }
+
+}
+
+@media (min-width: 1400px) {
+
+  .container span.title {
+    font-size: 2rem;
+    margin: 0;
+  }
+  
+  .bouman-form span.form-title {
+    font-size: 1.8rem;
+  }
+
+  .bouman-form label {
+    font-size: 1.4rem;
+  }
+  
+  label.profile-label > span {    
+    font-size: 0.8rem;
+  }
+  
+  hr {
+    margin: 1rem 0;
+  }
+
 }
