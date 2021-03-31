@@ -1,24 +1,22 @@
-.container{
-  margin-top: 3%;
-}
 .bouman-info {
   display: flex;
   flex-direction: column;
 }
 
 .bouman-info {
-  font-weight: bold;
-
   text-align: justify;
+  margin-bottom: 5vh;
 }
 
 .bouman-info span {
-  font-size: 3rem;
+  font-weight: bold;
+
+  font-size: 2rem;
   color: #df660f;
 }
 
 .bouman-info p {
-  font-size: 1.8rem;
+  font-size: 1rem;
 
   color: #3a3a3a;
 }
@@ -45,7 +43,7 @@
 }
 
 .bouman-form label {
-  font-size: 2rem;
+  font-size: 1rem;
 
   color: #ffffff;
 
@@ -64,11 +62,15 @@
   margin: 0 0 3% 3%;
 }
 
+.bouman-form p.help-invalid {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
 .bouman-form span {
   font-weight: bold;
-  font-size: 1.5rem;
-
-  width: 80%;
+  font-size: 1rem;
+  
   margin: 0 auto;
   margin-bottom: 2%;
 
@@ -78,34 +80,46 @@
   color: #ffffff;
 }
 
-.bouman-form p {
-  width: 80%;
+.bouman-form button {
+  display: block;
+  font-size: 1.2rem;
+  color: #ffffff;
+  background: linear-gradient(
+90.35deg
+, #2ca8ba 0.31%, #18adc4 99.86%);
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
   margin: 0 auto;
-  margin-top: 3%;
 }
 
-.bouman-form button {
-  display: flex;
-  align-items: center;
-
-  width: 50%;
-
-  justify-content: center;
-  align-items: center;
-
-  font-weight: bold;
-  font-size: 2.1rem;
-
-  color: #ffffff;
-
-  background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
-
+.bouman-form p {
+  width: 90%;
   margin: 0 auto;
+  margin-top: 3%;
+  font-size: 0.85rem;
 }
 
 .bouman-form input.ng-invalid.ng-touched {
   border-color: darkred;
   background-color: rgb(255, 158, 158);
+}
+
+@media (min-width: 768px) {
+
+  .bouman-info {
+    margin-bottom: 0;
+  }
+
+  .bouman-info span {
+    font-size: 2rem;
+    width: 80%;
+  }
+  
+  .bouman-info p {
+    font-size: 1rem;
+  }
+
+  .bouman-info img {
+    width: 50%;
+  }
+
 }

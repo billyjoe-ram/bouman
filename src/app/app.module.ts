@@ -24,10 +24,9 @@ import { LoginComponent } from './components/login/login.component';
 
 import { DropdownDirectiveDirective } from './directives/dropdown-directive.directive';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { EditorModule } from '@tinymce/tinymce-angular';
+
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectOverviewComponent } from './components/projects/project-overview/project-overview.component';
-import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
 import { ProjectComponent } from './components/projects/project-overview/project/project.component';
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
 import { environment } from 'src/environments/environment.prod';
@@ -48,7 +47,6 @@ import { environment } from 'src/environments/environment.prod';
     LoginComponent,
     ProjectsComponent,
     ProjectOverviewComponent,
-    ProjectEditComponent,
     ProjectComponent,
     ProfileConfigComponent,
   ],
@@ -62,7 +60,6 @@ import { environment } from 'src/environments/environment.prod';
     AngularFireAuthModule,
     AngularFirestoreModule,
     HttpClientModule,
-    EditorModule,
     AngularEditorModule
   ],
   providers: [],

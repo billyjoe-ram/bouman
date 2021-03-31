@@ -1,9 +1,8 @@
-.container{
-    margin-top: 5%;
-    align-items: center;
+.login-component {
+    margin: 0 auto;
 }
 
-.bouman-user{
+.bouman-user {
     margin-bottom: 4%;
     width: 30%;
     margin-left: 33%;
@@ -17,40 +16,38 @@
     font-size: 24px;
 }
 
-.bouman-form p{
+.bouman-form p {
     font-size: 1.6rem;
     font-weight: bold;
 }
 
 .bouman-form input.bouman-input {
-    width: 95%;
-    height: 5vh;
-    background: #ffffff;
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    border-radius: 8px;
+        
     margin-bottom: 5%;
     box-shadow: 3px 3px 3px #a3a3a3;
 }
 
 .bouman-form .show-pass {
-    display: flex;    
-    font-size: 1.6rem;
-    font-weight: bold;
+    font-size: 1rem;
     margin-bottom: 1.2rem;
+    align-items: baseline;
 }
 
 .bouman-form .show-pass input {    
     margin-right: 1rem;
 }
 
-.bouman-form button{
-    border-radius: 8px;
+.bouman-form button {    
     border-color: #df660f;
     background-color: #fa902e;
     color: #ffffff;
     width: 40%;
     height: 100%;
     font-weight: bold;
-    margin-left: 27%;
+    margin-left: 30%;
+}
+
+.bouman-form button:hover {    
+    border-color: #fa902e;
+    background-color: #df660f;
 }
