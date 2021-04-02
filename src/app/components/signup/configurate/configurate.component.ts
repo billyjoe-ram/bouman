@@ -16,7 +16,8 @@ export class ConfigurateComponent implements OnInit {
   public genders: string[] = ['Masculino', 'Feminino'];
   public states: { id: number, sigla: string }[] = [];  
   public cities: { id: number, nome: string }[] = [];  
-
+  emailverified : any;
+  
   constructor(
     private authService: AuthService,
     private store: AngularFirestore,
@@ -26,28 +27,51 @@ export class ConfigurateComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStates();
+    this.config();
   }
 
   async config() {
-    const user = await this.authService.getAuth().currentUser;
-    const description = this.form.value.desc;
-    const date = this.form.value.date;
-    const state = this.form.value.state;
-    const city = this.form.value.city;
 
-    if (this.form.valid) {
+      const user = await this.authService.getAuth().currentUser;
+      await user?.reload();
+      this.emailverified = user?.emailVerified; 
+      if (this.emailverified == undefined || this.emailverified == false){
+        if (user != null){
+        user.sendEmailVerification().then(function (){
+          // Email enviado corretamente.
+          user.providerData.forEach(function (profile:any) {
+            window.alert("Foi enviado um link de verificação de usuário para o seu E-mail, por favor na sua caixa de entrada: "+profile.email)
+          })
+      }).catch(function(error){
+        // Um erro ocorreu.
+          window.alert('um erro ocorreu, verifique se na sua caixa de entrada já não possui um link de verificação, caso não haja, tente novamente...');
+      })
+      }
+    }else if(this.emailverified == true){
+
+      if (this.form.valid) {
+
+      const description = this.form.value.desc;
+      const date = this.form.value.date;
+      const state = this.form.value.state;
+      const city = this.form.value.city;
       try {
         await this.store
           .collection('Users')
           .doc(user?.uid)
           .update({ desc: description, birth: date, state: state, city: city });
+        
+          window.alert('E-mail foi verificado, você será redirecionado para pagína do seu perfil.');
+          this.router.navigate(['/profile'])
       } catch (error) {
         console.error(error);
-      } finally {
-        this.router.navigate(['/profile']);
       }
     }    
-
+    else{
+      console.log("Ocorreu um erro no formulário.");
+      window.alert("Ocorreu um erro no formulário.");
+    }
+  }
     // this.validaData();
   }
 
