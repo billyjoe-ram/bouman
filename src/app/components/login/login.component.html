@@ -1,16 +1,15 @@
 <secondary-header></secondary-header>
 <div class="container">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
+    <div class="col-sm-6 col-md-6 col-lg-6 login-component">
         <div class="bouman-user">
             <img id="user" src="/assets/user.svg">
         </div>
-        <div class="bouman-form">
+        <div class="bouman-form form-group">
             <label for="email">Endereço de e-mail</label>
-            <input type="email" name="user" id="email" placeholder="Ex.: bouman@email.com" required [(ngModel)]="userLogin.email" class="bouman-input">
+            <input type="email" name="user" id="email" placeholder="Ex.: bouman@email.com" required [(ngModel)]="userLogin.email" class="bouman-input form-control">
     
             <label for="userkey">Senha</label>
-            <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required [(ngModel)]="userLogin.password" class="bouman-input" (keyup)="getKey($event)" #pass>
+            <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required [(ngModel)]="userLogin.password" class="bouman-input form-control" (keyup)="getKey($event)" #pass>
 
             <div class="show-pass" (click)="showPassword()">
                 <input type="checkbox" #box> Exibir senha
@@ -18,8 +17,7 @@
     
             <!-- <p>Esqueceu a sua senha? <a href="#">Clique aqui</a></p> -->
     
-            <button id="btnLogin" (click)="login()">Login</button>
+            <button id="btnLogin" (click)="login()" class="btn">Login</button>
         </div>
     </div>
-    <div class="col-md-3"></div>
 </div>
