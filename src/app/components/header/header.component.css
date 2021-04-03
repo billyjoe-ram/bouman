@@ -72,7 +72,7 @@ a.navbar-brand {
 
 .navbar .navbar-nav > li > a#navbarDropdown {
   flex-direction: row !important;
-  padding-right:4.4vw;
+  padding-right: 4.8vw;
 }
 
 .nav-item.dropdown a.dropdown-toggle img#profile-picture {
