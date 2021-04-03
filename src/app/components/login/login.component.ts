@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 // import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'login',
@@ -16,16 +17,26 @@ export class LoginComponent implements OnInit {
   
   public userLogin: any = {};
   
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router,
+    private user: UsersService) { }
 
   ngOnInit(): void {
   }
 
   async login() {
+    const user = await this.authService.getAuth().currentUser;
+
+    const area = this.user.getArea();
 
     try {
       await this.authService.login(this.userLogin);
-      this.router.navigate(["/feed"]);
+      
+      if (user && area) {
+        this.router.navigate(["/feed"]);
+      } else {
+        this.router.navigate(["/config"]);
+      }
+      
     } catch (error) {
       console.error(error);      
     }
