@@ -24,21 +24,23 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    const user = await this.authService.getAuth().currentUser;
-
-    const area = this.user.getArea();
+    let user, area;   
 
     try {
       await this.authService.login(this.userLogin);
+
+      user = await this.authService.getAuth().currentUser;
+
+      area = this.user.getArea();
       
-      if (user && area) {
+    } catch (error) {
+      console.error(error);
+    } finally {
+      if (user != null && area) {
         this.router.navigate(["/feed"]);
       } else {
         this.router.navigate(["/config"]);
       }
-      
-    } catch (error) {
-      console.error(error);      
     }
 
   }
