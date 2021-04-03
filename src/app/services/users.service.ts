@@ -12,6 +12,8 @@ export class UsersService {
     
   private userId: string | undefined = "";
 
+  private area: string | undefined = "";
+
   private profileImg: String = "/assets/profile-example.png";
   private wallpImg: String = "/assets/wallpaper-example.jpg";
   
@@ -33,6 +35,7 @@ export class UsersService {
     const fileRef = this.storage.ref(filePath);
     return fileRef.getDownloadURL();
   }
+
   profasset(){
     return this.profileImg;
   }
@@ -42,6 +45,7 @@ export class UsersService {
     const fileRef = this.storage.ref(filePath);
       return fileRef.getDownloadURL();
   }
+
   wallpasset(){
     return this.wallpImg;
   }
@@ -59,17 +63,17 @@ export class UsersService {
     return userObject;
   }
 
-  getArea() {
+  getArea(): string | undefined {
     let area: string;
 
     const collection = this.store.collection('Users').doc(this.userId).valueChanges();
 
     collection.subscribe((data: any) => {
 
-      area = data.area;
-
-      return area;
+      this.area = data.area;
     });
+
+    return this.area;
   }
 
 }
