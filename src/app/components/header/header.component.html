@@ -1,59 +1,56 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" (click)="collapsed = !collapsed">
-                <span class="icon-bar" *ngFor="let iconBar of [1, 2, 3]"></span>
-            </button>
-            <a routerLink="/feed" class="navbar-brand" (click)="onSelect('feed')">
-                <img src="/assets/logo.png" alt="Logo Bouman">
-            </a>
-            <input type="text" name="Pesquisar" id="pesquisar-input" placeholder="Pesquisar">
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar-header">
+        <a class="navbar-brand">
+            <img src="/assets/logo.png" alt="Logo Bouman">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button> 
+    </div>
 
-        <div class="navbar-collapse" [class.collapse]="collapsed" (window:resize)="collapsed = true">
+    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
 
-            <ul class="nav navbar-nav">                
-                <li>
-                    <a routerLink="/feed">
-                        <img src="/assets/home.svg" alt="Página Inicial">
-                        Início
-                    </a>
-                </li>
-                <li>
-                    <a routerLink="/projects/overview">
-                        <img src="/assets/testplan.svg" alt="Seus projetos">
-                        Projetos
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <img src="/assets/people.svg" alt="Apoio">
-                        Apoio
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <img src="/assets/notification.svg" alt="Notificação">
-                        Notificações
-                    </a>
-                </li>
-            </ul>
+        <ul class="nav navbar-nav">                
+            <li>
+                <a routerLink="/feed">
+                    <img src="/assets/home.svg" alt="Página Inicial">
+                    Início
+                </a>
+            </li>
+            <li>
+                <a routerLink="/projects/overview">
+                    <img src="/assets/testplan.svg" alt="Seus projetos">
+                    Projetos
+                </a>
+            </li>
+            <li>
+                <a>
+                    <img src="/assets/people.svg" alt="Apoio">
+                    Apoio
+                </a>
+            </li>
+            <li>
+                <a>
+                    <img src="/assets/notification.svg" alt="Notificação">
+                    Notificações
+                </a>
+            </li>
+        </ul>
 
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown" appDropdown>
-                    <a class="dropdown-toggle" role="button">
-                        <img [src]="profileImg" alt="Seu perfil" id="profile-picture">
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a routerLink="/profile" (click)="onSelect('profile')">Perfil</a></li>
-                        <li><a routerLink="/profile-config">Configurações</a></li>
-                        <li><a>Suporte</a></li>
-                        <li><a routerLink="/signup" (click)='logOut()'>Sair</a></li>
-                    </ul>
-                </li>
-            </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img [src]="profileImg" alt="Seu perfil" id="profile-picture">
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li class="nav-item"><a routerLink="/profile" (click)="onSelect('profile')" class="nav-link">Perfil</a></li>
+                    <li class="nav-item"><a routerLink="/profile-config" class="nav-link">Configurações</a></li>
+                    <li class="nav-item"><a class="nav-link">Suporte</a></li>
+                    <li class="nav-item"><a routerLink="/signup" (click)='logOut()' class="nav-link">Sair</a></li>
+                </ul>
+            </li>
+        </ul>
 
-        </div>
     </div>
 </nav>
