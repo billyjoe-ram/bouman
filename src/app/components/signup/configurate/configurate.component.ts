@@ -12,74 +12,51 @@ import { IbgeService } from 'src/app/services/ibge.service';
 })
 export class ConfigurateComponent implements OnInit {
   @ViewChild('boumanForm') form!: NgForm;
-
-  public genders: string[] = ['Masculino', 'Feminino'];
+  
   public states: { id: number, sigla: string }[] = [];  
   public cities: { id: number, nome: string }[] = [];  
-
+  
+  private emailverified!: any;
+  
   constructor(
     private authService: AuthService,
     private store: AngularFirestore,
-    private router: Router,
-    private ibgeService: IbgeService
+    private ibgeService: IbgeService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getStates();
   }
 
-  async config() {
+  async onSign() {
     const user = await this.authService.getAuth().currentUser;
-    const description = this.form.value.desc;
-    const date = this.form.value.date;
-    const state = this.form.value.state;
-    const city = this.form.value.city;
 
-    if (this.form.valid) {
+    this.emailverified = user?.emailVerified;
+
+    const verified = this.emailverified;
+
+    if (this.form.valid && verified && user) {
+
+      const description = this.form.value.desc;
+      const date = this.form.value.date;
+      const state = this.form.value.state;
+      const city = this.form.value.city;
+
       try {
         await this.store
           .collection('Users')
           .doc(user?.uid)
           .update({ desc: description, birth: date, state: state, city: city });
+
+          this.router.navigate(["/feed"]);
+
       } catch (error) {
         console.error(error);
-      } finally {
-        this.router.navigate(['/profile']);
       }
-    }    
+    }
 
-    // this.validaData();
-  }
-
-  validaData(){
-    var data = this.form.value.date;
-    var dataAtual = new Date();
-    var nascimento = new Date(data)
-    var ano = dataAtual.getFullYear() - nascimento.getFullYear();
- 
-    if(ano == 18){
-      if(dataAtual.getMonth() == nascimento.getMonth()){
-        if(dataAtual.getDay() <= nascimento.getDay()){
-          //menor de idade
-        }
-        else{
-          //maior de idade
-        }
-      }
-      else if(dataAtual.getMonth() < nascimento.getMonth()){
-        //menor de idade
-      }
-      else{
-        //maior de idade
-      }
-    }
-    else if(ano < 18){
-      //menor de idade
-    }
-    else{
-      //maior de idade
-    }
-  }
+  }  
 
   public getStates() {
     this.ibgeService.getStates().subscribe((res) => {

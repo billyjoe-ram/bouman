@@ -2,6 +2,7 @@ nav.navbar {
   background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
   border: none;
   border-radius: 0;
+  margin-bottom: 5vh;
 }
 
 nav .container-fluid .navbar-header {
@@ -69,11 +70,12 @@ a.navbar-brand {
   padding-left: 10px;
 }
 
-.nav.navbar-nav.navbar-right .dropdown .dropdown-toggle {
-  flex-direction: row;
+.navbar .navbar-nav > li > a#navbarDropdown {
+  flex-direction: row !important;
+  padding-right: 4.8vw;
 }
 
-.nav .dropdown .dropdown-toggle img#profile-picture {
+.nav-item.dropdown a.dropdown-toggle img#profile-picture {
   width: 48px;
   height: 48px;
 
