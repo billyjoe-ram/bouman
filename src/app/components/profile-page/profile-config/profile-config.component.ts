@@ -10,18 +10,16 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class ProfileConfigComponent implements OnInit {
 
-  public user: any = {  name: '', desc: '' };
+  public user: any = {  name: '', desc: '', area: '' };
 
   private areaSubs!: Subscription;
   
   constructor(private userService: UsersService) { }
 
   ngOnInit(): void {    
-    this.user = this.userService.getCollection();
-
-    const userData = Object.assign({}, this.user);
-
-    userData.area = this.userService.getArea();    
+    this.userService.getCollection().then((coll) => {
+      this.user = coll;
+    });
   }
 
 }

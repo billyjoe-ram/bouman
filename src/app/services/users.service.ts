@@ -57,13 +57,14 @@ export class UsersService {
   async getCollection() {
     const user = await this.authService.getAuth().currentUser;
 
-    let userObject: {name: string, desc: string} = { name: "", desc: ""};
+    let userObject: {name: string, desc: string, area: string} = { name: "", desc: "", area: ""};
     
     const collection = this.store.collection('Users').doc(user?.uid).valueChanges();
     
     collection.subscribe((data: any) => {      
       userObject.name = data.name;
       userObject.desc = data.desc;
+      userObject.area = data.area;
     });
 
     return userObject;
