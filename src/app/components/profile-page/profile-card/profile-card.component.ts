@@ -34,7 +34,9 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     
   ngOnInit(): void {    
 
-    this.userData = this.user.getCollection();
+    this.user.getCollection().then((coll) => {
+      this.userData = coll;
+    });
 
       // usando o service de usuario para pegar as imagens
 
@@ -43,7 +45,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
         }, (err:any) => {
         this.profileImg = this.user.profasset();
-        console.log(this.user.getProfilePicture())
 
       });
 
@@ -51,14 +52,12 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
         this.wallpImg = url;
 
         }, (err:any) => {
-        this.wallpImg = this.user.wallpasset();
-        console.log(this.user.getWallpaper())
+        this.wallpImg = this.user.wallpasset();        
 
       });
   }
 
-  ngOnDestroy()   {    
-    console.log
+  ngOnDestroy()   {        
     this.profile.unsubscribe();
     this.wallpaper.unsubscribe();
   }
@@ -74,12 +73,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
   }
 
   async saveFotos() {
-    const user = await this.auth.getAuth().currentUser;    
-
-    // apenas para fins de teste, para testar os ngifs
-    console.log('Esconder: ' + this.esconder);
-    console.log("profile input:"+ this.imgPath)
-    console.log("background input:"+ this.backgroundPath);
+    const user = await this.auth.getAuth().currentUser;            
     
     const profImgPath = `profile-pictures/${user?.uid}`;
     const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
@@ -95,9 +89,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
       this.wallpImg = url;
     });
   }
-    
-    console.log(this.profileImg);
-    console.log(this.wallpImg);
 
     // finalmente, alterando o estado do booleano
     this.esconder = !this.esconder;

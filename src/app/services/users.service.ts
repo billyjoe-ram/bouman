@@ -8,68 +8,80 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
-    
-  private userId: string | undefined = "";
+export class UsersService {      
+
+  private area: string | undefined = "";
 
   private profileImg: String = "/assets/profile-example.png";
   private wallpImg: String = "/assets/wallpaper-example.jpg";
-  
-  // private downloadURL!: Observable<string>;
   
   constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore) {
     this.getId();
   }
 
-  async getId() {
+  getId(): string | undefined {
     let id;
-    const user = await this.authService.getAuth().currentUser;
-    this.userId = user?.uid;    
-    return this.userId
+
+    this.authService.getAuth().currentUser.then((user) => {
+      id = user?.uid
+    });
+
+    return id;
   }
 
   getProfilePicture() {
-    const filePath = `profile-pictures/${this.userId}`;
+    const id = this.getId();
+
+    const filePath = `profile-pictures/${id}`;
     const fileRef = this.storage.ref(filePath);
     return fileRef.getDownloadURL();
   }
+
   profasset(){
     return this.profileImg;
   }
 
   getWallpaper() {
-    const filePath = `wallpaper-pictures/${this.userId}`;
+    const id = this.getId();
+
+    const filePath = `wallpaper-pictures/${id}`;
     const fileRef = this.storage.ref(filePath);
-      return fileRef.getDownloadURL();
+    
+    return fileRef.getDownloadURL();
   }
+
   wallpasset(){
     return this.wallpImg;
   }
 
-  getCollection() {
-    let userObject: {name: string, desc: string} = { name: '', desc: ''};    
+  async getCollection() {
+    const user = await this.authService.getAuth().currentUser;
+
+    let userObject: {name: string, desc: string, area: string} = { name: "", desc: "", area: ""};
     
-    const collection = this.store.collection('Users').doc(this.userId).valueChanges();          
+    const collection = this.store.collection('Users').doc(user?.uid).valueChanges();
     
     collection.subscribe((data: any) => {      
       userObject.name = data.name;
       userObject.desc = data.desc;
+      userObject.area = data.area;
     });
 
     return userObject;
   }
 
-  getArea() {
-    let area: string;
+  async getArea() {
+    const user = await this.authService.getAuth().currentUser;
 
-    const collection = this.store.collection('Users').doc(this.userId).valueChanges();
+    let userObject: {area: string} = { area: "" };
+    
+    const collection = this.store.collection('Users').doc(user?.uid).valueChanges();
 
     collection.subscribe((data: any) => {
-
-      area = data.area;
-
-      return area;
+      userObject.area = data.area;
     });
+
+    return userObject;
   }
 
 }

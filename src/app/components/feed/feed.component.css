@@ -3,12 +3,7 @@
     flex-direction: column;
     justify-content: center;
 
-    margin: 0 auto;
-
-    width: 825px;
-    height: 386px;
-
-    font-size: 48px;
+    font-size: 2rem;
     text-align: center;
 
     color: #5E5E5E;            
@@ -16,5 +11,5 @@
 
 .no-content span {
     font-weight: bold;
-    font-size: 144px;        
+    font-size: 4rem;
 }
