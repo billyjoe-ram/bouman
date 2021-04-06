@@ -1,0 +1,19 @@
+.form-group textarea.form-control {
+    resize: none;
+}
+
+button.btn-bouman {
+    margin-right: 0.5rem;   
+    color: #07889B;
+
+    background: #D3E2E5;
+    border: 1px solid #07889B;
+    box-sizing: border-box;    
+    transition: 0.3s;
+}
+
+button.btn-bouman:hover {
+    color: #D3E2E5;    
+
+    background: #07889B;       
+}
