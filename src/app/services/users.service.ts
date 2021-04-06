@@ -70,18 +70,4 @@ export class UsersService {
     return userObject;
   }
 
-  async getArea() {
-    const user = await this.authService.getAuth().currentUser;
-
-    let userObject: {area: string} = { area: "" };
-    
-    const collection = this.store.collection('Users').doc(user?.uid).valueChanges();
-
-    collection.subscribe((data: any) => {
-      userObject.area = data.area;
-    });
-
-    return userObject;
-  }
-
 }

@@ -24,19 +24,19 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    let user, area;   
+    let user, desc;   
 
     try {
       await this.authService.login(this.userLogin);
 
       user = await this.authService.getAuth().currentUser;
 
-      area = this.user.getArea();
+      desc = (await this.user.getCollection()).desc;
       
     } catch (error) {
       console.error(error);
     } finally {
-      if (user != null && area) {
+      if (user != null && desc) {
         this.router.navigate(["/feed"]);
       } else {
         this.router.navigate(["/config"]);
