@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AreasService } from 'src/app/services/areas.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -14,7 +16,7 @@ export class ProfileConfigComponent implements OnInit {
 
   public areas: any = {};
   
-  constructor(private userService: UsersService, private areasService: AreasService) { }
+  constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService) { }
 
   ngOnInit(): void {    
     this.userService.getCollection().then((coll) => {
@@ -24,12 +26,22 @@ export class ProfileConfigComponent implements OnInit {
     this.areas = this.areasService.getAreas();
   }
 
-  onSubmit(form: NgForm) {
-    console.log(form.value);
+  async onSubmit(form: NgForm) {
+    const user = await this.authService.getAuth().currentUser;
+
+    const formData = form.value;
+
+    console.log(formData);
+
+    this.service.updateProfile(user?.uid, { name: formData.name, description: formData.desc, area: formData.area })
   }
 
-  onDelete() {
-    alert("I can't do this right know. Thank you for the comprehension.");
+  async onDelete() {
+    const user = await this.authService.getAuth().currentUser;
+
+    // we must create and alert here, please dont delete the user so easily!!!
+
+    this.service.deleteProfile(user?.uid);
   }
 
 }
