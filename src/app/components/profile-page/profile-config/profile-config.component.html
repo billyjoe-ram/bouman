@@ -1,18 +1,22 @@
 <app-header></app-header>
-<div class="container">
-    <form>
+<div class="container-fluid">
+    <form (ngSubmit)="onSubmit(profConfForm)" #profConfForm="ngForm">
         <div class="form-group">
-            <label for="name">Your name</label>
-            <input type="text" class="form-control" id="name" [value]="user.name">
+            <label for="name">Seu nome</label>
+            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="user.name">
     
-            <label for="desc">Description</label>
-            <textarea type="text" class="form-control" id="desc" [value]="user.desc"></textarea>
+            <label for="desc">Descrição do perfil</label>
+            <textarea type="text" class="form-control" id="desc" name="desc" [(ngModel)]="user.desc"></textarea>
     
-            <label for="area">Area</label>
-            <input type="text" class="form-control" id="area" [value]="user.area">
+            <label for="area">Área de Atuação</label>
+            <select class="form-control bouman-select" id="area" name="area" ngModel>
+                <option *ngFor="let area of areas" [value]="area.value" [attr.selected]="user.area == area.value ? true : null">{{ area.name }}</option>
+            </select>
             
         </div>
 
-        <button type="submit" class="btn btn-default">Salvar</button>
+        <button type="submit" class="btn btn-bouman">Salvar</button>
+
+        <button class="btn btn-danger" (click)="onDelete()">Excluir conta</button>
     </form>    
 </div>
