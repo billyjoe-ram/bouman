@@ -9,89 +9,92 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './profile-card.component.html',
   styleUrls: ['./profile-card.component.css']
 })
-export class ProfileCardComponent implements OnInit, OnDestroy {  
-  
+export class ProfileCardComponent implements OnInit, OnDestroy {
+
   public esconder: boolean = false;
 
-  public userData: {name: string, desc: string} = { name: '', desc: ''};
+  public userData: { name: string, desc: string } = { name: '', desc: '' };
 
-  public profileImg: any = "";  
+  public profileImg: any = "";
   public wallpImg: any = "";
-  
+
   private profile!: Subscription;
-  private wallpaper!: Subscription; 
-  
+  private wallpaper!: Subscription;
+
   private imgPath: any = "";
   private imgcheck: boolean = false;
   private backgroundPath: any = "";
-  private backcheck: boolean = false;  
+  private backcheck: boolean = false;
 
   constructor(
-    private storage: AngularFireStorage, 
-    private auth: AuthService, 
+    private storage: AngularFireStorage,
+    private auth: AuthService,
     private renderer: Renderer2,
-    private user: UsersService){ }
-    
-  ngOnInit(): void {    
+    private user: UsersService) { }
+
+  ngOnInit(): void {
 
     this.user.getCollection().then((coll) => {
       this.userData = coll;
     });
 
-      // usando o service de usuario para pegar as imagens
+    // usando o service de usuario para pegar as imagens
 
-      this.profile = this.user.getProfilePicture().subscribe((url:any) => {
-        this.profileImg = url;
+    this.user.getProfilePicture().then((url: any) => {
+      this.profile = url.subscribe((profP: any) => {
+        this.profileImg = profP;
+      });      
+    }, (err: any) => {
+      console.error(err);
+      this.profileImg = this.user.profasset();
+    });
 
-        }, (err:any) => {
-        this.profileImg = this.user.profasset();
+    this.user.getWallpaper().then((url: any) => {
+      this.wallpaper = url.subscribe((wallP: any) => {
+        this.wallpImg = wallP;
+      })      
+    }).catch((err: any) => {
+      console.error(err);
+      this.wallpImg = this.user.wallpasset();
 
-      });
-
-      this.wallpaper = this.user.getWallpaper().subscribe((url: any)=>{
-        this.wallpImg = url;
-
-        }, (err:any) => {
-        this.wallpImg = this.user.wallpasset();        
-
-      });
+    });
   }
 
-  ngOnDestroy()   {        
+  ngOnDestroy() {
     this.profile.unsubscribe();
     this.wallpaper.unsubscribe();
   }
 
-  getProfileImg(event: any) {        
+  getProfileImg(event: any) {
     this.imgPath = event.target.files[0];
     this.imgcheck = true;
   }
 
-  getWallpImg(event: any) {        
+  getWallpImg(event: any) {
     this.backgroundPath = event.target.files[0];
     this.backcheck = true
   }
 
   async saveFotos() {
-    const user = await this.auth.getAuth().currentUser;            
-    
+    const user = await this.auth.getAuth().currentUser;
+
     const profImgPath = `profile-pictures/${user?.uid}`;
     const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
-    if (this.imgcheck == true){
-    const refProf = await this.storage.upload(profImgPath, this.imgPath); 
-    refProf.ref.getDownloadURL().then(url => {      
-      this.profileImg = url;
-    });
-  }
-    if ( this.backcheck == true){
-    const refWlpp = await this.storage.upload(wlppImgPath, this.backgroundPath);
-    refWlpp.ref.getDownloadURL().then(url => {      
-      this.wallpImg = url;
-    });
-  }
+    if (this.imgcheck == true) {
+      const refProf = await this.storage.upload(profImgPath, this.imgPath);
+      refProf.ref.getDownloadURL().then(url => {
+        this.profileImg = url;
+      });
+    }
+    if (this.backcheck == true) {
+      const refWlpp = await this.storage.upload(wlppImgPath, this.backgroundPath);
+      refWlpp.ref.getDownloadURL().then(url => {
+        this.wallpImg = url;
+      });
+    }
 
     // finalmente, alterando o estado do booleano
     this.esconder = !this.esconder;
-    
+
   }
 }
