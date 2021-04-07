@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { FormsModule } from '@angular/forms'
 
 @Component({
   selector: 'app-profile-config',
@@ -16,7 +18,7 @@ export class ProfileConfigComponent implements OnInit {
 
   public areas: any = {};
   
-  constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService) { }
+  constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService, private auth : AngularFireAuthModule) { }
 
   ngOnInit(): void {    
     this.userService.getCollection().then((coll) => {
@@ -36,12 +38,25 @@ export class ProfileConfigComponent implements OnInit {
     this.service.updateProfile(user?.uid, { name: formData.name, description: formData.desc, area: formData.area })
   }
 
-  async onDelete() {
+  async onDelete(form: NgForm) {
     const user = await this.authService.getAuth().currentUser;
-
     // we must create and alert here, please dont delete the user so easily!!!
-
-    this.service.deleteProfile(user?.uid);
+    // Prompt the user to re-provide their sign-in credentials
+    let email :string= form.value.email;
+    let password :string= form.value.senha;
+    console.log(email)
+    console.log(password)
+/*      if(user != null && (email != null || email != undefined || password != null || password != undefined)){
+        user.reauthenticateWithCredential(email, password).then(() => {
+          // User re-authenticated.
+          this.service.deleteProfile(user?.uid);
+        this.service.deleteProfile(user?.uid);
+        }).catch(function(error) {
+          // An error happened.
+        });
+  
+      }
+*/      
   }
 
 }
