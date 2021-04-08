@@ -4,8 +4,9 @@ import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
-import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms'
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-config',
@@ -18,7 +19,7 @@ export class ProfileConfigComponent implements OnInit {
 
   public areas: any = {};
 
-  constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService, private auth: AngularFireAuthModule) { }
+  constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService, private auth: AngularFireAuth) { }
 
   ngOnInit(): void {
     this.userService.getCollection().then((coll) => {
@@ -44,21 +45,23 @@ export class ProfileConfigComponent implements OnInit {
     const password: string = form.value.senha;
 
     const user = await this.authService.getAuth().currentUser;
-    
-    const credential = await this.authService.getAuth();
+
+    this.authService.getAuth().credential.subscribe((credential)=>{
+      console.log(credential)
+    })
     
     console.log(email);
     console.log(password);
-    if (user != null && (email != null || email != undefined || password != null || password != undefined)) {
-      // user.reauthenticateWithCredential(email).then(() => {
-      //   // User re-authenticated.
-      //   this.service.deleteProfile(user?.uid);
-      //   this.service.deleteProfile(user?.uid);
-      // }).catch(function (error) {
-      //   // An error happened.
-      // });
+    /*if (user != null && (email != null || email != undefined || password != null || password != undefined)) {
+       user.reauthenticateWithCredential(email).then(() => {
+         // User re-authenticated.
+         this.service.deleteProfile(user?.uid);
+         this.service.deleteProfile(user?.uid);
+       }).catch(function (error) {
+         // An error happened.
+    });
 
-    }
+    }*/
 
   }
 
