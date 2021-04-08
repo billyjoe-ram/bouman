@@ -9,9 +9,10 @@
       <textarea type="text" class="form-control" id="desc" name="desc" [(ngModel)]="user.desc"></textarea>
 
       <label for="area">Área de Atuação</label>
-      <select class="form-control bouman-select" id="area" name="area" ngModel>
+      <select class="form-control bouman-select" id="area" name="area" [(ngModel)]="user.area">
         <option *ngFor="let area of areas" [value]="area.value" [attr.selected]="user.area == area.value ? true : null">
-          {{ area.name }}</option>
+          {{ area.name }}
+        </option>
       </select>
 
     </div>
@@ -28,9 +29,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="reauthModalLabel">Tem certeza que quer deixar o Bouman tão cedo? :(</h5>
-          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button> -->
         </div>
         <div class="modal-body">
           <span>Excluir sua conta requer reautencicação</span>
@@ -43,12 +41,13 @@
               <label for="recipient-text" class="col-form-label" name="senha">Senha:</label>
               <input class="form-control" id="message-text">
             </div>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-outline-danger">Sim, tenho certeza</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+            </div>
           </form>
 
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-outline-danger">Sim, tenho certeza</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-          </div>
         </div>
       </div>
     </div>

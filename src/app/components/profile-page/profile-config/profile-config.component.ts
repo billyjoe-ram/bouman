@@ -14,13 +14,13 @@ import { FormsModule } from '@angular/forms'
 })
 export class ProfileConfigComponent implements OnInit {
 
-  public user: any = {  name: '', desc: '', area: '' };
+  public user: any = { name: '', desc: '', area: '' };
 
   public areas: any = {};
-  
-  constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService, private auth : AngularFireAuthModule) { }
 
-  ngOnInit(): void {    
+  constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService, private auth: AngularFireAuthModule) { }
+
+  ngOnInit(): void {
     this.userService.getCollection().then((coll) => {
       this.user = coll;
     });
@@ -39,24 +39,27 @@ export class ProfileConfigComponent implements OnInit {
   }
 
   async onDelete(form: NgForm) {
-    const user = await this.authService.getAuth().currentUser;
-    // we must create and alert here, please dont delete the user so easily!!!
     // Prompt the user to re-provide their sign-in credentials
-    let email :string= form.value.email;
-    let password :string= form.value.senha;
-    console.log(email)
-    console.log(password)
-/*      if(user != null && (email != null || email != undefined || password != null || password != undefined)){
-        user.reauthenticateWithCredential(email, password).then(() => {
-          // User re-authenticated.
-          this.service.deleteProfile(user?.uid);
-        this.service.deleteProfile(user?.uid);
-        }).catch(function(error) {
-          // An error happened.
-        });
-  
-      }
-*/      
+    const email: string = form.value.email;
+    const password: string = form.value.senha;
+
+    const user = await this.authService.getAuth().currentUser;
+    
+    const credential = await this.authService.getAuth();
+    
+    console.log(email);
+    console.log(password);
+    if (user != null && (email != null || email != undefined || password != null || password != undefined)) {
+      // user.reauthenticateWithCredential(email).then(() => {
+      //   // User re-authenticated.
+      //   this.service.deleteProfile(user?.uid);
+      //   this.service.deleteProfile(user?.uid);
+      // }).catch(function (error) {
+      //   // An error happened.
+      // });
+
+    }
+
   }
 
 }

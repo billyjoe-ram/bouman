@@ -18,7 +18,7 @@ export class ProfileService {
   }
 
   updateProfile(id: string | undefined, user: { name: string, description: string, area: string }) {
-    return this.UserCollection.doc(id).update({name: user.name, description: user.description, area: user.area});
+    return this.UserCollection.doc(id).update({name: user.name, desc: user.description, area: user.area});
   }
 
   async deleteProfile(id: string | undefined) {
