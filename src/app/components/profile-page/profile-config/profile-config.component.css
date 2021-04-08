@@ -3,17 +3,14 @@
 }
 
 button.btn-bouman {
-    margin-right: 0.5rem;   
-    color: #07889B;
-
-    background: #D3E2E5;
-    border: 1px solid #07889B;
-    box-sizing: border-box;    
+    background: #FA902E;
+    border: 1px solid #DF660F;
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: white;
     transition: 0.3s;
 }
 
 button.btn-bouman:hover {
-    color: #D3E2E5;    
-
-    background: #07889B;       
+    background: #DF660F;
 }
