@@ -44,7 +44,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
       this.profile = url.subscribe((profP: any) => {
         this.profileImg = profP;
       }, (err: any) => {
-        console.error(err);
         this.profileImg = this.user.profasset();
       });      
     });
@@ -53,7 +52,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
       this.wallpaper = url.subscribe((wallP: any) => {
         this.wallpImg = wallP;
       }, (err: any) => {
-        console.error(err);
         this.wallpImg = this.user.wallpasset();
       })      
     });
