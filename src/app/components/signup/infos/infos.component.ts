@@ -48,29 +48,33 @@ export class InfosComponent implements OnInit {
       delete userObject.password;
 
       try {
+        // User sign-up
         const newUser = await this.authService.register(this.userRegister);
 
-        await this.store
-          .collection('Users')
-          .doc(newUser.user?.uid)
-          .set(userObject);
+        this.form.reset();
+        
+        const user = newUser.user?.uid;
 
-        userObject.id = newUser.user?.uid;
+        this.authService.logout();
 
-        await this.store
-          .collection('Users')
-          .doc(newUser.user?.uid)
-          .update(userObject);
+        this.verifyEmail();
+
+        // Save the own user doc in users collection
+        await this.store.collection('Users').doc(user).set(userObject);
+        
+        // Adding an id field
+        await this.store.collection('Users').doc(user).update({ id: user });
       } catch (error) {
         console.error(error);
-      } finally {
-        this.config();
+      } finally {        
+        this.router.navigate(["/login"]);        
+        
       }
 
     }
   }
 
-  async config() {
+  async verifyEmail() {
     const user = await this.authService.getAuth().currentUser;
 
     this.emailverified = user?.emailVerified;
@@ -87,10 +91,6 @@ export class InfosComponent implements OnInit {
         window.alert('Um erro ocorreu, verifique se na sua caixa de entrada já não possui um link de verificação, caso não haja, tente novamente...');
 
         console.error(error);
-      }).finally(() => {
-        this.authService.logout();
-        this.form.reset();
-        this.router.navigate(["/login"]);
       });
       
     }
