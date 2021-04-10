@@ -16,27 +16,29 @@ export class LoginComponent implements OnInit {
   @ViewChild('box') boxPass!: ElementRef;
   
   public userLogin: any = {};
+
+  private userData: { name: string, desc: string, area: string } = { name: '', desc: '', area: '' };
   
   constructor(private authService: AuthService, private router: Router,
     private user: UsersService) { }
 
   ngOnInit(): void {
+    
   }
 
   async login() {
-    let user, area;   
+    let user;
 
     try {
       await this.authService.login(this.userLogin);
 
       user = await this.authService.getAuth().currentUser;
-
-      area = this.user.getArea();
       
     } catch (error) {
       console.error(error);
     } finally {
-      if (user != null && area) {
+      console.log(user?.emailVerified);
+      if (user != null && user?.emailVerified) {
         this.router.navigate(["/feed"]);
       } else {
         this.router.navigate(["/config"]);

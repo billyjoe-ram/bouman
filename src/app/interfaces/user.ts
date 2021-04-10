@@ -3,7 +3,7 @@ export interface User {
     name?: string;
     email: string;
     area?: string;
-    description?: string;
+    desc?: string;
     birth?: Date;
     state?: string;
     city?: string;
