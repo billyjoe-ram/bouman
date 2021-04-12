@@ -63,8 +63,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     sanitize: true,
     toolbarPosition: 'top',
     toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
+      ['insertImage'],
+      ['insertVideo']
     ]
 };
   
