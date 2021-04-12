@@ -42,17 +42,14 @@
 
 .card .card-body .profile-card-content .text-content span {
   font-weight: bold;
+  font-size: 1.3rem;
 }
 
 .card .card-body .profile-card-content .text-content p {
   width: 56vw;
   
   text-align: justify;
-  font-size: 0.7rem;
-}
-
-.card .card-body #editPen {
-  margin-left: 55%;
+  font-size: 1.3rem;
 }
 
 .card .card-body #button-save {
@@ -61,11 +58,8 @@
   background-color: #fa902e;
 
   color: #ffffff;
-  font-weight: bold;
-  font-size: 1.7rem;
 
-  height: 30px;
-  width: 90%;
+  padding: 5% 20%;
 }
 
 .card .card-body .fotoPerfil {
@@ -78,14 +72,13 @@
   border: 2px solid #df660f;
   border-radius: 6px;
 
-  width: 24%;
-  margin-left: 7%;
-  margin-bottom: 50%;
+  width: 20%;
+  margin-left: 0.6rem;
 
-  z-index: 30;
+  z-index: 5;
   position: absolute;
 
-  font-size: 1.3rem;
+  font-size: 0.8rem;
   text-align: center;
 
   cursor: pointer;
@@ -97,22 +90,27 @@
 }
 
 .card .card-body #labelFundo {
-  font-size: 2.8rem;
+  font-size: 1.8rem;
   text-align: center;
   color: white;
 
   z-index: 5;
   position: absolute;
-  margin-top: 9%;
+  margin-top: 5%;
 
   cursor: pointer;
 }
 
 #btnFotos {
-  margin-top: 3%;
+  margin-top: 1%;
+  margin-left: 10%;
 }
 
 @media (min-width: 768px) {
+  /*#btnFotos {
+    margin-left: 0%;
+  }*/
+
   .card .card-body img.profile-background {
     width: 60vw;
   }
@@ -142,6 +140,37 @@
   }
 }
 
+@media (max-width: 426px) {
+  #btnFotos {
+    margin-left: 0;
+  }
+
+  .card .card-body .profile-card-content .text-content p {
+    width: 50vw;
+    font-size: 0.9rem;
+  }
+
+  .card .card-body #labelFundo {
+    margin-top: 2%;
+    margin-left: 10%;
+
+    width: 70%;
+    font-size: 1.3rem;
+  }
+
+  .card .card-body #labelPerfil {
+    width: 25%;
+  }
+
+  .card .card-body .profile-card-content {
+    height: 12vh;
+  }
+
+  .card .card-body #button-save {
+    margin-left: -15%;
+  }
+}
+
 @media (min-width: 1024px) {
   .card .card-body img.profile-background {
     width: 45vw;
@@ -164,7 +193,7 @@
 
   .card .card-body .profile-card-content .text-content p {
     max-width: 24vw;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     margin: 0.6rem 0;
   }
 }
