@@ -27,29 +27,21 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    let user, id, coll;
+    let user;
 
     try {
       await this.authService.login(this.userLogin);
 
       user = await this.authService.getAuth().currentUser;
       
-      this.user.getId().then((user) => {
-        id = user;
-      });
-
-      coll = this.user.getCollection();
-
-      console.log(coll);
-
     } catch (error) {
       console.error(error);
     } finally {
       console.log(user?.emailVerified);
       if (user != null && user?.emailVerified) {
-        this.router.navigate(["/config"]);
-      } else {
         this.router.navigate(["/feed"]);
+      } else {
+        this.router.navigate(["/config"]);
       }
     }
 

@@ -42,32 +42,20 @@ export class UsersService {
     return this.wallpImg;
   }
 
-  async getId() {
-    let user;
-
-    try {
-      user = await this.authService.getAuth().currentUser;
-    } catch {
-      user = null;
-    }
-
-    return user?.uid;
-  }
-
   async getCollection() {
     const user = await this.authService.getAuth().currentUser;
 
     let userObject: {name: string, desc: string, area: string} = { name: "", desc: "", area: ""};
-
+    
     const collection = this.store.collection('Users').doc(user?.uid).valueChanges();
     
-    collection.subscribe((data: any) => {
+    collection.subscribe((data: any) => {      
       userObject.name = data.name;
       userObject.desc = data.desc;
       userObject.area = data.area;
     });
 
     return userObject;
-  }  
+  }
 
 }
