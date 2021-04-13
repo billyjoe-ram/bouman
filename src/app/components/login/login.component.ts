@@ -32,26 +32,27 @@ export class LoginComponent implements OnInit {
     try {
       await this.authService.login(this.userLogin);
 
-      user = await this.authService.getAuth().currentUser;
+      this.router.navigate(["/feed"]);
     } catch (error) {
       console.error(error);
-    } finally {
-      this.userData = this.user.getCollection(user?.uid)
+    } 
+    // finally {
+    //   this.userData = this.user.getCollection(user?.uid)
 
-      if(user != null){
-        if(user?.emailVerified){
-          if(!this.userData.desc){
-            this.router.navigate(["/config"]);
-          } else {
-            this.router.navigate(["/feed"]);
-          }
-        } else {
-          console.log("Que tal autenticar seu e-mail antes?")
-        }
-      } else {
-        console.log("Você primeiro deve logar ;)")
-      }
-    }
+    //   if(user != null){
+    //     if(user?.emailVerified){
+    //       if(!this.userData.desc){
+    //         this.router.navigate(["/config"]);
+    //       } else {
+    //         this.router.navigate(["/feed"]);
+    //       }
+    //     } else {
+    //       console.log("Que tal autenticar seu e-mail antes?")
+    //     }
+    //   } else {
+    //     console.log("Você primeiro deve logar ;)")
+    //   }
+    // }
 
   }
 

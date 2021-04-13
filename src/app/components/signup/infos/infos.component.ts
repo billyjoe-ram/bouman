@@ -53,11 +53,9 @@ export class InfosComponent implements OnInit {
 
         this.form.reset();
         
-        const user = newUser.user?.uid;
+        const user = newUser.user?.uid;        
 
-        this.authService.logout();
-
-        this.verifyEmail();
+        // this.verifyEmail();
 
         // Save the own user doc in users collection
         await this.store.collection('Users').doc(user).set(userObject);
@@ -67,34 +65,11 @@ export class InfosComponent implements OnInit {
       } catch (error) {
         console.error(error);
       } finally {        
-        this.router.navigate(["/login"]);        
+        this.router.navigate(["/config"]);
         
       }
 
     }
-  }
-
-  async verifyEmail() {
-    const user = await this.authService.getAuth().currentUser;
-
-    this.emailverified = user?.emailVerified;
-
-    if (!this.emailverified && user != null){
-
-      user.sendEmailVerification().then(() => {
-        // Email enviado corretamente.
-        user.providerData.forEach((profile:any) => {
-          window.alert("Foi enviado um link de verificação de usuário para o seu e-mail: " + profile.email)
-        });
-      }).catch((error) => {
-        // Um erro ocorreu.        
-        window.alert('Um erro ocorreu, verifique se na sua caixa de entrada já não possui um link de verificação, caso não haja, tente novamente...');
-
-        console.error(error);
-      });
-      
-    }
-
   }
 
 }
