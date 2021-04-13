@@ -30,13 +30,9 @@ export class ConfigurateComponent implements OnInit {
   }
 
   async onSign() {
-    const user = await this.authService.getAuth().currentUser;
+    const user = await this.authService.getAuth().currentUser;    
 
-    this.emailverified = user?.emailVerified;
-
-    const verified = this.emailverified;
-
-    if (this.form.valid && verified && user) {
+    if (this.form.valid) {
 
       const description = this.form.value.desc;
       const date = this.form.value.date;
@@ -44,19 +40,41 @@ export class ConfigurateComponent implements OnInit {
       const city = this.form.value.city;
 
       try {
-        await this.store
-          .collection('Users')
-          .doc(user?.uid)
-          .update({ desc: description, birth: date, state: state, city: city });
+        await this.store.collection('Users').doc(user?.uid).update({ desc: description, birth: date, state: state, city: city });
 
-          this.router.navigate(["/feed"]);
+        this.authService.logout();
+
+        this.verifyEmail();
 
       } catch (error) {
         console.error(error);
       }
     }
 
-  }  
+  }
+
+  async verifyEmail() {
+    const user = await this.authService.getAuth().currentUser;
+
+    this.emailverified = user?.emailVerified;
+
+    if (!this.emailverified && user != null){
+
+      user.sendEmailVerification().then(() => {
+        // Email enviado corretamente.
+        user.providerData.forEach((profile:any) => {
+          window.alert("Foi enviado um link de verificação de usuário para o seu e-mail: " + profile.email)
+        });
+      }).catch((error) => {
+        // Um erro ocorreu.        
+        window.alert('Um erro ocorreu, verifique se na sua caixa de entrada já não possui um link de verificação, caso não haja, tente novamente...');
+
+        console.error(error);
+      });
+      
+    }
+
+  }
 
   public getStates() {
     this.ibgeService.getStates().subscribe((res) => {
