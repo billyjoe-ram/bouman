@@ -42,12 +42,11 @@ export class UsersService {
     return this.wallpImg;
   }
 
-  async getCollection() {
-    const user = await this.authService.getAuth().currentUser;
-
+  
+  getCollection(id: string | undefined) {
     let userObject: {name: string, desc: string, area: string} = { name: "", desc: "", area: ""};
     
-    const collection = this.store.collection('Users').doc(user?.uid).valueChanges();
+    const collection = this.store.collection('Users').doc(id).valueChanges();
     
     collection.subscribe((data: any) => {      
       userObject.name = data.name;

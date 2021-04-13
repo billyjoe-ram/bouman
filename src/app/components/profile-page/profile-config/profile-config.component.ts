@@ -22,9 +22,10 @@ export class ProfileConfigComponent implements OnInit {
   constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService, private auth: AngularFireAuth) { }
 
   ngOnInit(): void {
-    this.userService.getCollection().then((coll) => {
-      this.user = coll;
-    });
+    // this.userService.getCollection().then((coll) => {
+    //   this.user = coll;
+    // });
+    this.getData();
 
     this.areas = this.areasService.getAreas();
   }
@@ -52,17 +53,11 @@ export class ProfileConfigComponent implements OnInit {
     
     console.log(email);
     console.log(password);
-    /*if (user != null && (email != null || email != undefined || password != null || password != undefined)) {
-       user.reauthenticateWithCredential(email).then(() => {
-         // User re-authenticated.
-         this.service.deleteProfile(user?.uid);
-         this.service.deleteProfile(user?.uid);
-       }).catch(function (error) {
-         // An error happened.
-    });
 
-    }*/
-
+  }
+  async getData(){
+    const user = await this.authService.getAuth().currentUser;
+    this.user = this.user.getCollection(user?.uid);
   }
 
 }
