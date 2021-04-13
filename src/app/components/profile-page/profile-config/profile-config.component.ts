@@ -57,7 +57,7 @@ export class ProfileConfigComponent implements OnInit {
   }
   async getData(){
     const user = await this.authService.getAuth().currentUser;
-    this.user = this.user.getCollection(user?.uid);
+    this.user = this.userService.getCollection(user?.uid);
   }
 
 }
