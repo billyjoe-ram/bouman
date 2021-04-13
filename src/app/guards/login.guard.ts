@@ -19,15 +19,12 @@ export class LoginGuard implements CanActivate {
     return new Promise(resolve => {
       this.ngAuth.getAuth().onAuthStateChanged(user => {
         if (user) {
-          console.log('testando porra billy')
           this.userdata = this.U_Service.getCollection(user.uid)
           if (this.userdata.desc == "" || this.userdata.desc == undefined || this.userdata.desc == null){
             console.log(this.userdata)
-            console.log('testando')
           this.router.navigate(["/config"]);
         
           }else{
-            console.log('ele agora saiu de dentro daquele IF do login Guard')
             this.router.navigate(["/feed"]);
           }
           

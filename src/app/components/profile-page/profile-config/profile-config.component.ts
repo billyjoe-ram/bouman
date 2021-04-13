@@ -7,6 +7,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms'
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-config',
@@ -19,7 +20,8 @@ export class ProfileConfigComponent implements OnInit {
 
   public areas: any = {};
 
-  constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService, private auth: AngularFireAuth) { }
+  constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService,
+     private auth: AngularFireAuth, private router: Router) { }
 
   ngOnInit(): void {
     // this.userService.getCollection().then((coll) => {
@@ -35,9 +37,19 @@ export class ProfileConfigComponent implements OnInit {
 
     const formData = form.value;
 
-    console.log(formData);
 
-    this.service.updateProfile(user?.uid, { name: formData.name, description: formData.desc, area: formData.area })
+
+    try {
+          this.service.updateProfile(user?.uid, { name: formData.name, description: formData.desc, area: formData.area })
+    }
+    catch(err){
+      console.log('Ocorreu alguma coisa errado no update dos dados cadastrados...')
+    }
+    finally{
+      console.log("Os dados foram cadastrados.");
+      this.router.navigate(["/profile"]);
+    }
+
   }
 
   async onDelete(form: NgForm) {
