@@ -34,10 +34,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.user.getCollection().then((coll) => {
-      this.userData = coll;
-    });
-
+    this.getData();
     // usando o service de usuario para pegar as imagens
 
     this.user.getProfilePicture().then((url: any) => {
@@ -94,4 +91,10 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     this.esconder = !this.esconder;
 
   }
+
+  async getData(){
+    const user = await this.auth.getAuth().currentUser;
+    this.userData = this.user.getCollection(user?.uid);
+  }
+
 }

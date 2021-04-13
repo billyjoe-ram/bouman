@@ -33,15 +33,23 @@ export class LoginComponent implements OnInit {
       await this.authService.login(this.userLogin);
 
       user = await this.authService.getAuth().currentUser;
-      
     } catch (error) {
       console.error(error);
     } finally {
-      console.log(user?.emailVerified);
-      if (user != null && user?.emailVerified) {
-        this.router.navigate(["/feed"]);
+      this.userData = this.user.getCollection(user?.uid)
+
+      if(user != null){
+        if(user?.emailVerified){
+          if(!this.userData.desc){
+            this.router.navigate(["/config"]);
+          } else {
+            this.router.navigate(["/feed"]);
+          }
+        } else {
+          console.log("Que tal autenticar seu e-mail antes?")
+        }
       } else {
-        this.router.navigate(["/config"]);
+        console.log("Você primeiro deve logar ;)")
       }
     }
 

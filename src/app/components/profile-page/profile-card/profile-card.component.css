@@ -54,13 +54,10 @@
 }
 
 .card .card-body #button-save {
-  border-radius: 8px;
   border-color: #df660f;
   background-color: #fa902e;
 
   color: #ffffff;
-
-  padding: 5% 20%;
 }
 
 .card .card-body .fotoPerfil {
@@ -103,8 +100,8 @@
 }
 
 #btnFotos {
-  margin-top: 1%;
-  margin-left: 10%;
+  margin-top: 1vh;
+  margin-left: 2vw;
 }
 
 @media (min-width: 768px) {

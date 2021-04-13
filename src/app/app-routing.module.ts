@@ -13,7 +13,7 @@ import { ProjectComponent } from './components/projects/project-overview/project
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: "signup", pathMatch: 'full' },
+  { path: '', redirectTo: "feed", pathMatch: 'full' },
   { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [LoginGuard] },
   { path: 'config',  component: ConfigurateComponent, canActivate: [AuthGuard] },
