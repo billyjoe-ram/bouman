@@ -11,7 +11,7 @@ export class LoginGuard implements CanActivate {
 
 
 
-  constructor(private ngAuth: AuthService, private router: Router, private U_Service : UsersService) {}
+  constructor(private ngAuth: AuthService, private router: Router, private userService : UsersService) {}
   userdata : {name : string, desc : string, area : string} = {name: "", desc: "", area: ""};
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -19,7 +19,7 @@ export class LoginGuard implements CanActivate {
     return new Promise(resolve => {
       this.ngAuth.getAuth().onAuthStateChanged(user => {
         if (user) {
-          this.userdata = this.U_Service.getCollection(user.uid)
+          this.userdata = this.userService.getCollection(user.uid)
           if (this.userdata.desc == "" || this.userdata.desc == undefined || this.userdata.desc == null){
             console.log(this.userdata)
           this.router.navigate(["/config"]);
