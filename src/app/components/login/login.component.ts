@@ -46,10 +46,10 @@ export class LoginComponent implements OnInit {
             this.router.navigate(["/feed"]);
           }
         } else {
-          console.log("Não vai entrar")
+          console.log("Que tal autenticar seu e-mail antes?")
         }
       } else {
-        console.log("Trate esse erro")
+        console.log("Você primeiro deve logar ;)")
       }
     }
 
