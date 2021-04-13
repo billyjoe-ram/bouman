@@ -39,9 +39,9 @@ export class LoginComponent implements OnInit {
     } finally {
       console.log(user?.emailVerified);
       if (user != null && user?.emailVerified) {
-        this.router.navigate(["/feed"]);
-      } else {
         this.router.navigate(["/config"]);
+      } else {
+        this.router.navigate(["/feed"]);
       }
     }
 
