@@ -32,6 +32,8 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
   private profileSubs!: Subscription;
   private userSubs!: Subscription;
 
+  private paramsSubs!: Subscription;
+
   constructor(
     private storage: AngularFireStorage,
     private auth: AuthService,
@@ -40,8 +42,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
-    this.getData();
     // usando o service de usuario para pegar as imagens
 
     this.user.getProfilePicture().then((url: any) => {
@@ -59,6 +59,16 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
         this.wallpImg = this.user.wallpasset();
       })      
     });
+
+    this.paramsSubs = this.route.params.subscribe((params) => {
+      this.profileId = params['profid'];
+      console.log(this.profileId);
+
+      this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
+        this.userData = profile;
+      });
+    });
+
   }
 
   ngOnDestroy() {
@@ -66,6 +76,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     this.wallpaper.unsubscribe();
 
     this.profileSubs.unsubscribe();
+    this.paramsSubs.unsubscribe();
   }
 
   getProfileImg(event: any) {
@@ -99,14 +110,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     // finalmente, alterando o estado do booleano
     this.esconder = !this.esconder;
 
-  }
-
-  async getData() {
-    this.profileId = this.route.snapshot.params['profid'];
-
-    this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
-      this.userData = profile;
-    });
   }
 
 }
