@@ -54,11 +54,4 @@ export class ProfileService {
 
   }
 
-  getProfile(id: string | undefined) {
-    const collection = this.store.collection('Profiles').doc(id).valueChanges();
-    
-    return collection;
-  }
-
-
 }
