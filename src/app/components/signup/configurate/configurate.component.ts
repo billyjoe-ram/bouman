@@ -22,6 +22,10 @@ export class ConfigurateComponent implements OnInit {
 
   private statesSubs!: Subscription;
   private citiesSubs!: Subscription;
+
+  private profileSubs!: Subscription;
+
+  private userProfile: any = {};
   
   constructor(
     private authService: AuthService,
@@ -33,6 +37,8 @@ export class ConfigurateComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStates();
+
+    this.getData();
   }
 
   async onSign() {
@@ -46,11 +52,8 @@ export class ConfigurateComponent implements OnInit {
       const city = this.form.value.city;
 
       try {
-        const profile = this.usersService.getCollection(user?.uid);
 
-        console.log(profile);
-
-        const userProfile = this.store.collection('Profiles').doc(profile.profileId);
+        const userProfile = this.store.collection('Profiles').doc(this.userProfile.profileId);
 
         await this.store.collection('Users').doc(user?.uid).update({ birth: date, state: state, city: city });
 
@@ -119,9 +122,28 @@ export class ConfigurateComponent implements OnInit {
     
   }
 
+  async getData(){
+    const user = await this.authService.getAuth().currentUser;
+    
+    let profileId;
+    
+    
+    this.profileSubs = this.usersService.getProfile(user?.uid).subscribe((profile: any) => {
+      console.log(profile);
+
+      profileId = profile.profileId;
+
+      this.userProfile = profile;
+
+      console.log(profileId);
+    });
+  }
+
   ngOnDestroy() {
     this.statesSubs.unsubscribe();
     this.citiesSubs.unsubscribe();
+
+    this.profileSubs.unsubscribe();
   }
 
 }

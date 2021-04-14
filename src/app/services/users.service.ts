@@ -41,7 +41,6 @@ export class UsersService {
   wallpasset(){
     return this.wallpImg;
   }
-
   
   getCollection(id: string | undefined) {
     let userObject: {name: string, desc: string, area: string, profileId: string} = { name: "", desc: "", area: "", profileId: ""};
@@ -54,8 +53,14 @@ export class UsersService {
       userObject.area = data.area;
       userObject.profileId = data.profileId;
     });
-    console.log(userObject)
+    // console.log(userObject);
     return userObject;
+  }
+
+  getProfile(id: string | undefined) {
+    const collection = this.store.collection('Users').doc(id).valueChanges();
+    
+    return collection;
   }
 
 }
