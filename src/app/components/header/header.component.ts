@@ -17,8 +17,10 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   public profileImg: any = "";
+  public profileId: string  = "";
 
   private profile!: Subscription;
+  private userSubs!: Subscription;
   
   @Output() featureSelected = new EventEmitter<string>();
   
@@ -36,10 +38,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });      
     });
     
+    this.getData();
   }
 
   ngOnDestroy() {
     this.profile.unsubscribe();
+
+    this.userSubs.unsubscribe();
   }  
 
   onSelect(feature: string) {
@@ -48,6 +53,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logOut(){
     this.authService.logout();
+  }
+
+  async getData(){
+    const user = await this.authService.getAuth().currentUser;
+
+    this.userSubs = this.user.getProfile(user?.uid).subscribe((profile: any) => {
+      this.profileId = profile.profileId;
+    });
+
   }
   
 }

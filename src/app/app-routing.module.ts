@@ -18,12 +18,12 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent, canActivate: [LoginGuard] },
   { path: 'config',  component: ConfigurateComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
-  { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
-  { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard], children: [
     { path: 'overview', component: ProjectOverviewComponent },
     { path: ':id', component: ProjectComponent }
   ] },
+  { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
+  { path: 'profiles/:profid', component: ProfilePageComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
