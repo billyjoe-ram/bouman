@@ -49,9 +49,12 @@ export class UsersService {
     const collection = this.store.collection('Users').doc(id).valueChanges();
     
     collection.subscribe((data: any) => {
-      userObject = data;
+      userObject.name = data.name;
+      userObject.desc = data.desc;
+      userObject.area = data.area;
+      userObject.profileId = data.profileId;
     });
-
+    console.log(userObject)
     return userObject;
   }
 
