@@ -9,8 +9,6 @@ import { UsersService} from '../services/users.service';
 })
 export class LoginGuard implements CanActivate {
 
-
-
   constructor(private ngAuth: AuthService, private router: Router, private userService : UsersService) {}
   userdata : {name : string, desc : string, area : string} = {name: "", desc: "", area: ""};
   canActivate(
@@ -22,7 +20,7 @@ export class LoginGuard implements CanActivate {
           this.userdata = this.userService.getCollection(user.uid)
           if (this.userdata.desc == "" || this.userdata.desc == undefined || this.userdata.desc == null){
             console.log(this.userdata)
-          this.router.navigate(["/config"]);
+            this.router.navigate(["/config"]);
         
           }else{
             this.router.navigate(["/feed"]);
