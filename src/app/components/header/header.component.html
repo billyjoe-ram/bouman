@@ -44,7 +44,7 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li class="nav-item"><a [routerLink]="['/profiles', profileId]" (click)="onSelect('profile')" class="nav-link">Perfil</a></li>
+                    <li class="nav-item"><a routerLink="/profile" (click)="onSelect('profile')" class="nav-link">Perfil</a></li>
                     <li class="nav-item"><a routerLink="/profile-config" class="nav-link">Configurações</a></li>
                     <!-- <li class="nav-item"><a class="nav-link">Suporte</a></li> -->
                     <li class="nav-item"><a routerLink="/signup" (click)='logOut()' class="nav-link">Sair</a></li>
