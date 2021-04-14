@@ -20,6 +20,8 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
 
   public areas: any = {};
   
+  private profileId: string = "";
+
   private getcoll!: Subscription;
 
   private getprof!: Subscription;
@@ -42,9 +44,10 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     const formData = form.value;
     console.log(this.user.profileId)
     try {
+          this.profileId = this.user.profile.Id;
           this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area })
           console.log("Os dados foram cadastrados.");
-          this.router.navigate(["/profile"]);
+          //this.router.navigate(["/profiles/"+this.profileId]);
     }
     catch(err){
       console.log('Ocorreu alguma coisa errado no update dos dados cadastrados...')
