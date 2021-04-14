@@ -20,6 +20,8 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
 
   public areas: any = {};
   
+  private getcoll!: Subscription;
+
   private getprof!: Subscription;
 
   constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService,
@@ -68,14 +70,17 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   
   async getData(){
     const user = await this.authService.getAuth().currentUser;
-    this.user = this.userService.getCollection(user?.uid);
-    console.log(this.user.profile)
-    this.getprof = this.service.getProfile(this.user.profileId).subscribe((data : any)=>{
-      this.user.name = data.name;
-      this.user.desc = data.desc;
+    this.getcoll = this.userService.getProfile(user?.uid).subscribe((data:any)=>{
+      this.user = data;
+      this.getprof = this.service.getProfile(this.user.profileId).subscribe((data : any)=>{
+        this.user.name = data.name;
+        this.user.desc = data.desc;
     })
+    });
   }
   ngOnDestroy(){
+    this.getcoll.unsubscribe();
+    this.getprof.unsubscribe();
   }
 
 }
