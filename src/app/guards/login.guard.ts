@@ -18,8 +18,7 @@ export class LoginGuard implements CanActivate {
       this.ngAuth.getAuth().onAuthStateChanged(user => {
         if (user) {
           this.userdata = this.userService.getCollection(user.uid)
-          if (this.userdata.desc == "" || this.userdata.desc == undefined || this.userdata.desc == null){
-            console.log(this.userdata)
+          if (this.userdata.desc == "" || this.userdata.desc == undefined || this.userdata.desc == null) {
             this.router.navigate(["/config"]);
         
           }else{

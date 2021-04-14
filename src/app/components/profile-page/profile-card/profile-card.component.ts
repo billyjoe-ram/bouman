@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -20,17 +22,22 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
   private profile!: Subscription;
   private wallpaper!: Subscription;
+  private profileId: string = "";
 
   private imgPath: any = "";
   private imgcheck: boolean = false;
   private backgroundPath: any = "";
   private backcheck: boolean = false;
 
+  private profileSubs!: Subscription;
+  private userSubs!: Subscription;
+
   constructor(
     private storage: AngularFireStorage,
     private auth: AuthService,
-    private renderer: Renderer2,
-    private user: UsersService) { }
+    private user: UsersService,
+    private profileService: ProfileService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -57,6 +64,8 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.profile.unsubscribe();
     this.wallpaper.unsubscribe();
+
+    this.profileSubs.unsubscribe();
   }
 
   getProfileImg(event: any) {
@@ -92,9 +101,12 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
   }
 
-  async getData(){
-    const user = await this.auth.getAuth().currentUser;
-    this.userData = this.user.getCollection(user?.uid);
+  async getData() {
+    this.profileId = this.route.snapshot.params['profid'];
+
+    this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
+      this.userData = profile;
+    });
   }
 
 }
