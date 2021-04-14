@@ -44,14 +44,12 @@ export class UsersService {
 
   
   getCollection(id: string | undefined) {
-    let userObject: {name: string, desc: string, area: string} = { name: "", desc: "", area: ""};
+    let userObject: {name: string, desc: string, area: string, profileId: string} = { name: "", desc: "", area: "", profileId: ""};
     
     const collection = this.store.collection('Users').doc(id).valueChanges();
     
-    collection.subscribe((data: any) => {      
-      userObject.name = data.name;
-      userObject.desc = data.desc;
-      userObject.area = data.area;
+    collection.subscribe((data: any) => {
+      userObject = data;
     });
 
     return userObject;
