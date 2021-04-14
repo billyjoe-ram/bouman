@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,11 +14,13 @@ import { Router } from '@angular/router';
   templateUrl: './profile-config.component.html',
   styleUrls: ['./profile-config.component.css']
 })
-export class ProfileConfigComponent implements OnInit {
+export class ProfileConfigComponent implements OnInit, OnDestroy {
 
-  public user: any = { name: '', desc: '', area: '' };
+  public user: any = { name: '', desc: '', area: '', profileId: '' };
 
   public areas: any = {};
+  
+  private getprof!: Subscription;
 
   constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService,
      private auth: AngularFireAuth, private router: Router) { }
@@ -36,18 +38,14 @@ export class ProfileConfigComponent implements OnInit {
     const user = await this.authService.getAuth().currentUser;
 
     const formData = form.value;
-
-
-
+    console.log(this.user.profileId)
     try {
-          this.service.updateProfile(user?.uid, { name: formData.name, description: formData.desc, area: formData.area })
+          this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area })
+          console.log("Os dados foram cadastrados.");
+          this.router.navigate(["/profile"]);
     }
     catch(err){
       console.log('Ocorreu alguma coisa errado no update dos dados cadastrados...')
-    }
-    finally{
-      console.log("Os dados foram cadastrados.");
-      this.router.navigate(["/profile"]);
     }
 
   }
@@ -70,6 +68,13 @@ export class ProfileConfigComponent implements OnInit {
   async getData(){
     const user = await this.authService.getAuth().currentUser;
     this.user = this.userService.getCollection(user?.uid);
+    console.log(this.user.profile)
+    this.getprof = this.service.getProfile(this.user.profileId).subscribe((data : any)=>{
+      this.user.name = data.name;
+      this.user.desc = data.desc;
+    })
+  }
+  ngOnDestroy(){
   }
 
 }

@@ -3,22 +3,33 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { User } from '../interfaces/user';
 import { AuthService } from './auth.service';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  private UserCollection = this.store.collection<User>('Users');
+  private userCollection = this.store.collection<User>('Users');
+  private profileCollection = this.store.collection('Profiles');
 
-  constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore) { }
+  constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore, private usersService: UsersService) { }
 
   createProfile(user: User) {
-    return this.UserCollection.add(user);
+    return this.userCollection.add(user);
   }
 
-  updateProfile(id: string | undefined, user: { name: string, description: string, area: string }) {
-    return this.UserCollection.doc(id).update({name: user.name, desc: user.description, area: user.area});
+  updateProfile(id: string | undefined, pid: string | undefined, user: { name: string, description: string, area: string }) {
+    this.profileCollection.doc(pid).update({name: user.name, desc: user.description});
+    this.userCollection.doc(id).update({area: user.area});
+  }
+
+  getProfile(pid: string | undefined) {
+    let userObject: {name: string, desc: string, storage: string} = { name: "", desc: "", storage: ""};
+    
+    const collection = this.store.collection('Profiles').doc(pid).valueChanges();
+    
+    return collection
   }
 
   async deleteProfile(id: string | undefined) {
@@ -30,7 +41,7 @@ export class ProfileService {
     try {
       user?.delete();
 
-      this.UserCollection.doc(id).delete();
+      this.userCollection.doc(id).delete();
 
       this.storage.ref(profImgPath).delete();
 
