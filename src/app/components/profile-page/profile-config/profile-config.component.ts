@@ -44,13 +44,12 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     const formData = form.value;
     console.log(this.user.profileId)
     try {
-          this.profileId = this.user.profile.Id;
-          this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area })
-          console.log("Os dados foram cadastrados.");
-          //this.router.navigate(["/profiles/"+this.profileId]);
+      this.profileId = this.user.profileId;
+      this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area });
+      this.router.navigate(["/profiles/", this.profileId]);
     }
     catch(err){
-      console.log('Ocorreu alguma coisa errado no update dos dados cadastrados...')
+      console.error(err);
     }
 
   }
