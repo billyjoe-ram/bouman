@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -32,6 +32,8 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
   private profileSubs!: Subscription;
   private userSubs!: Subscription;
 
+  private paramsSubs!: Subscription;
+
   constructor(
     private storage: AngularFireStorage,
     private auth: AuthService,
@@ -40,25 +42,9 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    
+    this.loadData();
 
-    this.getData();
-    // usando o service de usuario para pegar as imagens
-
-    this.user.getProfilePicture().then((url: any) => {
-      this.profile = url.subscribe((profP: any) => {
-        this.profileImg = profP;
-      }, (err: any) => {
-        this.profileImg = this.user.profasset();
-      });      
-    });
-
-    this.user.getWallpaper().then((url: any) => {
-      this.wallpaper = url.subscribe((wallP: any) => {
-        this.wallpImg = wallP;
-      }, (err: any) => {
-        this.wallpImg = this.user.wallpasset();
-      })      
-    });
   }
 
   ngOnDestroy() {
@@ -66,6 +52,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     this.wallpaper.unsubscribe();
 
     this.profileSubs.unsubscribe();
+    this.paramsSubs.unsubscribe();
   }
 
   getProfileImg(event: any) {
@@ -79,10 +66,9 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
   }
 
   async saveFotos() {
-    const user = await this.auth.getAuth().currentUser;
 
-    const profImgPath = `profile-pictures/${user?.uid}`;
-    const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
+    const profImgPath = `profiles/${this.profileId}/profile-pictures/profile${this.profileId}`;
+    const wlppImgPath = `profiles/${this.profileId}/wallpaper-pictures/wallpaper${this.profileId}`;
     if (this.imgcheck == true) {
       const refProf = await this.storage.upload(profImgPath, this.imgPath);
       refProf.ref.getDownloadURL().then(url => {
@@ -101,12 +87,27 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
   }
 
-  async getData() {
-    this.profileId = this.route.snapshot.params['profid'];
+  loadData() {
+    this.paramsSubs = this.route.params.subscribe((params) => {
+      this.profileId = params['profid'];
 
-    this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
-      this.userData = profile;
+      this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
+        this.userData = profile;
+
+        this.profile = this.user.getProfilePicture(this.profileId).subscribe((url: any) => {
+          this.profileImg = url;
+        }, (err: any) => {
+          this.profileImg = this.user.profasset();
+        });
+    
+        this.wallpaper = this.user.getWallpaper(this.profileId).subscribe((url: any) => {
+          this.wallpImg = url;
+        }, (err: any) => {
+          this.wallpImg = this.user.wallpasset();
+        });
+      });
     });
+
   }
 
 }

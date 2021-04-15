@@ -17,26 +17,32 @@
 
     </div>
 
-    <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#updateModal">
       Salvar
       </button>
     <!-- Button trigger modal -->
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Você realmente deseja salvar as alterações?</h5>
+        <h5 class="modal-title" id="updateModalLabel">Salvar as alterações?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        As alterações podem ser irreversíveis...
+        Suas informações também serão alteradas para grupos em que você participa e para aqueles que te seguem
+
+        <ul>
+          <li>Nome: {{ user.name }}</li>
+          <li>Descrição: {{ user.desc }}</li>
+          <li>Área: {{ areas[+user.area - 1].name }}</li>
+        </ul>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="submit" class="btn btn-primary">Salvar Mudanças</button>
+        <button type="button" class="btn btn-outline-info" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-bouman">Salvar Mudanças</button>
       </div>
     </div>
     </div>
