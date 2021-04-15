@@ -18,7 +18,7 @@ export class UsersService {
   constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore) { }
 
   getProfilePicture(pid: string) {
-    const filePath = `profile-pictures/${pid}`;
+    const filePath = `profiles/${pid}/profile-pictures/profile${pid}`;
     const fileRef = this.storage.ref(filePath);
     return fileRef.getDownloadURL();
   }
@@ -28,7 +28,7 @@ export class UsersService {
   }
 
   getWallpaper(pid: string) {
-    const filePath = `wallpaper-pictures/${pid}`;
+    const filePath = `profiles/${pid}/wallpaper-pictures/wallpaper${pid}`;
     const fileRef = this.storage.ref(filePath);
     
     return fileRef.getDownloadURL();

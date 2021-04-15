@@ -67,8 +67,8 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
   async saveFotos() {
 
-    const profImgPath = `profile-pictures/${this.profileId}`;
-    const wlppImgPath = `wallpaper-pictures/${this.profileId}`;
+    const profImgPath = `profiles/${this.profileId}/profile-pictures/profile${this.profileId}`;
+    const wlppImgPath = `profiles/${this.profileId}/wallpaper-pictures/wallpaper${this.profileId}`;
     if (this.imgcheck == true) {
       const refProf = await this.storage.upload(profImgPath, this.imgPath);
       refProf.ref.getDownloadURL().then(url => {
