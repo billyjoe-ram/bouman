@@ -17,10 +17,8 @@ export class UsersService {
   
   constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore) { }
 
-  async getProfilePicture() {
-    const user = await this.authService.getAuth().currentUser;
-
-    const filePath = `profile-pictures/${user?.uid}`;
+  getProfilePicture(pid: string) {
+    const filePath = `profile-pictures/${pid}`;
     const fileRef = this.storage.ref(filePath);
     return fileRef.getDownloadURL();
   }
@@ -29,10 +27,8 @@ export class UsersService {
     return this.profileImg;
   }
 
-  async getWallpaper() {
-    const user = await this.authService.getAuth().currentUser;
-
-    const filePath = `wallpaper-pictures/${user?.uid}`;
+  getWallpaper(pid: string) {
+    const filePath = `wallpaper-pictures/${pid}`;
     const fileRef = this.storage.ref(filePath);
     
     return fileRef.getDownloadURL();

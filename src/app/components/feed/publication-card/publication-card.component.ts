@@ -21,7 +21,7 @@ export class PublicationCardComponent implements OnInit {
 
     this.publication.interaction = "compartilhou";
 
-    this.profileImg = this.user.getProfilePicture();
+    // this.profileImg = this.user.getProfilePicture();
   }
 
 }
