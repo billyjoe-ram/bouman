@@ -1,6 +1,36 @@
-<div class="card">
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-body">
+                <img [src]="profileImg" alt="Foto de perfil" class="profile-picture img-responsive">
+                <div class="text-content">
+                    <span class="card-title">{{ userData.name }}</span>
+                    <p class="card-text">{{ userData.desc }}</p>
+                </div>
+                <div id="btnFotos">
+                    <div *ngIf="!esconder; else elseBloco">
+                        <img role="button" (click)="esconder = !esconder" id="editPen" src="../../../../assets/pen.svg">
+                    </div>
+                    <ng-template #elseBloco>
+                        <button class="btn" id="button-save" type="button" (click)="saveFotos()">Salvar</button>
+                    </ng-template>
+                </div>
+                <img [src]="wallpImg" alt="Papel de parede" class="profile-background img-responsive">
+            </div>
+            <div class="card-footer">
+                <p>Artigos <label>12</label></p>
+                <p>Contribuições <label>347</label></p>
+                <p>Outros Projetos <label>3</label></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+<!-- ANTIGO HTML DO CARD DE PERFIL
+    <div class="card">
     <div class="card-body">  
-        
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6" #btnFundo>
@@ -41,4 +71,4 @@
             </div>
         
     </div>
-</div>
+</div>-->
