@@ -2,15 +2,49 @@
     resize: none;
 }
 
-button.btn-bouman {
-    background: #FA902E;
-    border: 1px solid #DF660F;
+button.btn-bouman-modal, button.btn-bouman-form {
     box-sizing: border-box;
     border-radius: 6px;
     color: white;
     transition: 0.3s;
 }
 
-button.btn-bouman:hover {
+button.btn-bouman-form {
+    width: 100%;
+    background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
+}
+
+button.btn-bouman-modal{
+    background: #FA902E;
+    border: 1px solid #DF660F;
+}
+
+button.btn-bouman-modal:hover{
     background: #DF660F;
+}
+
+button.btn-bouman-form:hover {
+    background: #2ca8ba;
+}
+.modal-footer{
+    justify-content: space-between;
+}
+
+label{
+    margin-top: 2%;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+.listItem{
+    font-weight: bold;
+    list-style: none;
+    margin-top: 2%;
+    margin-bottom: 0;
+}
+
+#backForm{
+    background: linear-gradient(180deg, #df660f 0%, #fa902e 100%);
+    padding: 2% 3%;
+    border-radius: 6px;
 }
