@@ -1,14 +1,16 @@
-.card{
+.card {
   filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.5));
   border-radius: 8px 8px 0 0;
+
+  width: min-content;
 }
-.card .card-body{
+.card .card-body {
   padding: 0;
 }
 
 .card .card-body img.profile-background {
   height: 30vh;
-  width: 100%;
+  width: 60vw;
   border-radius: 8px 8px 0 0;
 }
 
@@ -19,14 +21,14 @@
   margin-top: 3%;
 }
 
-.card .card-body .text-content .card-title{
+.card .card-body .text-content .card-title {
   font-size: 2.2rem;
   font-weight: bold;
 }
 
-.card .card-body .text-content .card-text{
+.card .card-body .text-content .card-text {
   font-size: 1rem;
-  margin-top: 15%;
+  margin-top: 5%;
 }
 
 .card-text, .card-title{
@@ -54,26 +56,23 @@
   color: #ffffff;
 }
 
-.card-footer{
+.card-footer {
   justify-content: space-around;
   display: flex;
   flex-direction: row;
   padding: 0;
 }
 
-.card-footer label{
+.card-footer p {
+  margin: 1rem 0;
+}
+
+.card-footer label {
   font-size: 0.8rem;
   font-weight: 500;
 }
 
 /* ANTIGO CSS DO CARD DE PERFIL
-.card {
-  filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.5));
-}
-
-.card .card-body {
-  padding: 0;
-}
 
 .card .card-body img.profile-background {
   width: 90vw;
