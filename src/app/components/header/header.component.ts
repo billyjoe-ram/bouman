@@ -17,37 +17,48 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   public profileImg: any = "";
+  public profileId: string = "";
 
   private profile!: Subscription;
-  
+  private userSubs!: Subscription;
+
   @Output() featureSelected = new EventEmitter<string>();
-  
+
   collapsed = true;
-  
-  constructor(private authService:AuthService, private user: UsersService) { } 
+
+  constructor(private authService: AuthService, private user: UsersService) { }
 
   ngOnInit(): void {
-
-    this.user.getProfilePicture().then((url: any) => {
-      this.profile = url.subscribe((profP: any) => {
-        this.profileImg = profP;
-      }, (err: any) => {
-        this.profileImg = this.user.profasset();
-      });      
-    });
-    
+    this.getData();
   }
 
   ngOnDestroy() {
     this.profile.unsubscribe();
-  }  
+
+    this.userSubs.unsubscribe();
+  }
 
   onSelect(feature: string) {
     this.featureSelected.emit(feature);
   }
 
-  logOut(){
+  logOut() {
     this.authService.logout();
   }
-  
+
+  async getData() {
+    const user = await this.authService.getAuth().currentUser;
+
+    this.userSubs = this.user.getProfile(user?.uid).subscribe((profile: any) => {
+      this.profileId = profile.profileId;
+
+      this.profile = this.user.getProfilePicture(this.profileId).subscribe((url: any) => {
+        this.profileImg = url;
+      }, (err: any) => {
+        this.profileImg = this.user.profasset();
+      });
+    });
+
+  }
+
 }

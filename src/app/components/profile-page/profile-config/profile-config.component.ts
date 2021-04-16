@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,11 +14,17 @@ import { Router } from '@angular/router';
   templateUrl: './profile-config.component.html',
   styleUrls: ['./profile-config.component.css']
 })
-export class ProfileConfigComponent implements OnInit {
+export class ProfileConfigComponent implements OnInit, OnDestroy {
 
-  public user: any = { name: '', desc: '', area: '' };
+  public user: any = { name: '', desc: '', area: '', profileId: '' };
 
   public areas: any = {};
+  
+  private profileId: string = "";
+
+  private getcoll!: Subscription;
+
+  private getprof!: Subscription;
 
   constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService,
      private auth: AngularFireAuth, private router: Router) { }
@@ -36,18 +42,14 @@ export class ProfileConfigComponent implements OnInit {
     const user = await this.authService.getAuth().currentUser;
 
     const formData = form.value;
-
-
-
+    console.log(this.user.profileId)
     try {
-          this.service.updateProfile(user?.uid, { name: formData.name, description: formData.desc, area: formData.area })
+      this.profileId = this.user.profileId;
+      this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area });
+      this.router.navigate(["/profiles/", this.profileId]);
     }
     catch(err){
-      console.log('Ocorreu alguma coisa errado no update dos dados cadastrados...')
-    }
-    finally{
-      console.log("Os dados foram cadastrados.");
-      this.router.navigate(["/profile"]);
+      console.error(err);
     }
 
   }
@@ -67,9 +69,20 @@ export class ProfileConfigComponent implements OnInit {
     console.log(password);
 
   }
+  
   async getData(){
     const user = await this.authService.getAuth().currentUser;
-    this.user = this.userService.getCollection(user?.uid);
+    this.getcoll = this.userService.getProfile(user?.uid).subscribe((data:any)=>{
+      this.user = data;
+      this.getprof = this.service.getProfile(this.user.profileId).subscribe((data : any)=>{
+        this.user.name = data.name;
+        this.user.desc = data.desc;
+    })
+    });
+  }
+  ngOnDestroy(){
+    this.getcoll.unsubscribe();
+    this.getprof.unsubscribe();
   }
 
 }
