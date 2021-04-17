@@ -1,17 +1,29 @@
 <div class="card">
     <div class="card-body">
         <img [src]="profileImg" alt="Foto de perfil" class="profile-picture img-responsive">
-        <div class="text-content">
+        <div class="text-content" *ngIf="!esconder">
             <span class="card-title">{{ userData.name }}</span>
             <p class="card-text">{{ userData.desc }}</p>
         </div>
         <div id="btnFotos">
             <div *ngIf="!esconder; else elseBloco">
-                <img role="button" (click)="esconder = !esconder" id="editPen" src="../../../../assets/pen.svg">
+                <img role="button" (click)="esconder = !esconder"  id="editPen" src="../../../../assets/pen.svg">
             </div>
             <ng-template #elseBloco>
                 <button class="btn" id="button-save" type="button" (click)="saveFotos()">Salvar</button>
             </ng-template>
+        </div>
+        <div class="changeProfile" #btnPerfil *ngIf="esconder">
+            <label for="fotoPerfil" id="labelPerfil">
+                Clique aqui para enviar uma foto de perfil
+                <input type="file" id="fotoPerfil" class="fotoPerfil" accept="*.jpg.png" (change)="getProfileImg($event)">
+            </label>
+        </div>
+        <div class="changeWall" #btnFundo *ngIf="esconder">
+            <label for="fotoFundo" id="labelFundo">
+                Clique aqui para enviar um papel de parede
+                <input type="file" id="fotoFundo" class="fotoFundo" accept="*.jpg.png" (change)="getWallpImg($event)"> 
+            </label>
         </div>
         <img [src]="wallpImg" alt="Papel de parede" class="profile-background img-responsive">
     </div>
