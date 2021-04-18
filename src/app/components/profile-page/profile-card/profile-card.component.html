@@ -1,18 +1,23 @@
 <div class="card">
-    <div class="card-body">
-        <img [src]="profileImg" alt="Foto de perfil" class="profile-picture img-responsive">
-        <div class="text-content" *ngIf="!esconder">
-            <span class="card-title">{{ userData.name }}</span>
-            <p class="card-text">{{ userData.desc }}</p>
-        </div>
-        <div id="btnFotos">
-            <div *ngIf="!esconder; else elseBloco">
-                <img role="button" (click)="esconder = !esconder"  id="editPen" src="../../../../assets/pen.svg">
+    <div class="card-body" [ngStyle]="{ 'background-image': 'url(' + wallpImg + ')' }">
+
+        <div class="profile-card-content">
+            <img [src]="profileImg" alt="Foto de perfil" class="profile-picture img-responsive">
+            <div class="text-content" *ngIf="!esconder">
+                <span class="card-title">{{ userData.name }}</span>
+                <p class="card-text">{{ userData.desc }}</p>
             </div>
-            <ng-template #elseBloco>
-                <button class="btn" id="button-save" type="button" (click)="saveFotos()">Salvar</button>
-            </ng-template>
+
+            <div id="btnFotos">
+                <div *ngIf="!esconder; else elseBloco">
+                    <img role="button" (click)="esconder = !esconder"  id="editPen" src="../../../../assets/pen.svg">
+                </div>
+                <ng-template #elseBloco>
+                    <button class="btn" id="button-save" type="button" (click)="saveFotos()">Salvar</button>
+                </ng-template>
+            </div>
         </div>
+        
         <div class="changeProfile" #btnPerfil *ngIf="esconder">
             <label for="fotoPerfil" id="labelPerfil">
                 Clique aqui para enviar uma foto de perfil
@@ -25,12 +30,11 @@
                 <input type="file" id="fotoFundo" class="fotoFundo" accept="*.jpg.png" (change)="getWallpImg($event)"> 
             </label>
         </div>
-        <img [src]="wallpImg" alt="Papel de parede" class="profile-background img-responsive">
     </div>
     <div class="card-footer">
-        <p>Artigos <label>12</label></p>
-        <p>Contribuições <label>347</label></p>
-        <p>Outros Projetos <label>3</label></p>
+        <p> <span>Artigos</span> 12 <p>
+        <p> <span>Contribuições </span> 347</p>
+        <p> <span> Outros Projetos </span> 3 </p>
     </div>
 </div>
 
