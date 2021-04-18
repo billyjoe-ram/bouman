@@ -66,8 +66,8 @@ input::placeholder {
 }
 
 a.navbar-brand {
-  padding-top: 10px;
-  padding-left: 10px;
+  padding: 0;
+  margin: 0;
 }
 
 .navbar .navbar-nav > li > a#navbarDropdown {
