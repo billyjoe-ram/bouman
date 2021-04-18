@@ -77,20 +77,30 @@
   display: none;
 }
 
+.changeProfile {
+  position: absolute;
+
+  margin-top: 10%;
+  margin-left: 2%;
+}
+
 .changeWall{
   text-align: center;
   width: 50%;
 }
 
 .card .card-body #labelPerfil {
-  background-color: rgba(223, 102, 15, 0.6);
-  border: 2px solid #df660f;
+  background-color: rgba(223, 102, 15, 0.8);
+
+  border: 2px solid #df660f;  
   border-radius: 6px;
-  position: absolute; 
 
   font-size: 0.8rem;
+  font-weight: bold;
 
   cursor: pointer;
+
+  width: 50%;  
 }
 
 .card .card-body #labelFundo {

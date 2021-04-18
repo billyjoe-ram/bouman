@@ -3,9 +3,22 @@
 
         <div class="profile-card-content">
             <img [src]="profileImg" alt="Foto de perfil" class="profile-picture img-responsive">
+            <div class="changeProfile" #btnPerfil *ngIf="esconder">
+                <label for="fotoPerfil" id="labelPerfil">
+                    Clique aqui para enviar uma foto de perfil
+                    <input type="file" id="fotoPerfil" class="fotoPerfil" accept="*.jpg.png" (change)="getProfileImg($event)">
+                </label>
+            </div>
+
             <div class="text-content" *ngIf="!esconder">
                 <span class="card-title">{{ userData.name }}</span>
                 <p class="card-text">{{ userData.desc }}</p>
+            </div>
+            <div class="changeWall" #btnFundo *ngIf="esconder">
+                <label for="fotoFundo" id="labelFundo">
+                    Clique aqui para enviar um papel de parede
+                    <input type="file" id="fotoFundo" class="fotoFundo" accept="*.jpg.png" (change)="getWallpImg($event)"> 
+                </label>
             </div>
 
             <div id="btnFotos">
@@ -17,19 +30,7 @@
                 </ng-template>
             </div>
         </div>
-        
-        <div class="changeProfile" #btnPerfil *ngIf="esconder">
-            <label for="fotoPerfil" id="labelPerfil">
-                Clique aqui para enviar uma foto de perfil
-                <input type="file" id="fotoPerfil" class="fotoPerfil" accept="*.jpg.png" (change)="getProfileImg($event)">
-            </label>
-        </div>
-        <div class="changeWall" #btnFundo *ngIf="esconder">
-            <label for="fotoFundo" id="labelFundo">
-                Clique aqui para enviar um papel de parede
-                <input type="file" id="fotoFundo" class="fotoFundo" accept="*.jpg.png" (change)="getWallpImg($event)"> 
-            </label>
-        </div>
+
     </div>
     <div class="card-footer">
         <p> <span>Artigos</span> 12 <p>
