@@ -13,3 +13,9 @@
     font-weight: bold;
     font-size: 4rem;
 }
+
+.textarea {
+    max-height: 10%;
+    min-height: 10%;
+    font-size: 50%;
+}
