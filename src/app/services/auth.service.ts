@@ -8,7 +8,7 @@ import { User } from '../interfaces/user';
 })
 export class AuthService {
 
-  private UserCollection = this.store.collection<User>('Users');
+  private userCollection = this.store.collection<User>('Users');
 
   constructor(private ngAuth: AngularFireAuth, private store: AngularFirestore) { }
 
@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   addUser(user: User) {
-    return this.UserCollection.add(user);
+    return this.userCollection.add(user);
   }
   
   logout() {
