@@ -1,18 +1,5 @@
 button.btn-bouman {    
     width: 90%;
-
-    background: #FA902E;
-    border: 1px solid #DF660F;
-    box-sizing: border-box;
-    border-radius: 6px;
-    color: white;
-    transition: 0.3s;
-
-    font-weight: bold;
-}
-
-button.btn-bouman:hover {
-    background: #DF660F;
 }
 
 .project-card .project-header {
