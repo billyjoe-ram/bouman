@@ -1,12 +1,29 @@
 <app-header></app-header>
-<div class="no-content">
-    <div class="row">
-    <div class="col-3"></div>
-        <div class="col-6">
-            <textarea id="comment" class="textarea" form="form-control"></textarea>
+
+<div class="content">
+    <div class="row justify-content-center align-items-start">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+            <form>
+                <div class="form-group">
+                    <div class="card">
+                        <div class="card-header">
+                            <button class="btn btn-bouman-primary">Imagem</button>
+                            <button class="btn btn-bouman-primary">Enquete</button>
+                            <button class="btn btn-bouman-primary">Importar projeto</button>
+                        </div>
+
+                        <div class="card-body">
+                            <textarea class="form-control textarea" id="post-textarea" placeholder="Escreva sua postagem aqui"></textarea>
+                        </div>
+
+                        <div class="card-footer">
+                            <button class="btn btn-bouman">Publicar</button>
+                        </div>
+                    </div>                    
+                </div>
+            </form>
             Você ainda não tem nada no seu feed!
             <span> :( </span>
         </div>
-    <div class="col-3"></div>
     </div>
 </div>
