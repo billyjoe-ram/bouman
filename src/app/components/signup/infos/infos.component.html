@@ -31,7 +31,7 @@
                     <p *ngIf="!mail.valid && mail.touched" class="help-invalid">Por favor, insira um e-mail válido.</p>
 
                     <label for="area">Área de Atuação</label>
-                    <select class="bouman-select" id="area" name="area" ngModel required>
+                    <select class="custom-select bouman-select" id="area" name="area" ngModel required>
                         <option *ngFor="let area of areas" [value]="area.value">{{ area.name }}</option>
                     </select>
 
@@ -42,7 +42,6 @@
 
                     <span>
                         A senha precisa ter pelo menos 8 caracteres.
-                        <!--, sendo um especial (@, #, ! etc.)-->
                     </span>
 
                     <button type="submit" [disabled]="!boumanForm.valid" class="btn">Cadastrar</button>
@@ -56,53 +55,3 @@
         </div>
     </div>
 </div>
-
-    <!--
-<div class="content">
-    <div class="bouman-info">
-        <div class="bouman-details">
-            <span>O que é o Bouman</span>
-            <p>
-                O Bouman é a mais nova plataforma pensada e adaptada para os cientistas e inventores brasileiros,
-                oferecendo diversas ferramentas que facilitam o desenvolvimento de pesquisas e o trabalho em grupo.
-                Pensando no senso de comunidade, oferecemos a opção dos usuários contribuirem em trabalhos de outros
-                pesquisadores, oferecendo sugestões e análises.
-            </p>
-        </div>
-
-        <img src="/assets/undraw_medical_research_qg4d.svg" alt="Ilustração">
-    </div>
-    <div class="bouman-form">
-        <form #boumanForm="ngForm" (ngSubmit)="signup()">
-            <label for="username">Nome Completo</label>
-            <input type="text" name="name" id="username" placeholder="Seu nome" ngModel required #nome="ngModel">
-            <p *ngIf="!nome.valid && nome.touched">Por favor, preencha o campo corretamente.</p>
-
-            <label for="usermail">E-mail</label>
-            <input type="email" name="email" id="usermail" placeholder="Ex.: bouman@email.com" 
-            ngModel required email #mail="ngModel">
-            <p *ngIf="!mail.valid && mail.touched">Por favor, insira um e-mail válido.</p>
-
-            <label for="area">Área de Atuação</label>
-            <select class="bouman-select" id="area" name="area" ngModel required>
-                <option *ngFor="let area of areas" [value]="area.value">{{ area.name }}</option>
-            </select>
-
-            <label for="userkey">Senha</label>
-            <input type="password" name="passkey" id="userkey" placeholder="Ex.: @Bouman2021" 
-            ngModel required minlength="8" #passkey="ngModel">
-            <p *ngIf="!passkey.valid && passkey.touched">Por favor, insira uma senha válida.</p>
-
-            <span>
-                A senha precisa ter pelo menos 8 caracteres
-                , sendo um especial (@, #, ! etc.) 
-            </span>
-
-            <button type="submit" [disabled]="!boumanForm.valid">Cadastrar</button>
-        </form>
-
-        <p>
-            Ao se cadastrar, você concorda com nossos “Termos de Serviço e Privacidade”, e receber emails nossos.
-        </p>
-    </div>
-</div>-->
