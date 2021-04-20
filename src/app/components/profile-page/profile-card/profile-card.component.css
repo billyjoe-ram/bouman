@@ -54,6 +54,7 @@
   background-color: #fa902e;
 
   color: #ffffff;
+  margin-top: 12%;
 }
 
 .card-footer {
@@ -105,12 +106,15 @@
 
 .card .card-body #labelFundo {
   font-size: 1.9rem;
-  position: absolute;
   color: white;
 
   margin-top: 5%;
 
   cursor: pointer;
+}
+
+.card .card-body #btnFotos {
+  margin-left: 2%;
 }
 
 @media (min-width: 768px) {
@@ -148,6 +152,10 @@
     height: 2.5rem;
   }
 
+  .card .card-body #btnFotos {
+    margin-left: 8%;
+  }
+
   .card-footer {
     justify-content: space-around;
     display: flex;
@@ -163,6 +171,7 @@
     font-weight: bold;
     font-size: 0.9rem;
   }
+  
 }
 
 @media (min-width: 1024px) {
@@ -202,6 +211,10 @@
   .card .card-body #editPen {
     margin: 0.4rem;
     height: 2.5rem;
+  }
+
+  .card .card-body #btnFotos {
+    margin-left: 12%;
   }
   
   .card-footer {
@@ -255,4 +268,9 @@
     margin: 0.4rem;
     height: 2.5rem;
   }
+
+  .card .card-body #btnFotos {
+    margin-left: 10%;
+  }
+
 }
