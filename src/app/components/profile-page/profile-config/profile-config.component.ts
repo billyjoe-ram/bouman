@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile-config.component.css']
 })
 export class ProfileConfigComponent implements OnInit, OnDestroy {
+  
+  @ViewChild('modal') modal !: ElementRef;
 
   public user: any = { name: '', desc: '', area: '', profileId: '' };
 
@@ -40,7 +42,7 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
 
   async onSubmit(form: NgForm) {
     const user = await this.authService.getAuth().currentUser;
-
+    let submit = document.getElementById('submit')
     const formData = form.value;
     console.log(this.user.profileId)
     try {
@@ -50,6 +52,9 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     }
     catch(err){
       console.error(err);
+    }
+    finally{
+      submit?.click();
     }
 
   }
