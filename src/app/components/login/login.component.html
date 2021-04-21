@@ -4,20 +4,34 @@
         <div class="bouman-user">
             <img id="user" src="/assets/user.svg">
         </div>
-        <div class="bouman-form form-group">
+        <form class="bouman-form form-group">
             <label for="email">Endereço de e-mail</label>
-            <input type="email" name="user" id="email" placeholder="Ex.: bouman@email.com" required [(ngModel)]="userLogin.email" class="bouman-input form-control">
+            <input type="email" name="email" id="email" placeholder="Ex.: bouman@email.com" required email [(ngModel)]="userLogin.email" class="bouman-input form-control" #email="ngModel">
+            <p *ngIf="!email.valid && email.touched" class="help-invalid">Por favor, preencha o campo corretamente.</p>
     
             <label for="userkey">Senha</label>
-            <input type="password" name="user" id="userkey" placeholder="Ex.: @Bouman2021" required [(ngModel)]="userLogin.password" class="bouman-input form-control" (keyup)="getKey($event)" #pass>
+            <input type="password" name="pass" id="userkey" placeholder="Ex.: @Bouman2021" minlength="8" required [(ngModel)]="userLogin.password" class="bouman-input form-control" (keyup)="getKey($event)" #pass="ngModel">
+            <p *ngIf="!pass.valid && pass.touched" class="help-invalid">Por favor, preencha o campo corretamente.</p>
 
             <div class="show-pass" (click)="showPassword()">
                 <input type="checkbox" #box> Exibir senha
             </div>
     
             <!-- <p>Esqueceu a sua senha? <a href="#">Clique aqui</a></p> -->
-    
-            <button id="btnLogin" (click)="login()" class="btn">Login</button>
+            
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4"></div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <button id="btnLogin" (click)="login()" class="btn">Login</button>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4"></div>
+            </div>
+        </form>
+
+        <div *ngIf='messageError'>
+            <div class="alert alert-danger" role="alert">
+                {{messageError}}
+            </div>
         </div>
     </div>
 </div>

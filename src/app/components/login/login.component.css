@@ -3,7 +3,6 @@
 }
 
 .bouman-user {
-    margin-bottom: 4%;
     width: 30%;
     margin-left: 33%;
 }
@@ -16,20 +15,22 @@
     font-size: 1.3rem;
 }
 
-.bouman-form p {
-    font-size: 1.6rem;
-    font-weight: bold;
+.bouman-form label{
+    margin-top: 5%;
 }
 
+/*.bouman-form p {
+    font-size: 1.6rem;
+    font-weight: bold;
+}*/
+
 .bouman-form input.bouman-input {
-        
-    margin-bottom: 5%;
     box-shadow: 3px 3px 3px #a3a3a3;
 }
 
 .bouman-form .show-pass {
     font-size: 1rem;
-    margin-bottom: 1.2rem;
+    margin: 1rem 0 1.2rem 0;
     align-items: baseline;
 }
 
@@ -41,13 +42,23 @@
     border-color: #df660f;
     background-color: #fa902e;
     color: #ffffff;
-    width: 40%;
+    width: 100%;
     height: 100%;
     font-weight: bold;
-    margin-left: 30%;
+    margin: 0 auto;
 }
 
 .bouman-form button:hover {    
     border-color: #fa902e;
     background-color: #df660f;
+}
+
+.bouman-form p.help-invalid {
+    margin: 2% 0 0 2%;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.bouman-form input.ng-invalid.ng-touched {
+    border-color: darkred;
+    background-color: rgb(255, 158, 158);
 }
