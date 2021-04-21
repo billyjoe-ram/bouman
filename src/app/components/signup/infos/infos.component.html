@@ -47,11 +47,15 @@
 
                     <button type="submit" [disabled]="!boumanForm.valid" class="btn">Cadastrar</button>
                 </form>
-
                 <p>
                     Ao se cadastrar, você concorda com nossos “Termos de Serviço e Privacidade”, e receber emails
                     nossos.
                 </p>
+            </div>
+            <div *ngIf='messageError'>
+                <div class="alert alert-danger" role="alert">
+                    {{messageError}}
+                </div>
             </div>
         </div>
     </div>

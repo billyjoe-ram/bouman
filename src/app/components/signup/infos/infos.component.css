@@ -63,7 +63,7 @@
 }
 
 .bouman-form p.help-invalid {
-  margin: 0;
+  margin: 0 0 2% 5%;
   font-size: 0.9rem;
 }
 
@@ -71,11 +71,9 @@
   font-weight: bold;
   font-size: 1rem;
   
-  margin: 0 auto;
-  margin-bottom: 2%;
+  margin: 0 0 2% 10%;
 
   display: flex;
-  align-items: center;
 
   color: #ffffff;
 }
