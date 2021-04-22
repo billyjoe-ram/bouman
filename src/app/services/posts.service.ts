@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 
@@ -36,9 +37,10 @@ export class PostsService {
     const query = (await publicationRef.where('profileId', '==', 'DEE634zUyvX26zTfQslX').get()).docs;
     var publicacao !: any;
     var i : number = 0;
+    var projectRef !: Subscription;
     var teste2: any[] = [];
     query.forEach(doc=>{
-      const projectRef = this.postsCollection.doc(doc.id).valueChanges().subscribe((data)=>{
+      projectRef = this.postsCollection.doc(doc.id).valueChanges().subscribe((data)=>{
       let teste: any = data as object;
       publicacao = {
         pubId : doc.id,
@@ -46,9 +48,11 @@ export class PostsService {
         content : teste.content
       };
       teste2.push(publicacao);
-      console.log(teste2);
+      
     });
+    console.log(teste2);
     });
+        return teste2
   }
 
   async addProject(project: any) {
