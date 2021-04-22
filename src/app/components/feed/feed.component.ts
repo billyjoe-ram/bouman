@@ -15,13 +15,13 @@ export class FeedComponent implements OnInit {
   ngOnInit(): void {
   }
 
-addproj(){
-  console.log(this.content);
-  // try{
-  //   this.posts.addProject(this.content)
-  // }catch(err){
-  //   window.alert(err);
-  // }
-}
+// addproj(){
+//   console.log(this.content);
+//   try{
+//     this.posts.addProject(this.content)
+//   }catch(err){
+//     window.alert(err);
+//   }
+// }
 
 }

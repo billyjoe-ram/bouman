@@ -44,38 +44,28 @@ export class PostsService {
 //     return query;
 //   }
 
-  // async addProject(project: any) {
-  //   const owner = await this.auth.getAuth().currentUser;
-  //     this.usersService.getProfile(owner?.uid).subscribe(async (user : any)=>{
-  //       this.publication = {profileId: user.profileId, content: project};
-  //       const newPublication = await this.postsCollection.add(this.publication);
-  //     return newPublication;
-  //   });
+  async addProject(project: any) {
+    const owner = await this.auth.getAuth().currentUser;
+      this.usersService.getProfile(owner?.uid).subscribe(async (user : any)=>{
+        this.publication = {profileId: user.profileId, content: project};
+        const newPublication = await this.postsCollection.add(this.publication);
+      return newPublication;
+    });
 
-  // }
+  }
 
-//   async updateProject(id: string, project: { title: string, content: string }) {
-//     const owner = await this.auth.getAuth().currentUser;
-
-//     const userCollec = this.postsCollection .doc(owner?.uid);
-
-//     const oldDoc = userCollec.collection('Projects').doc(id);
-
-//     const updatedDoc = await oldDoc.update({ title: project.title, content: project.content });
-
-//     return updatedDoc;
-//   }
-
-//   async deleteProject(id: string) {
-//     const owner = await this.auth.getAuth().currentUser;
-
-//     const userCollec = this.postsCollection .doc(owner?.uid);
-
-//     const oldDoc = userCollec.collection('Projects').doc(id);
-
-//     const deletedDoc = oldDoc.delete();
-
-//     return deletedDoc;
-//   }
+  async deleteProject(publication : any) {
+    const owner = await this.auth.getAuth().currentUser;
+      this.usersService.getProfile(owner?.uid).subscribe(async (user : any)=>{
+        if (user.profileId == publication.profileId){
+          const deletedPub = this.postsCollection.doc(publication.id).delete;
+          return deletedPub;
+      }
+      else{
+        const deletedPub = undefined;
+        return deletedPub;
+      }
+    })
+  }
 
 }
