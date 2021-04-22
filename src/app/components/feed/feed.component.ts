@@ -13,6 +13,7 @@ export class FeedComponent implements OnInit {
   constructor(private posts: PostsService) { }
 
   ngOnInit(): void {
+    this.posts.listProject();
   }
 
 addproj(){

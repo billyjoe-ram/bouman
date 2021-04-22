@@ -7,7 +7,7 @@ import { UsersService } from './users.service';
   providedIn: 'root'
 })
 export class PostsService {
-  private publication: {profileId: string, content: string} = {profileId:"", content:""}
+  private publication: {profileId: string, content: string} = {profileId:"", content:""};
   private postsCollection = this.store.collection('Publications');
 
   constructor(private store: AngularFirestore, private auth: AuthService, private usersService: UsersService) { }
@@ -16,33 +16,38 @@ export class PostsService {
   // NÃO COPIE, É APENAS PARA AUXILIAR NA LÓGICA
   // AINDA NÃO DECIDIMOS SE POSTS SERÃO SUBCOLLECTIONS OU COLLECTIONS
 
-//   async listProjects() {
-//     const owner = await this.auth.getAuth().currentUser;
+  // async listProjects() {
+  //   const owner = await this.auth.getAuth().currentUser;
 
-//     const userCollec = this.postsCollection .doc(owner?.uid);
+  //   const userCollec = this.postsCollection .doc(owner?.uid);
 
-//     const projectsRef = await userCollec.collection('Projects').ref;
+  //   const projectsRef = await userCollec.collection('Projects').ref;
 
-//     // Create a query against the collection.
-//     const query = projectsRef.where("ownerId", "==", `${owner?.uid}`).get();
-//     // console.log(query);
-//     // this.projects.push(query);
-//     return query;
-//   }
+  //   // Create a query against the collection.
+  //   const query = projectsRef.where("ownerId", "==", `${owner?.uid}`).get();
+  //   // console.log(query);
+  //   // this.projects.push(query);
+  //   return query;
+  // }
 
-//   async listProject(id: string) {
-//     const owner = await this.auth.getAuth().currentUser;
+  async listProject() {
+    const owner = await this.auth.getAuth().currentUser;
+    const publicationRef = this.postsCollection.ref;
+    const query = (await publicationRef.where('profileId', '==', 'DEE634zUyvX26zTfQslX').get()).docs;
+    query.forEach(doc=>{
+      console.log(doc.id)
+    });
+    const projectRef = this.postsCollection.doc('Ij4HejYQ6w2hxNzVMCMf').valueChanges().subscribe((data)=>{
+      console.log(data)
+    //      const queryRef = projectRef.ref;
 
-//     const userCollec = this.postsCollection .doc(owner?.uid);
+    // const query = queryRef.where("docId", "==", 'Ij4HejYQ6w2hxNzVMCMf').get();
 
-//     const projectRef = userCollec.collection('Projects').doc(id).valueChanges();
+    return data;
+    });
 
-//     const queryRef = userCollec.collection('Projects').ref;
-
-//     const query = queryRef.where("docId", "==", id).get();
-
-//     return query;
-//   }
+ 
+  }
 
   async addProject(project: any) {
     const owner = await this.auth.getAuth().currentUser;
