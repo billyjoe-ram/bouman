@@ -34,19 +34,21 @@ export class PostsService {
     const owner = await this.auth.getAuth().currentUser;
     const publicationRef = this.postsCollection.ref;
     const query = (await publicationRef.where('profileId', '==', 'DEE634zUyvX26zTfQslX').get()).docs;
+    var publicacao !: any;
+    var i : number = 0;
+    var teste2: any[] = [];
     query.forEach(doc=>{
-      console.log(doc.id)
+      const projectRef = this.postsCollection.doc(doc.id).valueChanges().subscribe((data)=>{
+      let teste: any = data as object;
+      publicacao = {
+        pubId : doc.id,
+        profileId : teste.profileId,
+        content : teste.content
+      };
+      teste2.push(publicacao);
+      console.log(teste2);
     });
-    const projectRef = this.postsCollection.doc('Ij4HejYQ6w2hxNzVMCMf').valueChanges().subscribe((data)=>{
-      console.log(data)
-    //      const queryRef = projectRef.ref;
-
-    // const query = queryRef.where("docId", "==", 'Ij4HejYQ6w2hxNzVMCMf').get();
-
-    return data;
     });
-
- 
   }
 
   async addProject(project: any) {
