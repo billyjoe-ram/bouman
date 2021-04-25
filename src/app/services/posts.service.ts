@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Subscription } from 'rxjs';
+import { Post } from '../interfaces/posts';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 
@@ -8,75 +8,55 @@ import { UsersService } from './users.service';
   providedIn: 'root'
 })
 export class PostsService {
-  private publication: {profileId: string, content: string} = {profileId:"", content:""};
-  private postsCollection = this.store.collection('Publications');
+  private publication: {profileId: string, content: string} = { profileId:"", content:"" };
 
-  constructor(private store: AngularFirestore, private auth: AuthService, private usersService: UsersService) { }
+  private postsCollection = this.store.collection('Profiles');
 
-  // ESSE CÓDIGO É APENAS PARA GUIA
-  // NÃO COPIE, É APENAS PARA AUXILIAR NA LÓGICA
-  // AINDA NÃO DECIDIMOS SE POSTS SERÃO SUBCOLLECTIONS OU COLLECTIONS
+  constructor(private store: AngularFirestore) { }
 
-  // async listProjects() {
-  //   const owner = await this.auth.getAuth().currentUser;
-
-  //   const userCollec = this.postsCollection .doc(owner?.uid);
-
-  //   const projectsRef = await userCollec.collection('Projects').ref;
-
-  //   // Create a query against the collection.
-  //   const query = projectsRef.where("ownerId", "==", `${owner?.uid}`).get();
-  //   // console.log(query);
-  //   // this.projects.push(query);
-  //   return query;
-  // }
-
-  async listProject() {
-    const owner = await this.auth.getAuth().currentUser;
-    const publicationRef = this.postsCollection.ref;
-    const query = (await publicationRef.where('profileId', '==', 'DEE634zUyvX26zTfQslX').get()).docs;
-    var publicacao !: any;
-    var i : number = 0;
-    var projectRef !: Subscription;
-    var teste2: any[] = [];
-    query.forEach(doc=>{
-      projectRef = this.postsCollection.doc(doc.id).valueChanges().subscribe((data)=>{
-      let teste: any = data as object;
-      publicacao = {
-        pubId : doc.id,
-        profileId : teste.profileId,
-        content : teste.content
-      };
-      teste2.push(publicacao);
-      
-    });
-    console.log(teste2);
-    });
-        return teste2
+  listProfilePosts(profileId: string) {
+    const postsRef = this.postsCollection.doc(profileId).collection('Posts');
+    
+    const profilePosts = postsRef.valueChanges();
+    
+    return profilePosts;
   }
 
-  async addProject(project: any) {
-    const owner = await this.auth.getAuth().currentUser;
-      this.usersService.getProfile(owner?.uid).subscribe(async (user : any)=>{
-        this.publication = {profileId: user.profileId, content: project};
-        const newPublication = await this.postsCollection.add(this.publication);
-      return newPublication;
-    });
+  listAllPosts(profilesFollowing: string[]) {
+    const posts: any[] = [];
+    const postsRef = this.postsCollection.ref;
 
-  }
+    profilesFollowing.forEach(async profile => {
+      const query = await postsRef.where('profileId', '==', profile).get();
 
-  async deleteProject(publication : any) {
-    const owner = await this.auth.getAuth().currentUser;
-      this.usersService.getProfile(owner?.uid).subscribe(async (user : any)=>{
-        if (user.profileId == publication.profileId){
-          const deletedPub = this.postsCollection.doc(publication.id).delete;
-          return deletedPub;
-      }
-      else{
-        const deletedPub = undefined;
-        return deletedPub;
-      }
+      posts.push(query);
     })
+
+    console.log(posts);
+
+    return posts;
+  }
+
+  addPost(profileId: string | undefined, content: Post) {
+    // Going inside the profile posts
+    const userPosts = this.postsCollection.doc(profileId).collection('Posts');
+
+    // Adding a new posts
+    const newPost = userPosts.add({ profileId: profileId, content: content });
+
+    // Returning the process promise
+    return newPost;
+  }
+
+  deleteProject(profileId: string | undefined, postId: string) {
+    // Going inside the profile posts
+    const userPosts = this.postsCollection.doc(profileId).collection('Posts');
+
+    // Deleting a project
+    const deletedProj = userPosts.doc(postId).delete();
+    
+    // Returning the process promise
+    return deletedProj;
   }
 
 }
