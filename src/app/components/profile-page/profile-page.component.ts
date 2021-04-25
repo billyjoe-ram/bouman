@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Post } from 'src/app/interfaces/posts';
+import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
   selector: 'profile-page',
@@ -7,9 +11,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePageComponent implements OnInit {
 
-  constructor() { }
+  public userPosts: any[] = [];
+
+  private paramsSubs!: Subscription;
+  private postsSubs!: Subscription;  
+
+  private profileId: string = "";
+  
+  constructor(private posts: PostsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData() {
+    this.paramsSubs = this.route.params.subscribe((params) => {
+      this.profileId = params['profid'];
+
+      this.postsSubs = this.posts.listProfilePosts(this.profileId).subscribe(posts => {
+        this.userPosts = posts;
+      });
+    });
+
+  }
+
+  ngOnDestroy() {
+    this.paramsSubs.unsubscribe();
+
+    this.postsSubs.unsubscribe();
   }
 
 }

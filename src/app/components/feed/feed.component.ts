@@ -28,7 +28,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   createPost(form: NgForm) {
     try{
-      const post = this.posts.addPost(this.profileId, this.content);
+      const post = this.posts.addPost(this.profileId, this.content );
     } catch(err){
       console.error(err);
     } finally {
