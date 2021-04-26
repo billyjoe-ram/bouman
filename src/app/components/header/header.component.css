@@ -20,21 +20,7 @@ a.navbar-brand > img {
 }
 
 input {
-  width: 312px;
-  height: 42.14px;
-
-  background: #ffffff;
-  border: 1px solid #5c5c5c;
-  box-sizing: border-box;
-  border-radius: 8px;
-
-  font-weight: bold;
-  font-size: 20px;
-  text-align: center;
-}
-
-input::placeholder {
-  color: #fa902e;
+  color: #fa902e !important;
 }
 
 .nav > li > a > img {
@@ -81,25 +67,6 @@ a.navbar-brand {
 
   border: 1px solid #5c5c5c;
   border-radius: 32px;
-}
-
-input {
-  width: 65vw;
-  max-width: 300px;
-  height: 42.14px;
-
-  background: #ffffff;
-  border: 1px solid #5c5c5c;
-  box-sizing: border-box;
-  border-radius: 8px;
-
-  font-weight: bold;
-  font-size: 20px;
-  text-align: center;
-}
-
-input::placeholder {
-  color: #fa902e;
 }
 
 .navbar-nav {
