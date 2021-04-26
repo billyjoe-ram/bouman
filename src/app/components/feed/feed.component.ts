@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { Post } from 'src/app/interfaces/posts';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostsService } from 'src/app/services/posts.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -14,13 +16,23 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public content: any;
 
+  public profilesFollowing: string[]  = [];
+
+  public feedPosts: { profileId: string, posts: any[] }[] = [];
+
   private profileId!: string | undefined;
 
   private userSubs!: Subscription;
 
-  constructor(private auth: AuthService,
+  private profileSubs!: Subscription;
+
+  private postsSubs!: Subscription;
+
+  constructor(
+    private auth: AuthService,
     private posts: PostsService,
-    private user: UsersService) { }
+    private user: UsersService,
+    private profile: ProfileService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -40,13 +52,47 @@ export class FeedComponent implements OnInit, OnDestroy {
     // Awaiting current user id for profile id
     const user = await this.auth.getAuth().currentUser;
 
-    this.userSubs = this.user.getProfile(user?.uid).subscribe((profile: any) => {
-      this.profileId = profile.profileId;
+    // Subscribing to current user to get the profileId
+    this.userSubs = this.user.getProfile(user?.uid).subscribe((user: any) => {
+
+      // Passing to attribute
+      this.profileId = user.profileId;
+
+      // Executing the service method to get profile data
+      this.profileSubs = this.profile.getProfile(this.profileId).subscribe((profile: any) => {
+
+        // Passing following profiles to array
+        this.profilesFollowing = profile.following;
+
+        // In pratical terms, you "follow yourself", but not in the database, only in the attribute
+        this.profilesFollowing.push(this.profileId as string);
+
+        // Interating over each profile followed
+        this.profilesFollowing.forEach(profile => {
+          // Passing to posts attribute this profile id and an empty array
+          this.feedPosts.push({ profileId: profile, posts: [] });
+
+          
+          let profileIndex = this.profilesFollowing.indexOf(profile);
+
+          // For this profile (brought by iteration), bring its posts and add in the object array
+          this.postsSubs = this.posts.listProfilePosts(profile).subscribe(profilePost => {
+            this.feedPosts[profileIndex].posts = profilePost;
+          });
+          
+        });
+
+      });
+      
     });
   }
 
   ngOnDestroy() {
-    this.userSubs.unsubscribe()
+    this.userSubs.unsubscribe();
+
+    this.profileSubs.unsubscribe();
+    
+    this.postsSubs.unsubscribe();
   }
 
 }
