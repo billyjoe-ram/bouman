@@ -42,7 +42,7 @@ export class PostsService {
     const userPosts = this.postsCollection.doc(profileId).collection('Posts');
 
     // Adding a new posts
-    const newPost = userPosts.add({ profileId: profileId, content: content, createdAt: new Date() });
+    const newPost = userPosts.add({ profileId: profileId, content: content, publishedAt: new Date() });
 
     // Returning the process promise
     return newPost;
