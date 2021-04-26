@@ -8,7 +8,7 @@
                 <!-- <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture"> -->
                 <div class="profile-info">
                     {{ profile }}
-                    <span>{{ publication.createdAt }} </span>
+                    <span>{{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
                 </div>
             </div>
             <p class="card-text">

@@ -1,7 +1,9 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+
+import ptBR from "@angular/common/locales/pt"
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -28,7 +30,11 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectOverviewComponent } from './components/projects/project-overview/project-overview.component';
 import { ProjectComponent } from './components/projects/project-overview/project/project.component';
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
+
 import { environment } from 'src/environments/environment.prod';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(ptBR);
 
 @NgModule({
   declarations: [
@@ -60,7 +66,7 @@ import { environment } from 'src/environments/environment.prod';
     HttpClientModule,
     AngularEditorModule
   ],
-  providers: [],
+  providers: [ { provide: LOCALE_ID, useValue: "pt-BR" } ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
