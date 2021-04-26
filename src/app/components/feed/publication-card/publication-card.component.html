@@ -1,33 +1,31 @@
-<div class="container">
-    <div class="card">
-        <div class="card-header">
-            {{ profile }} fez uma postagem 
-        </div>
-        <div class="card-body">            
-            <div class="profile-details">
-                <!-- <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture"> -->
-                <div class="profile-info">
-                    {{ profile }}
-                    <span>{{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
-                </div>
+<div class="card">
+    <div class="card-header">
+        {{ profile }} fez uma postagem 
+    </div>
+    <div class="card-body">            
+        <div class="profile-details">
+            <!-- <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture"> -->
+            <div class="profile-info">
+                {{ profile }}
+                <span>{{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
             </div>
-            <p class="card-text">
-                {{ publication.content }}
-            </p>
         </div>
-        <div class="card-footer">
-            <!-- {{ publication.name }} -->
-            <div class="interactions">
-                <img src="/assets/like-gray.svg" alt="Curtir">
-                <label for="">Curtir</label>
+        <p class="card-text">
+            {{ publication.content }}
+        </p>
+    </div>
+    <div class="card-footer">
+        <!-- {{ publication.name }} -->
+        <div class="interactions">
+            <img src="/assets/like-gray.svg" alt="Curtir">
+            <label for="">Curtir</label>
 
-                <img src="/assets/comment-gray.svg" alt="Comentar">
-                <label for="">Comentar</label>
+            <img src="/assets/comment-gray.svg" alt="Comentar">
+            <label for="">Comentar</label>
 
-                <img src="/assets/share-gray.svg" alt="Compartilhar">
-                <label for="">Compartilhar</label>
-            </div>
-            
+            <img src="/assets/share-gray.svg" alt="Compartilhar">
+            <label for="">Compartilhar</label>
         </div>
+        
     </div>
 </div>
