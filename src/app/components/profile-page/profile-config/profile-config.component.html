@@ -1,56 +1,66 @@
 <app-header></app-header>
 <div class="container-fluid">
-  <form (ngSubmit)="onSubmit(profConfForm)" #profConfForm="ngForm">
-    <div class="form-group">
-      <label for="name">Seu nome</label>
-      <input type="text" class="form-control" id="name" name="name" [(ngModel)]="user.name">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <form (ngSubmit)="onSubmit(profConfForm)" #profConfForm="ngForm" id="backForm">
+        <div class="form-group">
+          <label for="name">Seu nome</label>
+          <input type="text" class="form-control" id="name" name="name" [(ngModel)]="user.name">
 
-      <label for="desc">Descrição do perfil</label>
-      <textarea type="text" class="form-control" id="desc" name="desc" [(ngModel)]="user.desc"></textarea>
+          <label for="desc">Descrição do perfil</label>
+          <textarea type="text" class="form-control" id="desc" name="desc" [(ngModel)]="user.desc"></textarea>
 
-      <label for="area">Área de Atuação</label>
-      <select class="form-control bouman-select" id="area" name="area" [(ngModel)]="user.area">
-        <option *ngFor="let area of areas" [value]="area.value" [attr.selected]="user.area == area.value ? true : null">
-          {{ area.name }}
-        </option>
-      </select>
-
+          <label for="area">Área de Atuação</label>
+          <select class="custom-select bouman-select" id="area" name="area" [(ngModel)]="user.area">
+            <option *ngFor="let area of areas" [value]="area.value"
+              [attr.selected]="user.area == area.value ? true : null">
+              {{ area.name }}
+            </option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="col-md-10"></div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-bouman-form" data-toggle="modal" data-target="#updateModal" #modal>
+              Salvar
+            </button>
+          </div>
+        </div>
+        <!-- Button trigger modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Deseja salvar as alterações?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Essas informações também serão alteradas para grupos em que você participa e para aqueles que te seguem.</p>
+                <div id="listData">
+                  <h6 class="listItem">Nome: </h6><span>{{ user.name }}</span>
+                  <h6 class="listItem">Descrição: </h6><span>{{ user.desc }}</span>
+                  <h6 class="listItem">Área: </h6><span>{{ areas[+user.area - 1].name }}</span>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-bouman-modal">Salvar Mudanças</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
+    <div class="col-md-3"></div>
+  </div>
 
-    <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#updateModal">
-      Salvar
-      </button>
-    <!-- Button trigger modal -->
-    <!-- Modal -->
-    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="updateModalLabel">Salvar as alterações?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Suas informações também serão alteradas para grupos em que você participa e para aqueles que te seguem
 
-        <ul>
-          <li>Nome: {{ user.name }}</li>
-          <li>Descrição: {{ user.desc }}</li>
-          <li>Área: {{ areas[+user.area - 1].name }}</li>
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-info" data-dismiss="modal">Cancelar</button>
-        <button type="submit" class="btn btn-bouman">Salvar Mudanças</button>
-      </div>
-    </div>
-    </div>
-    </div>
-  </form>
-  
-  <!-- Button trigger modal -->
-  <!-- <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#reauthModal" data-whatever="@getbootstrap">Excluir conta</button> -->
+  <!-- 
 
   <div class="modal fade" id="reauthModal" tabindex="-1" role="dialog" aria-labelledby="reauthModalLabel"
     aria-hidden="true">
@@ -63,9 +73,8 @@
           <span>Excluir sua conta requer reautencicação</span>
           <form (ngSubmit)="onDelete(reauth)" #reauth="ngForm">
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label" >Email:</label>
-              <input type="text" class="form-control" id="recipient-name"
-              name="email">
+              <label for="recipient-name" class="col-form-label">Email:</label>
+              <input type="text" class="form-control" id="recipient-name" name="email">
             </div>
             <div class="form-group">
               <label for="recipient-text" class="col-form-label">Senha:</label>
@@ -81,6 +90,6 @@
         </div>
       </div>
     </div>
-  </div>
-  
+  </div> -->
+
 </div>

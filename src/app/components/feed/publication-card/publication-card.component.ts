@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -8,20 +10,28 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class PublicationCardComponent implements OnInit {
 
-  public publication: { name: string, content: string, interaction: string } = { name: '', content: '', interaction: ''};
+  @Input('publication') public publication: { content: string, createdAt: Date } = { content: "", createdAt: new Date()};
+
+  @Input('profileId') public profileId: string = "";
+
+  public profile: any = "";  
+
   public profileImg: any = "";
+
+  private profileSubs!: Subscription;
   
-  constructor(private user: UsersService) { }
+  constructor(private user: ProfileService) { }
 
   ngOnInit(): void {
-    // this.user.getCollection().then((collec) => {
-    //   this.publication.name =  collec.name;
-    // })
-    this.publication.content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis...";      
-
-    this.publication.interaction = "compartilhou";
+    this.profileSubs = this.user.getProfile(this.profileId).subscribe((collec: any) => {
+      this.profile = collec.name;
+    });
 
     // this.profileImg = this.user.getProfilePicture();
+  }
+
+  ngOnDestroy() {
+    this.profileSubs.unsubscribe();
   }
 
 }

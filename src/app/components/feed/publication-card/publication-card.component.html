@@ -1,23 +1,22 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            {{ publication.name }} {{ publication.interaction }} um projeto
+            {{ profile }} fez uma postagem 
         </div>
         <div class="card-body">            
             <div class="profile-details">
-                <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture">
+                <!-- <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture"> -->
                 <div class="profile-info">
-                    {{ publication.name }}
-                    <span>2h</span>
-                </div>                
-            </div>            
-            <p class="card-text">                
+                    {{ profile }}
+                    <span>{{ publication.createdAt }} </span>
+                </div>
+            </div>
+            <p class="card-text">
                 {{ publication.content }}
-                <img src="/assets/tubos-ensaio.jpg" alt="Imagem publicação" class="publication-picture">
             </p>
         </div>
         <div class="card-footer">
-            <p> Projeto de {{ publication.name }} - Resistência de protozoários a organismos do tipo +ssRNA </p>
+            <!-- {{ publication.name }} -->
             <div class="interactions">
                 <img src="/assets/like-gray.svg" alt="Curtir">
                 <label for="">Curtir</label>

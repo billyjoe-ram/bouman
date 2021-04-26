@@ -1,5 +1,32 @@
 <app-header></app-header>
-<div class="no-content">
-    Você ainda não tem nada no seu feed!
-    <span> :( </span>
+
+<div class="content">
+    <div class="row justify-content-center align-items-start">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+            <form #form="ngForm" (ngSubmit)="createPost(form)">
+                <div class="form-group">
+                    <div class="card">
+                        <div class="card-header">
+                            <button class="btn btn-bouman-primary">Imagem</button>
+                            <button class="btn btn-bouman-primary">Enquete</button>
+                            <button class="btn btn-bouman-primary">Importar projeto</button>
+                        </div>
+
+                        <div class="card-body">
+                            <textarea class="form-control textarea" id="post-textarea" placeholder="Escreva sua postagem aqui" name="content" [(ngModel)]="content"></textarea>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-bouman">Publicar</button>
+                        </div>
+                    </div>                    
+                </div>
+            </form>
+        <div>
+            
+        </div>
+            Você ainda não tem nada no seu feed!
+            <span> :( </span>
+        </div>
+    </div>
 </div>

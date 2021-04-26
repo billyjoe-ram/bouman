@@ -1,4 +1,4 @@
-.no-content {
+content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -6,10 +6,31 @@
     font-size: 2rem;
     text-align: center;
 
-    color: #5E5E5E;            
+    color: #5E5E5E;
 }
 
-.no-content span {
+content span {
     font-weight: bold;
     font-size: 4rem;
+}
+
+.card-header, .card-footer {
+    display: flex;
+    background-color: #D3E2E5;
+}
+
+.card-header {
+    justify-content: space-between;
+}
+
+.card-body {
+    padding: 0;
+}
+
+.card-body .textarea {
+    resize: none;
+}
+
+.card-footer {
+    justify-content: end;
 }

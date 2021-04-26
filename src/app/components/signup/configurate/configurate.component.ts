@@ -79,8 +79,9 @@ export class ConfigurateComponent implements OnInit {
 
       user.sendEmailVerification().then(() => {
         // Email enviado corretamente.
+
         user.providerData.forEach((profile:any) => {
-          window.alert("Foi enviado um link de verificação de usuário para o seu e-mail: " + profile.email)
+          document.getElementById("ModalVerify")?.click();
         });
       }).catch((error) => {
         // Um erro ocorreu.        

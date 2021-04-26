@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   
   public userLogin: any = {};
 
+  messageError!: string;
+
   private userData: { name: string, desc: string, area: string } = { name: '', desc: '', area: '' };
   
   constructor(private authService: AuthService, private router: Router,
@@ -34,6 +36,32 @@ export class LoginComponent implements OnInit {
 
       this.router.navigate(["/feed"]);
     } catch (error) {
+      switch(error.code){
+        case 'auth/argument-error':
+          this.messageError = 'Por favor, preencha os campos corretamente.';
+          break;
+        case 'auth/user-not-found':
+          this.messageError = 'Este email não está cadastrado.';
+          break;
+        case 'auth/wrong-password':
+          this.messageError = 'A senha digitada está incorreta.';
+          break;
+        case 'auth/invalid-email':
+          this.messageError = 'Email inválido, preencha o campo corretamente.';
+          break;
+        case 'auth/too-many-requests':
+          this.messageError = 'Número de tentativas excedido, tente novamente mais tarde.';
+          break;
+        case 'auth/network-request-failed':
+          this.messageError = 'Verifique a sua conexão com a internet e tente novamente.';
+          break;
+        default:
+          this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
+          break;
+      }
+
+      //this.createAlert(this.messageError, error.code);
+      console.error(this.messageError);
       console.error(error);
     } 
     // finally {

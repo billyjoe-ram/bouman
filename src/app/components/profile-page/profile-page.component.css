@@ -1,3 +1,6 @@
 .container {
     display: flex;    
 }
+.profile-content{
+    margin-top: 1%;
+}

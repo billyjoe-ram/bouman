@@ -22,7 +22,6 @@ import { SecondaryHeaderComponent } from './components/secondary-header/secondar
 import { InfosComponent } from './components/signup/infos/infos.component';
 import { LoginComponent } from './components/login/login.component';
 
-import { DropdownDirectiveDirective } from './directives/dropdown-directive.directive';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { ProjectsComponent } from './components/projects/projects.component';
@@ -35,7 +34,6 @@ import { environment } from 'src/environments/environment.prod';
   declarations: [
     AppComponent,
     HeaderComponent,
-    DropdownDirectiveDirective,
     ProfileCardComponent,
     PublicationCardComponent,
     ProfilePageComponent,

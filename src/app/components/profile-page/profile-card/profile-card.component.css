@@ -1,56 +1,52 @@
 .card {
   filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.5));
-}
-
-.card .card-body {
-  padding: 0;
-}
-
-.card .card-body img.profile-background {
-  width: 90vw;
-  height: 16vh;
-
   border-radius: 8px 8px 0 0;
 }
 
-.card .card-body img.profile-picture {
-  position: absolute;
-  bottom: 3.5rem;
+.card .card-body {
+  height: 30vh;
+  max-height: 30vh;
 
-  width: 20vw;
-  height: 20vw;
+  padding: 0;
 
-  border: 1px solid #000000;
-
-  border-radius: 10vw;
-
-  margin-left: 1rem;
+  background-size: cover;
 }
 
 .card .card-body .profile-card-content {
   display: flex;
-  height: 18vh;
-  width: 90vw;
-
-  background: #ffffff;
-  border-radius: 0px 0px 8px 8px;
 }
 
-.card .card-body .profile-card-content .text-content {
-  position: relative;
-  margin-left: 25vw;
+.card .card-body img.profile-picture {
+  width: 25%;
+  height: 25%;
+
+  padding: 1rem;
+
+  border-radius: 50%;
 }
 
-.card .card-body .profile-card-content .text-content span {
+.card .card-body .text-content{
+  color: white;  
+}
+
+.card-text, .card-title{
+  background-color: rgb(0, 0, 0, 0.5);
+}
+
+.card .card-body .text-content .card-title {
+  font-size: 1.2rem;
   font-weight: bold;
-  font-size: 1.3rem;
 }
 
-.card .card-body .profile-card-content .text-content p {
-  width: 56vw;
-  
-  text-align: justify;
-  font-size: 1.3rem;
+.card .card-body .text-content .card-text {
+  font-size: 1rem;
+  width: 85%;
+  margin-top: 0.4rem
+}
+
+.card .card-body #editPen {
+  margin: 0.4rem;
+  height: 2.5rem;
 }
 
 .card .card-body #button-save {
@@ -58,140 +54,223 @@
   background-color: #fa902e;
 
   color: #ffffff;
+  margin-top: 12%;
 }
 
-.card .card-body .fotoPerfil {
+.card-footer {
+  justify-content: space-around;
+  display: flex;
+  padding: 0;
+}
+
+.card-footer p {
+  margin: 0.4rem 0;
+  font-size: 0.8rem;
+}
+
+.card-footer span {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.card .card-body .fotoPerfil, .fotoFundo{
   position: absolute;
   display: none;
+}
+
+.changeProfile {
+  position: absolute;
+
+  margin-top: 10%;
+  margin-left: 2%;
+}
+
+.changeWall{
+  text-align: center;
+  width: 50%;
 }
 
 .card .card-body #labelPerfil {
-  background-color: rgba(223, 102, 15, 0.6);
-  border: 2px solid #df660f;
+  background-color: rgba(223, 102, 15, 0.8);
+
+  border: 2px solid #df660f;  
   border-radius: 6px;
 
-  width: 20%;
-  margin-left: 0.6rem;
-
-  z-index: 5;
-  position: absolute;
-
   font-size: 0.8rem;
-  text-align: center;
+  font-weight: bold;
 
   cursor: pointer;
-}
 
-.card .card-body .fotoFundo {
-  position: absolute;
-  display: none;
+  width: 50%;  
 }
 
 .card .card-body #labelFundo {
-  font-size: 1.6rem;
-  text-align: center;
+  font-size: 1.9rem;
   color: white;
 
-  z-index: 5;
-  position: absolute;
   margin-top: 5%;
 
   cursor: pointer;
 }
 
-#btnFotos {
-  margin-top: 1vh;
-  margin-left: 2vw;
+.card .card-body #btnFotos {
+  margin-left: 2%;
 }
 
 @media (min-width: 768px) {
-  /*#btnFotos {
-    margin-left: 0%;
-  }*/
-
-  .card .card-body img.profile-background {
-    width: 60vw;
+  .card .card-body {
+    height: 25vh;
+    max-height: 25vh;
   }
-
+  
   .card .card-body .profile-card-content {
-    height: fit-content;
-    width: 60vw;
+    display: flex;
   }
 
   .card .card-body img.profile-picture {
-    position: absolute;
-    bottom: 2.5rem;
-
-    width: 12vw;
-    height: 12vw;
-
-    border-radius: 12vw;
+    width: 25%;
+    height: 25%;
+  
+    padding: 1rem;
+  
+    border-radius: 50%;
+  }
+  
+  .card .card-body .text-content .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .card .card-body .text-content .card-text {
+    font-size: 0.9rem;
+    width: 70%;
+    margin-top: 0.4rem
+  }
+  
+  .card .card-body #editPen {
+    margin: 0.4rem;
+    height: 2.5rem;
   }
 
-  .card .card-body .profile-card-content .text-content {    
-    margin-left: 16vw;
+  .card .card-body #btnFotos {
+    margin-left: 8%;
   }
 
-  .card .card-body .profile-card-content .text-content p {
-    width: 36vw;
+  .card-footer {
+    justify-content: space-around;
+    display: flex;
+    padding: 0;
+  }
+  
+  .card-footer p {
     margin: 0.4rem 0;
+    font-size: 0.7rem;
   }
-}
-
-@media (max-width: 426px) {
-  #btnFotos {
-    margin-left: 0;
-  }
-
-  .card .card-body .profile-card-content .text-content p {
-    width: 50vw;
+  
+  .card-footer span {
+    font-weight: bold;
     font-size: 0.9rem;
   }
-
-  .card .card-body #labelFundo {
-    margin-top: 2%;
-    margin-left: 10%;
-
-    width: 70%;
-    font-size: 1.3rem;
-  }
-
-  .card .card-body #labelPerfil {
-    width: 25%;
-  }
-
-  .card .card-body .profile-card-content {
-    height: 12vh;
-  }
-
-  .card .card-body #button-save {
-    margin-left: -15%;
-  }
+  
 }
 
 @media (min-width: 1024px) {
-  .card .card-body img.profile-background {
-    width: 45vw;
+  .card .card-body {
+    height: 30vh;
+    max-height: 30vh;
+  
+    padding: 0;
+  
+    background-size: cover;
   }
-
-  .card .card-body img.profile-picture {
-    position: absolute;
-    width: 8vw;
-    height: 8vw;
-  }  
-
+  
   .card .card-body .profile-card-content {
-    height: fit-content;
-    width: 45vw;
+    display: flex;
+  }
+  
+  .card .card-body img.profile-picture {
+    width: 25%;
+    height: 25%;
+  
+    padding: 1rem;
+  
+    border-radius: 50%;
+  }
+  
+  .card .card-body .text-content .card-title {
+    font-size: 2.1rem;
+    font-weight: bold;
+  }
+  
+  .card .card-body .text-content .card-text {
+    font-size: 1rem;
+    width: 70%;
+    margin-top: 0.4rem
+  }
+  
+  .card .card-body #editPen {
+    margin: 0.4rem;
+    height: 2.5rem;
   }
 
-  .card .card-body .profile-card-content .text-content {    
-    margin-left: 12vw;
+  .card .card-body #btnFotos {
+    margin-left: 12%;
+  }
+  
+  .card-footer {
+    justify-content: space-around;
+    display: flex;
+    padding: 0;
+  }
+  
+  .card-footer p {
+    margin: 0.4rem 0;
+    font-size: 0.8rem;
+  }
+  
+  .card-footer span {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .card .card-body {
+    height: 25vh;
+    max-height: 25vh;
+  }
+  
+  .card .card-body .profile-card-content {
+    display: flex;
+  }
+  
+  .card .card-body img.profile-picture {
+    width: 25%;
+    height: 25%;
+  
+    padding: 1rem;
+  
+    border-radius: 50%;
+  }
+  
+  .card .card-body .text-content .card-title {
+    font-size: 2.1rem;
+    font-weight: bold;
+  }
+  
+  .card .card-body .text-content .card-text {
+    font-size: 1rem;
+    width: 70%;
+    margin-top: 0.4rem
+  }
+  
+  .card .card-body #editPen {
+    margin: 0.4rem;
+    height: 2.5rem;
   }
 
-  .card .card-body .profile-card-content .text-content p {
-    max-width: 24vw;
-    font-size: 0.9rem;
-    margin: 0.6rem 0;
+  .card .card-body #btnFotos {
+    margin-left: 10%;
   }
+
 }

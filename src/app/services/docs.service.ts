@@ -22,8 +22,7 @@ export class DocsService {
 
     // Create a query against the collection.
     const query = projectsRef.where("ownerId", "==", `${owner?.uid}`).get();
-    // console.log(query);
-    // this.projects.push(query);
+    
     return query;
   }
 
