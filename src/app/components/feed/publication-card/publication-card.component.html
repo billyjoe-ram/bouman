@@ -1,12 +1,12 @@
 <div class="card">
     <div class="card-header">
-        {{ profile }} fez uma postagem 
+        {{ profileName }} fez uma postagem 
     </div>
     <div class="card-body">            
         <div class="profile-details">
-            <!-- <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture"> -->
+            <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture">
             <div class="profile-info">
-                {{ profile }}
+                {{ profileName }}
                 <span>{{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
             </div>
         </div>

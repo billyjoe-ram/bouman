@@ -15,24 +15,30 @@ export class PublicationCardComponent implements OnInit {
 
   @Input('profileId') public profileId: string = "";
 
-  public profile: any = "";  
+  public profileName: any = "";  
 
   public profileImg: any = "";
 
   private profileSubs!: Subscription;
+
+  private imageSubs!: Subscription;
   
-  constructor(private user: ProfileService) { }
+  constructor(private user: UsersService, private profile: ProfileService) { }
 
   ngOnInit(): void {
-    this.profileSubs = this.user.getProfile(this.profileId).subscribe((collec: any) => {
-      this.profile = collec.name;
+    this.profileSubs = this.profile.getProfile(this.profileId).subscribe((collec: any) => {
+      this.profileName = collec.name;
     });
 
-    // this.profileImg = this.user.getProfilePicture();
+    this.imageSubs = this.user.getProfilePicture(this.profileId).subscribe(image => {
+      this.profileImg = image;
+    });
   }
 
   ngOnDestroy() {
     this.profileSubs.unsubscribe();
+
+    this.imageSubs.unsubscribe();
   }
 
 }
