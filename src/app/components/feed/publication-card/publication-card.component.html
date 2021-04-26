@@ -1,8 +1,5 @@
 <div class="card">
-    <div class="card-header">
-        {{ profileName }} fez uma postagem 
-    </div>
-    <div class="card-body">            
+    <div class="card-body">
         <div class="profile-details">
             <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture">
             <div class="profile-info">
@@ -11,21 +8,21 @@
             </div>
         </div>
         <p class="card-text">
-            {{ publication.content }}
+            {{ publication.content | slice:0:limit  }}<span [hidden]="sMDisabled" (click)="showMore()">ver mais...</span>
         </p>
     </div>
     <div class="card-footer">
-        <!-- {{ publication.name }} -->
-        <div class="interactions">
-            <img src="/assets/like-gray.svg" alt="Curtir">
-            <label for="">Curtir</label>
+        <button class="btn btn-default">
+            <img src="/assets/like-gray.svg" alt="Curtir">Curtir
+        </button>
 
-            <img src="/assets/comment-gray.svg" alt="Comentar">
-            <label for="">Comentar</label>
+        <button class="btn btn-default">
+            <img src="/assets/comment-gray.svg" alt="Comentar">Comentar
+        </button>
 
-            <img src="/assets/share-gray.svg" alt="Compartilhar">
-            <label for="">Compartilhar</label>
-        </div>
+        <button class="btn btn-default">
+            <img src="/assets/share-gray.svg" alt="Compartilhar">Compartilhar
+        </button>
         
     </div>
 </div>

@@ -17,7 +17,13 @@ export class PublicationCardComponent implements OnInit {
 
   public profileName: any = "";  
 
-  public profileImg: any = "";
+  public profileImg: string = "";
+
+  public fullContent: boolean = false;
+
+  public sMDisabled: boolean = false;
+
+  public limit: number = 286;
 
   private profileSubs!: Subscription;
 
@@ -26,6 +32,10 @@ export class PublicationCardComponent implements OnInit {
   constructor(private user: UsersService, private profile: ProfileService) { }
 
   ngOnInit(): void {
+    if (this.publication.content.length < this.limit) {
+      this.sMDisabled = true;
+    }
+
     this.profileSubs = this.profile.getProfile(this.profileId).subscribe((collec: any) => {
       this.profileName = collec.name;
     });
@@ -33,6 +43,11 @@ export class PublicationCardComponent implements OnInit {
     this.imageSubs = this.user.getProfilePicture(this.profileId).subscribe(image => {
       this.profileImg = image;
     });
+  }
+
+  showMore() {
+    this.limit = this.publication.content.length;
+    this.sMDisabled = !this.sMDisabled;
   }
 
   ngOnDestroy() {
