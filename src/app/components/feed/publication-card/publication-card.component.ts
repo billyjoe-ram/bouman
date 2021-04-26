@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Post } from 'src/app/interfaces/posts';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -10,7 +11,7 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class PublicationCardComponent implements OnInit {
 
-  @Input('publication') public publication: { content: string, createdAt: Date } = { content: "", createdAt: new Date()};
+  @Input('publication') public publication!: Post;
 
   @Input('profileId') public profileId: string = "";
 
