@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
+import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -29,7 +30,9 @@ export class PublicationCardComponent implements OnInit {
 
   private imageSubs!: Subscription;
   
-  constructor(private user: UsersService, private profile: ProfileService) { }
+  constructor(private user: UsersService,
+    private profile: ProfileService,
+    private post: PostsService) { }
 
   ngOnInit(): void {
     if (this.publication.content.length < this.limit) {
@@ -48,6 +51,10 @@ export class PublicationCardComponent implements OnInit {
   showMore() {
     this.limit = this.publication.content.length;
     this.sMDisabled = !this.sMDisabled;
+  }
+
+  onLikePost(post: string) {
+    this.post.likePost(this.publication.profileId, post);
   }
 
   ngOnDestroy() {

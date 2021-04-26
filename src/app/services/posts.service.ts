@@ -37,18 +37,25 @@ export class PostsService {
     return posts;
   }
 
-  addPost(profileId: string | undefined, content: Post) {
+  async addPost(profileId: string | undefined, content: Post) {
     // Going inside the profile posts
     const userPosts = this.postsCollection.doc(profileId).collection('Posts');
 
     // Adding a new posts
-    const newPost = userPosts.add({ profileId: profileId, content: content, publishedAt: new Date() });
+    const newPost = await userPosts.add(
+      { profileId: profileId,
+        content: content,
+        publishedAt: new Date(),
+        likes: 0
+      });
+
+    const post = newPost.update({ postId: newPost.id });
 
     // Returning the process promise
-    return newPost;
+    return post;
   }
 
-  deleteProject(profileId: string | undefined, postId: string) {
+  deletePost(profileId: string | undefined, postId: string) {
     // Going inside the profile posts
     const userPosts = this.postsCollection.doc(profileId).collection('Posts');
 
@@ -57,6 +64,11 @@ export class PostsService {
     
     // Returning the process promise
     return deletedProj;
+  }
+
+  likePost(profileId: string | undefined, postId: string) {
+    // Going inside the profile posts
+    console.log("Can't like projet " + postId + "rigth now, " + profileId);
   }
 
 }
