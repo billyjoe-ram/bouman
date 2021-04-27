@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Subscription } from 'rxjs';
 import { Post } from '../interfaces/posts';
 import { AuthService } from './auth.service';
+import { ProfileService } from './profile.service';
 import { UsersService } from './users.service';
 
 @Injectable({
@@ -12,7 +14,7 @@ export class PostsService {
 
   private postsCollection = this.store.collection('Profiles');
 
-  constructor(private store: AngularFirestore) { }
+  constructor(private store: AngularFirestore, private ProfileService: ProfileService) { }
 
   listProfilePosts(profileId: string) {
     const postsRef = this.postsCollection.doc(profileId).collection('Posts');
@@ -59,4 +61,29 @@ export class PostsService {
     return deletedProj;
   }
 
+  async searchingprofiles(input:string){
+    var varsubscription!: Subscription;
+    const postsid: any[] = [];
+    let postsname: any[] = [];
+    var i : number = 0;
+    const postsResult= (await this.postsCollection.ref.orderBy('name').startAt(input.toUpperCase()).endAt(input.toLowerCase+'\uf8ff').limit(10).get()).docs;
+    console.log(postsResult);
+    postsResult.forEach(element=>{
+      const varlocalelement = element.id;
+      postsid.push(varlocalelement);
+      console.log(varlocalelement)
+      })
+    postsid.forEach(element=>{
+      varsubscription = this.ProfileService.getProfile(element).pipe().subscribe((element : any)=>{
+        postsname.push(element.name);
+        i++;
+      })
+
+    })
+    if(i > postsid.length){
+    }
+    console.log(postsname.length, postsid.length)
+    console.log(postsid);
+  return {postsname, postsid};
+  }
 }

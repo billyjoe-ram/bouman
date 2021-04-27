@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
   selector: 'app-header',
@@ -18,15 +19,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public profileImg: any = "";
   public profileId: string = "";
-
+  public search: string = "";
   private profile!: Subscription;
   private userSubs!: Subscription;
+  public searchresult : any = [];
 
   @Output() featureSelected = new EventEmitter<string>();
 
   collapsed = true;
 
-  constructor(private authService: AuthService, private user: UsersService) { }
+  constructor(private authService: AuthService, private user: UsersService, private postsService: PostsService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -40,6 +42,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onSelect(feature: string) {
     this.featureSelected.emit(feature);
+  }
+  
+  public togglesearch(){
+    document.getElementById('search')?.classList.toggle("show");
+  }
+  public searching(){
+    console.log(this.search);
+    this.postsService.searchingprofiles(this.search).then(data=>{
+      this.searchresult = data.postsname
+      console.log(this.searchresult)
+    });
   }
 
   logOut() {

@@ -39,7 +39,13 @@
 
         <form>
             <div class="form-group">
-                <input type="search" class="form-control" placeholder="Procure um perfil aqui">
+                <div class="dropdown">
+                        <input type="search" class="form-control" placeholder="Procure um perfil aqui" [(ngModel)]="search" (ngModelChange)="searching()" (focus)="togglesearch()" (blur)="togglesearch()">                    
+                    <div class="dropdown-content" id="search">
+
+                        <a href="#" *ngFor="let testes of searchresult" [routerLink]=[]>{{testes}}</a>
+                    </div>
+                </div>
             </div>
         </form>
 
