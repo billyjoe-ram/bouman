@@ -62,28 +62,17 @@ export class PostsService {
   }
 
   async searchingprofiles(input:string){
-    var varsubscription!: Subscription;
-    const postsid: any[] = [];
-    let postsname: any[] = [];
+    const posts: any[] = [];
+    const postsname: any[] = [];
     var i : number = 0;
-    const postsResult= (await this.postsCollection.ref.orderBy('name').startAt(input.toUpperCase()).endAt(input.toLowerCase+'\uf8ff').limit(10).get()).docs;
+    const postsResult= (await this.postsCollection.ref.orderBy('name').startAt(input.toUpperCase()).endAt(input.toLowerCase+'\uf8ff').limit(10).get());
     console.log(postsResult);
     postsResult.forEach(element=>{
-      const varlocalelement = element.id;
-      postsid.push(varlocalelement);
-      console.log(varlocalelement)
+      postsname.push(element.data() as object);
+      posts.push({id:element.id, name:postsname[i].name});
+      i++;
       })
-    postsid.forEach(element=>{
-      varsubscription = this.ProfileService.getProfile(element).pipe().subscribe((element : any)=>{
-        postsname.push(element.name);
-        i++;
-      })
-
-    })
-    if(i > postsid.length){
-    }
-    console.log(postsname.length, postsid.length)
-    console.log(postsid);
-  return {postsname, postsid};
+    console.log(posts);
+  return posts;
   }
 }

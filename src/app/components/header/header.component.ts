@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public search: string = "";
   private profile!: Subscription;
   private userSubs!: Subscription;
-  public searchresult : any = [];
+  public searchresult : any[] = [];
 
   @Output() featureSelected = new EventEmitter<string>();
 
@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public searching(){
     console.log(this.search);
     this.postsService.searchingprofiles(this.search).then(data=>{
-      this.searchresult = data.postsname
+      this.searchresult = data;
       console.log(this.searchresult)
     });
   }
