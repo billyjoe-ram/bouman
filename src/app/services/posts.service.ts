@@ -66,13 +66,11 @@ export class PostsService {
     const postsname: any[] = [];
     var i : number = 0;
     const postsResult= (await this.postsCollection.ref.orderBy('name').startAt(input.toUpperCase()).endAt(input.toLowerCase+'\uf8ff').limit(10).get());
-    console.log(postsResult);
     postsResult.forEach(element=>{
       postsname.push(element.data() as object);
       posts.push({id:element.id, name:postsname[i].name});
       i++;
       })
-    console.log(posts);
   return posts;
   }
 }

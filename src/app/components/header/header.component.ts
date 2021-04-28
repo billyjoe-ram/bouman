@@ -45,16 +45,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   
   public togglesearch(){
+    if (this.search == ""){
     document.getElementById('search')?.classList.toggle("show");
+    }
   }
   public searching(){
-    console.log(this.search);
     this.postsService.searchingprofiles(this.search).then(data=>{
       this.searchresult = data;
-      console.log(this.searchresult)
     });
   }
-
+  public togglesearchclick(){
+      this.search = "";
+      document.getElementById('search')?.classList.toggle("show");
+  }
   logOut() {
     this.authService.logout();
   }
