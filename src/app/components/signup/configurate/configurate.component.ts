@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { NgForm } from '@angular/forms';
+import { NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { IbgeService } from 'src/app/services/ibge.service';
 import { UsersService } from 'src/app/services/users.service';
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { User } from '../../../interfaces/user';
 
 @Component({
   selector: 'configurate',
@@ -14,6 +16,14 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class ConfigurateComponent implements OnInit {
   @ViewChild('boumanForm') form!: NgForm;
+
+  public formConfig! : FormGroup;
+  public dataConfig = {
+    about: '',
+    state: '',
+    city: '',
+    birth: new Date()
+  };
   
   public states: { id: number, sigla: string }[] = [];  
   public cities: { id: number, nome: string }[] = [];  
@@ -25,6 +35,8 @@ export class ConfigurateComponent implements OnInit {
 
   private profileSubs!: Subscription;
 
+  messageError: string = '';
+
   private userProfile: any = {};
   
   constructor(
@@ -32,16 +44,29 @@ export class ConfigurateComponent implements OnInit {
     private store: AngularFirestore,
     private ibgeService: IbgeService,
     private router: Router,
-    private usersService: UsersService
+    private usersService: UsersService,
   ) {}
 
   ngOnInit(): void {
+    this.createForm();
+
     this.getStates();
 
     this.getData();
   }
 
-  async onSign() {
+  createForm(){
+    this.formConfig = new FormGroup({
+      'about' : new FormControl(this.dataConfig.about, [Validators.required, Validators.minLength(15), Validators.maxLength(300)]),
+      'state' : new FormControl(this.dataConfig.state, [Validators.required]),
+      'city' : new FormControl(this.dataConfig.city, [Validators.required]),
+      'birth' : new FormControl(this.dataConfig.birth, [Validators.required])
+    });
+
+    console.log(this.formConfig);
+  }
+
+  async onSign(form: any) {
     const user = await this.authService.getAuth().currentUser;
 
     if (this.form.valid) {
@@ -64,6 +89,19 @@ export class ConfigurateComponent implements OnInit {
         this.verifyEmail();
 
       } catch (error) {
+        switch(error.code){
+          case 'auth/argument-error':
+            this.messageError = 'Por favor, preencha os campos corretamente.';
+            break;
+          case 'auth/network-request-failed':
+            this.messageError = 'Verifique a sua conexão com a internet e tente novamente.';
+            break;
+          default:
+            this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
+            break;
+        }
+      
+        console.error(this.messageError);
         console.error(error);
       }
     }

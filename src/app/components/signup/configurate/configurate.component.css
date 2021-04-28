@@ -23,7 +23,7 @@
 
 label.profile-label > span {
   font-weight: lighter;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   padding-left: 1vw;
 }
 
@@ -40,13 +40,14 @@ hr {
 
   filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.5));
 
-  margin: 0 auto;
+  margin: 3vh auto;
 
   padding: 3% 4% 3% 4%;
 }
 
-.bouman-form label {
-  font-size: 1rem;
+.bouman-form .profile-label {
+  font-size: 1.1rem;
+  margin-top: 1vh;
 }
 
 .bouman-form textarea {  
@@ -65,14 +66,20 @@ hr {
 
   margin: 2vh auto 0 auto;
 
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #ffffff;
 
   background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.bouman-form input.ng-invalid.ng-touched {
+.bouman-form p.help-invalid {
+  margin: 2% 0 0 2%;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.bouman-form input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched, select.ng-invalid.ng-touched{
   border-color: darkred;
   background-color: rgb(255, 158, 158);
 }

@@ -1,7 +1,11 @@
 <secondary-header></secondary-header>
 <div class="container">
     <div class="row">
-        <span class="title">Comece configurando seu perfil</span>
+        <div class="col-sm-1 col-md-2 col-lg-3"></div>
+        <div class="col-sm-10 col-md-8 col-lg-6">
+            <span class="title">Comece configurando seu perfil</span>
+        </div>
+        <div class="col-sm-1 col-md-2 col-lg-3"></div>
     </div>
     <div class="row">
         <div class="col-sm-1 col-md-2 col-lg-3"></div>
@@ -9,45 +13,62 @@
             <div class="bouman-form form-group">
                 <span class="form-title">Dados</span>
                 <hr>
-                <form #boumanForm="ngForm" (ngSubmit)="onSign()">
+                <form #configForm [formGroup]="formConfig" (ngSubmit)="onSign(formConfig)">
                     <div class="row">
                         <div class="col-md-12">
                             <label for="profile-about" class="profile-label">Sobre<span>Máximo de 300
                                     caracteres</span></label>
-                            <textarea name="about" id="profile-about" maxlength="300"
-                                placeholder="Descreva um pouco de quem você é e do seu trabalho para a comunidade"
-                                name="desc" class="form-control" ngModel required>
-                            </textarea>
+                            <textarea name="about" id="profile-about" maxlength="300" minlength="15"
+                                placeholder="Descreva um pouco de quem você é e do seu trabalho para a comunidade."
+                                name="desc" class="form-control" required formControlName="about">
+                                </textarea>
+                            <p *ngIf="!formConfig.valid && formConfig.touched" class="help-invalid">Por favor, insira pelo menos
+                                15 caracteres.
+                            </p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-4 col-lg-4">
                             <label for="profile-uf" class="profile-label">UF</label>
                             <select class="bouman-select form-control" name="state" placeholder="Selecione um estado"
-                                (change)="fillCities()" ngModel required>
+                                (change)="fillCities()" required formControlName="state">
                                 <option *ngFor="let state of states" [value]="state.id">{{ state.sigla }}</option>
                             </select>
+                            <p *ngIf="!formConfig.controls['state'].valid && formConfig.controls['state'].touched" class="help-invalid">
+                                Por favor, selecione um Estado.
+                            </p>
                         </div>
                         <div class="col-md-1 col-lg-1"></div>
                         <div class="col-sm-12 col-md-7 col-lg-7">
                             <label for="profile-city" class="profile-label">Cidade</label>
-                            <select class="bouman-select form-control class="form-control name="city" placeholder="Selecione uma cidade" ngModel
-                                required>
+                            <select class="bouman-select form-control" name="city"
+                                placeholder="Selecione uma cidade" required formControlName="city">
                                 <option *ngFor="let city of cities" [value]="city.id">{{ city.nome }}</option>
                             </select>
+                            <p *ngIf="!formConfig.controls['city'].valid && formConfig.controls['city'].touched" class="help-invalid">
+                                Por favor, selecione uma cidade.
+                            </p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <label for="profile-date" class="profile-label">Data de nascimento</label>
-                            <input type="date" name="date" id="bouman-input" class="form-control" ngModel required #birth="ngModel">
-                            <p *ngIf="!birth.valid && birth.touched">Por favor, informe uma data válida.</p>
+                            <input type="date" name="date" id="bouman-input" class="form-control" ngModel required
+                                formControlName="birth">
+                            <p *ngIf="!formConfig.controls['birth'].valid && formConfig.controls['birth'].touched" class="help-invalid">Por favor, informe uma data
+                                válida.
+                            </p>
                         </div>
                         <div class="col-md-6"></div>
                     </div>
 
-                    <button type="submit" class="btn" [disabled]="!boumanForm.valid">Confirmar</button>
+                    <button type="submit" class="btn" [disabled]="!formConfig.valid">Confirmar</button>
                 </form>
+            </div>
+            <div *ngIf='messageError'>
+                <div class="alert alert-danger" role="alert">
+                    {{messageError}}
+                </div>
             </div>
         </div>
         <div class="col-sm-1 col-md-2 col-lg-3"></div>
