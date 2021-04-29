@@ -73,15 +73,13 @@ hr {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.bouman-form p.help-invalid {
-  margin: 2% 0 0 2%;
-  font-size: 0.9rem;
-  font-weight: 500;
+p.invalid-feedback{
+  color: #000000;
 }
 
-.bouman-form input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched, select.ng-invalid.ng-touched{
-  border-color: darkred;
+.is-invalid{
   background-color: rgb(255, 158, 158);
+  border-color: darkred !important;
 }
 
 @media (min-width: 768px) {

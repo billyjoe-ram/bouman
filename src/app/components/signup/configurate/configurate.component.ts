@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { NgForm, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, NgForm, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
@@ -45,6 +45,7 @@ export class ConfigurateComponent implements OnInit {
     private ibgeService: IbgeService,
     private router: Router,
     private usersService: UsersService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +54,10 @@ export class ConfigurateComponent implements OnInit {
     this.getStates();
 
     this.getData();
+  }
+
+  get f() {
+    return this.formConfig.controls; 
   }
 
   createForm(){

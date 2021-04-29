@@ -60,7 +60,8 @@ import { environment } from 'src/environments/environment.prod';
     AngularFireAuthModule,
     AngularFirestoreModule,
     HttpClientModule,
-    AngularEditorModule
+    AngularEditorModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -20,9 +20,10 @@
                                     caracteres</span></label>
                             <textarea name="about" id="profile-about" maxlength="300" minlength="15"
                                 placeholder="Descreva um pouco de quem você é e do seu trabalho para a comunidade."
-                                name="desc" class="form-control" required formControlName="about">
+                                name="desc" class="form-control" required formControlName="about" 
+                                [ngClass]="{ 'is-invalid': f.about.errors && f.about.touched}">
                                 </textarea>
-                            <p *ngIf="!formConfig.valid && formConfig.touched" class="help-invalid">Por favor, insira pelo menos
+                            <p *ngIf="f.about.errors && f.about.touched" class="invalid-feedback">Por favor, insira pelo menos
                                 15 caracteres.
                             </p>
                         </div>
@@ -31,10 +32,11 @@
                         <div class="col-sm-12 col-md-4 col-lg-4">
                             <label for="profile-uf" class="profile-label">UF</label>
                             <select class="bouman-select form-control" name="state" placeholder="Selecione um estado"
-                                (change)="fillCities()" required formControlName="state">
+                                (change)="fillCities()" required formControlName="state"
+                                [ngClass]="{ 'is-invalid': f.state.errors && f.state.touched}">
                                 <option *ngFor="let state of states" [value]="state.id">{{ state.sigla }}</option>
                             </select>
-                            <p *ngIf="!formConfig.controls['state'].valid && formConfig.controls['state'].touched" class="help-invalid">
+                            <p *ngIf="f.state.errors && f.state.touched" class="invalid-feedback">
                                 Por favor, selecione um Estado.
                             </p>
                         </div>
@@ -42,10 +44,11 @@
                         <div class="col-sm-12 col-md-7 col-lg-7">
                             <label for="profile-city" class="profile-label">Cidade</label>
                             <select class="bouman-select form-control" name="city"
-                                placeholder="Selecione uma cidade" required formControlName="city">
+                                placeholder="Selecione uma cidade" required formControlName="city"
+                                [ngClass]="{ 'is-invalid': f.city.errors && f.city.touched}">
                                 <option *ngFor="let city of cities" [value]="city.id">{{ city.nome }}</option>
                             </select>
-                            <p *ngIf="!formConfig.controls['city'].valid && formConfig.controls['city'].touched" class="help-invalid">
+                            <p *ngIf="f.city.errors && f.city.touched" class="invalid-feedback">
                                 Por favor, selecione uma cidade.
                             </p>
                         </div>
@@ -54,8 +57,8 @@
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <label for="profile-date" class="profile-label">Data de nascimento</label>
                             <input type="date" name="date" id="bouman-input" class="form-control" ngModel required
-                                formControlName="birth">
-                            <p *ngIf="!formConfig.controls['birth'].valid && formConfig.controls['birth'].touched" class="help-invalid">Por favor, informe uma data
+                                formControlName="birth" [ngClass]="{ 'is-invalid': f.birth.errors && f.birth.touched}">
+                            <p *ngIf="f.birth.errors && f.birth.touched" class="invalid-feedback">Por favor, informe uma data
                                 válida.
                             </p>
                         </div>
