@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Subscription } from 'rxjs';
 import { Post } from '../interfaces/posts';
 import { AuthService } from './auth.service';
+import { ProfileService } from './profile.service';
 import { UsersService } from './users.service';
 
 @Injectable({
@@ -12,7 +14,7 @@ export class PostsService {
 
   private postsCollection = this.store.collection('Profiles');
 
-  constructor(private store: AngularFirestore) { }
+  constructor(private store: AngularFirestore, private ProfileService: ProfileService) { }
 
   listProfilePosts(profileId: string) {
     const postsRef = this.postsCollection.doc(profileId).collection('Posts');
@@ -71,4 +73,16 @@ export class PostsService {
     console.log("Can't like projet " + postId + "rigth now, " + profileId);
   }
 
+  async searchingprofiles(input:string){
+    const posts: any[] = [];
+    const postsname: any[] = [];
+    var i : number = 0;
+    const postsResult= (await this.postsCollection.ref.orderBy('name').startAt(input.toUpperCase()).endAt(input.toLowerCase+'\uf8ff').limit(10).get());
+    postsResult.forEach(element=>{
+      postsname.push(element.data() as object);
+      posts.push({id:element.id, name:postsname[i].name});
+      i++;
+      })
+  return posts;
+  }
 }
