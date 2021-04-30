@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Post } from 'src/app/interfaces/posts';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -60,13 +59,15 @@ export class FeedComponent implements OnInit, OnDestroy {
 
       // Executing the service method to get profile data
       this.profileSubs = this.profile.getProfile(this.profileId).subscribe((profile: any) => {
-
+        console.log(profile)
+        console.log(profile.following.length)
         // Passing following profiles to array
+        if ( profile.following.length > 0 ){
         this.profilesFollowing = profile.following;
-
+        }
         // In pratical terms, you "follow yourself", but not in the database, only in the attribute
         this.profilesFollowing.push(this.profileId as string);
-
+        
         // Interating over each profile followed
         this.profilesFollowing.forEach(profile => {
           // Passing to posts attribute this profile id and an empty array
