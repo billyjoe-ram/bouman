@@ -25,8 +25,7 @@ export class ProfileService {
   }
 
   getProfile(pid: string | undefined) {
-    let userObject: {name: string, desc: string, storage: string} = { name: "", desc: "", storage: ""};
-    
+        
     const collection = this.store.collection('Profiles').doc(pid).valueChanges();
     
     return collection

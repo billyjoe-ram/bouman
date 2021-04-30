@@ -3,7 +3,7 @@
 
         <div class="profile-card-content">
             <img [src]="profileImg" alt="Foto de perfil" class="profile-picture img-responsive">
-            <div class="changeProfile" #btnPerfil *ngIf="esconder">
+            <div class="changeProfile" #btnPerfil *ngIf="esconder && editbutton">
                 <label for="fotoPerfil" id="labelPerfil">
                     Clique aqui para enviar uma foto de perfil
                     <input type="file" id="fotoPerfil" class="fotoPerfil" accept="*.jpg.png" (change)="getProfileImg($event)">
@@ -14,14 +14,14 @@
                 <span class="card-title">{{ userData.name }}</span>
                 <p class="card-text">{{ userData.desc }}</p>
             </div>
-            <div class="changeWall" #btnFundo *ngIf="esconder">
+            <div class="changeWall" #btnFundo *ngIf="esconder && editbutton">
                 <label for="fotoFundo" id="labelFundo">
                     Clique aqui para enviar um papel de parede
                     <input type="file" id="fotoFundo" class="fotoFundo" accept="*.jpg.png" (change)="getWallpImg($event)"> 
                 </label>
             </div>
 
-            <div id="btnFotos">
+            <div id="btnFotos" *ngIf="editbutton">
                 <div *ngIf="!esconder; else elseBloco">
                     <img role="button" (click)="esconder = !esconder"  id="editPen" src="../../../../assets/pen.svg">
                 </div>

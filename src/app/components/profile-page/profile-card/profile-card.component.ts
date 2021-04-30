@@ -19,6 +19,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
   public profileImg: any = "";
   public wallpImg: any = "";
+  public editbutton : boolean = false;
 
   private profile!: Subscription;
   private wallpaper!: Subscription;
@@ -39,6 +40,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private user: UsersService,
     private profileService: ProfileService,
+    private usersServices : UsersService,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -87,10 +89,12 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
 
   }
 
-  loadData() {
+  async loadData() {
+    const user = await this.auth.getAuth().currentUser;
     this.paramsSubs = this.route.params.subscribe((params) => {
       this.profileId = params['profid'];
-
+      
+    
       this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
         this.userData = profile;
 
@@ -105,8 +109,20 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
         }, (err: any) => {
           this.wallpImg = this.user.wallpasset();
         });
+
+        const profid = this.usersServices.getProfile(user?.uid).subscribe((data : any)=>{
+        console.log(data);
+        if (this.profileId == data.profileId)
+        {
+          this.editbutton = true;
+        }
+        else {
+          this.editbutton = false;
+        }
+        this.esconder = false;
       });
     });
+  });
 
   }
 
