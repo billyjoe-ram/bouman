@@ -24,7 +24,7 @@ import { SecondaryHeaderComponent } from './components/secondary-header/secondar
 import { InfosComponent } from './components/signup/infos/infos.component';
 import { LoginComponent } from './components/login/login.component';
 
-import { AngularEditorModule } from '@kolkov/angular-editor';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectOverviewComponent } from './components/projects/project-overview/project-overview.component';
@@ -64,7 +64,7 @@ registerLocaleData(ptBR);
     AngularFireAuthModule,
     AngularFirestoreModule,
     HttpClientModule,
-    AngularEditorModule
+    EditorModule
   ],
   providers: [ { provide: LOCALE_ID, useValue: "pt-BR" } ],
   bootstrap: [AppComponent],
