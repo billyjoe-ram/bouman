@@ -74,12 +74,12 @@ export class ConfigurateComponent implements OnInit {
   async onSign(form: any) {
     const user = await this.authService.getAuth().currentUser;
 
-    if (this.form.valid) {
+    if (this.formConfig.valid) {
 
-      const description = this.form.value.desc;
-      const date = this.form.value.date;
-      const state = this.form.value.state;
-      const city = this.form.value.city;
+      const description = this.formConfig.value.about;
+      const date = this.formConfig.value.birth;
+      const state = this.formConfig.value.state;
+      const city = this.formConfig.value.city;
 
       try {
 
@@ -149,7 +149,7 @@ export class ConfigurateComponent implements OnInit {
   }
 
   fillCities() {
-    const id = this.form.value.state;
+    const id = this.formConfig.value.state;
     this.cities = [];
     
     this.citiesSubs = this.ibgeService.getCities(id).subscribe(res => {
