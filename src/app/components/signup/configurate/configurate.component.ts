@@ -22,9 +22,9 @@ export class ConfigurateComponent implements OnInit {
     about: '',
     state: '',
     city: '',
-    birth: new Date()
+    birth: new Date(),
   };
-  
+
   public states: { id: number, sigla: string }[] = [];  
   public cities: { id: number, nome: string }[] = [];  
   
@@ -74,12 +74,21 @@ export class ConfigurateComponent implements OnInit {
 
   //validador personalizado para data de nascimento
   valiDate(input: AbstractControl): ValidationErrors | null{
-    //pegando valor do input e criando uma data com ele
-    //?????????????????????????????????????????????????
-    const birth = new Date(input.value);
-    //criando data atual para comparação
-    const today = new Date();
 
+    /* TENTATIVA 2, falha:
+    const today = new Date();
+    const birth = new Date(input.value);
+
+    const ageMin = (((60 * 60 * 24) * 365) * 14);
+    const ageMax = (((60 * 60 * 24) * 365) * 100);
+
+    if((birth.getUTCSeconds() < ageMin) || (birth.getUTCSeconds() > ageMax)){
+      return {'response': true};
+    }
+
+    return null;*/
+
+    /*TENTATIVA 1, não testada:
     //pegando o ano de cada data
     const todayYear = today.getFullYear();
     const birthYear = birth.getFullYear();
@@ -113,7 +122,6 @@ export class ConfigurateComponent implements OnInit {
       return {'response': true};
     }
     //se a diferença entre os anos for igual a 100
-    //????????????????????????????????????????????????
     if((todayYear - birthYear) === 100){
       //e o mês atual for igual ao mês de nascimento
       if(todayMon === birthMon){
@@ -128,7 +136,7 @@ export class ConfigurateComponent implements OnInit {
     if((todayYear - birthYear) > 100){
       return {'response': true};
     }
-    //caso nenhuma das alternativas, data de nascimento válida =)
+    //caso nenhuma das alternativas, data de nascimento válida =)*/
     return null;
   }
 
