@@ -56,6 +56,7 @@ export class ConfigurateComponent implements OnInit {
     this.getData();
   }
 
+  //retorna os controles do formulário('about', 'state', 'city' e 'birth') para serem utilizados no *ngIf do formulário no HTML
   get f() {
     return this.formConfig.controls; 
   }
@@ -65,10 +66,70 @@ export class ConfigurateComponent implements OnInit {
       'about' : new FormControl(this.dataConfig.about, [Validators.required, Validators.minLength(15), Validators.maxLength(300)]),
       'state' : new FormControl(this.dataConfig.state, [Validators.required]),
       'city' : new FormControl(this.dataConfig.city, [Validators.required]),
-      'birth' : new FormControl(this.dataConfig.birth, [Validators.required])
+      'birth' : new FormControl(this.dataConfig.birth, [Validators.required, this.valiDate])
     });
 
     console.log(this.formConfig);
+  }
+
+  //validador personalizado para data de nascimento
+  valiDate(input: AbstractControl): ValidationErrors | null{
+    //pegando valor do input e criando uma data com ele
+    //?????????????????????????????????????????????????
+    const birth = new Date(input.value);
+    //criando data atual para comparação
+    const today = new Date();
+
+    //pegando o ano de cada data
+    const todayYear = today.getFullYear();
+    const birthYear = birth.getFullYear();
+
+    //pegando o mês de cada data
+    const todayMon = today.getMonth()
+    const birthMon = birth.getMonth();
+
+    //pegando o dia de cada data
+    const toDay = today.getDay();
+    const birthDay = birth.getDay();
+
+    //se a diferença de anos for igual a 16 (16 anos)
+    if((todayYear - birthYear) === 16){
+      //e o mês atual for igual ao mês de nascimento
+      if(todayMon === birthMon){
+        //mas o dia de nascimento for menor que o atual, o usuário ainda não fez aniversário
+        //ou seja, não completou 16 anos
+        if(toDay < birthDay){
+          return {'response': true};
+        }
+      }
+      //se o mês atual for menor que o mês de nascimento, o usuário ainda não fez aniversário
+      //ou seja, não completo 16 anos
+      else if(todayMon < birthMon){
+        return {'response': true};
+      }
+    }
+    //se a diferença entre os anos for menor que 16, usuário menor de 16 anos
+    if((todayYear - birthYear) < 16){
+      return {'response': true};
+    }
+    //se a diferença entre os anos for igual a 100
+    //????????????????????????????????????????????????
+    if((todayYear - birthYear) === 100){
+      //e o mês atual for igual ao mês de nascimento
+      if(todayMon === birthMon){
+        //mas o dia atual é maior que o dia de nascimento, usuário já fez aniversário
+        //ou seja, já completou 100 anos
+        if(toDay > birthDay){
+          return {'response': true};
+        }
+      }
+    }
+    //se a diferença entre os anos for maior que 100, usuário maior de 100 anos
+    if((todayYear - birthYear) > 100){
+      return {'response': true};
+    }
+    //caso nenhuma das alternativas, data de nascimento válida =)
+    return null;
   }
 
   async onSign(form: any) {
