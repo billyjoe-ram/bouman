@@ -22,7 +22,7 @@ export class ConfigurateComponent implements OnInit {
     about: '',
     state: '',
     city: '',
-    birth: new Date(),
+    birth: '',
   };
 
   public states: { id: number, sigla: string }[] = [];  
@@ -75,12 +75,16 @@ export class ConfigurateComponent implements OnInit {
   // Validador personalizado para data de nascimento
   valiDate(input: AbstractControl): ValidationErrors | null{
 
+    console.log('Valor do input:');
+    console.log(input.value);
+
     // TENTATIVA 2, falha:
     const today = new Date();
     let birthString: string = input.value;
     let birthDate: string[] = []
 
     // String inicial
+    console.log('Valor inicial do birthString:');
     console.log(birthString);
     
     birthDate = birthString.split("-");
@@ -127,10 +131,11 @@ export class ConfigurateComponent implements OnInit {
     const profileBirth = new Date(birthString);
 
     // Sem perda de tempo
+    console.log('Data final:');
     console.log(profileBirth);
 
-    // const ageMin = (((60 * 60 * 24) * 365) * 14);
-    // const ageMax = (((60 * 60 * 24) * 365) * 100);
+    //const ageMin = (((60 * 60 * 24) * 365) * 14);
+    //const ageMax = (((60 * 60 * 24) * 365) * 100);
 
     // if((birth.getUTCSeconds() < ageMin) || (birth.getUTCSeconds() > ageMax)){
     //   return {'response': true};
@@ -138,25 +143,24 @@ export class ConfigurateComponent implements OnInit {
 
     // return null;
 
-    /*TENTATIVA 1, não testada:
     //pegando o ano de cada data
     const todayYear = today.getFullYear();
-    const birthYear = birth.getFullYear();
+    const birthYear = profileBirth.getFullYear();
 
     //pegando o mês de cada data
     const todayMon = today.getMonth()
-    const birthMon = birth.getMonth();
+    const birthMon = profileBirth.getMonth();
 
     //pegando o dia de cada data
-    const toDay = today.getDay();
-    const birthDay = birth.getDay();
+    const toDay = today.getDate();
+    const birthDay = profileBirth.getDate();
 
-    //se a diferença de anos for igual a 16 (16 anos)
-    if((todayYear - birthYear) === 16){
+    //se a diferença de anos for igual a 14 (14 anos)
+    if((todayYear - birthYear) === 14){
       //e o mês atual for igual ao mês de nascimento
       if(todayMon === birthMon){
         //mas o dia de nascimento for menor que o atual, o usuário ainda não fez aniversário
-        //ou seja, não completou 16 anos
+        //ou seja, não completou 14 anos
         if(toDay < birthDay){
           return {'response': true};
         }
@@ -167,26 +171,33 @@ export class ConfigurateComponent implements OnInit {
         return {'response': true};
       }
     }
-    //se a diferença entre os anos for menor que 16, usuário menor de 16 anos
-    if((todayYear - birthYear) < 16){
+    //se a diferença entre os anos for menor que 14, usuário menor de 14 anos
+    if((todayYear - birthYear) < 14){
       return {'response': true};
     }
     //se a diferença entre os anos for igual a 100
     if((todayYear - birthYear) === 100){
       //e o mês atual for igual ao mês de nascimento
+      console.log('Diferença de anos igual a 100');
       if(todayMon === birthMon){
+        console.log('Diferença de anos igual a 100 e mesmo mês');
         //mas o dia atual é maior que o dia de nascimento, usuário já fez aniversário
         //ou seja, já completou 100 anos
-        if(toDay > birthDay){
+        if(toDay > birthDay || toDay === birthDay){
+          console.log('Diferença de anos igual a 100, mesmo mês e dia ou já fez aniversário');
           return {'response': true};
         }
+      }
+      if(todayMon > birthMon){
+        console.log('Diferença de anos igual a 100 porém já fez aniversário');
+        return {'response': true};
       }
     }
     //se a diferença entre os anos for maior que 100, usuário maior de 100 anos
     if((todayYear - birthYear) > 100){
       return {'response': true};
     }
-    //caso nenhuma das alternativas, data de nascimento válida =)*/
+    //caso nenhuma das alternativas, data de nascimento válida =)
     return null;
   }
 
