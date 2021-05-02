@@ -72,21 +72,71 @@ export class ConfigurateComponent implements OnInit {
     console.log(this.formConfig);
   }
 
-  //validador personalizado para data de nascimento
+  // Validador personalizado para data de nascimento
   valiDate(input: AbstractControl): ValidationErrors | null{
 
-    /* TENTATIVA 2, falha:
+    // TENTATIVA 2, falha:
     const today = new Date();
-    const birth = new Date(input.value);
+    let birthString: string = input.value;
+    let birthDate: string[] = []
 
-    const ageMin = (((60 * 60 * 24) * 365) * 14);
-    const ageMax = (((60 * 60 * 24) * 365) * 100);
+    // String inicial
+    console.log(birthString);
+    
+    birthDate = birthString.split("-");
 
-    if((birth.getUTCSeconds() < ageMin) || (birth.getUTCSeconds() > ageMax)){
-      return {'response': true};
-    }
+    // Array separado
+    console.log(birthDate);
 
-    return null;*/
+    // Criando um novo índice para reorganização
+    birthDate.push("00");
+
+    // Criando uma cópia do ano no novo índice
+    birthDate[3] = birthDate[0];
+
+    // Iniciando a reoganização
+    console.log(birthDate);
+
+    birthDate[0] = birthDate[1];
+
+    // Primeiro índice - mês
+    console.log(birthDate);
+
+    birthDate[1] = birthDate[2];
+
+    // Segundo índice - dia
+    console.log(birthDate);
+
+    birthDate[2] = birthDate[3];
+
+    // Terceiro índice - ano
+    console.log(birthDate);
+
+    // Removendo aquele último índice não mais utiizando
+    birthDate.pop();
+    
+    // Data formatada
+    console.log(birthDate);
+
+    // Atribuindo à string
+    birthString = birthDate.join("-");
+
+    // Nova data - diferente da linha 84
+    console.log(birthString);
+
+    const profileBirth = new Date(birthString);
+
+    // Sem perda de tempo
+    console.log(profileBirth);
+
+    // const ageMin = (((60 * 60 * 24) * 365) * 14);
+    // const ageMax = (((60 * 60 * 24) * 365) * 100);
+
+    // if((birth.getUTCSeconds() < ageMin) || (birth.getUTCSeconds() > ageMax)){
+    //   return {'response': true};
+    // }
+
+    // return null;
 
     /*TENTATIVA 1, não testada:
     //pegando o ano de cada data
