@@ -68,29 +68,16 @@ export class ConfigurateComponent implements OnInit {
       'city' : new FormControl(this.dataConfig.city, [Validators.required]),
       'birth' : new FormControl(this.dataConfig.birth, [Validators.required, this.valiDate])
     });
-
-    console.log(this.formConfig);
   }
 
   // Validador personalizado para data de nascimento
   valiDate(input: AbstractControl): ValidationErrors | null{
-
-    console.log('Valor do input:');
-    console.log(input.value);
-
-    // TENTATIVA 2, falha:
     const today = new Date();
     let birthString: string = input.value;
-    let birthDate: string[] = []
-
-    // String inicial
-    console.log('Valor inicial do birthString:');
-    console.log(birthString);
+    let birthDate: string[] = [];
     
+    // Separando a string em um array
     birthDate = birthString.split("-");
-
-    // Array separado
-    console.log(birthDate);
 
     // Criando um novo índice para reorganização
     birthDate.push("00");
@@ -98,50 +85,23 @@ export class ConfigurateComponent implements OnInit {
     // Criando uma cópia do ano no novo índice
     birthDate[3] = birthDate[0];
 
-    // Iniciando a reoganização
-    console.log(birthDate);
-
+    // Primeiro índice - mês
     birthDate[0] = birthDate[1];
 
-    // Primeiro índice - mês
-    console.log(birthDate);
-
-    birthDate[1] = birthDate[2];
-
     // Segundo índice - dia
-    console.log(birthDate);
-
-    birthDate[2] = birthDate[3];
-
+    birthDate[1] = birthDate[2];
+    
     // Terceiro índice - ano
-    console.log(birthDate);
+    birthDate[2] = birthDate[3];
 
     // Removendo aquele último índice não mais utiizando
     birthDate.pop();
-    
-    // Data formatada
-    console.log(birthDate);
 
     // Atribuindo à string
-    birthString = birthDate.join("-");
+    birthString = birthDate.join("/");
 
-    // Nova data - diferente da linha 84
-    console.log(birthString);
-
-    const profileBirth = new Date(birthString);
-
-    // Sem perda de tempo
-    console.log('Data final:');
-    console.log(profileBirth);
-
-    //const ageMin = (((60 * 60 * 24) * 365) * 14);
-    //const ageMax = (((60 * 60 * 24) * 365) * 100);
-
-    // if((birth.getUTCSeconds() < ageMin) || (birth.getUTCSeconds() > ageMax)){
-    //   return {'response': true};
-    // }
-
-    // return null;
+    // Sem a perda de tempo
+    const profileBirth = new Date(birthString);    
 
     //pegando o ano de cada data
     const todayYear = today.getFullYear();
@@ -178,18 +138,14 @@ export class ConfigurateComponent implements OnInit {
     //se a diferença entre os anos for igual a 100
     if((todayYear - birthYear) === 100){
       //e o mês atual for igual ao mês de nascimento
-      console.log('Diferença de anos igual a 100');
-      if(todayMon === birthMon){
-        console.log('Diferença de anos igual a 100 e mesmo mês');
+      if(todayMon === birthMon) {
         //mas o dia atual é maior que o dia de nascimento, usuário já fez aniversário
         //ou seja, já completou 100 anos
-        if(toDay > birthDay || toDay === birthDay){
-          console.log('Diferença de anos igual a 100, mesmo mês e dia ou já fez aniversário');
+        if(toDay > birthDay || toDay === birthDay){          
           return {'response': true};
         }
       }
-      if(todayMon > birthMon){
-        console.log('Diferença de anos igual a 100 porém já fez aniversário');
+      if(todayMon > birthMon) {
         return {'response': true};
       }
     }
@@ -197,7 +153,7 @@ export class ConfigurateComponent implements OnInit {
     if((todayYear - birthYear) > 100){
       return {'response': true};
     }
-    //caso nenhuma das alternativas, data de nascimento válida =)
+    //caso nenhuma das alternativas, data de nascimento válida
     return null;
   }
 
@@ -235,9 +191,7 @@ export class ConfigurateComponent implements OnInit {
             this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
             break;
         }
-      
-        console.error(this.messageError);
-        console.error(error);
+
       }
     }
 
@@ -257,9 +211,7 @@ export class ConfigurateComponent implements OnInit {
         });
       }).catch((error) => {
         // Um erro ocorreu.        
-        window.alert('Um erro ocorreu, verifique se na sua caixa de entrada já não possui um link de verificação...');
-
-        console.error(error);
+        window.alert('Um erro ocorreu, verifique se na sua caixa de entrada já não possui um link de verificação...');        
       });
       
     }
@@ -299,16 +251,11 @@ export class ConfigurateComponent implements OnInit {
     const user = await this.authService.getAuth().currentUser;
     
     let profileId;
-    
-    
+        
     this.profileSubs = this.usersService.getProfile(user?.uid).subscribe((profile: any) => {
-      console.log(profile);
-
       profileId = profile.profileId;
 
-      this.userProfile = profile;
-
-      console.log(profileId);
+      this.userProfile = profile;      
     });
   }
 
