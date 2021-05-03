@@ -11,31 +11,33 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('pass') inputPass!: ElementRef;
+  @ViewChild('passwordInput') inputPass!: ElementRef;
 
   @ViewChild('box') boxPass!: ElementRef;
   
   public userLogin: any = {};
 
-  messageError!: string;
+  public messageError: string = "";
 
   private userData: { name: string, desc: string, area: string } = { name: '', desc: '', area: '' };
   
   constructor(private authService: AuthService, private router: Router,
     private user: UsersService) { }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void { }
 
   async login() {
     let user;
 
     try {
+      // Tentando logar o usuário
       await this.authService.login(this.userLogin);
 
+      // Navegando para o feed se logou
       this.router.navigate(["/feed"]);
     } catch (error) {
+
+      // Personalizando mensagens de erro
       switch(error.code){
         case 'auth/argument-error':
           this.messageError = 'Por favor, preencha os campos corretamente.';
@@ -57,30 +59,15 @@ export class LoginComponent implements OnInit {
           break;
         default:
           this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
-          break;
+          break;        
       }
 
-      //this.createAlert(this.messageError, error.code);
-      console.error(this.messageError);
-      console.error(error);
-    } 
-    // finally {
-    //   this.userData = this.user.getCollection(user?.uid)
+      // Limitando o alert a aparcer somente 5s
+      setTimeout(() => {
+        this.messageError = "";
+      }, 5000);
 
-    //   if(user != null){
-    //     if(user?.emailVerified){
-    //       if(!this.userData.desc){
-    //         this.router.navigate(["/config"]);
-    //       } else {
-    //         this.router.navigate(["/feed"]);
-    //       }
-    //     } else {
-    //       console.log("Que tal autenticar seu e-mail antes?")
-    //     }
-    //   } else {
-    //     console.log("Você primeiro deve logar ;)")
-    //   }
-    // }
+    }
 
   }
 
