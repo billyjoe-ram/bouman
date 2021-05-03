@@ -130,13 +130,10 @@ export class ConfigurateComponent implements OnInit {
     
     
     this.profileSubs = this.usersService.getProfile(user?.uid).subscribe((profile: any) => {
-      console.log(profile);
 
       profileId = profile.profileId;
 
       this.userProfile = profile;
-
-      console.log(profileId);
     });
   }
 

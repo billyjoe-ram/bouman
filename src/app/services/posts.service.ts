@@ -77,7 +77,7 @@ export class PostsService {
     const posts: any[] = [];
     const postsname: any[] = [];
     var i : number = 0;
-    const postsResult= (await this.postsCollection.ref.orderBy('name').startAt(input.toUpperCase()).endAt(input.toLowerCase+'\uf8ff').limit(10).get());
+    const postsResult= (await this.postsCollection.ref.orderBy('name').startAt(input.toUpperCase()+'\uf8ff').endAt(input.toLowerCase()+'\uf8ff').limit(10).get());
     postsResult.forEach(element=>{
       postsname.push(element.data() as object);
       posts.push({id:element.id, name:postsname[i].name});
