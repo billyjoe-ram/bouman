@@ -10,7 +10,7 @@
             <p *ngIf="!email.valid && email.touched" class="help-invalid">Por favor, preencha o campo corretamente.</p>
     
             <label for="userkey">Senha</label>
-            <input type="password" name="pass" id="userkey" placeholder="Ex.: @Bouman2021" minlength="8" required [(ngModel)]="userLogin.password" class="bouman-input form-control" (keyup)="getKey($event)" #pass="ngModel">
+            <input type="password" name="pass" id="userkey" placeholder="Ex.: @Bouman2021" minlength="8" required [(ngModel)]="userLogin.password" class="bouman-input form-control" (keyup)="getKey($event)" #pass="ngModel" #passwordInput>
             <p *ngIf="!pass.valid && pass.touched" class="help-invalid">Por favor, preencha o campo corretamente.</p>
 
             <div class="show-pass" (click)="showPassword()">
@@ -28,9 +28,9 @@
             </div>
         </form>
 
-        <div *ngIf='messageError'>
+        <div *ngIf="messageError">
             <div class="alert alert-danger" role="alert">
-                {{messageError}}
+                {{ messageError }}
             </div>
         </div>
 
