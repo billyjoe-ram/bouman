@@ -81,8 +81,6 @@ export class PostsService {
 
     const postsResult= (await this.postsCollection.ref.orderBy("name", "asc").startAt(input.toUpperCase()+'\uf8ff').endAt(input.toLowerCase()+'\uf8ff').limit(10).get());
 
-    console.log(postsResult);
-
     postsResult.forEach(element=>{
       postsname.push(element.data() as object);
       posts.push({id:element.id, name:postsname[i].name});

@@ -59,8 +59,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
       // Executing the service method to get profile data
       this.profileSubs = this.profile.getProfile(this.profileId).subscribe((profile: any) => {
-        console.log(profile)
-        console.log(profile.following.length)
+        
         // Passing following profiles to array
         if ( profile.following.length > 0 ){
         this.profilesFollowing = profile.following;

@@ -111,7 +111,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
         });
 
         const profid = this.usersServices.getProfile(user?.uid).subscribe((data : any)=>{
-        console.log(data);
+        
         if (this.profileId == data.profileId)
         {
           this.editbutton = true;
