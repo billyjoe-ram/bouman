@@ -70,19 +70,25 @@ export class PostsService {
 
   likePost(profileId: string | undefined, postId: string) {
     // Going inside the profile posts
-    console.log("Can't like projet " + postId + "rigth now, " + profileId);
+    console.log("Can't like projet " + postId + " rigth now, " + profileId);
   }
 
   async searchingprofiles(input:string){
     const posts: any[] = [];
     const postsname: any[] = [];
-    var i : number = 0;
-    const postsResult= (await this.postsCollection.ref.orderBy('name').startAt(input.toUpperCase()+'\uf8ff').endAt(input.toLowerCase()+'\uf8ff').limit(10).get());
+
+    let i : number = 0;
+
+    const postsResult= (await this.postsCollection.ref.orderBy("name", "asc").startAt(input.toUpperCase()+'\uf8ff').endAt(input.toLowerCase()+'\uf8ff').limit(10).get());
+
+    console.log(postsResult);
+
     postsResult.forEach(element=>{
       postsname.push(element.data() as object);
       posts.push({id:element.id, name:postsname[i].name});
       i++;
-      })
+    });
+
   return posts;
   }
 }
