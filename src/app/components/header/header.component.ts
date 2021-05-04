@@ -44,20 +44,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.featureSelected.emit(feature);
   }
   
-  public togglesearch(){
+  togglesearch(){
     if (this.search == ""){
-    document.getElementById('search')?.classList.toggle("show");
+      document.getElementById('search')?.classList.toggle("show");
     }
   }
-  public searching(){
+
+  searching() {
     this.postsService.searchingprofiles(this.search).then(data=>{
       this.searchresult = data;
     });
   }
-  public togglesearchclick(){
-      this.search = "";
-      document.getElementById('search')?.classList.toggle("show");
+
+  togglesearchclick(){
+    this.search = "";
+    document.getElementById('search')?.classList.toggle("show");
   }
+
   logOut() {
     this.authService.logout();
   }

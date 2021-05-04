@@ -40,11 +40,10 @@
         <form>
             <div class="form-group">
                 <div class="dropdown">
-                        <input type="search" class="form-control" placeholder="Procure um perfil aqui" [(ngModel)]="search" (ngModelChange)="searching()" (focus)="togglesearch()" (blur)="togglesearch()">                    
-                    <div class="dropdown-content" id="search">
-
-                        <a href="#" *ngFor="let prof of searchresult" [routerLink]="['/profiles', prof.id]" (click)="togglesearchclick()">{{prof.name}}</a>
-                    </div>
+                        <input type="search" class="form-control" placeholder="Procure um perfil aqui" [(ngModel)]="search" (ngModelChange)="searching()" (focus)="togglesearch()" (blur)="togglesearch()">    
+                        <div class="dropdown-content" id="search" [ngStyle]="{ 'display': search ? 'block' : 'none'}">
+                            <a href="#" *ngFor="let prof of searchresult" [routerLink]="['/profiles', prof.id]" (click)="togglesearchclick()">{{prof.name}}</a>
+                        </div>
                 </div>
             </div>
         </form>
