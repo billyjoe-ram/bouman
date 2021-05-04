@@ -51,9 +51,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   searching() {
+// const filterItems = (elemento:String, data:string[]) => {
+//   return data.filter(el => el.toLowerCase().indexOf(elemento.toLowerCase()) > -1);};
+
     this.postsService.searchingprofiles(this.search).then(data=>{
+
+//       const teste = data;
+//       console.log(filterItems(this.search, teste));
+//       this.searchresult = data;
+//       console.log(data);
       this.searchresult = data;
     });
+
   }
 
   togglesearchclick(){
