@@ -1,13 +1,36 @@
 <app-header></app-header>
 
 <div class="row justify-content-center align-items-start">
-    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
-        <profile-card></profile-card>
 
-        <div class="profile-content">
-            <div class="post-item" *ngFor="let post of userPosts">
-                <publication-card [profileId]="post.profileId" [publication]="post"></publication-card>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="row justify-content-center align-items-start">
+            <div class="col-xs-10 col-sm-8 col-md-6 col-lg-6">
+                <profile-card></profile-card>
+            </div>
+        
+            <div class="col-xs-2 col-sm-4 col-md-3 col-lg-2">
+                <div class="card">
+                    <div class="card-header">
+                        Redes sociais
+                    </div>
+                    <div class="card-body">
+                        E-mail: <a> billyjoersantos@outlook.com </a>
+                        GitHub: <a> github.com/billyjoe-ram </a>
+                        LinkedIn <a > ?? </a>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="row justify-content-center align-items-start">
+            <div class="col-xs-10 col-sm-8 col-md-10 col-lg-6">
+                <div class="profile-content">
+                    <div class="post-item" *ngFor="let post of userPosts">
+                        <publication-card [profileId]="post.profileId" [publication]="post"></publication-card>
+                    </div>
+                </div>
+            </div>
+        </div>        
     </div>
+
 </div>
