@@ -12,6 +12,7 @@ import { PostsService } from 'src/app/services/posts.service';
 export class ProfilePageComponent implements OnInit {
 
   public userPosts: any[] = [];
+  public editbutton : boolean = true;
 
   private paramsSubs!: Subscription;
   private postsSubs!: Subscription;  
@@ -22,6 +23,7 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+    console.log(this.editbutton);
   }
 
   loadData() {
