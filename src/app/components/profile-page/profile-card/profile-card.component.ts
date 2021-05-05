@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,21 +11,21 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './profile-card.component.html',
   styleUrls: ['./profile-card.component.css']
 })
-export class ProfileCardComponent implements OnInit, OnDestroy {
+export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
-  @ViewChild('btnFollow') btnFollow!: ElementRef;
-  
+  @Input('profileId') public profileId: string = "";
+  @Input('editMode') public editbutton: boolean = false;
   public esconder: boolean = false;
+  
+  @ViewChild('btnFollow') btnFollow!: ElementRef;
 
   public userData: { name: string, desc: string } = { name: '', desc: '' };
 
   public profileImg: any = "";
   public wallpImg: any = "";
-  public editbutton : boolean = false;
 
   private profile!: Subscription;
   private wallpaper!: Subscription;
-  private profileId: string = "";
 
   private imgPath: any = "";
   private imgcheck: boolean = false;
@@ -46,9 +46,12 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    
     this.loadData();
+  }
 
+  ngOnChanges() {
+    this.esconder = false;
+    console.log(this.esconder);
   }
 
   ngOnDestroy() {
@@ -111,18 +114,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
         }, (err: any) => {
           this.wallpImg = this.user.wallpasset();
         });
-
-        const profid = this.usersServices.getProfile(user?.uid).subscribe((data : any)=>{
-        
-        if (this.profileId == data.profileId)
-        {
-          this.editbutton = true;
-        }
-        else {
-          this.editbutton = false;
-        }
-        this.esconder = false;
-      });
+      
     });
   });
 

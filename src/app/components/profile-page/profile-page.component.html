@@ -2,7 +2,7 @@
 
 <div class="row justify-content-center align-items-start">
     <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
-        <profile-card></profile-card>
+        <profile-card [profileId]="profileId" [editMode]="sameUser" ></profile-card>
 
         <div class="profile-content">
             <div class="post-item" *ngFor="let post of userPosts">
