@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,8 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class ProfileCardComponent implements OnInit, OnDestroy {
 
+  @ViewChild('btnFollow') btnFollow!: ElementRef;
+  
   public esconder: boolean = false;
 
   public userData: { name: string, desc: string } = { name: '', desc: '' };
@@ -124,6 +126,19 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
     });
   });
 
+  }
+
+  followProfile() {
+    const button = this.btnFollow.nativeElement;
+
+    const buttonTxt = button.innerHTML;    
+
+    if (buttonTxt == "Seguir") {
+      button.innerHTML = "Seguindo";
+    } else {
+      button.innerHTML = "Seguir";
+    }
+    
   }
 
 }
