@@ -1,0 +1,49 @@
+.row{
+    margin-top: 3%;
+}
+img{
+    width: 90%;
+}
+h1{
+    font-size: 2.9rem;
+    font-weight: bold;
+}
+.text-error{
+    font-size: 1.2rem;
+}
+#text-email{
+    font-size: 1.1rem;
+    background-color: rgb(255, 255, 255, 0.8);
+    /* rgb(44, 168, 186, 0.2);*/
+    /* rgb(255, 255, 255, 0.8)*/
+    border-radius: 8px;
+    padding: 3%;
+    text-align: center;
+}
+#texts{
+    margin-top: 10%;
+    height: fit-content;
+    width: fit-content;
+    background-color: rgb(250, 144, 46, 0.3);
+    padding: 3%;
+    border-radius: 10px;
+}
+
+@media (min-width: 768px){
+    img{
+        margin-top: 50%;
+    }
+    h1{
+        font-size: 2.5rem;
+    }
+}
+@media (min-width: 1024px){
+    img{
+        margin-top: 30%;
+    }
+}
+@media (min-width: 1440px){
+    img{
+        margin-top: 10%;
+    }
+}

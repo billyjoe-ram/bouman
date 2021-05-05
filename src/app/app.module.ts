@@ -33,6 +33,7 @@ import { ProfileConfigComponent } from './components/profile-page/profile-config
 
 import { environment } from 'src/environments/environment.prod';
 import { registerLocaleData } from '@angular/common';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 registerLocaleData(ptBR);
 
@@ -53,6 +54,7 @@ registerLocaleData(ptBR);
     ProjectOverviewComponent,
     ProjectComponent,
     ProfileConfigComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
