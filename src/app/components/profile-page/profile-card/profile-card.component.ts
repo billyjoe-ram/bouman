@@ -51,7 +51,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges() {
     this.esconder = false;
-    console.log(this.esconder);
   }
 
   ngOnDestroy() {
@@ -88,9 +87,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
         this.wallpImg = url;
       });
     }
-
-    // finalmente, alterando o estado do booleano
-    this.esconder = !this.esconder;
 
   }
 
