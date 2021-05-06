@@ -31,7 +31,6 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
-    console.log(this.editbutton);
   }
 
   async loadData() {
