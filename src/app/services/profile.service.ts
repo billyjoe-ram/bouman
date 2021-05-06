@@ -60,10 +60,11 @@ export class ProfileService {
     
     // Getting current user profileId
     this.usersService.getProfile(user?.uid).subscribe((profile: any) => {      
+
       this.userProfileId = profile.profileId;
 
       // Getting current user following array
-      this.getProfile(this.userProfileId).subscribe((profile: any) => {
+      const updateProfile = this.getProfile(this.userProfileId).subscribe((profile: any) => {
         // Creating a copy from this array        
         const profilesFollowing: any[] = profile.following
         
@@ -79,10 +80,11 @@ export class ProfileService {
           console.log("Already in array: ");
           console.log(profilesFollowing);
         }
-                
+        
       });
+      
+    });
 
-    });    
   }
 
 }

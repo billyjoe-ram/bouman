@@ -117,48 +117,33 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   async onFollow() {
+    // Getting current user uid
+    const user = await this.auth.getAuth().currentUser;
+
     const button = this.btnFollow.nativeElement;
 
-    const buttonTxt = button.innerHTML;    
+    const buttonTxt = button.innerHTML;
 
     // Executing the service method to get profile data
-    await this.profileService.followProfile(this.profileId);
+    const following = await this.profileService.followProfile(this.profileId);
 
-    if (buttonTxt == "Seguir") {
-      button.innerHTML = "Seguindo";
-    } else {
-      button.innerHTML = "Seguir";
-    }    
+    this.userSubs = this.usersServices.getProfile(user?.uid).subscribe((profile: any) => {      
+      const userProfileId = profile.profileId;
 
-    /*
-    // Executing the service method to get profile data
-      this.profileSubs = this.profile.getProfile(this.profileId).subscribe((profile: any) => {
+      // Getting current user following array
+      const updateProfile = this.profileService.getProfile(userProfileId).subscribe((profile: any) => {
+        // Creating a copy from this array        
+        const profilesFollowing: any[] = profile.following
         
-        // Passing following profiles to array
-        if ( profile.following.length > 0 ){
-        this.profilesFollowing = profile.following;
+        // Checking if already followed
+        if (!profilesFollowing.includes(this.profileId)) {
+          button.innerHTML = "Seguir";
+        } else {
+          button.innerHTML = "Seguindo";
         }
-        // In pratical terms, you "follow yourself", but not in the database, only in the attribute
-        this.profilesFollowing.push(this.profileId as string);
         
-        // Interating over each profile followed
-        this.profilesFollowing.forEach(profile => {
-          // Passing to posts attribute this profile id and an empty array
-          this.feedPosts.push({ profileId: profile, posts: [] });
-
-          
-          let profileIndex = this.profilesFollowing.indexOf(profile);
-
-          // For this profile (brought by iteration), bring its posts and add in the object array
-          this.postsSubs = this.posts.listProfilePosts(profile).subscribe(profilePost => {
-            this.feedPosts[profileIndex].posts = profilePost;
-          });
-          
-        });
-
       });
-    */
-    
-  }
+    })
 
+  }
 }
