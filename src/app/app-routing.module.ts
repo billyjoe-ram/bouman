@@ -11,6 +11,7 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectOverviewComponent } from './components/projects/project-overview/project-overview.component';
 import { ProjectComponent } from './components/projects/project-overview/project/project.component';
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "feed", pathMatch: 'full' },
@@ -24,6 +25,7 @@ const routes: Routes = [
   ] },
   { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
   { path: 'profiles/:profid', component: ProfilePageComponent, canActivate: [AuthGuard] },
+  { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

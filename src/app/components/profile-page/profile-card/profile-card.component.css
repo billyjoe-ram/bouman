@@ -1,6 +1,5 @@
 .card {
-  filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.5));
-  border-radius: 8px 8px 0 0;
+  filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.5));  
 }
 
 .card .card-body {
@@ -10,6 +9,8 @@
   padding: 0;
 
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .card .card-body .profile-card-content {
@@ -25,11 +26,11 @@
   border-radius: 50%;
 }
 
-.card .card-body .text-content{
+.card .card-body .text-content {
   color: white;  
 }
 
-.card-text, .card-title{
+.card-text, .card-title {
   background-color: rgb(0, 0, 0, 0.5);
 }
 
@@ -49,12 +50,8 @@
   height: 2.5rem;
 }
 
-.card .card-body #button-save {
-  border-color: #df660f;
-  background-color: #fa902e;
-
-  color: #ffffff;
-  margin-top: 12%;
+.card .card-body .btn-bouman:first-child {
+  margin-top: 0.75rem;
 }
 
 .card-footer {
@@ -115,6 +112,10 @@
 
 .card .card-body #btnFotos {
   margin-left: 2%;
+}
+
+.card .card-body #followProfile {
+  margin-left: 15%;
 }
 
 @media (min-width: 768px) {
