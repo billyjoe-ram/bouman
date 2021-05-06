@@ -116,16 +116,48 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   }
 
-  followProfile() {
+  async onFollow() {
     const button = this.btnFollow.nativeElement;
 
     const buttonTxt = button.innerHTML;    
+
+    // Executing the service method to get profile data
+    await this.profileService.followProfile(this.profileId);
 
     if (buttonTxt == "Seguir") {
       button.innerHTML = "Seguindo";
     } else {
       button.innerHTML = "Seguir";
-    }
+    }    
+
+    /*
+    // Executing the service method to get profile data
+      this.profileSubs = this.profile.getProfile(this.profileId).subscribe((profile: any) => {
+        
+        // Passing following profiles to array
+        if ( profile.following.length > 0 ){
+        this.profilesFollowing = profile.following;
+        }
+        // In pratical terms, you "follow yourself", but not in the database, only in the attribute
+        this.profilesFollowing.push(this.profileId as string);
+        
+        // Interating over each profile followed
+        this.profilesFollowing.forEach(profile => {
+          // Passing to posts attribute this profile id and an empty array
+          this.feedPosts.push({ profileId: profile, posts: [] });
+
+          
+          let profileIndex = this.profilesFollowing.indexOf(profile);
+
+          // For this profile (brought by iteration), bring its posts and add in the object array
+          this.postsSubs = this.posts.listProfilePosts(profile).subscribe(profilePost => {
+            this.feedPosts[profileIndex].posts = profilePost;
+          });
+          
+        });
+
+      });
+    */
     
   }
 
