@@ -1,0 +1,20 @@
+.card {
+    width: max-content;
+    height: 30vh;
+    max-height: 30vh;
+}
+
+.card .card-header {
+	display: flex;
+	justify-content: space-between;
+
+    font-weight: bold;
+    background-color: #D3E2E5;
+}
+
+.card .card-header button {
+    font-weight: lighter;
+    font-size: 0.85rem;
+    
+    align-items: center;
+}
