@@ -8,25 +8,24 @@
         </button>
     </div>
 
-    <div class="card-body">
+    <div class="card-body">        
         <div class="social-network-item">
             <p>
-                <a> billyjoersantos@outlook.com </a>
+                <a> {{ userSocial.email }} </a>
             </p>
         </div>
 
         <div class="social-network-item">
             <p>
-                <a> github.com/billyjoe-ram </a>
+                <a> {{ userSocial.linkedin }} </a>
             </p>
         </div>
 
         <div class="social-network-item">
             <p>
-                <a> github.com/billyjoe-ram </a>
+                <a> {{ userSocial.linkedin }} </a>
             </p>
         </div>
-
     </div>
 </div>
 
@@ -45,13 +44,13 @@
                 <form>
                     <div class="form-group">
                         <label for="emailInput">E-mail: </label>
-                        <input type="text" class="form-control" id="emailInput" placeholder="pesquisador@email.com">
+                        <input type="text" class="form-control" id="emailInput" placeholder="pesquisador@email.com"  ngModel>
 
                         <label for="linkedInInput">LinkedIn: </label>
-                        <input type="text" class="form-control" id="linkedInInput" placeholder="linkedin.com/in/seu-perfil">
+                        <input type="text" class="form-control" id="linkedInInput" placeholder="linkedin.com/in/seu-perfil" ngModel>
 
                         <label for="anotherContactInput">Outra rede social: </label>
-                        <input type="text" class="form-control" id="anotherContactInput" placeholder="Facebook, GitHub, SciElo etc.">
+                        <input type="text" class="form-control" id="anotherContactInput" placeholder="Facebook, GitHub, SciElo etc." ngModel>
                     </div>
                 </form>
             </div>

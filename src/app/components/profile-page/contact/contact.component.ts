@@ -15,6 +15,8 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   @Input('editMode') public editMode: boolean = false;
 
+  public userSocial: { email: string, linkedin: string, other: string } = { email: "", linkedin: "", other: "" };
+
   private profileSubs!: Subscription;
 
   constructor(
@@ -26,6 +28,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.loadData();
   }
 
   editContact() {
@@ -33,8 +36,22 @@ export class ContactComponent implements OnInit, OnDestroy {
       console.log("Editável");
   }
 
-  ngOnDestroy() {
+  async loadData(){
+    const profileId = this.route.snapshot.params["profid"];
+    
+    this.profileSubs = this.profileService.getProfile(profileId).subscribe((profile: any) => {
+      // Checking if it isn't undefined
+      if (profile.social.length) {
+        this.userSocial = profile.social;
+      } else {
+        this.userSocial = { email: "E-mail não informado", linkedin: "LinkedIn não informado", other: "Nenhum outro contato informado" };
+      }
 
+      console.log(profile)
+    });
+  }
+
+  ngOnDestroy() {
     // Se existir algo na subscription, fechar
     if(this.profileSubs) {
       this.profileSubs.unsubscribe();
