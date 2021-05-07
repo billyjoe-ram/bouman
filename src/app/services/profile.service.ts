@@ -23,13 +23,13 @@ export class ProfileService {
     return this.userCollection.add(user);
   }
 
-  updateProfile(id: string | undefined, pid: string | undefined, user: { name: string, description: string, area: string }) {
-    this.profileCollection.doc(pid).update({name: user.name, desc: user.description});
+  updateProfile(id: string | undefined, profileId: string | undefined, user: { name: string, description: string, area: string }) {
+    this.profileCollection.doc(profileId).update({name: user.name, desc: user.description});
     this.userCollection.doc(id).update({area: user.area});
   }
 
-  getProfile(pid: string | undefined) {
-    const collection = this.store.collection('Profiles').doc(pid).valueChanges();
+  getProfile(profileId: string | undefined) {
+    const collection = this.store.collection('Profiles').doc(profileId).valueChanges();
     
     return collection;
   }
@@ -111,6 +111,10 @@ export class ProfileService {
       });
     })
 
+  }
+
+  updateContact(profileId: string, contact: { email: string, linkedin: string, other: string }) {
+    return this.profileCollection.doc(profileId).update({ social: contact });
   }
 
 }
