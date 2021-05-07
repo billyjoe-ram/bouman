@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
-export class ContactComponent implements OnInit, OnDestroy {
+export class ContactComponent implements OnChanges, OnInit, OnDestroy {
 
   @Input('editMode') public editMode: boolean = false;
   @ViewChild("dismissButton") private dismissModalBtn!: ElementRef;
@@ -33,7 +33,9 @@ export class ContactComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngOnChanges() {
     this.loadData();
   }
 
