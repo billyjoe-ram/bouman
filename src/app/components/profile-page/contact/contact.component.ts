@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AreasService } from 'src/app/services/areas.service';
@@ -31,9 +32,12 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
-  editContact() {
-    if (this.editMode)
-      console.log("Editável");
+  editContact(form: NgForm) {
+    if (this.editMode) {
+      const formValues = form.form.value;
+
+      console.log(formValues);
+    }
   }
 
   async loadData(){
@@ -46,8 +50,7 @@ export class ContactComponent implements OnInit, OnDestroy {
       } else {
         this.userSocial = { email: "E-mail não informado", linkedin: "LinkedIn não informado", other: "Nenhum outro contato informado" };
       }
-
-      console.log(profile)
+            
     });
   }
 

@@ -1,14 +1,15 @@
 <div class="card">
-    <div class="card-header" >
+    <div class="card-header">
         Redes sociais
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#contactModal" (click)="editContact()" #modal *ngIf="editMode">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#contactModal" #modal
+            *ngIf="editMode">
             Editar
         </button>
     </div>
 
-    <div class="card-body">        
+    <div class="card-body">
         <div class="social-network-item">
             <p>
                 <a> {{ userSocial.email }} </a>
@@ -40,25 +41,29 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form>
+            <form (ngSubmit)="editContact(f)" #f="ngForm">
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="emailInput">E-mail: </label>
-                        <input type="text" class="form-control" id="emailInput" placeholder="pesquisador@email.com"  ngModel>
+                        <input type="email" class="form-control" id="emailInput" placeholder="pesquisador@email.com"
+                            name="email" email required ngModel>
 
                         <label for="linkedInInput">LinkedIn: </label>
-                        <input type="text" class="form-control" id="linkedInInput" placeholder="linkedin.com/in/seu-perfil" ngModel>
+                        <input type="text" class="form-control" id="linkedInInput"
+                            placeholder="linkedin.com/in/seu-perfil" name="linkedin" required ngModel>
 
                         <label for="anotherContactInput">Outra rede social: </label>
-                        <input type="text" class="form-control" id="anotherContactInput" placeholder="Facebook, GitHub, SciElo etc." ngModel>
+                        <input type="text" class="form-control" id="anotherContactInput"
+                            placeholder="Facebook, GitHub, SciElo etc." name="another" required ngModel>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="submit" class="btn btn-outline-dark"
-                    data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-bouman">Salvar Mudanças</button>
-            </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="submit" class="btn btn-outline-dark"
+                        data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-bouman">Salvar Mudanças</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
