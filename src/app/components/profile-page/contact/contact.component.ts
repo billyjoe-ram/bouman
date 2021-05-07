@@ -1,4 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AreasService } from 'src/app/services/areas.service';
@@ -11,9 +12,16 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
-export class ContactComponent implements OnInit, OnDestroy {
+export class ContactComponent implements OnChanges, OnInit, OnDestroy {
 
   @Input('editMode') public editMode: boolean = false;
+  @ViewChild("dismissButton") private dismissModalBtn!: ElementRef;
+
+  public userSocial: { email: string, linkedin: string, other: string } = { email: "", linkedin: "", other: "" };
+
+  public hasSocial: boolean = false;
+
+  private profileId: string = "";
 
   private profileSubs!: Subscription;
 
@@ -25,40 +33,53 @@ export class ContactComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngOnChanges() {
+    this.loadData();
   }
 
-  editContact() {
-    if (this.editMode)
-      console.log("Editável");
+  async editContact(form: NgForm) {
+    if (this.editMode) {
+      const formValues = form.form.value;
+
+      const dismissBtn = this.dismissModalBtn.nativeElement;
+
+      this.userSocial = formValues;
+
+      try {
+        await this.profileService.updateContact(this.profileId, this.userSocial);
+      } catch(error) {
+        console.log(error);
+      } finally {
+        dismissBtn.click();
+      }
+
+    }
+  }
+
+  loadData(){
+    this.profileId = this.route.snapshot.params["profid"];
+
+    this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
+
+      // Checking if it isn't undefined
+      if (profile.social) {
+        this.hasSocial = true;
+        this.userSocial = profile.social;
+      } else {
+        this.hasSocial = false;
+        this.userSocial = { email: "E-mail não informado", linkedin: "LinkedIn não informado", other: "Nenhum outro contato informado" };
+      }
+
+    });
   }
 
   ngOnDestroy() {
-
     // Se existir algo na subscription, fechar
     if(this.profileSubs) {
       this.profileSubs.unsubscribe();
     }
-  }
-  /*
-  public user: any = { name: '', desc: '', area: '', profileId: '' };
-
-  public areas: any = {};
-  
-  private profileId: string = "";
-
-  private getcoll!: Subscription;
-
-  private getprof!: Subscription;
-  */
-
-  getData() {
-    const profileId = this.route.snapshot.params["profid"];
-    
-    this.profileSubs = this.profileService.getProfile(profileId).subscribe((data: any) => {
-      console.log(data)
-    });
-
   }
 
 }
