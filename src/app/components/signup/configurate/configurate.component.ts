@@ -173,7 +173,7 @@ export class ConfigurateComponent implements OnInit {
 
         await this.store.collection('Users').doc(user?.uid).update({ birth: date, state: state, city: city });
 
-        await userProfile.update({ desc: description, following: [], social: []});
+        await userProfile.update({ desc: description, following: [] });
 
         this.authService.logout();
 
