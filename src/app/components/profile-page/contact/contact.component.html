@@ -1,0 +1,65 @@
+<div class="card">
+    <div class="card-header" >
+        Redes sociais
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#contactModal" (click)="editContact()" #modal *ngIf="editMode">
+            Editar
+        </button>
+    </div>
+
+    <div class="card-body">
+        <div class="social-network-item">
+            <p>
+                <a> billyjoersantos@outlook.com </a>
+            </p>
+        </div>
+
+        <div class="social-network-item">
+            <p>
+                <a> github.com/billyjoe-ram </a>
+            </p>
+        </div>
+
+        <div class="social-network-item">
+            <p>
+                <a> github.com/billyjoe-ram </a>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactModalLabel">Editar suas informações de contato?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="emailInput">E-mail: </label>
+                        <input type="text" class="form-control" id="emailInput" placeholder="pesquisador@email.com">
+
+                        <label for="linkedInInput">LinkedIn: </label>
+                        <input type="text" class="form-control" id="linkedInInput" placeholder="linkedin.com/in/seu-perfil">
+
+                        <label for="anotherContactInput">Outra rede social: </label>
+                        <input type="text" class="form-control" id="anotherContactInput" placeholder="Facebook, GitHub, SciElo etc.">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-outline-dark"
+                    data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-bouman">Salvar Mudanças</button>
+            </div>
+        </div>
+    </div>
+</div>

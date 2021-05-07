@@ -14,6 +14,7 @@
                 <span class="card-title">{{ userData.name }}</span>
                 <p class="card-text">{{ userData.desc }}</p>
             </div>
+
             <div class="changeWall" #btnFundo *ngIf="esconder && editbutton">
                 <label for="fotoFundo" id="labelFundo">
                     Clique aqui para enviar um papel de parede
@@ -21,14 +22,20 @@
                 </label>
             </div>
 
-            <div id="btnFotos" *ngIf="editbutton">
+            <div id="btnFotos" *ngIf="editbutton; else followDiv">
                 <div *ngIf="!esconder; else elseBloco">
                     <img role="button" (click)="esconder = !esconder"  id="editPen" src="../../../../assets/pen.svg">
                 </div>
                 <ng-template #elseBloco>
-                    <button class="btn" id="button-save" type="button" (click)="saveFotos()">Salvar</button>
+                    <button class="btn btn-bouman" type="button" (click)="saveFotos()">Salvar</button>
                 </ng-template>
             </div>
+
+            <ng-template #followDiv>
+                <div id="followProfile">
+                    <button class="btn btn-bouman" type="button" (click)="onFollow()" #btnFollow>Seguir</button>
+                </div>
+            </ng-template>            
         </div>
 
     </div>

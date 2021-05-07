@@ -1,0 +1,22 @@
+.card {
+    width: max-content;
+    height: 30vh;
+    max-height: 30vh;
+}
+
+.card .card-header {
+	display: flex;
+	justify-content: space-between;
+
+    font-weight: bold;
+    background-color: #D3E2E5;
+    padding: .375rem .75rem;
+}
+
+.card .card-header button {
+    padding: 0;
+    font-weight: lighter;
+    font-size: 0.85rem;
+    
+    align-items: center;
+}

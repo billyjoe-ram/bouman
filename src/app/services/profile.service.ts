@@ -10,6 +10,10 @@ import { UsersService } from './users.service';
 })
 export class ProfileService {
 
+  public followAction: string = "";
+  
+  private userProfileId: string = "";
+
   private userCollection = this.store.collection<User>('Users');
   private profileCollection = this.store.collection('Profiles');
 
@@ -25,10 +29,9 @@ export class ProfileService {
   }
 
   getProfile(pid: string | undefined) {
-        
     const collection = this.store.collection('Profiles').doc(pid).valueChanges();
     
-    return collection
+    return collection;
   }
 
   async deleteProfile(id: string | undefined) {
@@ -50,6 +53,63 @@ export class ProfileService {
     } finally {
       this.authService.logout();
     }
+
+  }
+
+  async followProfile(profileId: string | undefined) {
+    // Getting current user uid
+    const user = await this.authService.getAuth().currentUser;
+    
+    // Getting current user profileId
+    this.usersService.getProfile(user?.uid).subscribe((profile: any) => {      
+
+      this.userProfileId = profile.profileId;
+
+      // Getting current user following array
+      const updateProfile = this.getProfile(this.userProfileId).subscribe((profile: any) => {
+        // Creating a copy from this array        
+        const profilesFollowing: any[] = profile.following
+        
+        // Checking if already followed
+        if (!profilesFollowing.includes(profileId)) {
+          // Adding profileToFollow to array
+          profilesFollowing.push(profileId);
+
+          // Replacing with copy
+          this.profileCollection.doc(this.userProfileId).update({ following: profilesFollowing });
+          console.log("Followed!");
+        } else {
+          console.log("Already in array: ");
+          console.log(profilesFollowing);
+        }
+        
+      });
+      
+    });
+
+  }
+
+  async verifyFollowing(profileId: string | undefined) {
+    // Getting current user uid
+    const user = await this.authService.getAuth().currentUser;
+
+    this.usersService.getProfile(user?.uid).subscribe((profile: any) => {      
+      this.userProfileId = profile.profileId;
+
+      // Getting current user following array
+      const updateProfile = this.getProfile(this.userProfileId).subscribe((profile: any) => {
+        // Creating a copy from this array        
+        const profilesFollowing: any[] = profile.following
+        
+        // Checking if already followed
+        if (profilesFollowing.includes(profileId)) {
+          this.followAction = "Seguindo";
+        } else {
+          this.followAction = "Seguir";
+        }
+        
+      });
+    })
 
   }
 
