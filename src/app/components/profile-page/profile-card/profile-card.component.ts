@@ -45,12 +45,21 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
     private usersServices : UsersService,
     private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    // Loading profile data
     this.loadData();
   }
 
   ngOnChanges() {
     this.esconder = false;
+
+    // Verifying if this user it's beeing followed
+    this.profileService.verifyFollowing(this.profileId);
+  }
+
+  ngAfterViewChecked() {
+    // Checking after the view initialized and its Inputs are okay
+    this.checkFollowAction();
   }
 
   ngOnDestroy() {
@@ -120,10 +129,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
     // Getting current user uid
     const user = await this.auth.getAuth().currentUser;
 
-    const button = this.btnFollow.nativeElement;
-
-    const buttonTxt = button.innerHTML;
-
     // Executing the service method to get profile data
     const following = await this.profileService.followProfile(this.profileId);
 
@@ -133,17 +138,18 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
       // Getting current user following array
       const updateProfile = this.profileService.getProfile(userProfileId).subscribe((profile: any) => {
         // Creating a copy from this array        
-        const profilesFollowing: any[] = profile.following
-        
-        // Checking if already followed
-        if (!profilesFollowing.includes(this.profileId)) {
-          button.innerHTML = "Seguir";
-        } else {
-          button.innerHTML = "Seguindo";
-        }
+        const profilesFollowing: any[] = profile.following;
         
       });
     })
 
+  }
+
+  checkFollowAction() {
+    // Retrieving button
+    const button = this.btnFollow.nativeElement;
+
+    // Changing text for the follow action from the service
+    button.innerHTML = this.profileService.followAction;
   }
 }
