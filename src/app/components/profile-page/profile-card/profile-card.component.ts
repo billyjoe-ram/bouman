@@ -146,10 +146,14 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   checkFollowAction() {
-    // Retrieving button
-    const button = this.btnFollow.nativeElement;
+    // If it isn't undefined, execute 
+    if (this.btnFollow) {
+      // Retrieving button
+      const button = this.btnFollow.nativeElement;
 
-    // Changing text for the follow action from the service
-    button.innerHTML = this.profileService.followAction;
+      // Changing text for the follow action from the service
+      button.innerHTML = this.profileService.followAction;
+    }
+    
   }
 }
