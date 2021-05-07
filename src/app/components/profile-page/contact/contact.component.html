@@ -3,30 +3,23 @@
         Redes sociais
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#contactModal" #modal
-            *ngIf="editMode">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#contactModal" *ngIf="editMode">
             Editar
         </button>
     </div>
 
     <div class="card-body">
-        <div class="social-network-item">
-            <p>
-                <a> {{ userSocial.email }} </a>
-            </p>
-        </div>
-
-        <div class="social-network-item">
-            <p>
-                <a> {{ userSocial.linkedin }} </a>
-            </p>
-        </div>
-
-        <div class="social-network-item">
-            <p>
-                <a> {{ userSocial.linkedin }} </a>
-            </p>
-        </div>
+        <ul>
+            <li class="social-network-item">
+                <a target="_blank"> {{ userSocial.email }} </a>
+            </li>
+            <li class="social-network-item">
+                <a [href]="userSocial.linkedin" target="_blank"> {{ userSocial.linkedin }} </a>
+            </li>
+            <li class="social-network-item">
+                <a [href]="userSocial.other" target="_blank"> {{ userSocial.other }} </a>
+            </li>
+        </ul>        
     </div>
 </div>
 
@@ -46,21 +39,20 @@
                     <div class="form-group">
                         <label for="emailInput">E-mail: </label>
                         <input type="email" class="form-control" id="emailInput" placeholder="pesquisador@email.com"
-                            name="email" email required ngModel>
+                            name="email" [value]="hasSocial ? userSocial.email : '' " email required ngModel>
 
                         <label for="linkedInInput">LinkedIn: </label>
                         <input type="text" class="form-control" id="linkedInInput"
-                            placeholder="linkedin.com/in/seu-perfil" name="linkedin" required ngModel>
+                            placeholder="linkedin.com/in/seu-perfil" name="linkedin" [value]="hasSocial ? userSocial.linkedin : '' " required ngModel>
 
                         <label for="anotherContactInput">Outra rede social: </label>
                         <input type="text" class="form-control" id="anotherContactInput"
-                            placeholder="Facebook, GitHub, SciElo etc." name="another" required ngModel>
+                            placeholder="Facebook, GitHub, SciElo etc." name="other" [value]="hasSocial ? userSocial.other : '' " required ngModel>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" id="submit" class="btn btn-outline-dark"
-                        data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="submit" class="btn btn-outline-dark" data-dismiss="modal" #dismissButton >Cancelar</button>
                     <button type="submit" class="btn btn-bouman">Salvar Mudanças</button>
                 </div>
             </form>
