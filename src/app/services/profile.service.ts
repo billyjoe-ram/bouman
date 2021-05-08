@@ -62,15 +62,7 @@ export class ProfileService {
   }
 
   verifyFollowing(userProfile: string | undefined, profileId: string | undefined) {
-    console.log(userProfile)
-
-    const profileData = this.usersService.getProfile(userProfile).toPromise();
-
-    profileData.then(data => {
-      console.log(data);
-    }).catch(error => {
-      console.log(error)
-    }).finally(() => { console.log("Finally" )});
+    // const profileData = this.usersService.getProfile(userProfile);    
 
     // Getting current user following array
     // const updateProfile = this.getProfile(this.userProfileId).subscribe((profile: any) => {
