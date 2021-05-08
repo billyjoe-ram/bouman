@@ -59,4 +59,10 @@ export class UsersService {
     return collection;
   }
 
+  async getUid() {
+    const user = await this.authService.getAuth().currentUser;
+
+    return user?.uid;
+  }
+
 }

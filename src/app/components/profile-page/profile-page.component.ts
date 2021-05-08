@@ -16,6 +16,8 @@ export class ProfilePageComponent implements OnInit {
   public userPosts: any[] = [];
   public profileId: string = "";
 
+  public userId: string | undefined = "";
+
   public sameUser: boolean = false;
 
   private paramsSubs!: Subscription;
@@ -30,6 +32,10 @@ export class ProfilePageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.usersServices.getUid().then(id => {
+      this.userId = id;
+    })
+
     this.loadData();
   }
 

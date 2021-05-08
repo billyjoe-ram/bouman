@@ -14,6 +14,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input('profileId') public profileId: string = "";
+  @Input('userId') public userId: string | undefined = "";
   @Input('editMode') public editbutton: boolean = false;
   public esconder: boolean = false;
   
@@ -24,6 +25,8 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   public profileImg: any = "";
   public wallpImg: any = "";
 
+  private i: number = 0;
+  
   private profile!: Subscription;
   private wallpaper!: Subscription;
 
@@ -52,9 +55,11 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges() {
     this.esconder = false;
-
-    // Verifying if this user it's beeing followed
-    this.profileService.verifyFollowing(this.profileId);
+    if (this.i == 1) {
+      // Verifying if this user it's beeing followed
+      this.profileService.verifyFollowing(this.userId, this.profileId);
+    }
+    this.i++
   }
 
   ngAfterViewChecked() {
@@ -125,24 +130,13 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   }
 
-  async onFollow() {
-    // Getting current user uid
-    const user = await this.auth.getAuth().currentUser;
-
+  onFollow() {
     // Executing the service method to get profile data
-    const following = await this.profileService.followProfile(this.profileId);
-
-    this.userSubs = this.usersServices.getProfile(user?.uid).subscribe((profile: any) => {      
-      const userProfileId = profile.profileId;
-
-      // Getting current user following array
-      const updateProfile = this.profileService.getProfile(userProfileId).subscribe((profile: any) => {
-        // Creating a copy from this array        
-        const profilesFollowing: any[] = profile.following;
-        
-      });
-    })
-
+    try { 
+      this.profileService.followProfile(this.userId, this.profileId);
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   checkFollowAction() {
