@@ -10,7 +10,7 @@ import { UsersService } from './users.service';
 })
 export class ProfileService {
 
-  public followAction: string = "";
+  private followAction: string = "";
   
   private userProfileId: string = "";
 
@@ -61,22 +61,16 @@ export class ProfileService {
     return profileFollowing.add({ profileId });
   }
 
-  verifyFollowing(userProfile: string | undefined, profileId: string | undefined) {
-    // const profileData = this.usersService.getProfile(userProfile);    
+  verifyFollowing(profileId: string, following: string[] ): string {
 
-    // Getting current user following array
-    // const updateProfile = this.getProfile(this.userProfileId).subscribe((profile: any) => {
-    //   // Creating a copy from this array        
-    //   const profilesFollowing: any[] = profile.following
-      
-    //   // Checking if already followed
-    //   if (profilesFollowing.includes(profileId)) {
-    //     this.followAction = "Seguindo";
-    //   } else {
-    //     this.followAction = "Seguir";
-    //   }
-      
-    // });
+    if (following.includes(profileId)) {
+      this.followAction = "Seguindo";
+    } else {
+      this.followAction = "Seguir";
+    }
+    console.log(this.followAction)
+    
+    return this.followAction;    
   }
 
   updateContact(profileId: string, contact: { email: string, linkedin: string, other: string }) {

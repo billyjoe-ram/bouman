@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -16,14 +16,16 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   @Input('profileId') public profileId: string = "";
   @Input('userId') public userId: string | undefined = "";
   @Input('editMode') public editbutton: boolean = false;
-  public esconder: boolean = false;
+  @Input('userData') public userData: any = {};
   
-  @ViewChild('btnFollow') btnFollow!: ElementRef;
-
-  public userData: { name: string, desc: string } = { name: '', desc: '' };
+  @ViewChild('btnFollow') btnFollow!: ElementRef;    
+  
+  public esconder: boolean = false;
 
   public profileImg: any = "";
   public wallpImg: any = "";
+
+  private userFollowing: string[] = [];
 
   private i: number = 0;
   
@@ -37,6 +39,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   private profileSubs!: Subscription;
   private userSubs!: Subscription;
+  private userProfileSubs!: Subscription;
 
   private paramsSubs!: Subscription;
 
@@ -49,22 +52,23 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {    
-    // Loading profile data
-    this.loadData();
+    
   }
 
   ngOnChanges() {
     this.esconder = false;
-    if (this.i == 1) {
-      // Verifying if this user it's beeing followed
-      this.profileService.verifyFollowing(this.userId, this.profileId);
-    }
-    this.i++
-  }
 
-  ngAfterViewChecked() {
-    // Checking after the view initialized and its Inputs are okay
-    this.checkFollowAction();
+    if(this.i == 1) {
+      // Loading profile data
+      this.loadData()
+    }
+
+    if (this.i >= 2) {
+      // Verifying if this user it's beeing followed
+      this.btnFollow.nativeElement.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userData.following);
+    }
+
+    this.i++;
   }
 
   ngOnDestroy() {
@@ -73,6 +77,9 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
     this.profileSubs.unsubscribe();
     this.paramsSubs.unsubscribe();
+
+    this.userSubs.unsubscribe();
+    this.userProfileSubs.unsubscribe();
   }
 
   getProfileImg(event: any) {
@@ -104,14 +111,11 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   }
 
-  async loadData() {
-    const user = await this.auth.getAuth().currentUser;
+  loadData() {
     this.paramsSubs = this.route.params.subscribe((params) => {
-      this.profileId = params['profid'];
-      
+      // this.profileId = params['profid'];
     
       this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
-        this.userData = profile;
 
         this.profile = this.user.getProfilePicture(this.profileId).subscribe((url: any) => {
           this.profileImg = url;
@@ -126,7 +130,17 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
         });
       
     });
-  });
+    });
+
+    this.userSubs = this.usersServices.getProfile(this.userId).subscribe((user: any) => {
+
+      this.userProfileSubs = this.profileService.getProfile(user.profileId).subscribe((profile: any) => {
+
+        this.userFollowing = profile.following;
+
+        console.log(this.userFollowing);
+      });
+    });
 
   }
 
@@ -139,15 +153,4 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  checkFollowAction() {
-    // If it isn't undefined, execute 
-    if (this.btnFollow) {
-      // Retrieving button
-      const button = this.btnFollow.nativeElement;
-
-      // Changing text for the follow action from the service
-      button.innerHTML = this.profileService.followAction;
-    }
-    
-  }
 }

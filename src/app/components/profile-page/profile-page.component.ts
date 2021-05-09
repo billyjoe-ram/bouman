@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostsService } from 'src/app/services/posts.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -17,17 +18,20 @@ export class ProfilePageComponent implements OnInit {
   public profileId: string = "";
 
   public userId: string | undefined = "";
+  public userData: any = {};
 
   public sameUser: boolean = false;
 
   private paramsSubs!: Subscription;
   private postsSubs!: Subscription;
+  private userSubs!: Subscription;
   private profileSubs!: Subscription;
   
   constructor(
     private posts: PostsService,
     private route: ActivatedRoute,
     private usersServices: UsersService,
+    private profileService: ProfileService,
     private auth: AuthService,
   ) { }
 
@@ -45,18 +49,22 @@ export class ProfilePageComponent implements OnInit {
     this.paramsSubs = this.route.params.subscribe((params) => {
       this.profileId = params['profid'];
 
-      this.postsSubs = this.posts.listProfilePosts(this.profileId).subscribe(posts => {
+      this.userSubs = this.posts.listProfilePosts(this.profileId).subscribe(posts => {
         this.userPosts = posts;
       });
 
-      this.profileSubs = this.usersServices.getProfile(user?.uid).subscribe((data : any)=>{
-        
+      this.profileSubs = this.usersServices.getProfile(user?.uid).subscribe((data : any) => {
+
         if (this.profileId == data.profileId) {
           this.sameUser = true;
         } else {
           this.sameUser = false;
         }
         
+      });
+
+      this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
+        this.userData = profile;
       });
 
     });
@@ -67,6 +75,8 @@ export class ProfilePageComponent implements OnInit {
     this.paramsSubs.unsubscribe();
 
     this.postsSubs.unsubscribe();
+
+    this.userSubs.unsubscribe();
 
     this.profileSubs.unsubscribe();
   }
