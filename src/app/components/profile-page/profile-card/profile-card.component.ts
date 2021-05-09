@@ -18,13 +18,14 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   @Input('editMode') public editbutton: boolean = false;
   @Input('userData') public userData: any = {};
   
-  @ViewChild('btnFollow') btnFollow!: ElementRef;    
+  @ViewChild('btnFollow') btnFollow!: ElementRef;
   
   public esconder: boolean = false;
 
   public profileImg: any = "";
   public wallpImg: any = "";
 
+  private userProfile: string = "";
   private userFollowing: string[] = [];
 
   private i: number = 0;
@@ -51,24 +52,27 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
     private usersServices : UsersService,
     private route: ActivatedRoute) { }
 
-  ngOnInit(): void {    
-    
-  }
+  ngOnInit(): void {}
 
   ngOnChanges() {
     this.esconder = false;
 
-    if(this.i == 1) {
+    if(this.i >= 1) {
       // Loading profile data
-      this.loadData()
+      this.loadData();      
     }
 
-    if (this.i >= 2) {
+    if(this.i >= 2) {
       // Verifying if this user it's beeing followed
-      this.btnFollow.nativeElement.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userData.following);
+      // console.log(this.userFollowing);
+      // this.btnFollow.nativeElement.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userFollowing);
     }
 
     this.i++;
+  }
+
+  ngAfterViewChecked() {
+    this.btnFollow.nativeElement.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userFollowing);
   }
 
   ngOnDestroy() {
@@ -134,23 +138,22 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
     this.userSubs = this.usersServices.getProfile(this.userId).subscribe((user: any) => {
 
+      this.userProfile = user.profileId;
+      
       this.userProfileSubs = this.profileService.getProfile(user.profileId).subscribe((profile: any) => {
-
         this.userFollowing = profile.following;
-
-        console.log(this.userFollowing);
       });
     });
 
   }
 
   onFollow() {
-    // Executing the service method to get profile data
     try { 
-      this.profileService.followProfile(this.userId, this.profileId);
-    } catch (error) {
-      console.error(error)
+      this.profileService.followProfile(this.profileId, this.userFollowing, this.userProfile);
+    } catch(error) {
+      console.log(error)
     }
+    
   }
 
 }

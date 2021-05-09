@@ -55,20 +55,30 @@ export class ProfileService {
     }
   }
 
-  followProfile(userProfile: string | undefined, profileId: string | undefined) {
-    const profileFollowing = this.profileCollection.doc(userProfile).collection('Following');
+  followProfile(profileId: string, followingProfiles: string[], userProfile: string) {
+    const profileFollowing = this.profileCollection.doc(userProfile);    
     
-    return profileFollowing.add({ profileId });
+    if (this.followAction === "Seguindo") {
+      followingProfiles = followingProfiles.filter(profile => {
+        return profile !== profileId;
+      })
+
+      return profileFollowing.update({ following: followingProfiles });
+    } else {
+      followingProfiles.push(profileId);
+
+      return profileFollowing.update({ following: followingProfiles });
+    }
+    
   }
 
   verifyFollowing(profileId: string, following: string[] ): string {
-
+    
     if (following.includes(profileId)) {
       this.followAction = "Seguindo";
     } else {
       this.followAction = "Seguir";
     }
-    console.log(this.followAction)
     
     return this.followAction;    
   }
