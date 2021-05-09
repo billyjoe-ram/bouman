@@ -72,13 +72,22 @@ export class ProfilePageComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.paramsSubs.unsubscribe();
+    if (this.paramsSubs) {
+      this.paramsSubs.unsubscribe();
+    }
 
-    this.postsSubs.unsubscribe();
+    if (this.postsSubs) {
+      this.postsSubs.unsubscribe();
+    }
 
-    this.userSubs.unsubscribe();
+    if (this.userSubs) {
+      this.userSubs.unsubscribe();
+    }
 
-    this.profileSubs.unsubscribe();
+    if (this.profileSubs) {
+      this.profileSubs.unsubscribe();
+    }
+
   }
 
 }
