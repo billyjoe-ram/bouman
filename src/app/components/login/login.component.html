@@ -1,61 +1,72 @@
+<!-- Secondary header, for not logged users -->
 <secondary-header></secondary-header>
+
 <div class="container">
-    <div class="col-sm-6 col-md-6 col-lg-6 login-component">
-        <div class="bouman-user">
-            <img id="user" src="/assets/user.svg">
+  <div class="col-sm-6 col-md-6 col-lg-6 login-component">
+    <!-- Illustrative image for users to login -->
+    <div class="bouman-user">
+      <img id="user" src="/assets/user.svg">
+    </div>
+
+    <!-- Login form field -->
+    <form class="bouman-form form-group">
+      <label for="email">Endereço de e-mail</label>
+      <input type="email" name="email" id="email" placeholder="Ex.: bouman@email.com" required email
+        [(ngModel)]="userLogin.email" class="bouman-input form-control" #email="ngModel">
+      <p *ngIf="!email.valid && email.touched" class="help-invalid">Por favor, preencha o campo corretamente.</p>
+
+      <label for="userkey">Senha</label>
+      <input type="password" name="pass" id="userkey" placeholder="Ex.: @Bouman2021" minlength="8" required
+        [(ngModel)]="userLogin.password" class="bouman-input form-control" (keyup)="getKey($event)" #pass="ngModel"
+        #passwordInput>
+      <p *ngIf="!pass.valid && pass.touched" class="help-invalid">Por favor, preencha o campo corretamente.</p>
+
+      <div class="show-pass" (click)="showPassword()">
+        <input type="checkbox" #box> Exibir senha
+      </div>
+
+      <!-- <p>Esqueceu a sua senha? <a href="#">Clique aqui</a></p> -->
+
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4"></div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <button id="btnLogin" (click)="login()" class="btn">Login</button>
         </div>
-        <form class="bouman-form form-group">
-            <label for="email">Endereço de e-mail</label>
-            <input type="email" name="email" id="email" placeholder="Ex.: bouman@email.com" required email [(ngModel)]="userLogin.email" class="bouman-input form-control" #email="ngModel">
-            <p *ngIf="!email.valid && email.touched" class="help-invalid">Por favor, preencha o campo corretamente.</p>
-    
-            <label for="userkey">Senha</label>
-            <input type="password" name="pass" id="userkey" placeholder="Ex.: @Bouman2021" minlength="8" required [(ngModel)]="userLogin.password" class="bouman-input form-control" (keyup)="getKey($event)" #pass="ngModel" #passwordInput>
-            <p *ngIf="!pass.valid && pass.touched" class="help-invalid">Por favor, preencha o campo corretamente.</p>
+        <div class="col-sm-4 col-md-4 col-lg-4"></div>
+      </div>
+    </form>
 
-            <div class="show-pass" (click)="showPassword()">
-                <input type="checkbox" #box> Exibir senha
-            </div>
-    
-            <!-- <p>Esqueceu a sua senha? <a href="#">Clique aqui</a></p> -->
-            
-            <div class="row">
-                <div class="col-sm-4 col-md-4 col-lg-4"></div>
-                <div class="col-sm-4 col-md-4 col-lg-4">
-                    <button id="btnLogin" (click)="login()" class="btn">Login</button>
-                </div>
-                <div class="col-sm-4 col-md-4 col-lg-4"></div>
-            </div>
-        </form>
+    <!-- Error messages -->
+    <div *ngIf="messageError">
+      <div class="alert alert-danger" role="alert">
+        {{ messageError }}
+      </div>
+    </div>
 
-        <div *ngIf="messageError">
-            <div class="alert alert-danger" role="alert">
-                {{ messageError }}
-            </div>
-        </div>
+    <!-- Open modal button -->
+    <button type="button" class="modal hide" id="ModalVerify" data-toggle="modal" data-target="#updateModal">
+    </button>
 
-        <button type="button" class="modal hide" id="ModalVerify" data-toggle="modal" data-target="#updateModal">
-          </button>
-
-        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="updateModalLabel">Verificação de Email</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>Foi enviado um link de verificação de usuário para o seu e-mail</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id="submit" class="btn btn-outline-dark" data-dismiss="modal">OK</button>
-            </div>
+    <!-- Modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateModalLabel">Verificação de Email</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Foi enviado um link de verificação de usuário para o seu e-mail</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="submit" class="btn btn-outline-dark" data-dismiss="modal">OK</button>
           </div>
         </div>
       </div>
-
     </div>
+
+  </div>
 </div>

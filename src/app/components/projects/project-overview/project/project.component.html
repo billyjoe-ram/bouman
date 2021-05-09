@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-md-8">
+        <!-- Project form -->
         <form (ngSubmit)="onSubmit()" #projForm="ngForm">
             <div class="row">
+                <!-- Project informations -->
                 <div class="form-group col-xs-8">
                     <input type="text" class="form-control" placeholder="Nome do seu projeto" name="title"
                         [(ngModel)]="projTitle">
@@ -14,6 +16,7 @@
                 </div>
             </div>
 
+            <!-- Text editor -->
             <div class="form-group">
                 <editor apiKey="o3i6lurtf2tfz1lcc7x48d1kyium2fjgo3fjsgz5utdjm5hu" [init]="{
                         height: 500,
@@ -35,6 +38,7 @@
 
     </div>
 
+    <!-- Navigate page and contributors -->
     <div class="col-md-4 aside-content">
         <button class="btn btn-bouman" (click)="myProjects()">Meus projetos</button>
 

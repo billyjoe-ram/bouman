@@ -8,6 +8,7 @@
         </button>
     </div>
 
+    <!-- User social networks -->
     <div class="card-body">
         <ul>
             <li class="social-network-item">
@@ -34,6 +35,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
+            <!-- Form in modal to edit social networks / contact -->
             <form (ngSubmit)="editContact(f)" #f="ngForm">
                 <div class="modal-body">
                     <div class="form-group">
@@ -51,6 +54,7 @@
                     </div>
                 </div>
 
+                <!-- Save or dismiss buttons -->
                 <div class="modal-footer">
                     <button type="button" id="submit" class="btn btn-outline-dark" data-dismiss="modal" #dismissButton >Cancelar</button>
                     <button type="submit" class="btn btn-bouman">Salvar Mudanças</button>

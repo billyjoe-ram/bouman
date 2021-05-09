@@ -1,11 +1,15 @@
+<!-- Header / Navbar -->
 <app-header></app-header>
 
 <div class="row justify-content-center align-items-start">
+    <!-- Profile card and profile contacts -->
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5 offset-md-0 offset-lg-2">
+        <!-- binding properties to reuse code -->
         <profile-card [profileId]="profileId" [userId]="userId" [userData]="userData" [editMode]="sameUser"></profile-card>
     </div>
 
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5">
+        <!-- binding properties to reuse code -->
         <profile-contact [editMode]="sameUser" ></profile-contact>
     </div>
 
@@ -13,6 +17,7 @@
 
 <div class="row justify-content-center align-items-start">
     <div class="col-xs-10 col-sm-8 col-md-8 col-lg-6">
+        <!-- Showing user posts -->
         <div class="profile-content">
             <div class="post-item" *ngFor="let post of userPosts">
                 <publication-card [profileId]="post.profileId" [publication]="post"></publication-card>

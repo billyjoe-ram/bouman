@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
+            <!-- Information about the website -->
             <div class="bouman-info">
                 <span>O que é o Bouman</span>
                 <p>
@@ -13,11 +14,13 @@
                     pesquisadores, oferecendo sugestões e análises.
                 </p>
 
+                <!-- Vector to illustrate website -->
                 <img src="/assets/undraw_medical_research_qg4d.svg" alt="Ilustração">
             </div>
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-5">
+            <!-- Form to signup user -->
             <div class="bouman-form">
                 <form #boumanForm="ngForm" (ngSubmit)="signup()">
                     <label for="username">Nome Completo</label>
@@ -46,11 +49,14 @@
 
                     <button type="submit" [disabled]="!boumanForm.valid" class="btn">Cadastrar</button>
                 </form>
+                <!-- Add the link to the terms here in an anchor tag -->
                 <p>
                     Ao se cadastrar, você concorda com nossos “Termos de Serviço e Privacidade”, e receber emails
                     nossos.
                 </p>
             </div>
+
+            <!-- Error message display -->
             <div *ngIf='messageError'>
                 <div class="alert alert-danger" role="alert">
                     {{messageError}}

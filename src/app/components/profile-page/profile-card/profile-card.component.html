@@ -1,8 +1,12 @@
 <div class="card">
+    <!-- Profile card content with background image -->
     <div class="card-body" [ngStyle]="{ 'background-image': 'url(' + wallpImg + ')' }">
 
+        
         <div class="profile-card-content">
+            <!-- Profile picture -->
             <img [src]="profileImg" alt="Foto de perfil" class="profile-picture img-responsive">
+            <!-- Change profile picture options -->
             <div class="changeProfile" #btnPerfil *ngIf="esconder && editbutton">
                 <label for="fotoPerfil" id="labelPerfil">
                     Clique aqui para enviar uma foto de perfil
@@ -10,11 +14,13 @@
                 </label>
             </div>
 
+            <!-- Profile informations -->
             <div class="text-content" *ngIf="!esconder">
                 <span class="card-title">{{ userData.name }}</span>
                 <p class="card-text">{{ userData.desc }}</p>
             </div>
 
+            <!-- Change wallpaper picture options -->
             <div class="changeWall" #btnFundo *ngIf="esconder && editbutton">
                 <label for="fotoFundo" id="labelFundo">
                     Clique aqui para enviar um papel de parede
@@ -22,6 +28,7 @@
                 </label>
             </div>
 
+            <!-- Edit or save picture -->
             <div id="btnFotos" *ngIf="editbutton; else followDiv">
                 <div *ngIf="!esconder; else elseBloco">
                     <img role="button" (click)="esconder = !esconder"  id="editPen" src="../../../../assets/pen.svg">
@@ -31,6 +38,7 @@
                 </ng-template>
             </div>
 
+            <!-- Follow or not div -->
             <ng-template #followDiv>
                 <div id="followProfile">
                     <button class="btn btn-bouman" type="button" (click)="onFollow()" #btnFollow>Seguir</button>
@@ -40,8 +48,9 @@
 
     </div>
     <div class="card-footer">
-        <p> <span>Artigos</span> 12 <p>
+        <!-- This should be commented out when you get the users activities to work -->
+        <!-- <p> <span>Artigos</span> 12 <p>
         <p> <span>Contribuições </span> 347</p>
-        <p> <span> Outros Projetos </span> 3 </p>
+        <p> <span> Outros Projetos </span> 3 </p> -->
     </div>
 </div>

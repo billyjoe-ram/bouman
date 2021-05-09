@@ -1,5 +1,7 @@
+<!-- Header for logged user -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="navbar-header">
+    <!-- Header with logo and toggle hbg button -->
+    <div class="navbar-header">        
         <a class="navbar-brand">
             <img src="/assets/logo.png" alt="Logo Bouman">
         </a>
@@ -8,8 +10,10 @@
         </button> 
     </div>
 
+    <!-- Header main content -->
     <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
 
+        <!-- Links to pages -->
         <ul class="nav navbar-nav">
             <li>
                 <a routerLink="/feed">
@@ -37,6 +41,7 @@
             </li> -->
         </ul>
 
+        <!-- Search input -->
         <form>
             <div class="form-group">
                 <div class="dropdown">
@@ -48,6 +53,7 @@
             </div>
         </form>
 
+        <!-- Toggle menu from profile image -->
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" role="button" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

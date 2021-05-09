@@ -1,8 +1,11 @@
+<!-- Header / Navbar -->
 <app-header></app-header>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
+      <!-- form to edit profile -->
       <form (ngSubmit)="onSubmit(profConfForm)" #profConfForm="ngForm" id="backForm">
         <div class="form-group">
           <label for="name">Seu nome</label>
@@ -11,6 +14,7 @@
           <label for="desc">Descrição do perfil</label>
           <textarea type="text" class="form-control" id="desc" name="desc" [(ngModel)]="user.desc"></textarea>
 
+          <!-- Selects the value for the area code that's equal to user area code -->
           <label for="area">Área de Atuação</label>
           <select class="custom-select bouman-select" id="area" name="area" [(ngModel)]="user.area">
             <option *ngFor="let area of areas" [value]="area.value"
@@ -22,12 +26,13 @@
         <div class="row">
           <div class="col-md-10"></div>
           <div class="col-md-2">
+            <!-- Button trigger modal -->
             <button type="button" class="btn btn-bouman-form" data-toggle="modal" data-target="#updateModal" #modal>
               Salvar
             </button>
           </div>
         </div>
-        <!-- Button trigger modal -->
+
         <!-- Modal -->
         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
           aria-hidden="true">
@@ -58,38 +63,4 @@
     </div>
     <div class="col-md-3"></div>
   </div>
-
-
-  <!-- 
-
-  <div class="modal fade" id="reauthModal" tabindex="-1" role="dialog" aria-labelledby="reauthModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="reauthModalLabel">Tem certeza que quer deixar o Bouman tão cedo? :(</h5>
-        </div>
-        <div class="modal-body">
-          <span>Excluir sua conta requer reautencicação</span>
-          <form (ngSubmit)="onDelete(reauth)" #reauth="ngForm">
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Email:</label>
-              <input type="text" class="form-control" id="recipient-name" name="email">
-            </div>
-            <div class="form-group">
-              <label for="recipient-text" class="col-form-label">Senha:</label>
-              <input class="form-control" id="message-text" name="senha">
-            </div>
-
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-outline-danger">Sim, tenho certeza</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-            </div>
-          </form>
-
-        </div>
-      </div>
-    </div>
-  </div> -->
-
 </div>

@@ -1,8 +1,11 @@
+<!-- Header / Navbar -->
 <app-header></app-header>
 
+<!-- Main content -->
 <div class="content">
     <div class="row justify-content-center align-items-start">
         <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+            <!-- New publication form-card -->
             <form #form="ngForm" (ngSubmit)="createPost(form)">
                 <div class="form-group">
                     <div class="card">
@@ -23,13 +26,15 @@
                 </div>
             </form>
 
+            <!-- Feed and posts -->
             <div class="feed-content">
                 <div class="post-item" *ngFor="let profile of feedPosts">
                     <publication-card [profileId]="profile.profileId" [publication]="post" *ngFor="let post of profile.posts"></publication-card>
                 </div>                
             </div>
         <div>
-            
+        
+        <!-- Showing if there're no posts -->
         <div *ngIf="!feedPosts">
             <span>Crie uma postagem ou siga alguém para começar!</span>
         </div>

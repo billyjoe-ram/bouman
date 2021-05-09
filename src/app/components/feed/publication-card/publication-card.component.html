@@ -1,18 +1,23 @@
+<!-- Post card -->
 <div class="card">
+    <!-- Post content and user data -->
     <div class="card-body">
         <div class="profile-details">
+            <!-- User informations -->
             <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture">
             <div class="profile-info">
                 {{ profileName }}
                 <span>{{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
             </div>
         </div>
+        <!-- Post text with text limiting pipe -->
         <p class="card-text">
             {{ publication.content | slice:0:limit  }}<span [hidden]="sMDisabled" (click)="showMore()">ver mais...</span>
         </p>
     </div>
     <div class="card-footer">
-        <button class="btn btn-default" (click)="onLikePost(publication.postId)">
+        <!-- This should be commented out when interactions are implemented -->
+        <!-- <button class="btn btn-default" (click)="onLikePost(publication.postId)">
             <img src="/assets/like-gray.svg" alt="Curtir">Curtir
         </button>
 
@@ -22,7 +27,7 @@
 
         <button class="btn btn-default">
             <img src="/assets/share-gray.svg" alt="Compartilhar">Compartilhar
-        </button>
+        </button> -->
         
     </div>
 </div>

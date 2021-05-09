@@ -1,5 +1,6 @@
 <div class="row">
     <div class="col-md-8">
+        <!-- Listing user projects -->
         <ul class="list-group">
             <li class="list-group-item" *ngFor="let project of projects" [routerLink]="['/projects', project.docId]" style="cursor: pointer;" >
                 
@@ -14,6 +15,8 @@
             </li>
         </ul>
     </div>
+    
+    <!-- Create new project -->
     <div class="col-md-3">
         <button class="btn btn-bouman" routerLink="/projects/new">
             Novo projeto

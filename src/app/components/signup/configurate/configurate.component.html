@@ -1,7 +1,11 @@
+<!-- Secondary header, for not logged users -->
 <secondary-header></secondary-header>
+
 <div class="container">
-    <div class="row">
+    <div class="row">        
         <div class="col-sm-1 col-md-2 col-lg-3"></div>
+
+        <!-- Page title -->
         <div class="col-sm-10 col-md-8 col-lg-6">
             <span class="title">Comece configurando seu perfil</span>
         </div>
@@ -11,8 +15,10 @@
         <div class="col-sm-1 col-md-2 col-lg-3"></div>
         <div class="col-sm-10 col-md-8 col-lg-6">
             <div class="bouman-form form-group">
+                <!-- Help text -->
                 <span class="form-title">Dados</span>
                 <hr>
+                <!-- Form to finish profile data adding -->
                 <form #configForm [formGroup]="formConfig" (ngSubmit)="onSign(formConfig)">
                     <div class="row">
                         <div class="col-md-12">
@@ -68,6 +74,8 @@
                     <button type="submit" class="btn" [disabled]="!formConfig.valid">Confirmar</button>
                 </form>
             </div>
+
+            <!-- Error messsage -->
             <div *ngIf='messageError'>
                 <div class="alert alert-danger" role="alert">
                     {{messageError}}
