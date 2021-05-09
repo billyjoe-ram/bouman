@@ -6,6 +6,7 @@ import { Area } from '../interfaces/areas';
 })
 export class AreasService {
 
+  // This is only temporary, in future the data will come from DB
   private areas: Area[] = [
     { name: 'Administração', value: 1 },
     { name: 'Arquitetura e Urbanismo', value: 2 },
@@ -40,10 +41,12 @@ export class AreasService {
   
   constructor() { }
 
+  // Getting Areas
   getAreas() {
     return this.areas;
   }
 
+  // Adding only to the array
   addArea(area: Area) {
     this.areas.push(area);
   }
