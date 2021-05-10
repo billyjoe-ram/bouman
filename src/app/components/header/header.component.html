@@ -1,5 +1,7 @@
+<!-- Header for logged user -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="navbar-header">
+    <!-- Header with logo and toggle hbg button -->
+    <div class="navbar-header">        
         <a class="navbar-brand">
             <img src="/assets/logo.png" alt="Logo Bouman">
         </a>
@@ -8,9 +10,11 @@
         </button> 
     </div>
 
+    <!-- Header main content -->
     <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
 
-        <ul class="nav navbar-nav">                
+        <!-- Links to pages -->
+        <ul class="nav navbar-nav">
             <li>
                 <a routerLink="/feed">
                     <img src="/assets/home.svg" alt="Página Inicial">
@@ -37,6 +41,19 @@
             </li> -->
         </ul>
 
+        <!-- Search input -->
+        <form>
+            <div class="form-group">
+                <div class="dropdown">
+                        <input type="search" class="form-control" placeholder="Procure um perfil aqui" [(ngModel)]="search" (ngModelChange)="searching()" (focus)="togglesearch()" (blur)="togglesearch()">    
+                        <div class="dropdown-content" id="search" [ngStyle]="{ 'display': search ? 'block' : 'none'}">
+                            <a href="#" *ngFor="let prof of searchresult" [routerLink]="['/profiles', prof.id]" (click)="togglesearchclick()">{{prof.name}}</a>
+                        </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Toggle menu from profile image -->
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" role="button" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,7 +61,7 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li class="nav-item"><a routerLink="/profile" (click)="onSelect('profile')" class="nav-link">Perfil</a></li>
+                    <li class="nav-item"><a [routerLink]="['/profiles', profileId]" (click)="onSelect('profile')" class="nav-link">Perfil</a></li>
                     <li class="nav-item"><a routerLink="/profile-config" class="nav-link">Configurações</a></li>
                     <!-- <li class="nav-item"><a class="nav-link">Suporte</a></li> -->
                     <li class="nav-item"><a routerLink="/signup" (click)='logOut()' class="nav-link">Sair</a></li>

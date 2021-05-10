@@ -11,48 +11,63 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('pass') inputPass!: ElementRef;
+  @ViewChild('passwordInput') inputPass!: ElementRef;
 
   @ViewChild('box') boxPass!: ElementRef;
   
   public userLogin: any = {};
+
+  public messageError: string = "";
 
   private userData: { name: string, desc: string, area: string } = { name: '', desc: '', area: '' };
   
   constructor(private authService: AuthService, private router: Router,
     private user: UsersService) { }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void { }
 
   async login() {
     let user;
 
     try {
+      // Tentando logar o usuário
       await this.authService.login(this.userLogin);
 
+      // Navegando para o feed se logou
       this.router.navigate(["/feed"]);
     } catch (error) {
-      console.error(error);
-    } 
-    // finally {
-    //   this.userData = this.user.getCollection(user?.uid)
 
-    //   if(user != null){
-    //     if(user?.emailVerified){
-    //       if(!this.userData.desc){
-    //         this.router.navigate(["/config"]);
-    //       } else {
-    //         this.router.navigate(["/feed"]);
-    //       }
-    //     } else {
-    //       console.log("Que tal autenticar seu e-mail antes?")
-    //     }
-    //   } else {
-    //     console.log("Você primeiro deve logar ;)")
-    //   }
-    // }
+      // Personalizando mensagens de erro
+      switch(error.code){
+        case 'auth/argument-error':
+          this.messageError = 'Por favor, preencha os campos corretamente.';
+          break;
+        case 'auth/user-not-found':
+          this.messageError = 'Este email não está cadastrado.';
+          break;
+        case 'auth/wrong-password':
+          this.messageError = 'A senha digitada está incorreta.';
+          break;
+        case 'auth/invalid-email':
+          this.messageError = 'Email inválido, preencha o campo corretamente.';
+          break;
+        case 'auth/too-many-requests':
+          this.messageError = 'Número de tentativas excedido, tente novamente mais tarde.';
+          break;
+        case 'auth/network-request-failed':
+          this.messageError = 'Verifique a sua conexão com a internet e tente novamente.';
+          break;
+        default:
+          this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
+          break;        
+      }
+
+      // Limitando o alert a aparcer somente 5s
+      setTimeout(() => {
+        this.messageError = "";
+      }, 5000);
+
+    }
 
   }
 

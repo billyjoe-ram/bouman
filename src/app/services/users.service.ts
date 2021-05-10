@@ -17,10 +17,8 @@ export class UsersService {
   
   constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore) { }
 
-  async getProfilePicture() {
-    const user = await this.authService.getAuth().currentUser;
-
-    const filePath = `profile-pictures/${user?.uid}`;
+  getProfilePicture(pid: string) {
+    const filePath = `profiles/${pid}/profile-pictures/profile${pid}`;
     const fileRef = this.storage.ref(filePath);
     return fileRef.getDownloadURL();
   }
@@ -29,10 +27,8 @@ export class UsersService {
     return this.profileImg;
   }
 
-  async getWallpaper() {
-    const user = await this.authService.getAuth().currentUser;
-
-    const filePath = `wallpaper-pictures/${user?.uid}`;
+  getWallpaper(pid: string) {
+    const filePath = `profiles/${pid}/wallpaper-pictures/wallpaper${pid}`;
     const fileRef = this.storage.ref(filePath);
     
     return fileRef.getDownloadURL();
@@ -41,20 +37,32 @@ export class UsersService {
   wallpasset(){
     return this.wallpImg;
   }
-
   
   getCollection(id: string | undefined) {
-    let userObject: {name: string, desc: string, area: string} = { name: "", desc: "", area: ""};
+    let userObject: {name: string, desc: string, area: string, profileId: string} = { name: "", desc: "", area: "", profileId: ""};
     
     const collection = this.store.collection('Users').doc(id).valueChanges();
     
-    collection.subscribe((data: any) => {      
+    collection.subscribe((data: any) => {
       userObject.name = data.name;
       userObject.desc = data.desc;
       userObject.area = data.area;
+      userObject.profileId = data.profileId;
     });
-
+    // console.log(userObject);
     return userObject;
+  }
+
+  getProfile(id: string | undefined) {
+    const collection = this.store.collection('Users').doc(id).valueChanges();
+    
+    return collection;
+  }
+
+  async getUid() {
+    const user = await this.authService.getAuth().currentUser;
+
+    return user?.uid;
   }
 
 }

@@ -1,11 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     
     padding: 0;
 
     background-color: #f8f8f8 !important;
+
+    overflow-x: hidden;
 }
 
 button:focus, input:focus, select:focus, textarea:focus{
@@ -15,4 +17,35 @@ button:focus, input:focus, select:focus, textarea:focus{
 
 input, select, textarea{
     padding: 2%;
+}
+
+button.btn-bouman {
+    background: #FA902E;
+    border: 1px solid #DF660F;
+    border-radius: 6px;
+    color: white;
+    transition: 0.3s;
+
+    font-weight: bold;
+}
+
+button.btn-bouman:hover {
+    color: white;
+    background: #DF660F;
+}
+
+button.btn-bouman-secondary {
+    margin-right: 0.5rem;   
+    color: #07889B;
+
+    background: #D3E2E5;
+    border: 1px solid #07889B;
+    box-sizing: border-box;    
+    transition: 0.3s;
+}
+
+button.btn-bouman-secondary:hover {
+    color: #D3E2E5;    
+
+    background: #07889B;       
 }

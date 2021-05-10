@@ -1,24 +1,44 @@
 <div class="row">
     <div class="col-md-8">
+        <!-- Project form -->
         <form (ngSubmit)="onSubmit()" #projForm="ngForm">
-            <div class="row">        
+            <div class="row">
+                <!-- Project informations -->
                 <div class="form-group col-xs-8">
-                    <input type="text" class="form-control" placeholder="Nome do seu projeto" name="title" [(ngModel)]="projTitle">
+                    <input type="text" class="form-control" placeholder="Nome do seu projeto" name="title"
+                        [(ngModel)]="projTitle">
                 </div>
-        
+
                 <div class="col-xs-4">
                     <button class="btn btn-bouman-secondary" type="submit">Salvar</button>
-                    <button class="btn btn-danger" type="button" (click)="deleteProject()" [ngStyle]="{'display': newProj ? 'none' : 'inline-block' }">Excluir projeto</button>
+                    <button class="btn btn-danger" type="button" (click)="deleteProject()"
+                        [ngStyle]="{'display': newProj ? 'none' : 'inline-block' }">Excluir projeto</button>
                 </div>
             </div>
-        
+
+            <!-- Text editor -->
             <div class="form-group">
-                <angular-editor placeholder="Digite aqui..." [config]="editorConfig" name="content" [(ngModel)]="projContent"></angular-editor>
+                <editor apiKey="o3i6lurtf2tfz1lcc7x48d1kyium2fjgo3fjsgz5utdjm5hu" [init]="{
+                        height: 500,
+                        menubar: false,
+                        plugins: [
+                        'advlist autolink lists link image charmap print preview anchor',
+                        'searchreplace visualblocks code fullscreen',
+                        'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar:
+                        'undo redo | formatselect | bold italic backcolor | \
+                        alignleft aligncenter alignright alignjustify | \
+                        bullist numlist outdent indent | removeformat | help'
+                    }" [(ngModel)]="projContent" name="content">{{ projContent }}</editor>
+                <!-- <angular-editor placeholder="Digite aqui..." [config]="editorConfig" name="content"
+                    [(ngModel)]="projContent"></angular-editor> -->
             </div>
         </form>
-        
+
     </div>
 
+    <!-- Navigate page and contributors -->
     <div class="col-md-4 aside-content">
         <button class="btn btn-bouman" (click)="myProjects()">Meus projetos</button>
 
@@ -28,6 +48,6 @@
                 Você
             </div>
         </div>
-        
+
     </div>
 </div>

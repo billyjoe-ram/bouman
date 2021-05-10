@@ -17,6 +17,8 @@ export class InfosComponent implements OnInit {
   public userRegister: any = {};
   public areas: any = {};
 
+  messageError!: string;
+
   private emailverified: any;
 
   constructor(
@@ -42,10 +44,9 @@ export class InfosComponent implements OnInit {
         password: this.form.value.passkey,
       };
 
-      const userObject = Object.assign({}, this.userRegister);
+      const userObject = { area: this.userRegister.area };
 
-      delete userObject.email;
-      delete userObject.password;
+      const profileObject = { name: this.userRegister.name };
 
       try {
         // User sign-up
@@ -53,16 +54,29 @@ export class InfosComponent implements OnInit {
 
         this.form.reset();
         
-        const user = newUser.user?.uid;        
-
-        // this.verifyEmail();
+        const user = newUser.user?.uid;
 
         // Save the own user doc in users collection
         await this.store.collection('Users').doc(user).set(userObject);
+
+        const profile = await this.store.collection('Profiles').add(profileObject);
         
         // Adding an id field
-        await this.store.collection('Users').doc(user).update({ id: user });
+        await this.store.collection('Users').doc(user).update({ profileId: profile.id });
       } catch (error) {
+        switch(error.code){
+          case 'auth/network-request-failed':
+            this.messageError = 'Verifique a sua conexão com a internet e tente novamente.';
+            break;
+          case 'auth/email-already-in-use':
+            this.messageError = 'Este email já está cadastrado.';
+            break;
+          default:
+            this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
+            break;
+        }
+      
+        console.error(this.messageError);
         console.error(error);
       } finally {        
         this.router.navigate(["/config"]);

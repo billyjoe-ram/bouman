@@ -1,7 +1,9 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+
+import ptBR from "@angular/common/locales/pt"
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -22,20 +24,24 @@ import { SecondaryHeaderComponent } from './components/secondary-header/secondar
 import { InfosComponent } from './components/signup/infos/infos.component';
 import { LoginComponent } from './components/login/login.component';
 
-import { DropdownDirectiveDirective } from './directives/dropdown-directive.directive';
-import { AngularEditorModule } from '@kolkov/angular-editor';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectOverviewComponent } from './components/projects/project-overview/project-overview.component';
 import { ProjectComponent } from './components/projects/project-overview/project/project.component';
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
+
 import { environment } from 'src/environments/environment.prod';
+import { registerLocaleData } from '@angular/common';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ContactComponent } from './components/profile-page/contact/contact.component';
+
+registerLocaleData(ptBR);
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    DropdownDirectiveDirective,
     ProfileCardComponent,
     PublicationCardComponent,
     ProfilePageComponent,
@@ -49,6 +55,8 @@ import { environment } from 'src/environments/environment.prod';
     ProjectOverviewComponent,
     ProjectComponent,
     ProfileConfigComponent,
+    NotFoundComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,9 +68,9 @@ import { environment } from 'src/environments/environment.prod';
     AngularFireAuthModule,
     AngularFirestoreModule,
     HttpClientModule,
-    AngularEditorModule
+    EditorModule
   ],
-  providers: [],
+  providers: [ { provide: LOCALE_ID, useValue: "pt-BR" } ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

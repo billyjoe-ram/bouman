@@ -3,22 +3,35 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { User } from '../interfaces/user';
 import { AuthService } from './auth.service';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  private UserCollection = this.store.collection<User>('Users');
+  private followAction: string = "";
+  
+  private userProfileId: string = "";
 
-  constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore) { }
+  private userCollection = this.store.collection<User>('Users');
+  private profileCollection = this.store.collection('Profiles');
+
+  constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore, private usersService: UsersService) { }
 
   createProfile(user: User) {
-    return this.UserCollection.add(user);
+    return this.userCollection.add(user);
   }
 
-  updateProfile(id: string | undefined, user: { name: string, description: string, area: string }) {
-    return this.UserCollection.doc(id).update({name: user.name, desc: user.description, area: user.area});
+  updateProfile(id: string | undefined, profileId: string | undefined, user: { name: string, description: string, area: string }) {
+    this.profileCollection.doc(profileId).update({name: user.name, desc: user.description});
+    this.userCollection.doc(id).update({area: user.area});
+  }
+
+  getProfile(profileId: string | undefined) {
+    const collection = this.store.collection('Profiles').doc(profileId).valueChanges();
+    
+    return collection;
   }
 
   async deleteProfile(id: string | undefined) {
@@ -30,7 +43,7 @@ export class ProfileService {
     try {
       user?.delete();
 
-      this.UserCollection.doc(id).delete();
+      this.userCollection.doc(id).delete();
 
       this.storage.ref(profImgPath).delete();
 
@@ -40,8 +53,38 @@ export class ProfileService {
     } finally {
       this.authService.logout();
     }
-
   }
 
+  followProfile(profileId: string, followingProfiles: string[], userProfile: string) {
+    const profileFollowing = this.profileCollection.doc(userProfile);    
+    
+    if (this.followAction === "Seguindo") {
+      followingProfiles = followingProfiles.filter(profile => {
+        return profile !== profileId;
+      })
+
+      return profileFollowing.update({ following: followingProfiles });
+    } else {
+      followingProfiles.push(profileId);
+
+      return profileFollowing.update({ following: followingProfiles });
+    }
+    
+  }
+
+  verifyFollowing(profileId: string, following: string[] ): string {
+    
+    if (following.includes(profileId)) {
+      this.followAction = "Seguindo";
+    } else {
+      this.followAction = "Seguir";
+    }
+    
+    return this.followAction;    
+  }
+
+  updateContact(profileId: string, contact: { email: string, linkedin: string, other: string }) {
+    return this.profileCollection.doc(profileId).update({ social: contact });
+  }
 
 }

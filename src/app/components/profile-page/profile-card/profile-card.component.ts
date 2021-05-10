@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -9,15 +11,25 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './profile-card.component.html',
   styleUrls: ['./profile-card.component.css']
 })
-export class ProfileCardComponent implements OnInit, OnDestroy {
+export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
+  @Input('profileId') public profileId: string = "";
+  @Input('userId') public userId: string | undefined = "";
+  @Input('editMode') public editbutton: boolean = false;
+  @Input('userData') public userData: any = {};
+  
+  @ViewChild('btnFollow') btnFollow!: ElementRef;
+  
   public esconder: boolean = false;
-
-  public userData: { name: string, desc: string } = { name: '', desc: '' };
 
   public profileImg: any = "";
   public wallpImg: any = "";
 
+  private userProfile: string = "";
+  private userFollowing: string[] = [];
+
+  private i: number = 0;
+  
   private profile!: Subscription;
   private wallpaper!: Subscription;
 
@@ -26,37 +38,52 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
   private backgroundPath: any = "";
   private backcheck: boolean = false;
 
+  private profileSubs!: Subscription;
+  private userSubs!: Subscription;
+  private userProfileSubs!: Subscription;
+
+  private paramsSubs!: Subscription;
+
   constructor(
     private storage: AngularFireStorage,
     private auth: AuthService,
-    private renderer: Renderer2,
-    private user: UsersService) { }
+    private user: UsersService,
+    private profileService: ProfileService,
+    private usersServices : UsersService,
+    private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
-    this.getData();
-    // usando o service de usuario para pegar as imagens
+  ngOnChanges() {
+    this.esconder = false;
 
-    this.user.getProfilePicture().then((url: any) => {
-      this.profile = url.subscribe((profP: any) => {
-        this.profileImg = profP;
-      }, (err: any) => {
-        this.profileImg = this.user.profasset();
-      });      
-    });
+    if(this.i >= 1) {
+      // Loading profile data
+      this.loadData();      
+    }
 
-    this.user.getWallpaper().then((url: any) => {
-      this.wallpaper = url.subscribe((wallP: any) => {
-        this.wallpImg = wallP;
-      }, (err: any) => {
-        this.wallpImg = this.user.wallpasset();
-      })      
-    });
+    if(this.i >= 2) {
+      // Verifying if this user it's beeing followed
+      // console.log(this.userFollowing);
+      // this.btnFollow.nativeElement.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userFollowing);
+    }
+
+    this.i++;
+  }
+
+  ngAfterViewChecked() {
+    this.btnFollow.nativeElement.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userFollowing);
   }
 
   ngOnDestroy() {
     this.profile.unsubscribe();
     this.wallpaper.unsubscribe();
+
+    this.profileSubs.unsubscribe();
+    this.paramsSubs.unsubscribe();
+
+    this.userSubs.unsubscribe();
+    this.userProfileSubs.unsubscribe();
   }
 
   getProfileImg(event: any) {
@@ -70,10 +97,9 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
   }
 
   async saveFotos() {
-    const user = await this.auth.getAuth().currentUser;
 
-    const profImgPath = `profile-pictures/${user?.uid}`;
-    const wlppImgPath = `wallpaper-pictures/${user?.uid}`;
+    const profImgPath = `profiles/${this.profileId}/profile-pictures/profile${this.profileId}`;
+    const wlppImgPath = `profiles/${this.profileId}/wallpaper-pictures/wallpaper${this.profileId}`;
     if (this.imgcheck == true) {
       const refProf = await this.storage.upload(profImgPath, this.imgPath);
       refProf.ref.getDownloadURL().then(url => {
@@ -87,14 +113,47 @@ export class ProfileCardComponent implements OnInit, OnDestroy {
       });
     }
 
-    // finalmente, alterando o estado do booleano
-    this.esconder = !this.esconder;
+  }
+
+  loadData() {
+    this.paramsSubs = this.route.params.subscribe((params) => {
+      // this.profileId = params['profid'];
+    
+      this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
+
+        this.profile = this.user.getProfilePicture(this.profileId).subscribe((url: any) => {
+          this.profileImg = url;
+        }, (err: any) => {
+          this.profileImg = this.user.profasset();
+        });
+    
+        this.wallpaper = this.user.getWallpaper(this.profileId).subscribe((url: any) => {
+          this.wallpImg = url;
+        }, (err: any) => {
+          this.wallpImg = this.user.wallpasset();
+        });
+      
+    });
+    });
+
+    this.userSubs = this.usersServices.getProfile(this.userId).subscribe((user: any) => {
+
+      this.userProfile = user.profileId;
+      
+      this.userProfileSubs = this.profileService.getProfile(user.profileId).subscribe((profile: any) => {
+        this.userFollowing = profile.following;
+      });
+    });
 
   }
 
-  async getData(){
-    const user = await this.auth.getAuth().currentUser;
-    this.userData = this.user.getCollection(user?.uid);
+  onFollow() {
+    try { 
+      this.profileService.followProfile(this.profileId, this.userFollowing, this.userProfile);
+    } catch(error) {
+      console.log(error)
+    }
+    
   }
 
 }

@@ -1,0 +1,65 @@
+<div class="card">
+    <div class="card-header">
+        Redes sociais
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#contactModal" *ngIf="editMode">
+            Editar
+        </button>
+    </div>
+
+    <!-- User social networks -->
+    <div class="card-body">
+        <ul>
+            <li class="social-network-item">
+                {{ userSocial.email }}
+            </li>
+            <li class="social-network-item">
+                {{ userSocial.linkedin }}
+            </li>
+            <li class="social-network-item">
+                {{ userSocial.other }}
+            </li>
+        </ul>        
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactModalLabel">Editar suas informações de contato?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- Form in modal to edit social networks / contact -->
+            <form (ngSubmit)="editContact(f)" #f="ngForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="emailInput">E-mail: </label>
+                        <input type="email" class="form-control" id="emailInput" placeholder="pesquisador@email.com"
+                            name="email" [value]="hasSocial ? userSocial.email : '' " email required ngModel>
+
+                        <label for="linkedInInput">LinkedIn: </label>
+                        <input type="text" class="form-control" id="linkedInInput"
+                            placeholder="linkedin.com/in/seu-perfil" name="linkedin" [value]="hasSocial ? userSocial.linkedin : '' " required ngModel>
+
+                        <label for="anotherContactInput">Outra rede social: </label>
+                        <input type="text" class="form-control" id="anotherContactInput"
+                            placeholder="Facebook, GitHub, SciElo etc." name="other" [value]="hasSocial ? userSocial.other : '' " required ngModel>
+                    </div>
+                </div>
+
+                <!-- Save or dismiss buttons -->
+                <div class="modal-footer">
+                    <button type="button" id="submit" class="btn btn-outline-dark" data-dismiss="modal" #dismissButton >Cancelar</button>
+                    <button type="submit" class="btn btn-bouman">Salvar Mudanças</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -20,21 +20,7 @@ a.navbar-brand > img {
 }
 
 input {
-  width: 312px;
-  height: 42.14px;
-
-  background: #ffffff;
-  border: 1px solid #5c5c5c;
-  box-sizing: border-box;
-  border-radius: 8px;
-
-  font-weight: bold;
-  font-size: 20px;
-  text-align: center;
-}
-
-input::placeholder {
-  color: #fa902e;
+  color: #fa902e !important;
 }
 
 .nav > li > a > img {
@@ -66,8 +52,8 @@ input::placeholder {
 }
 
 a.navbar-brand {
-  padding-top: 10px;
-  padding-left: 10px;
+  padding: 0;
+  margin: 0;
 }
 
 .navbar .navbar-nav > li > a#navbarDropdown {
@@ -81,25 +67,6 @@ a.navbar-brand {
 
   border: 1px solid #5c5c5c;
   border-radius: 32px;
-}
-
-input {
-  width: 65vw;
-  max-width: 300px;
-  height: 42.14px;
-
-  background: #ffffff;
-  border: 1px solid #5c5c5c;
-  box-sizing: border-box;
-  border-radius: 8px;
-
-  font-weight: bold;
-  font-size: 20px;
-  text-align: center;
-}
-
-input::placeholder {
-  color: #fa902e;
 }
 
 .navbar-nav {
@@ -159,3 +126,45 @@ a {
     flex-direction: column;
   }
 }
+/* Dropdown Button */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The search field when it gets focus/clicked on */
+#myInput:focus {outline: 3px solid #ddd;}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 230px;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}

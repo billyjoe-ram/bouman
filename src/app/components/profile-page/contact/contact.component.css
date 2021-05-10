@@ -1,0 +1,31 @@
+.card {
+    width: 20vw;
+    height: 38vh;
+    max-height: 38vh;
+}
+
+.card .card-header {
+	display: flex;
+	justify-content: space-between;
+
+    font-weight: bold;
+    background-color: #D3E2E5;
+    padding: .375rem .75rem;
+}
+
+.card .card-header button {
+    padding: 0;
+    font-weight: lighter;
+    font-size: 0.85rem;
+    
+    align-items: center;
+}
+
+.card .card-body ul {
+    padding: 0;
+    list-style: none;
+}
+
+.card .card-body .social-network-item {
+    margin: 0.25rem 0;
+}

@@ -1,15 +1,8 @@
-.container {
-    position: relative;
-    width: 842px;
-    height: 408px;    
-    top: 60vh;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));    
-}
+.card {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
+    margin-bottom: 5vh;
 
-.card {     
-    background: #FFFFFF;
-
-    border-radius: 0px 0px 8px 8px;
+    border: none;
 }
 
 .card .card-header {
@@ -38,74 +31,60 @@
 
 .card .profile-details img {
     position: relative;
-    width: 56px;
-    height: 56px;
+    width: 4rem;
+    height: 4rem;
 
     border: 1px solid #000000;
-    border-radius: 28px;
+    border-radius: 4rem;
 
-    margin: 7px 18px;
+    margin: 0 3% 3% 0;
 }
 
 .card .profile-details .profile-info {
     display: flex;
     flex-direction: column;
 
-    margin: 7px 0;
-
     font-weight: bold;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
-.card .profile-details .profile-info span{    
-    font-size: 12px;
+.card .profile-details .profile-info span {
+    font-size: 0.75rem;
+
+    font-weight: normal;
 
     color: #A4A4A4;
 }
 
-.card .card-body {
-    width: 736px;
-    margin-left: 26px;
-}
-
-.card .card-body .card-text{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.card .card-body .card-text .publication-picture{
+.card .card-body .card-text .publication-picture {
     width: 280px;
     height: 165px;
 
-    margin: 16px;
+    margin: 1rem;
+}
+
+.card .card-body .card-text span {
+    margin-left: 0.4rem;
+    color: #185c66;
+    cursor: pointer;
 }
 
 .card .card-footer {
-    height: 62px;
+    display: flex;
 
-    background: #FA902E;
-    border-radius: 0px 0px 8px 8px;
-}
+    padding: 0.25rem 1.5rem;
 
-.card .card-footer p{
-    padding-left: 10px;
+    justify-content: space-between;
 
-    font-weight: bold;
-    font-size: 12px;    
-}
-
-.card .card-footer .interactions{
-    margin-left: 26px;
+    background-color: #FA902E;
 
     font-weight: bold;
-    font-size: 12px;  
 }
 
-.card .interactions img{
-    margin: 0 16px;
-}
-
-.card .interactions label{
+.card .card-footer .btn.btn-default {
     color: white;
+}
+
+.card .card-footer img {
+    margin: 0 1rem;
 }

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Post } from 'src/app/interfaces/posts';
+import { PostsService } from 'src/app/services/posts.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -8,20 +12,55 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class PublicationCardComponent implements OnInit {
 
-  public publication: { name: string, content: string, interaction: string } = { name: '', content: '', interaction: ''};
-  public profileImg: any = "";
+  @Input('publication') public publication!: any;
+
+  @Input('profileId') public profileId: string = "";
+
+  public profileName: any = "";  
+
+  public profileImg: string = "";
+
+  public fullContent: boolean = false;
+
+  public sMDisabled: boolean = false;
+
+  public limit: number = 286;
+
+  private profileSubs!: Subscription;
+
+  private imageSubs!: Subscription;
   
-  constructor(private user: UsersService) { }
+  constructor(private user: UsersService,
+    private profile: ProfileService,
+    private post: PostsService) { }
 
   ngOnInit(): void {
-    // this.user.getCollection().then((collec) => {
-    //   this.publication.name =  collec.name;
-    // })
-    this.publication.content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis...";      
+    if (this.publication.content.length < this.limit) {
+      this.sMDisabled = true;
+    }
 
-    this.publication.interaction = "compartilhou";
+    this.profileSubs = this.profile.getProfile(this.profileId).subscribe((collec: any) => {
+      this.profileName = collec.name;
+    });
 
-    this.profileImg = this.user.getProfilePicture();
+    this.imageSubs = this.user.getProfilePicture(this.profileId).subscribe(image => {
+      this.profileImg = image;
+    });
+  }
+
+  showMore() {
+    this.limit = this.publication.content.length;
+    this.sMDisabled = !this.sMDisabled;
+  }
+
+  onLikePost(post: string) {
+    this.post.likePost(this.publication.profileId, post);
+  }
+
+  ngOnDestroy() {
+    this.profileSubs.unsubscribe();
+
+    this.imageSubs.unsubscribe();
   }
 
 }
