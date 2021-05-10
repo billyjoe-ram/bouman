@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
-export class ContactComponent implements OnChanges, OnInit, OnDestroy {
+export class ContactComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @Input('editMode') public editMode: boolean = false;
   @ViewChild("dismissButton") private dismissModalBtn!: ElementRef;
@@ -33,10 +33,12 @@ export class ContactComponent implements OnChanges, OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {}
-
-  ngOnChanges() {
+  ngOnInit(): void {
     this.loadData();
+  }
+
+  ngAfterViewInit() {
+   // this.loadData();
   }
 
   async editContact(form: NgForm) {
@@ -63,10 +65,22 @@ export class ContactComponent implements OnChanges, OnInit, OnDestroy {
 
     this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
 
+
+      console.log(profile.social);
       // Checking if it isn't undefined
+      
       if (profile.social) {
         this.hasSocial = true;
         this.userSocial = profile.social;
+        if(!profile.social.email){
+          profile.social.email = "E-mail não informado"
+        }
+        if(!profile.social.linkedin){
+          profile.social.linkedin = "LinkedIn não informado"
+        }
+        if(!profile.social.other){
+          profile.social.other = "Nenhum outro contato informado"
+        }
       } else {
         this.hasSocial = false;
         this.userSocial = { email: "E-mail não informado", linkedin: "LinkedIn não informado", other: "Nenhum outro contato informado" };
