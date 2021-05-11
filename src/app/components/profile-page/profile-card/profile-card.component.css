@@ -18,8 +18,8 @@
 }
 
 .card .card-body img.profile-picture {
-  width: 25%;
-  height: 25%;
+  width: 9rem;
+  height: 9rem;
 
   padding: 1rem;
 
@@ -41,7 +41,7 @@
 
 .card .card-body .text-content .card-text {
   font-size: 1rem;
-  width: 85%;
+  width: 105%;
   margin-top: 0.4rem
 }
 
@@ -129,8 +129,8 @@
   }
 
   .card .card-body img.profile-picture {
-    width: 25%;
-    height: 25%;
+    width: 9rem;
+    height: 9rem;
   
     padding: 1rem;
   
@@ -144,7 +144,7 @@
   
   .card .card-body .text-content .card-text {
     font-size: 0.9rem;
-    width: 70%;
+    width: 100%;
     margin-top: 0.4rem
   }
   
@@ -190,8 +190,8 @@
   }
   
   .card .card-body img.profile-picture {
-    width: 25%;
-    height: 25%;
+    width: 9rem;
+    height: 9rem;
   
     padding: 1rem;
   
@@ -205,7 +205,7 @@
   
   .card .card-body .text-content .card-text {
     font-size: 1rem;
-    width: 70%;
+    width: 100%;
     margin-top: 0.4rem
   }
   
@@ -246,8 +246,8 @@
   }
   
   .card .card-body img.profile-picture {
-    width: 25%;
-    height: 25%;
+    width: 9rem;
+    height: 9rem;
   
     padding: 1rem;
   
@@ -261,7 +261,7 @@
   
   .card .card-body .text-content .card-text {
     font-size: 1rem;
-    width: 70%;
+    width: 100%;
     margin-top: 0.4rem
   }
   

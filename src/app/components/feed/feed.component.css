@@ -32,5 +32,5 @@ content span {
 }
 
 .card-footer {
-    justify-content: end;
+    justify-content: flex-end;
 }

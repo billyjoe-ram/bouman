@@ -14,14 +14,14 @@ import { ProfileConfigComponent } from './components/profile-page/profile-config
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: "feed", pathMatch: 'full' },
+  { path: '', redirectTo: "signup", pathMatch: 'full' },
   { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [LoginGuard] },
   { path: 'config',  component: ConfigurateComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard], children: [
-    { path: 'overview', component: ProjectOverviewComponent },
-    { path: ':id', component: ProjectComponent }
+  { path: 'overview', component: ProjectOverviewComponent },
+  { path: ':id', component: ProjectComponent }
   ] },
   { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
   { path: 'profiles/:profid', component: ProfilePageComponent, canActivate: [AuthGuard] },
