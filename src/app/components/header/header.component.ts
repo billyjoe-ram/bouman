@@ -51,21 +51,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   searching() {
-    this.postsService.searchingprofiles(this.search).then(data => {
+    this.postsService.searchingProfiles(this.search).then(data => {
       // Attr all profiles found to the search resulsts
-      this.searchResult = data;
-
-      // Filtering this array
-      this.searchResult = this.searchResult.filter((element: any) => {    
-        // Converting each element from array to lower string
-        let elementLower = element.name.toLowerCase()
-
-        // Converting search values to lower case
-        let searchLower = this.search.toLowerCase();
-
-        return elementLower.startsWith(searchLower);
-      });
-            
+      this.searchResult = data;            
     });
 
   }
