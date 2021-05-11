@@ -12,16 +12,16 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
-export class ContactComponent implements OnChanges, OnInit, OnDestroy {
+export class ContactComponent implements OnInit, OnChanges ,OnDestroy {
 
   @Input('editMode') public editMode: boolean = false;
+  @Input('profileId') public profileId: string = "";
+
   @ViewChild("dismissButton") private dismissModalBtn!: ElementRef;
 
   public userSocial: { email: string, linkedin: string, other: string } = { email: "", linkedin: "", other: "" };
 
-  public hasSocial: boolean = false;
-
-  private profileId: string = "";
+  public hasSocial: boolean = false;  
 
   private profileSubs!: Subscription;
 
@@ -33,10 +33,12 @@ export class ContactComponent implements OnChanges, OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.loadData();
+  }
 
   ngOnChanges() {
-    this.loadData();
+   this.loadData();
   }
 
   async editContact(form: NgForm) {
@@ -58,15 +60,24 @@ export class ContactComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-  loadData(){
-    this.profileId = this.route.snapshot.params["profid"];
-
+  loadData() {
     this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
 
+      console.log(profile.social);
       // Checking if it isn't undefined
+      
       if (profile.social) {
         this.hasSocial = true;
         this.userSocial = profile.social;
+        if(!profile.social.email){
+          profile.social.email = "E-mail não informado"
+        }
+        if(!profile.social.linkedin){
+          profile.social.linkedin = "LinkedIn não informado"
+        }
+        if(!profile.social.other){
+          profile.social.other = "Nenhum outro contato informado"
+        }
       } else {
         this.hasSocial = false;
         this.userSocial = { email: "E-mail não informado", linkedin: "LinkedIn não informado", other: "Nenhum outro contato informado" };
