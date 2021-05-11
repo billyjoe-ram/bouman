@@ -64,15 +64,13 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
     if(this.i >= 2) {
       // Verifying if this user it's beeing followed
-      // console.log(this.userFollowing);
-      // this.btnFollow.nativeElement.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userFollowing);
+      if (this.btnFollow) {
+        this.btnFollow.nativeElement.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userFollowing);
+      }
+      
     }
 
     this.i++;
-  }
-
-  ngAfterViewChecked() {
-    this.btnFollow.nativeElement.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userFollowing);
   }
 
   ngOnDestroy() {
