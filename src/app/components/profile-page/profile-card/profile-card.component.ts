@@ -68,9 +68,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
     this.profile.unsubscribe();
     this.wallpaper.unsubscribe();
 
-    this.profileSubs.unsubscribe();
-    this.paramsSubs.unsubscribe();
-
     this.userSubs.unsubscribe();
     this.userProfileSubs.unsubscribe();
   }
