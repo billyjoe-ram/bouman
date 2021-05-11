@@ -57,20 +57,11 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges() {
     this.esconder = false;
 
-    if(this.i >= 1) {
+    if(this.profileId) {
       // Loading profile data
       this.loadData();      
     }
-
-    if(this.i >= 2) {
-      // Verifying if this user it's beeing followed
-      if (this.btnFollow) {
-        this.btnFollow.nativeElement.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userFollowing);
-      }
-      
-    }
-
-    this.i++;
+       
   }
 
   ngOnDestroy() {
@@ -114,24 +105,16 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   loadData() {
-    this.paramsSubs = this.route.params.subscribe((params) => {
-      // this.profileId = params['profid'];
-    
-      this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
-
-        this.profile = this.user.getProfilePicture(this.profileId).subscribe((url: any) => {
-          this.profileImg = url;
-        }, (err: any) => {
-          this.profileImg = this.user.profasset();
-        });
-    
-        this.wallpaper = this.user.getWallpaper(this.profileId).subscribe((url: any) => {
-          this.wallpImg = url;
-        }, (err: any) => {
-          this.wallpImg = this.user.wallpasset();
-        });
-      
+    this.profile = this.user.getProfilePicture(this.profileId).subscribe((url: any) => {
+      this.profileImg = url;
+    }, (err: any) => {
+      this.profileImg = this.user.profasset();
     });
+
+    this.wallpaper = this.user.getWallpaper(this.profileId).subscribe((url: any) => {
+      this.wallpImg = url;
+    }, (err: any) => {
+      this.wallpImg = this.user.wallpasset();
     });
 
     this.userSubs = this.usersServices.getProfile(this.userId).subscribe((user: any) => {
@@ -140,6 +123,16 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
       
       this.userProfileSubs = this.profileService.getProfile(user.profileId).subscribe((profile: any) => {
         this.userFollowing = profile.following;
+
+        // Verifying if this user it's beeing followed
+        if (this.btnFollow) {
+          const button = this.btnFollow.nativeElement;
+
+          button.innerHTML = this.profileService.verifyFollowing(this.profileId, this.userFollowing);
+
+          button.hidden = false;
+        }
+
       });
     });
 
