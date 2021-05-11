@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public search: string = "";
   private profile!: Subscription;
   private userSubs!: Subscription;
-  public searchresult : any[] = [];
+  public searchResult : any[] = [];
 
   @Output() featureSelected = new EventEmitter<string>();
 
@@ -51,21 +51,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   searching() {
-// const filterItems = (elemento:String, data:string[]) => {
-//   return data.filter(el => el.toLowerCase().indexOf(elemento.toLowerCase()) > -1);};
+    this.postsService.searchingprofiles(this.search).then(data => {
+      // Attr all profiles found to the search resulsts
+      this.searchResult = data;
 
-    this.postsService.searchingprofiles(this.search).then(data=>{
+      // Filtering this array
+      this.searchResult = this.searchResult.filter((element: any) => {    
+        // Converting each element from array to lower string
+        let elementLower = element.name.toLowerCase()
 
-//       const teste = data;
-//       console.log(filterItems(this.search, teste));
-//       this.searchresult = data;
-//       console.log(data);
-      this.searchresult = data;
+        // Converting search values to lower case
+        let searchLower = this.search.toLowerCase();
+
+        return elementLower.startsWith(searchLower);
+      });
+            
     });
 
   }
 
-  togglesearchclick(){
+  toggleSearchClick(){
     this.search = "";
     document.getElementById('search')?.classList.toggle("show");
   }
