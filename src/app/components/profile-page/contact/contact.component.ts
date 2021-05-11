@@ -33,12 +33,10 @@ export class ContactComponent implements OnInit, OnChanges ,OnDestroy {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
-    // this.loadData();
-  }
+  ngOnInit(): void { }
 
   ngOnChanges() {
-   this.loadData();
+    this.loadData();
   }
 
   async editContact(form: NgForm) {
@@ -61,29 +59,32 @@ export class ContactComponent implements OnInit, OnChanges ,OnDestroy {
   }
 
   loadData() {
-    this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
-
-      console.log(profile.social);
-      // Checking if it isn't undefined
+    // Checking if the value came through propertiy binding
+    if(this.profileId) {
+      this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
       
-      if (profile.social) {
-        this.hasSocial = true;
-        this.userSocial = profile.social;
-        if(!profile.social.email){
-          profile.social.email = "E-mail não informado"
+        // Checking if it isn't undefined      
+        if (profile.social) {
+          this.hasSocial = true;
+          this.userSocial = profile.social;
+          // Checking if isn't empy string
+          if(!profile.social.email){
+            profile.social.email = "E-mail não informado"
+          }
+          if(!profile.social.linkedin){
+            profile.social.linkedin = "LinkedIn não informado"
+          }
+          if(!profile.social.other){
+            profile.social.other = "Nenhum outro contato informado"
+          }
+        } else {
+          this.hasSocial = false;
+          this.userSocial = { email: "E-mail não informado", linkedin: "LinkedIn não informado", other: "Nenhum outro contato informado" };
         }
-        if(!profile.social.linkedin){
-          profile.social.linkedin = "LinkedIn não informado"
-        }
-        if(!profile.social.other){
-          profile.social.other = "Nenhum outro contato informado"
-        }
-      } else {
-        this.hasSocial = false;
-        this.userSocial = { email: "E-mail não informado", linkedin: "LinkedIn não informado", other: "Nenhum outro contato informado" };
-      }
-
-    });
+  
+      });
+    }
+    
   }
 
   ngOnDestroy() {
