@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -12,16 +12,16 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
-export class ContactComponent implements AfterViewInit, OnInit, OnDestroy {
+export class ContactComponent implements OnInit, OnChanges ,OnDestroy {
 
   @Input('editMode') public editMode: boolean = false;
+  @Input('profileId') public profileId: string = "";
+
   @ViewChild("dismissButton") private dismissModalBtn!: ElementRef;
 
   public userSocial: { email: string, linkedin: string, other: string } = { email: "", linkedin: "", other: "" };
 
-  public hasSocial: boolean = false;
-
-  private profileId: string = "";
+  public hasSocial: boolean = false;  
 
   private profileSubs!: Subscription;
 
@@ -34,11 +34,11 @@ export class ContactComponent implements AfterViewInit, OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.loadData();
+    // this.loadData();
   }
 
-  ngAfterViewInit() {
-   // this.loadData();
+  ngOnChanges() {
+   this.loadData();
   }
 
   async editContact(form: NgForm) {
@@ -60,11 +60,8 @@ export class ContactComponent implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
-  loadData(){
-    this.profileId = this.route.snapshot.params["profid"];
-
+  loadData() {
     this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
-
 
       console.log(profile.social);
       // Checking if it isn't undefined
