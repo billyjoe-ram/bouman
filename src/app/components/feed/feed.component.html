@@ -28,9 +28,9 @@
 
             <!-- Feed and posts -->
             <div class="feed-content">
-                <div class="post-item" *ngFor="let profile of feedPosts">
-                    <publication-card [profileId]="profile.profileId" [userProfile]="this.profileId" [publication]="post" *ngFor="let post of profile.posts"></publication-card>
-                </div>                
+                <div class="post-item" *ngFor="let post of feedPosts">
+                    <publication-card [profileId]="profilePost.profileId" [userProfile]="this.profileId" [publication]="profilePost" *ngFor="let profilePost of post"></publication-card>
+                </div>
             </div>
         <div>
         

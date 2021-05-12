@@ -10,7 +10,7 @@ import { UsersService } from './users.service';
   providedIn: 'root'
 })
 export class PostsService {
-  private publication: Post = { content: "", profileId:"", likes: [] };
+  private publication: Post = { content: "", profileId:"", likes: [], publishedAt: new Date() };
 
   private postsCollection = this.store.collection('Profiles');
 

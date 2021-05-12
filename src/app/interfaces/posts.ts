@@ -3,5 +3,5 @@ export interface Post {
     likes: string[];
     postId?: string;
     profileId: string;
-    publishedAt?: Date;    
+    publishedAt: Date;
 }
