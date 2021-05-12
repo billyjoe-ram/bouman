@@ -24,14 +24,16 @@
             <div class="bouman-form">
                 <form #boumanForm="ngForm" (ngSubmit)="signup()">
                     <label for="username">Nome Completo</label>
-                    <input type="text" name="name" id="username" placeholder="Seu nome" ngModel required
+                    <input type="text" name="name" id="username" placeholder="Seu nome" minlength="3" ngModel required
                         #nome="ngModel">
-                    <p *ngIf="!nome.valid && nome.touched" class="help-invalid">Por favor, preencha o campo corretamente.</p>
+                    <p *ngIf="!nome.valid && nome.touched" class="help-invalid">Por favor, preencha o campo
+                        corretamente.</p>
 
                     <label for="usermail">E-mail</label>
                     <input type="email" name="email" id="usermail" placeholder="Ex.: bouman@email.com" ngModel required
                         email #mail="ngModel">
-                    <p *ngIf="!mail.valid && mail.touched" class="help-invalid">Por favor, insira um e-mail válido.</p>
+                    <p *ngIf="!mail.valid && mail.touched"
+                        class="help-invalid">Por favor, insira um e-mail válido.</p>
 
                     <label for="area">Área de Atuação</label>
                     <select class="custom-select bouman-select" id="area" name="area" ngModel required>
@@ -41,7 +43,8 @@
                     <label for="userkey">Senha</label>
                     <input type="password" name="passkey" id="userkey" placeholder="Ex.: @Bouman2021" ngModel required
                         minlength="8" #passkey="ngModel">
-                    <p *ngIf="!passkey.valid && passkey.touched" class="help-invalid">Por favor, insira uma senha válida.</p>
+                    <p *ngIf="!passkey.valid && passkey.touched" class="help-invalid">Por favor, insira uma senha
+                        válida.</p>
 
                     <span>
                         A senha precisa ter pelo menos 8 caracteres.
@@ -62,6 +65,7 @@
                     {{messageError}}
                 </div>
             </div>
+
         </div>
     </div>
 </div>

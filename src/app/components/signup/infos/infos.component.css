@@ -101,6 +101,10 @@
   background-color: rgb(255, 158, 158);
 }
 
+.alert{
+  margin-top: 3%;
+}
+
 @media (min-width: 768px) {
 
   .bouman-info {

@@ -63,13 +63,15 @@ export class InfosComponent implements OnInit {
         
         // Adding an id field
         await this.store.collection('Users').doc(user).update({ profileId: profile.id });
+
+        this.router.navigate(["/config"]);
       } catch (error) {
         switch(error.code){
           case 'auth/network-request-failed':
             this.messageError = 'Verifique a sua conexão com a internet e tente novamente.';
             break;
           case 'auth/email-already-in-use':
-            this.messageError = 'Este email já está cadastrado.';
+            this.messageError = 'Este email já está cadastrado. Tente outro endereço de email ou recupere a sua senha.';
             break;
           default:
             this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
@@ -78,10 +80,11 @@ export class InfosComponent implements OnInit {
       
         console.error(this.messageError);
         console.error(error);
-      } finally {        
-        this.router.navigate(["/config"]);
+      } /*finally {   
+        //Está parte agora está localizada no final do TRY acima     
+          this.router.navigate(["/config"]);
         
-      }
+      }*/
 
     }
   }
