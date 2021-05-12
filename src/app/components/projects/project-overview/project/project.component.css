@@ -7,6 +7,6 @@ editor {
     flex-direction: column;    
 }
 
-.aside-content span {
+.aside-content strong {
     margin: 1rem 0 ;
 }

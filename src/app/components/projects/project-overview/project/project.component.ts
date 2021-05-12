@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,6 +15,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 export class ProjectComponent implements OnInit, AfterViewInit {
 
   @ViewChild('projForm') projForm!: NgForm;
+  @ViewChild('articleStructure') article!: ElementRef;
   
   public projTitle: string = "";
 
@@ -37,7 +38,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {    
-
+    this.addEvents();
   }
 
   async onSubmit() {
@@ -63,6 +64,25 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     
   }
 
+  private addEvents() {
+    if (this.article) {
+      const list = this.article.nativeElement;
+      
+      const listItems = list.children;
+
+      for (let key of listItems) {
+
+        key.addEventListener("click", (event: any) => {
+          let projPart = event.target.innerHTML;
+
+          this.loadProjectPart(projPart);
+        });
+      }
+      
+    }
+  }
+
+
   loadProject() {
     const docId: string = this.route.snapshot.params['id'];
     this.docServ.listProject(docId).then((project) => {
@@ -70,6 +90,10 @@ export class ProjectComponent implements OnInit, AfterViewInit {
         this.projForm.setValue({'title':query.data().title, 'content':query.data().content})
       });
     });
+  }
+
+  loadProjectPart(projPart: string) {
+    this.projForm.setValue({'title': this.projTitle, 'content': projPart })
   }
 
   deleteProject() {
