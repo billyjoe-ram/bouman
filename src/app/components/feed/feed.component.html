@@ -29,7 +29,7 @@
             <!-- Feed and posts -->
             <div class="feed-content">
                 <div class="post-item" *ngFor="let post of feedPosts">
-                    <publication-card [profileId]="profilePost.profileId" [userProfile]="this.profileId" [publication]="profilePost" *ngFor="let profilePost of post"></publication-card>
+                    <publication-card [profileId]="post.profileId" [userProfile]="this.profileId" [publication]="post" ></publication-card>
                 </div>
             </div>
         <div>

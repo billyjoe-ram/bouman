@@ -18,7 +18,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public profilesFollowing: string[] = [];
 
-  public feedPosts: Post[][] = [];
+  public feedPosts: Post[] = [];
 
   public profileId!: string | undefined;
 
@@ -65,31 +65,35 @@ export class FeedComponent implements OnInit, OnDestroy {
         if (profile.following.length > 0) {
           this.profilesFollowing = profile.following;
         }
+
         // In pratical terms, you "follow yourself", but not in the database, only in the attribute
         this.profilesFollowing.push(this.profileId as string);
 
         // Interating over each profile followed
         this.profilesFollowing.forEach(profile => {
-          // Passing to posts attribute this profile id and an empty array
-
-          let profileIndex = this.profilesFollowing.indexOf(profile);
-
+          
           // For this profile (brought by iteration), bring its posts and add in the object array
           this.postsSubs = this.posts.listProfilePosts(profile).subscribe((profilePost: any) => {
-            profilePost.sort((a: any, b: any) => {
+            // Pushing each post object feed conten array
+            this.feedPosts.push(...(profilePost as Post[]));
+
+            // Ordering by date
+            this.feedPosts.sort((a: any, b: any) => {
 
               return a.publishedAt.seconds - b.publishedAt.seconds;
             }).reverse();
+          });
 
-            this.feedPosts[profileIndex] = (profilePost as Post[]);
+          // Removing duplicates by postId
+          this.feedPosts = this.feedPosts.filter(element => {
+            return element.postId != element.postId;
           });
 
         });
         
       });
       
-    });
-    console.log(this.feedPosts);
+    });    
   }
 
   ngOnDestroy() {
