@@ -1,3 +1,7 @@
+editor {
+    margin-top: 1.25rem;
+}
+
 .aside-content {
     display: flex;
     flex-direction: column;    

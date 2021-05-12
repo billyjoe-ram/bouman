@@ -1,24 +1,29 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+        <button class="btn btn-bouman-secondary">Exportar projeto</button>
+    </div>
+    
+    <div class="col-sm-6 col-md-6 col-lg-6">
         <!-- Project form -->
         <form (ngSubmit)="onSubmit()" #projForm="ngForm">
-            <div class="row">
-                <!-- Project informations -->
-                <div class="form-group col-xs-8">
-                    <input type="text" class="form-control" placeholder="Nome do seu projeto" name="title"
-                        [(ngModel)]="projTitle">
-                </div>
-
-                <div class="col-xs-4">
-                    <button class="btn btn-bouman-secondary" type="submit">Salvar</button>
-                    <button class="btn btn-danger" type="button" (click)="deleteProject()"
-                        [ngStyle]="{'display': newProj ? 'none' : 'inline-block' }">Excluir projeto</button>
-                </div>
-            </div>
-
-            <!-- Text editor -->
+            <!-- Project informations -->
             <div class="form-group">
-                <editor apiKey="o3i6lurtf2tfz1lcc7x48d1kyium2fjgo3fjsgz5utdjm5hu" [init]="{
+                <div class="row">
+                    <div class="col-sm-5 col-md-6 col-lg-8">
+                        <input type="text" class="form-control" placeholder="Nome do seu projeto" name="title"
+                            [(ngModel)]="projTitle">
+                    </div>
+                    <div class="col-sm-7 col-md-6 col-lg-4">
+                        <button class="btn btn-outline-success" type="submit">Salvar</button>
+                        <button class="btn btn-danger" type="button" (click)="deleteProject()"
+                            [ngStyle]="{'display': newProj ? 'none' : 'inline-block' }">Excluir</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <!-- Text editor -->
+                        <editor apiKey="o3i6lurtf2tfz1lcc7x48d1kyium2fjgo3fjsgz5utdjm5hu" [init]="{
                         height: 500,
                         menubar: false,
                         plugins: [
@@ -31,15 +36,15 @@
                         alignleft aligncenter alignright alignjustify | \
                         bullist numlist outdent indent | removeformat | help'
                     }" [(ngModel)]="projContent" name="content">{{ projContent }}</editor>
-                <!-- <angular-editor placeholder="Digite aqui..." [config]="editorConfig" name="content"
-                    [(ngModel)]="projContent"></angular-editor> -->
+                    </div>
+                </div>
             </div>
         </form>
 
     </div>
 
     <!-- Navigate page and contributors -->
-    <div class="col-md-4 aside-content">
+    <div class="col-sm-3 col-md-3 col-lg-3 aside-content">
         <button class="btn btn-bouman" (click)="myProjects()">Meus projetos</button>
 
         <span>Pessoas neste projeto: </span>
