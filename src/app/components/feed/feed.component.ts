@@ -67,8 +67,10 @@ export class FeedComponent implements OnInit, OnDestroy {
         }
 
         // In pratical terms, you "follow yourself", but not in the database, only in the attribute
-        this.profilesFollowing.push(this.profileId as string);
-
+        if (!this.profilesFollowing.includes(this.profileId as string)) {
+          this.profilesFollowing.push(this.profileId as string);
+        }
+      
         // Interating over each profile followed
         this.profilesFollowing.forEach(profile => {
           
