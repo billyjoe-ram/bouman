@@ -19,7 +19,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public feedPosts: { profileId: string, posts: any[] }[] = [];
 
-  private profileId!: string | undefined;
+  public profileId!: string | undefined;
 
   private userSubs!: Subscription;
 

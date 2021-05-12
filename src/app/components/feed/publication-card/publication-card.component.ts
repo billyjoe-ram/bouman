@@ -16,6 +16,8 @@ export class PublicationCardComponent implements OnInit {
 
   @Input('profileId') public profileId: string = "";
 
+  @Input('userProfile') public userProfile: string | undefined = "";
+
   public profileName: any = "";  
 
   public profileImg: string = "";
@@ -53,8 +55,8 @@ export class PublicationCardComponent implements OnInit {
     this.sMDisabled = !this.sMDisabled;
   }
 
-  onLikePost(post: string) {
-    this.post.likePost(this.publication.profileId, post);
+  async onLikePost(post: Post) {
+    this.post.likePost(post, this.userProfile);
   }
 
   ngOnDestroy() {

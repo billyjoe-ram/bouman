@@ -10,7 +10,7 @@ import { UsersService } from './users.service';
   providedIn: 'root'
 })
 export class PostsService {
-  private publication: {profileId: string, content: string} = { profileId:"", content:"" };
+  private publication: Post = { content: "", profileId:"", likes: [] };
 
   private postsCollection = this.store.collection('Profiles');
 
@@ -48,7 +48,7 @@ export class PostsService {
       { profileId: profileId,
         content: content,
         publishedAt: new Date(),
-        likes: 0
+        likes: []
       });
 
     const post = newPost.update({ postId: newPost.id });
@@ -68,9 +68,25 @@ export class PostsService {
     return deletedProj;
   }
 
-  likePost(profileId: string | undefined, postId: string) {
+  likePost(post: Post, profileId: string | undefined) {
+    let likes: string[] = post.likes;
+
     // Going inside the profile posts
-    console.log("Can't like projet " + postId + " rigth now, " + profileId);
+    const userPosts = this.postsCollection.doc(post.profileId).collection('Posts');
+
+    if (likes.includes(profileId as string)) {
+      likes = likes.filter(element => {
+        return element != profileId
+      });
+    } else {
+      likes.push(profileId as string);
+    }
+
+    // Updating a project
+    const updatedProj = userPosts.doc(post.postId).update({ likes: likes });
+    
+    // Returning the process promise
+    return updatedProj;
   }
 
   async searchingProfiles(input:string){
