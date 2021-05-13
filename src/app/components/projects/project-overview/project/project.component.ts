@@ -14,6 +14,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   @ViewChild('projForm') projForm!: NgForm;
   @ViewChild('articleStructure') article!: ElementRef;
+  @ViewChild('modalTrigger') modalTrigger!: ElementRef;
   
   public projTitle: string = "";
 
@@ -29,6 +30,24 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   public editorText: string = "";
 
   public newProj: boolean = false;
+
+  public tinyConfig = {
+    height: 500,
+    menubar: false,
+    plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table paste code help wordcount'
+    ],
+    toolbar:
+    'undo redo | formatselect | bold italic backcolor | \
+    alignleft aligncenter alignright alignjustify | \
+    bullist numlist outdent indent | removeformat | help',
+    language: 'pt_BR',
+    directionality : 'ltr'
+  };
+
+  public errorState: boolean = false;
 
   private projectWorkingPart: string = "";
   
@@ -56,26 +75,30 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     const date = new Date();    
 
     const submitted = this.projForm.value;
-    
-    if (this.newProj) {
-      const projContent = this.projectWorkingPart;
 
-      this.projContent[projContent] = this.projForm.value.content;
-
-      const project = { ownerId: user?.uid, title: submitted.title, content: this.projContent, createdAt: date};
-
-      this.docServ.addProject(project).then(() => {
-        this.myProjects();
-      });
+    if (submitted.title.trim() && submitted.content.trim()) {
+      if (this.newProj) {
+        const projContent = this.projectWorkingPart;
+  
+        this.projContent[projContent] = this.projForm.value.content;
+  
+        const project = { ownerId: user?.uid, title: submitted.title, content: this.projContent, createdAt: date};
+  
+        this.docServ.addProject(project).then(() => {
+          this.myProjects();
+        });
+      } else {
+        const projContent = this.projectWorkingPart;
+  
+        this.projContent[projContent] = this.projForm.value.content;
+  
+        const project = { title: submitted.title, content: this.projContent };
+  
+        this.docServ.updateProject(docId, project);
+      }
     } else {
-      const projContent = this.projectWorkingPart;
-
-      this.projContent[projContent] = this.projForm.value.content;
-
-      const project = { title: submitted.title, content: this.projContent };
-
-      this.docServ.updateProject(docId, project);
-    }
+      this.modalTrigger.nativeElement.click();
+    }  
     
   }
 

@@ -10,3 +10,8 @@ editor {
 .aside-content strong {
     margin: 1rem 0 ;
 }
+
+.modal-content .modal-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
