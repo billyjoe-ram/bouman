@@ -2,10 +2,10 @@ export interface ProjectContent {
     
     [key: string]: string;
 
-    intro: string,
-    obj: string,
-    metod: string,
-    result: string,
-    cons: string,
-    ref: string
+    aIntro: string,
+    bObj: string,
+    cMetod: string,
+    dResult: string,
+    eCons: string,
+    fRef: string
 }

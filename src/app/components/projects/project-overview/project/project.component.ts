@@ -18,12 +18,12 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   public projTitle: string = "";
 
   public projContent: ProjectContent = {
-    intro: "",
-    obj: "",
-    metod: "",
-    result: "",
-    cons: "",
-    ref: ""
+    aIntro: "",
+    bObj: "",
+    cMetod: "",
+    dResult: "",
+    eCons: "",
+    fRef: ""
   };
 
   public editorText: string = "";
@@ -57,7 +57,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     const submitted = this.projForm.value;
     
-    if (docId === 'new') {
+    if (this.newProj) {
       const projContent = this.projectWorkingPart;
 
       this.projContent[projContent] = this.projForm.value.content;
@@ -101,14 +101,21 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     const docId: string = this.route.snapshot.params['id'];
 
     // Preventing loading in new projects
-    if (docId !== "new") {
+    if (!this.newProj) {
       this.docServ.listProject(docId).then((project) => {
         project.forEach(query => {
           this.projContent = query.data().content;
 
           this.projForm.setValue({'title': query.data().title, 'content': this.projContent })
         });
+
+        this.editorText = "";
+
+        for (let key in this.projContent) {
+          this.editorText += this.projContent[key];
+        }
       });
+      
     }
         
   }
@@ -146,10 +153,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     const docId = this.route.snapshot.params['id'];
 
     this.docServ.deleteProject(docId).then(() => {
-      console.log('Deleted!');
-    }).finally(() => {
       this.myProjects();
-    });;    
+    });
   }
 
   myProjects() {    
