@@ -7,6 +7,8 @@
     <div class="col-md-6">
       <!-- form to edit profile -->
       <form (ngSubmit)="onSubmit(profConfForm)" #profConfForm="ngForm" id="backForm">
+        <h2 id="title">Altere os dados do seu perfil:</h2> 
+        <hr/>
         <div class="form-group">
           <label for="name">Seu nome</label>
           <input type="text" class="form-control" id="name" name="name" [(ngModel)]="user.name">
