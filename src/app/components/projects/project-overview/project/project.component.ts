@@ -125,22 +125,22 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     switch (projPart.trim()) {
       case "Introdução":
-        contentKey = "intro";
+        contentKey = "aIntro";
       break;
       case "Objetivos":
-        contentKey = "obj";
+        contentKey = "bObj";
       break;
       case "Metodologia":
-        contentKey = "metod";
+        contentKey = "cMetod";
       break;
       case "Resultados":
-        contentKey = "result";
+        contentKey = "dResult";
       break;
       case "Considerações":
-        contentKey = "cons";
+        contentKey = "eCons";
       break;
       case "Referências":
-        contentKey = "ref";
+        contentKey = "fRef";
       break;
     }
 
