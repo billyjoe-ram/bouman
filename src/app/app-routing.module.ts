@@ -12,10 +12,12 @@ import { ProjectOverviewComponent } from './components/projects/project-overview
 import { ProjectComponent } from './components/projects/project-overview/project/project.component';
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { TermsComponent } from './components/terms/terms.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },
   { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
+  { path: 'terms', component: TermsComponent },
   { path: 'signup', component: SignupComponent, canActivate: [LoginGuard] },
   { path: 'config',  component: ConfigurateComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
