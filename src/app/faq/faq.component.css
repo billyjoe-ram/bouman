@@ -11,7 +11,7 @@ h1{
 }
 .card-header{
     display: flex;
-    background-color: #fa912e50;
+    background-color: rgb(250, 144, 46, 0.3);
 }
 .card-header h2{
     font-size: 1.4rem;
@@ -34,4 +34,15 @@ h1{
 }
 .card-body p{
     font-size: 1.1rem;
+}
+
+.card-body ul li{
+    font-size: 1.2rem;
+    font-weight: bold;
+    list-style: circle;
+    margin-top: 2%;
+}
+
+.bold{
+    font-weight: bold;
 }
