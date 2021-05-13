@@ -1,6 +1,6 @@
 .card {
     width: 20vw;
-    height: 38vh;
+    height: fit-content;
     max-height: 38vh;
 }
 
@@ -28,4 +28,13 @@
 
 .card .card-body .social-network-item {
     margin: 0.25rem 0;
+}
+
+.modal-footer{
+    justify-content: space-between;
+}
+
+.modal-body label{
+    font-weight: bold;
+    margin: 2% 0 1% 1%;
 }
