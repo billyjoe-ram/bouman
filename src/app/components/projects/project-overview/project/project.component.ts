@@ -1,11 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Project } from 'src/app/interfaces/project';
 import { AuthService } from 'src/app/services/auth.service';
 import { DocsService } from 'src/app/services/docs.service';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { ProjectContent } from 'src/app/interfaces/projectContent';
 
 @Component({
   selector: 'app-project',
@@ -19,9 +17,20 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   
   public projTitle: string = "";
 
-  public projContent: string = "";
+  public projContent: ProjectContent = {
+    intro: "",
+    obj: "",
+    metod: "",
+    result: "",
+    cons: "",
+    ref: ""
+  };
+
+  public editorText: string = "";
 
   public newProj: boolean = false;
+
+  private projectWorkingPart: string = "";
   
   constructor(private docServ: DocsService, private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
 
@@ -44,23 +53,29 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   async onSubmit() {
     const user = await this.auth.getAuth().currentUser;
     const docId = this.route.snapshot.params['id'];
-    const date = new Date();
+    const date = new Date();    
 
     const submitted = this.projForm.value;
     
     if (docId === 'new') {
-      const project = { ownerId: user?.uid, title: submitted.title, content: submitted.content, createdAt: date};
+      const projContent = this.projectWorkingPart;
+
+      this.projContent[projContent] = this.projForm.value.content;
+
+      const project = { ownerId: user?.uid, title: submitted.title, content: this.projContent, createdAt: date};
 
       this.docServ.addProject(project).then(() => {
         this.myProjects();
       });
     } else {
-      const project = { title: submitted.title, content: submitted.content };
+      const projContent = this.projectWorkingPart;
 
-      this.docServ.updateProject(docId, project).then(() => {
-        this.myProjects();
-      });
-    }    
+      this.projContent[projContent] = this.projForm.value.content;
+
+      const project = { title: submitted.title, content: this.projContent };
+
+      this.docServ.updateProject(docId, project);
+    }
     
   }
 
@@ -75,25 +90,56 @@ export class ProjectComponent implements OnInit, AfterViewInit {
         key.addEventListener("click", (event: any) => {
           let projPart = event.target.innerHTML;
 
-          this.loadProjectPart(projPart);
+          this.projectWorkingPart = this.loadProjectPart(projPart);
         });
       }
       
     }
   }
 
-
   loadProject() {
     const docId: string = this.route.snapshot.params['id'];
-    this.docServ.listProject(docId).then((project) => {
-      project.forEach(query => {
-        this.projForm.setValue({'title':query.data().title, 'content':query.data().content})
+
+    // Preventing loading in new projects
+    if (docId !== "new") {
+      this.docServ.listProject(docId).then((project) => {
+        project.forEach(query => {
+          this.projContent = query.data().content;
+
+          this.projForm.setValue({'title': query.data().title, 'content': this.projContent })
+        });
       });
-    });
+    }
+        
   }
 
-  loadProjectPart(projPart: string) {
-    this.projForm.setValue({'title': this.projTitle, 'content': projPart })
+  loadProjectPart(projPart: string): string {
+    let contentKey: string = "";
+
+    switch (projPart.trim()) {
+      case "Introdução":
+        contentKey = "intro";
+      break;
+      case "Objetivos":
+        contentKey = "obj";
+      break;
+      case "Metodologia":
+        contentKey = "metod";
+      break;
+      case "Resultados":
+        contentKey = "result";
+      break;
+      case "Considerações":
+        contentKey = "cons";
+      break;
+      case "Referências":
+        contentKey = "ref";
+      break;
+    }
+
+    this.editorText = this.projContent[contentKey];
+
+    return contentKey;
   }
 
   deleteProject() {
