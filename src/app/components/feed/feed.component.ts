@@ -99,11 +99,19 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.userSubs.unsubscribe();
+    // Unsubscribing only if subscription exists
+    if (this.userSubs) {
+      this.userSubs.unsubscribe();
+    }
 
-    this.profileSubs.unsubscribe();
+    if (this.profileSubs) {
+      this.profileSubs.unsubscribe();
+    }
 
-    this.postsSubs.unsubscribe();
+    if (this.postsSubs) {
+      this.postsSubs.unsubscribe();
+    }
+
   }
 
 }
