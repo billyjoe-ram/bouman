@@ -13,6 +13,17 @@
                 </div>
         
             </li>
+
+            <li class="list-group-item" *ngIf="!projects.length">
+                <div class="project-card">
+                    <div class="project-header">
+                        Nenhum projeto... ainda!
+                    </div>
+                    <div class="project-body">
+                        Parece que você ainda não começou a desenvolver seus projetos com o Bouman. Que tal começar hoje?
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
     
