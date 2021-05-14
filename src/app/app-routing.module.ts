@@ -26,8 +26,8 @@ const routes: Routes = [
   ] },
   { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
   { path: 'profiles/:profid', component: ProfilePageComponent, canActivate: [AuthGuard] },
-  { path: 'apoio', component: FaqComponent, canActivate: [AuthGuard] },
-  { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
+  { path: 'support', component: FaqComponent, canActivate: [AuthGuard] },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
