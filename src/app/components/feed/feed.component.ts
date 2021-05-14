@@ -18,10 +18,10 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public profilesFollowing: string[] = [];
 
-  public feedPosts: Post[] = [];
-
   public profileId!: string | undefined;
 
+  public feedPosts: { profileId: string, posts: Post[] }[] = [];
+  
   private userSubs!: Subscription;
 
   private profileSubs!: Subscription;
@@ -73,37 +73,47 @@ export class FeedComponent implements OnInit, OnDestroy {
       
         // Interating over each profile followed
         this.profilesFollowing.forEach(profile => {
+          // Passing to posts attribute this profile id and an empty array
+          this.feedPosts.push({ profileId: profile, posts: [] });
+
+          let profileIndex = this.profilesFollowing.indexOf(profile);
           
           // For this profile (brought by iteration), bring its posts and add in the object array
           this.postsSubs = this.posts.listProfilePosts(profile).subscribe((profilePost: any) => {
             // Pushing each post object feed conten array
-            this.feedPosts.push(...(profilePost as Post[]));
+            this.feedPosts[profileIndex].posts = profilePost;
 
             // Ordering by date
-            this.feedPosts.sort((a: any, b: any) => {
-
+            this.feedPosts[profileIndex].posts.sort((a: any, b: any) => {
               return a.publishedAt.seconds - b.publishedAt.seconds;
-            }).reverse();
+            }).reverse();                        
           });
 
           // Removing duplicates by postId
-          this.feedPosts = this.feedPosts.filter(element => {
-            return element.postId != element.postId;
-          });
+          // this.feedPosts = this.feedPosts.filter(element => {
+          //   return element.postId != element.postId;
+          // });
 
         });
-        
       });
       
     });    
   }
 
   ngOnDestroy() {
-    this.userSubs.unsubscribe();
+    // Unsubscribing only if subscription exists
+    if (this.userSubs) {
+      this.userSubs.unsubscribe();
+    }
 
-    this.profileSubs.unsubscribe();
+    if (this.profileSubs) {
+      this.profileSubs.unsubscribe();
+    }
 
-    this.postsSubs.unsubscribe();
+    if (this.postsSubs) {
+      this.postsSubs.unsubscribe();
+    }
+
   }
 
 }

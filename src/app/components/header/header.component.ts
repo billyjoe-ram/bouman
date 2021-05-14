@@ -35,9 +35,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.profile.unsubscribe();
-
-    this.userSubs.unsubscribe();
+    if (this.profile) {
+      this.profile.unsubscribe();
+    }
+    
+    if(this.userSubs) {
+      this.userSubs.unsubscribe();
+    }    
   }
 
   onSelect(feature: string) {

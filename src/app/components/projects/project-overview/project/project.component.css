@@ -1,8 +1,17 @@
+editor {
+    margin-top: 1.25rem;
+}
+
 .aside-content {
     display: flex;
     flex-direction: column;    
 }
 
-.aside-content span {
+.aside-content strong {
     margin: 1rem 0 ;
+}
+
+.modal-content .modal-header {
+    font-size: 1.8rem;
+    font-weight: bold;
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Project } from '../interfaces/project';
+import { ProjectContent } from '../interfaces/projectContent';
 import { User } from '../interfaces/user';
 import { AuthService } from './auth.service';
 
@@ -72,7 +73,7 @@ export class DocsService {
   }
 
   // Update a project in your user's subcollection
-  async updateProject(id: string, project: { title: string, content: string }) {
+  async updateProject(id: string, project: { title: string, content: ProjectContent }) {
     // Current user object
     const owner = await this.auth.getAuth().currentUser;
 
