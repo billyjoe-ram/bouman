@@ -12,7 +12,7 @@ import { ProjectOverviewComponent } from './components/projects/project-overview
 import { ProjectComponent } from './components/projects/project-overview/project/project.component';
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { FaqComponent } from './faq/faq.component';
+import { FaqComponent } from './components/faq/faq.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },

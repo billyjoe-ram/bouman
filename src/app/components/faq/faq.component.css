@@ -4,7 +4,6 @@ h1{
 .card{
     margin: 2% auto;
     filter: drop-shadow(0px 6px 5px rgba(0, 0, 0, 0.3));  
-    border: none;
 }
 .card, .card-header, .card-body{
     border: none;
@@ -31,18 +30,49 @@ h1{
 }
 .card-body{
     background-color: rgb(0, 0, 0, 0.1);
+    padding: 3% 7%;
 }
 .card-body p{
     font-size: 1.1rem;
 }
 
 .card-body ul li{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    list-style: circle;
     margin-top: 2%;
+    text-decoration: underline;
+}
+
+.card-body ul{
+    list-style: none;
+    padding: 0;
 }
 
 .bold{
     font-weight: bold;
 }
+
+.card-body a{
+    color: #df660f;
+    text-decoration: none;
+}
+
+.card-body a:hover{
+    color: #2ca8ba;
+    text-decoration: underline;
+}
+
+.listItem{
+    display: block;
+    padding-left: 2%;
+}
+
+.margin{
+    margin-top: 2%;
+}
+
+#email{
+    color: #df660f;
+    text-decoration: underline;
+    font-size: 1.1rem;
+}   
