@@ -35,6 +35,7 @@ import { environment } from 'src/environments/environment.prod';
 import { registerLocaleData } from '@angular/common';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ContactComponent } from './components/profile-page/contact/contact.component';
+import { FaqComponent } from './components/faq/faq.component';
 
 registerLocaleData(ptBR);
 
@@ -57,6 +58,7 @@ registerLocaleData(ptBR);
     ProfileConfigComponent,
     NotFoundComponent,
     ContactComponent,
+    FaqComponent,
   ],
   imports: [
     BrowserModule,

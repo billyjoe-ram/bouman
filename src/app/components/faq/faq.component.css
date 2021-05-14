@@ -1,0 +1,78 @@
+h1{
+    font-size: 2rem;
+}
+.card{
+    margin: 2% auto;
+    filter: drop-shadow(0px 6px 5px rgba(0, 0, 0, 0.3));  
+}
+.card, .card-header, .card-body{
+    border: none;
+}
+.card-header{
+    display: flex;
+    background-color: rgb(250, 144, 46, 0.3);
+}
+.card-header h2{
+    font-size: 1.4rem;
+    font-weight: normal;
+    padding-left: 1%;
+    margin: auto 0;
+    color: #3a3a3a;
+}
+.card-header h2:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.card-header span{
+    font-size: 1.1rem;
+    color: #2ca8ba;
+    margin: auto 0;
+}
+.card-body{
+    background-color: rgb(0, 0, 0, 0.1);
+    padding: 3% 7%;
+}
+.card-body p{
+    font-size: 1.1rem;
+}
+
+.card-body ul li{
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 2%;
+    text-decoration: underline;
+}
+
+.card-body ul{
+    list-style: none;
+    padding: 0;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.card-body a{
+    color: #df660f;
+    text-decoration: none;
+}
+
+.card-body a:hover{
+    color: #2ca8ba;
+    text-decoration: underline;
+}
+
+.listItem{
+    display: block;
+    padding-left: 2%;
+}
+
+.margin{
+    margin-top: 2%;
+}
+
+#email{
+    color: #df660f;
+    text-decoration: underline;
+    font-size: 1.1rem;
+}   
