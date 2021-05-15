@@ -4,11 +4,29 @@ editor {
 
 .aside-content {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
 }
 
 .aside-content strong {
     margin: 1rem 0 ;
+}
+
+/* Changing default bootstrap background color for active item */
+.list-group .list-group-item.active {
+    border-color: #eee;
+    background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
+}
+
+/* Resume must be a visually separated item from list */
+.list-group .list-group-item#resume {
+    margin-bottom: 1rem;
+    border-radius: inherit;
+}
+
+/* Aplying styles in the second item as a first item */
+.list-group .list-group-item:nth-child(2) {
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: inherit;
 }
 
 .modal-content .modal-header {
