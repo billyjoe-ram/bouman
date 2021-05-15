@@ -19,12 +19,13 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   public projTitle: string = "";
 
   public projContent: ProjectContent = {
-    aIntro: "",
-    bObj: "",
-    cMetod: "",
-    dResult: "",
-    eCons: "",
-    fRef: ""
+    aResum: "",
+    bIntro: "",
+    cObj: "",
+    dMetod: "",
+    eResult: "",
+    fCons: "",
+    gRef: ""
   };
 
   public editorText: string = "";
@@ -147,23 +148,26 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     // Loading the project part selected
     switch (projPart.trim()) {
+      case "Resumo":
+        this.contentKey = "aResum";
+      break;
       case "Introdução":
-        this.contentKey = "aIntro";
+        this.contentKey = "bIntro";
       break;
       case "Objetivos":
-        this.contentKey = "bObj";
+        this.contentKey = "cObj";
       break;
       case "Metodologia":
-        this.contentKey = "cMetod";
+        this.contentKey = "dMetod";
       break;
       case "Resultados":
-        this.contentKey = "dResult";
+        this.contentKey = "eResult";
       break;
       case "Considerações":
-        this.contentKey = "eCons";
+        this.contentKey = "fCons";
       break;
       case "Referências":
-        this.contentKey = "fRef";
+        this.contentKey = "gRef";
       break;
     }
 
@@ -219,7 +223,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     const orderedKeys = Object.keys(this.projContent).sort();
 
     // Creating a new Object: ProjectCotent
-    const orderedObject: ProjectContent = { aIntro: "", bObj: "", cMetod: "", dResult: "", eCons: "", fRef: "" };
+    const orderedObject: ProjectContent = { aResum: "", bIntro: "", cObj: "", dMetod: "", eResult: "", fCons: "", gRef: "" };
 
     // For each ordered key, in their order, get the value from the same key of projContent
     orderedKeys.forEach((key) => {
