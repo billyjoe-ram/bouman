@@ -5,5 +5,6 @@ export interface Project {
     docId?: string | undefined;
     title: string;
     content: ProjectContent;
-    createdAt: Date;
+    createdAt?: Date;
+    lastEdit: Date;
 }

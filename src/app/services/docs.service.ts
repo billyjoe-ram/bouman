@@ -73,7 +73,7 @@ export class DocsService {
   }
 
   // Update a project in your user's subcollection
-  async updateProject(id: string, project: { title: string, content: ProjectContent }) {
+  async updateProject(id: string, project: { title: string, content: ProjectContent, lastEdit: Date }) {
     // Current user object
     const owner = await this.auth.getAuth().currentUser;
 
@@ -82,7 +82,7 @@ export class DocsService {
 
     const oldDoc = userCollec.collection<Project>('Projects').doc(id);
 
-    const updatedDoc = await oldDoc.update({ title: project.title, content: project.content });
+    const updatedDoc = await oldDoc.update({ title: project.title, content: project.content, lastEdit: project.lastEdit });
 
     return updatedDoc;
   }
