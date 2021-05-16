@@ -39,7 +39,7 @@ export class PostsService {
     return posts;
   }
 
-  async addPost(profileId: string | undefined, content: Post) {
+  async addPost(profileId: string | undefined, content: string) {
     // Going inside the profile posts
     const userPosts = this.postsCollection.doc(profileId).collection('Posts');
 

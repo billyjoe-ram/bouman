@@ -34,3 +34,8 @@ content span {
 .card-footer {
     justify-content: flex-end;
 }
+
+.modal-content .modal-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
