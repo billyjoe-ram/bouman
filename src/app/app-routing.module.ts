@@ -21,8 +21,9 @@ const routes: Routes = [
   { path: 'config',  component: ConfigurateComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard], children: [
+  { path: '',  redirectTo: 'overview', pathMatch: 'full'},
   { path: 'overview', component: ProjectOverviewComponent },
-  { path: ':id', component: ProjectComponent }
+  { path: ':id', component: ProjectComponent },  
   ] },
   { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
   { path: 'profiles/:profid', component: ProfilePageComponent, canActivate: [AuthGuard] },
