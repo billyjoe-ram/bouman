@@ -2,7 +2,9 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { FormsModule, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
+import { Project } from 'src/app/interfaces/project';
 import { AuthService } from 'src/app/services/auth.service';
+import { DocsService } from 'src/app/services/docs.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -14,7 +16,9 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class FeedComponent implements OnInit, OnDestroy {
 
-  @ViewChild('modalTrigger') modalTrigger!: ElementRef;
+  @ViewChild('errorModalTrigger') errorModalTrigger!: ElementRef;
+  
+  @ViewChild('projectsModalTrigger') projectsModalTrigger!: ElementRef;
   
   public content: string = "";
 
@@ -24,6 +28,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public feedPosts: { profileId: string, posts: Post[] }[] = [];
 
+  public userProjects: Project[] = []
+
   public errorMsg: string = "";
   
   private userSubs!: Subscription;
@@ -32,11 +38,14 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   private postsSubs!: Subscription;
 
+  private docSubs!: Subscription;
+
   constructor(
     private auth: AuthService,
     private posts: PostsService,
     private user: UsersService,
-    private profile: ProfileService) { }
+    private profile: ProfileService,
+    private docs: DocsService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -110,6 +119,29 @@ export class FeedComponent implements OnInit, OnDestroy {
     });    
   }
 
+  importProject() {
+    // Reset the array
+    this.userProjects = [];
+
+    this.docs.listProjects().then((projects) => {
+      // Retrieving user projects
+      projects.forEach((project) => {
+        // Add to the array
+        this.userProjects.push(project.data());
+      });
+    });
+
+    // Triggering modal
+    this.projectsModalTrigger.nativeElement.click();
+  }
+
+  handleError(errorMsg: string) {
+    
+    this.errorMsg = errorMsg;
+    
+    this.errorModalTrigger.nativeElement.click();
+  }
+
   ngOnDestroy() {
     // Unsubscribing only if subscription exists
     if (this.userSubs) {
@@ -124,12 +156,6 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.postsSubs.unsubscribe();
     }
 
-  }
-
-  handleError(errorMsg: string) {
-    this.errorMsg = errorMsg;
-    
-    this.modalTrigger.nativeElement.click();
-  }
+  }  
 
 }

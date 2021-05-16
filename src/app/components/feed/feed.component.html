@@ -10,9 +10,9 @@
                 <div class="form-group">
                     <div class="card">
                         <div class="card-header">
-                            <!-- <button class="btn btn-bouman-primary">Imagem</button>
-                            <button class="btn btn-bouman-primary">Enquete</button>
-                            <button class="btn btn-bouman-primary">Importar projeto</button> -->
+                            <!-- <button class="btn btn-bouman-primary">Imagem</button> -->
+                            <!-- <button class="btn btn-bouman-primary">Enquete</button> -->
+                            <button class="btn btn-bouman-primary" type="button" (click)="importProject()">Importar projeto</button>
                         </div>
 
                         <div class="card-body">
@@ -46,8 +46,32 @@
     </div>   
 </div>
 
-<!-- Modal Trigger -->
-<button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#errorModal" hidden #modalTrigger></button>
+<!-- Projects Modal Trigger -->
+<button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectsModalTrigger" hidden #projectsModalTrigger></button>
+<!-- Projects display -->
+<div class="modal fade" id="projectsModalTrigger" tabindex="-1" role="dialog" aria-labelledby="projectsModalTriggerLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Seu projeto
+            </div>
+            <div class="modal-body">
+                <div class="list-group">
+                    <div class="list-group-item" *ngFor="let project of userProjects">
+                        {{ project.title }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-bouman" data-dismiss="modal">Cancela</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Error Modal Trigger -->
+<button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#errorModal" hidden #errorModalTrigger></button>
 <!-- Error message -->
 <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
     aria-hidden="true">
