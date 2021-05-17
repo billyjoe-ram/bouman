@@ -1,7 +1,7 @@
 export interface PostedProject {
     content: string,
-    profileId: string,
+    profileId: string | undefined,
     likes: string[],
     publishedAt: Date,
-    projectId: string
+    projectId?: string
 }

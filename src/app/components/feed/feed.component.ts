@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DocsService } from 'src/app/services/docs.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { ProjectsService } from 'src/app/services/projects.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -54,7 +55,8 @@ export class FeedComponent implements OnInit, OnDestroy {
     private posts: PostsService,
     private user: UsersService,
     private profile: ProfileService,
-    private docs: DocsService) { }
+    private docs: DocsService,
+    private projects: ProjectsService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -172,8 +174,48 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   }
 
-  handleError(errorMsg: string) {
+  postProject() {
+    if(this.selectedProjectText.length) {
+      this.projects.addProject(this.profileId, this.selectedProjectText.join(' '));
+    } else {
+      this.handleError("Selecione pelo menos uma parte do projeto...");
+    }
     
+  }
+
+  loadProjectPart(projPart: string): string {
+    let contentKey = projPart;
+
+    // Loading the project part selected
+    switch (projPart.trim()) {
+      case "Resumo":
+        contentKey = "aResum";
+      break;
+      case "Introdução":
+        contentKey = "bIntro";
+      break;
+      case "Objetivos":
+        contentKey = "cObj";
+      break;
+      case "Metodologia":
+        contentKey = "dMetod";
+      break;
+      case "Resultados":
+        contentKey = "eResult";
+      break;
+      case "Considerações":
+        contentKey = "fCons";
+      break;
+      case "Referências":
+        contentKey = "gRef";
+      break;
+    }
+
+    // Return the value of the key
+    return contentKey;
+  }
+
+  handleError(errorMsg: string) {
     this.errorMsg = errorMsg;
     
     this.errorModalTrigger.nativeElement.click();
@@ -252,38 +294,6 @@ export class FeedComponent implements OnInit, OnDestroy {
       }
       
     }
-  }
-
-  loadProjectPart(projPart: string): string {
-    let contentKey = projPart;
-
-    // Loading the project part selected
-    switch (projPart.trim()) {
-      case "Resumo":
-        contentKey = "aResum";
-      break;
-      case "Introdução":
-        contentKey = "bIntro";
-      break;
-      case "Objetivos":
-        contentKey = "cObj";
-      break;
-      case "Metodologia":
-        contentKey = "dMetod";
-      break;
-      case "Resultados":
-        contentKey = "eResult";
-      break;
-      case "Considerações":
-        contentKey = "fCons";
-      break;
-      case "Referências":
-        contentKey = "gRef";
-      break;
-    }
-
-    // Return the value of the key
-    return contentKey;
   }
 
 }

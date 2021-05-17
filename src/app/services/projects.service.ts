@@ -38,13 +38,14 @@ export class ProjectsService {
     return projects;
   }
 
-  async addProject(profileId: string | undefined, content: ProjectContent) {
+  async addProject(profileId: string | undefined, content: string) {
     // Going inside the profile projects
-    const userProjects = this.profilesCollection.doc(profileId).collection('Projects');
+    const userProjects = this.profilesCollection.doc(profileId).collection<PostedProject>('Projects');
 
     // Adding a new projects
     const newProject = await userProjects.add(
-      { profileId: profileId,
+      {
+        profileId: profileId,
         content: content,
         publishedAt: new Date(),
         likes: []
