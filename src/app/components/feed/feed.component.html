@@ -12,7 +12,8 @@
                         <div class="card-header">
                             <!-- <button class="btn btn-bouman-primary">Imagem</button> -->
                             <!-- <button class="btn btn-bouman-primary">Enquete</button> -->
-                            <button class="btn btn-bouman-primary" type="button" (click)="importProject()">Importar projeto</button>
+                            <button class="btn btn-bouman-primary" type="button" (click)="importProject()">Importar
+                                projeto</button>
                         </div>
 
                         <div class="card-body">
@@ -37,20 +38,21 @@
                     <publication-card [profileId]="post.profileId" [userProfile]="this.profileId" [publication]="post" ></publication-card>
                 </div> -->
             </div>
-            
+
             <!-- Showing if there're no posts -->
             <div *ngIf="!feedPosts">
                 <span>Crie uma postagem ou siga alguém para começar!</span>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
 
 <!-- Projects Modal Trigger -->
-<button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectsModalTrigger" hidden #projectsModalTrigger></button>
+<button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectsModalTrigger" hidden
+    #projectsModalTrigger></button>
 <!-- Projects display -->
-<div class="modal fade" id="projectsModalTrigger" tabindex="-1" role="dialog" aria-labelledby="projectsModalTriggerLabel"
-    aria-hidden="true">
+<div class="modal fade" id="projectsModalTrigger" tabindex="-1" role="dialog"
+    aria-labelledby="projectsModalTriggerLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -58,15 +60,18 @@
             </div>
             <div class="modal-body">
                 <div class="list-group" role="tablist">
-                    <div class="list-group-item" data-toggle="list" *ngFor="let project of userProjects" (click)="selectProject(project)">
+                    <div class="list-group-item" data-toggle="list" *ngFor="let project of userProjects"
+                        (click)="selectProject(project)">
                         {{ project.title }}
-                    </div>                    
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="submit" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="submit" class="btn btn-outline-secondary"
+                    data-dismiss="modal">Cancelar</button>
                 <!-- Projects Options Trigger -->
-                <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectOptions" data-dismiss="modal" (click)="showProject()">Confirmar</button>
+                <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectOptions"
+                    data-dismiss="modal" (click)="showProject()">Confirmar</button>
             </div>
         </div>
     </div>
@@ -80,17 +85,84 @@
             <div class="modal-header">
                 {{ selectedProject.title }}
             </div>
-            <div class="modal-body" #selectedProjectContent></div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Checkboxes -->
+                    <div class="col-sm-6 col-md-6 col-lg-6" #checkBoxes>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="resumo">
+                            <label class="form-check-label" for="resumo">
+                                Resumo
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="intro">
+                            <label class="form-check-label" for="intro">
+                                Introdução
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="objs">
+                            <label class="form-check-label" for="objs">
+                                Objetivos
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="metods">
+                            <label class="form-check-label" for="metods">
+                                Metodologia
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="results">
+                            <label class="form-check-label" for="results">
+                                Resultados
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="consd">
+                            <label class="form-check-label" for="consd">
+                                Considerações
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="refers">
+                            <label class="form-check-label" for="refers">
+                                Referências
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Chapter view -->
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <form>
+                            <div class="form-group">
+                                <label for="projectPart">Capítulo</label>
+                                <textarea id="projectPart" class="form-control" readonly #selectedProjectContentclas> {{ selectedProject.content }} </textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="modal-footer">
-                <button type="button" id="submit" class="btn btn-outline-secondary" data-dismiss="modal">Cancela</button>
-                <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectOptions" data-dismiss="modal">Confirmar</button>
+                <button type="button" id="submit" class="btn btn-outline-secondary"
+                    data-dismiss="modal">Cancela</button>
+                <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectOptions"
+                    data-dismiss="modal">Confirmar</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Error Modal Trigger -->
-<button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#errorModal" hidden #errorModalTrigger></button>
+<button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#errorModal" hidden
+    #errorModalTrigger></button>
 <!-- Error message -->
 <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
     aria-hidden="true">
@@ -103,8 +175,7 @@
                 {{ errorMsg }}
             </div>
             <div class="modal-footer">
-                <button type="button" id="submit" class="btn btn-bouman"
-                    data-dismiss="modal">OK</button>
+                <button type="button" id="submit" class="btn btn-bouman" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>

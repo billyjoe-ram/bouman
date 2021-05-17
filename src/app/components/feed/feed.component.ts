@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
@@ -22,6 +22,8 @@ export class FeedComponent implements OnInit, OnDestroy {
   @ViewChild('projectsModalTrigger') projectsModalTrigger!: ElementRef;
 
   @ViewChild('selectedProjectContent') selectedProjectContent!: ElementRef;
+
+  @ViewChild('checkBoxes') checkBoxes!: ElementRef;
   
   public content: string = "";
 
@@ -151,18 +153,18 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   showProject() {
     // Selecting element
-    const divTag = this.selectedProjectContent.nativeElement;
+    const textArea = this.selectedProjectContent.nativeElement;
 
     // Clearing content
-    divTag.innerHTML = "";
+    textArea.innerHTML = "";
+
+    this.addEvents();
 
     // Ordering keys that were messed
     const orderedKeys = Object.keys(this.selectedProject.content).sort();
     
     // Creating a new Object: ProjectCotent
     const orderedObject: ProjectContent = { aResum: "", bIntro: "", cObj: "", dMetod: "", eResult: "", fCons: "", gRef: "" };
-    
-    console.log(this.selectedProject.content);
     
     // For each ordered key, in their order, get the value from the same key of projContent
     orderedKeys.forEach((key) => {
@@ -172,11 +174,9 @@ export class FeedComponent implements OnInit, OnDestroy {
     // With the copy now ordered and populated, pass it to projContent
     this.selectedProject.content = orderedObject;
 
-    console.log(this.selectedProject.content);
-
     // Adding text to modal
     for (let key in this.selectedProject.content) {
-      divTag.innerHTML += this.selectedProject.content[key];
+      textArea.innerHTML += this.selectedProject.content[key];
     }
 
   }
@@ -202,6 +202,69 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.postsSubs.unsubscribe();
     }
 
-  }  
+  }
+  
+  private addEvents() {
+    // Checking if the element was created
+    if (this.checkBoxes) {
+      // Getting the element itself
+      const checks = this.checkBoxes.nativeElement;
+      
+      // Getting its children
+      const checkControls = checks.children;
+
+      // For each .form-check, handle 
+      for (let control of checkControls) {
+        // Form check children
+        const controlChildren = control.children;
+
+        // Input label
+        const checkboxLabel = controlChildren[1];
+
+        const labelText = checkboxLabel.innerHTML;
+
+        console.log(labelText);
+
+        // key.addEventListener("click", (event: any) => {
+          // let projPart = event.target.innerHTML;
+
+          // this.projectWorkingPart = this.loadProjectPart(projPart);
+        // });
+      }
+      
+    }
+  }
+
+  loadProjectPart(projPart: string): string {
+    let contentKey = projPart;
+
+    // Loading the project part selected
+    switch (projPart.trim()) {
+      case "Resumo":
+        contentKey = "aResum";
+      break;
+      case "Introdução":
+        contentKey = "bIntro";
+      break;
+      case "Objetivos":
+        contentKey = "cObj";
+      break;
+      case "Metodologia":
+        contentKey = "dMetod";
+      break;
+      case "Resultados":
+        contentKey = "eResult";
+      break;
+      case "Considerações":
+        contentKey = "fCons";
+      break;
+      case "Referências":
+        contentKey = "gRef";
+      break;
+    }
+
+    // Return the value of the key
+    return contentKey;
+  }
 
 }
