@@ -41,6 +41,14 @@ content span {
     font-weight: bold;
 }
 
+.modal-content .modal-body form {
+    height: 100%;
+}
+
+.modal-content .modal-body .form-group, .modal-content .modal-body textarea {
+    height: 80%;
+}
+
 .modal-content .modal-body textarea {
     resize: none;
 }

@@ -37,6 +37,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public selectedProject!: any;
 
+  public selectedProjectText: string[] = [];
+
   public errorMsg: string = "";
   
   private userSubs!: Subscription;
@@ -153,10 +155,10 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   showProject() {
     // Selecting element
-    const textArea = this.selectedProjectContent.nativeElement;
+    // const textArea = this.selectedProjectContent.nativeElement;
 
     // Clearing content
-    textArea.innerHTML = "";
+    // textArea.innerHTML = "";
 
     this.addEvents();
 
@@ -175,9 +177,9 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.selectedProject.content = orderedObject;
 
     // Adding text to modal
-    for (let key in this.selectedProject.content) {
-      textArea.innerHTML += this.selectedProject.content[key];
-    }
+    // for (let key in this.selectedProject.content) {
+      // textArea.innerHTML += this.selectedProject.content[key];
+    // }
 
   }
 
@@ -218,18 +220,37 @@ export class FeedComponent implements OnInit, OnDestroy {
         // Form check children
         const controlChildren = control.children;
 
-        // Input label
-        const checkboxLabel = controlChildren[1];
+        // Input itself
+        const checkboxInput = controlChildren[0];
 
-        const labelText = checkboxLabel.innerHTML;
+        // Add a callback attached to click
+        checkboxInput.addEventListener("click", (event: any) => {
+          // Event target
+          let input = event.target;
 
-        console.log(labelText);
+          // Input label
+          const checkboxLabel = input.nextElementSibling;
 
-        // key.addEventListener("click", (event: any) => {
-          // let projPart = event.target.innerHTML;
+          // Label text
+          const labelText = checkboxLabel.innerHTML;
 
-          // this.projectWorkingPart = this.loadProjectPart(projPart);
-        // });
+          // Get selected working part
+          const workingPart = this.loadProjectPart(labelText);
+
+          // Verify checkbox
+          if (input.checked) {
+            // Add content if is checked
+            this.selectedProjectText.push(this.selectedProject.content[workingPart]);
+          } else {
+            // Remove content if it isn't checked
+            this.selectedProjectText = this.selectedProjectText.filter((element) => {
+              return element !== this.selectedProject.content[workingPart];
+            });
+          }
+
+          console.log(this.selectedProjectText);
+          
+        });
       }
       
     }
