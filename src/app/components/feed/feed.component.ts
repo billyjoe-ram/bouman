@@ -3,6 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
 import { Project } from 'src/app/interfaces/project';
+import { ProjectContent } from 'src/app/interfaces/projectContent';
 import { AuthService } from 'src/app/services/auth.service';
 import { DocsService } from 'src/app/services/docs.service';
 import { PostsService } from 'src/app/services/posts.service';
@@ -19,6 +20,8 @@ export class FeedComponent implements OnInit, OnDestroy {
   @ViewChild('errorModalTrigger') errorModalTrigger!: ElementRef;
   
   @ViewChild('projectsModalTrigger') projectsModalTrigger!: ElementRef;
+
+  @ViewChild('selectedProjectContent') selectedProjectContent!: ElementRef;
   
   public content: string = "";
 
@@ -28,7 +31,9 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public feedPosts: { profileId: string, posts: Post[] }[] = [];
 
-  public userProjects: Project[] = []
+  public userProjects: Project[] = [];
+
+  public selectedProject!: any;
 
   public errorMsg: string = "";
   
@@ -138,6 +143,42 @@ export class FeedComponent implements OnInit, OnDestroy {
 
     // Triggering modal
     this.projectsModalTrigger.nativeElement.click();
+  }
+
+  selectProject(project: Project) {
+    this.selectedProject = project;
+  }
+
+  showProject() {
+    // Selecting element
+    const divTag = this.selectedProjectContent.nativeElement;
+
+    // Clearing content
+    divTag.innerHTML = "";
+
+    // Ordering keys that were messed
+    const orderedKeys = Object.keys(this.selectedProject.content).sort();
+    
+    // Creating a new Object: ProjectCotent
+    const orderedObject: ProjectContent = { aResum: "", bIntro: "", cObj: "", dMetod: "", eResult: "", fCons: "", gRef: "" };
+    
+    console.log(this.selectedProject.content);
+    
+    // For each ordered key, in their order, get the value from the same key of projContent
+    orderedKeys.forEach((key) => {
+      orderedObject[key] = this.selectedProject.content[key];
+    });
+
+    // With the copy now ordered and populated, pass it to projContent
+    this.selectedProject.content = orderedObject;
+
+    console.log(this.selectedProject.content);
+
+    // Adding text to modal
+    for (let key in this.selectedProject.content) {
+      divTag.innerHTML += this.selectedProject.content[key];
+    }
+
   }
 
   handleError(errorMsg: string) {
