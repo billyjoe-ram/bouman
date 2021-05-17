@@ -49,6 +49,12 @@ content span {
     height: 80%;
 }
 
-.modal-content .modal-body textarea {
-    resize: none;
+#chapter-view {
+    padding-left: 0;
+}
+
+.form-group .form-control#project-part {
+    height: 8rem;
+    text-overflow: clip;
+    overflow: auto;
 }

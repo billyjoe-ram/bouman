@@ -154,12 +154,6 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   showProject() {
-    // Selecting element
-    // const textArea = this.selectedProjectContent.nativeElement;
-
-    // Clearing content
-    // textArea.innerHTML = "";
-
     this.addEvents();
 
     // Ordering keys that were messed
@@ -175,11 +169,6 @@ export class FeedComponent implements OnInit, OnDestroy {
 
     // With the copy now ordered and populated, pass it to projContent
     this.selectedProject.content = orderedObject;
-
-    // Adding text to modal
-    // for (let key in this.selectedProject.content) {
-      // textArea.innerHTML += this.selectedProject.content[key];
-    // }
 
   }
 
@@ -207,6 +196,9 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
   
   private addEvents() {
+    // Selecting element
+    const textArea = this.selectedProjectContent.nativeElement;    
+
     // Checking if the element was created
     if (this.checkBoxes) {
       // Getting the element itself
@@ -225,6 +217,9 @@ export class FeedComponent implements OnInit, OnDestroy {
 
         // Add a callback attached to click
         checkboxInput.addEventListener("click", (event: any) => {
+          // Clearing content
+          textArea.innerHTML = "";
+
           // Event target
           let input = event.target;
 
@@ -248,7 +243,10 @@ export class FeedComponent implements OnInit, OnDestroy {
             });
           }
 
-          console.log(this.selectedProjectText);
+          // Adding text to modal
+          this.selectedProjectText.forEach(projectChapter => {
+            textArea.innerHTML += projectChapter;
+          });
           
         });
       }

@@ -140,11 +140,11 @@
                     </div>
 
                     <!-- Chapter view -->
-                    <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-sm-6 col-md-6 col-lg-6" id="chapter-view">
                         <form>
                             <div class="form-group">
-                                <label for="projectPart">Capítulo</label>
-                                <textarea id="projectPart" class="form-control" readonly #selectedProjectContent> {{ selectedProjectText.join(' ') }} </textarea>
+                                <label for="projectPart">Pré-visualização</label>
+                                <div id="project-part" class="form-control" #selectedProjectContent></div>
                             </div>
                         </form>
                     </div>
