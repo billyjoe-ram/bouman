@@ -129,7 +129,12 @@ export class FeedComponent implements OnInit, OnDestroy {
         // Add to the array
         this.userProjects.push(project.data());
       });
-    });
+
+      // Ordering by date
+      this.userProjects.sort((a: any, b: any) => {
+        return a.lastEdit.seconds - b.lastEdit.seconds;
+      }).reverse();
+    });    
 
     // Triggering modal
     this.projectsModalTrigger.nativeElement.click();
