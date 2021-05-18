@@ -28,7 +28,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public profileId!: string | undefined;
 
-  public feedPosts: { profileId: string, posts: Post[] }[] = [];
+  public feedPosts: Post[] = [];
 
   public userProjects: Project[] = [];
 
@@ -94,53 +94,25 @@ export class FeedComponent implements OnInit, OnDestroy {
       
         // Interating over each profile followed
         this.profilesFollowing.forEach(profile => {
-          // Passing to posts attribute this profile id and an empty array
-          this.feedPosts.push({ profileId: profile, posts: [] });
-
-          let profileIndex = this.profilesFollowing.indexOf(profile);
           
           // For this profile (brought by iteration), bring its posts and add in the object array
-          this.postsSubs = this.posts.listProfilePosts(profile).subscribe((profilePost: any) => {
-            // Pushing each post object feed conten array
-            this.feedPosts[profileIndex].posts = profilePost;
+          this.posts.listProfilePosts(profile).then((profilePosts) => {
+            // Pushing each post object feed content array
+            profilePosts.forEach(query => {              
+              this.feedPosts.push(query.data() as Post);
+            });
 
             // Ordering by date
-            this.feedPosts[profileIndex].posts.sort((a: any, b: any) => {
+            this.feedPosts.sort((a: any, b: any) => {
               return a.publishedAt.seconds - b.publishedAt.seconds;
             }).reverse();                        
           });
 
-          // Removing duplicates by postId
-          // this.feedPosts = this.feedPosts.filter(element => {
-          //   return element.postId != element.postId;
-          // });
-
-        });
+        });        
       });
       
     });    
-  }
-
-  // importProject() {
-  //   // Reset the array
-  //   this.userProjects = [];
-
-  //   this.docs.listProjects().then((projects) => {
-  //     // Retrieving user projects
-  //     projects.forEach((project) => {
-  //       // Add to the array
-  //       this.userProjects.push(project.data());
-  //     });
-
-  //     // Ordering by date
-  //     this.userProjects.sort((a: any, b: any) => {
-  //       return a.lastEdit.seconds - b.lastEdit.seconds;
-  //     }).reverse();
-  //   });    
-
-  //   // Triggering modal
-  //   this.projectsModalTrigger.nativeElement.click();
-  // }    
+  }   
 
   handleError(errorMsg: string) {
     this.errorMsg = errorMsg;

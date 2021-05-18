@@ -16,7 +16,7 @@ export class PostsService {
   listProfilePosts(profileId: string) {
     const postsRef = this.postsCollection.doc(profileId).collection('Posts');
     
-    const profilePosts = postsRef.valueChanges();
+    const profilePosts = postsRef.ref.get();
     
     return profilePosts;
   }
