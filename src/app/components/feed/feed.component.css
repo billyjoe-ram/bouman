@@ -20,17 +20,23 @@ content span {
 }
 
 .card-header {
-    justify-content: space-between;
+    padding: 0;
+    justify-content: space-around;
 }
 
 .card-body {
     padding: 0;
 }
 
-.card-body .textarea {
+.card-body textarea {
     resize: none;
 }
 
 .card-footer {
     justify-content: flex-end;
+}
+
+.modal-content .modal-header {
+    font-size: 1.8rem;
+    font-weight: bold;
 }

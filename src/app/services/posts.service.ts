@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Subscription } from 'rxjs';
 import { Post } from '../interfaces/posts';
-import { AuthService } from './auth.service';
 import { ProfileService } from './profile.service';
-import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +11,12 @@ export class PostsService {
 
   private postsCollection = this.store.collection('Profiles');
 
-  constructor(private store: AngularFirestore, private ProfileService: ProfileService) { }
+  constructor(private store: AngularFirestore) { }
 
   listProfilePosts(profileId: string) {
     const postsRef = this.postsCollection.doc(profileId).collection('Posts');
     
-    const profilePosts = postsRef.valueChanges();
+    const profilePosts = postsRef.ref.get();
     
     return profilePosts;
   }
@@ -39,7 +36,7 @@ export class PostsService {
     return posts;
   }
 
-  async addPost(profileId: string | undefined, content: Post) {
+  async addPost(profileId: string | undefined, content: string) {
     // Going inside the profile posts
     const userPosts = this.postsCollection.doc(profileId).collection('Posts');
 

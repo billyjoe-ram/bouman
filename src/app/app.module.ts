@@ -36,6 +36,7 @@ import { registerLocaleData } from '@angular/common';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ContactComponent } from './components/profile-page/contact/contact.component';
 import { FaqComponent } from './components/faq/faq.component';
+import { PostProjectComponent } from './components/feed/post-project/post-project.component';
 
 registerLocaleData(ptBR);
 
@@ -59,6 +60,7 @@ registerLocaleData(ptBR);
     NotFoundComponent,
     ContactComponent,
     FaqComponent,
+    PostProjectComponent,
   ],
   imports: [
     BrowserModule,
