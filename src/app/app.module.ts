@@ -37,6 +37,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ContactComponent } from './components/profile-page/contact/contact.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { PostProjectComponent } from './components/feed/post-project/post-project.component';
+import { ProjectCardComponent } from './components/profile-page/project-card/project-card.component';
 
 registerLocaleData(ptBR);
 
@@ -61,6 +62,7 @@ registerLocaleData(ptBR);
     ContactComponent,
     FaqComponent,
     PostProjectComponent,
+    ProjectCardComponent,
   ],
   imports: [
     BrowserModule,

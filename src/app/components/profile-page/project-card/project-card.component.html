@@ -1,0 +1,35 @@
+<!-- Post card -->
+<div class="card">
+    <!-- Post content and user data -->
+    <div class="card-body">
+        <div class="profile-details">
+            <!-- User informations -->
+            <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture">
+            <div class="profile-info">
+                {{ profileName }}
+                <span>{{ project.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
+            </div>
+        </div>
+        <!-- Post text with text limiting pipe -->
+        <div class="card-text">
+            <h1> {{ project.title }} </h1>
+            <div id="div-to-render"></div>
+            <span [hidden]="sMDisabled" (click)="showMore()">ver mais...</span>
+        </div>
+    </div>
+    <div class="card-footer">
+        <!-- This should be commented out when interactions are implemented -->
+        <button class="btn btn-default" (click)="onLikePost(project)">
+           <span> {{ project.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir">Curtir
+        </button>
+
+        <!-- <button class="btn btn-default">
+            <img src="/assets/comment-gray.svg" alt="Comentar">Comentar
+        </button>
+
+        <button class="btn btn-default">
+            <img src="/assets/share-gray.svg" alt="Compartilhar">Compartilhar
+        </button> -->
+        
+    </div>
+</div>

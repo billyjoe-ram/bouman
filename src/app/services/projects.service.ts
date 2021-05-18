@@ -18,7 +18,7 @@ export class ProjectsService {
   listProfileProjects(profileId: string) {
     const projectsRef = this.profilesCollection.doc(profileId).collection('Projects');
     
-    const profileProjects = projectsRef.valueChanges();
+    const profileProjects = projectsRef.ref.get();
     
     return profileProjects;
   }
@@ -38,23 +38,24 @@ export class ProjectsService {
     return projects;
   }
 
-  async addProject(profileId: string | undefined, content: string) {
+  async addProject(profileId: string | undefined, project: { title: string, content: string }) {
     // Going inside the profile projects
     const userProjects = this.profilesCollection.doc(profileId).collection<PostedProject>('Projects');
 
     // Adding a new projects
     const newProject = await userProjects.add(
       {
+        title: project.title,
         profileId: profileId,
-        content: content,
+        content: project.content,
         publishedAt: new Date(),
         likes: []
       });
 
-    const project = newProject.update({ projectId: newProject.id });
+    const postedProject = newProject.update({ projectId: newProject.id });
 
     // Returning the process promise
-    return project;
+    return postedProject;
   }
 
   deleteProject(profileId: string | undefined, projectId: string) {

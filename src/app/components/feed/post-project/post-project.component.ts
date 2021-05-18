@@ -21,6 +21,8 @@ export class PostProjectComponent implements OnInit {
 
   @ViewChild('checkBoxes') checkBoxes!: ElementRef;  
 
+  public selectedProjectObj: { title: string, content: string } = { title: "", content: "" };
+  
   public selectedProjectText: string[] = [];
 
   public selectedProject!: any;
@@ -107,8 +109,10 @@ export class PostProjectComponent implements OnInit {
   }
 
   postProject() {
+    const project = { title: this.selectedProject.title, content: this.selectedProjectText.join('\\n') };
+
     if(this.selectedProjectText.length) {
-      this.projectsService.addProject(this.profileId, this.selectedProjectText.join(' '));
+      this.projectsService.addProject(this.profileId, project);
     } else {
       alert("Selecione pelo menos uma parte do projeto...");
     }
