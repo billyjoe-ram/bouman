@@ -5,26 +5,6 @@
     border: none;
 }
 
-.card .card-header {
-    height: 36px;
-
-    display: flex;    
-    align-items: center;
-
-    padding-left: 10px;
-
-    background: #FFFFFF;
-    border: 2px solid #FA902E;
-    box-sizing: border-box;
-    border-radius: 2px;
-
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 15px;        
-
-    color: #DF660F;    
-}
-
 .card .profile-details {
     display: flex;    
 }
@@ -63,8 +43,16 @@
     margin: 1rem;
 }
 
+.card .card-header {
+    color: #08715D;
+}
+
+.card .card-header h1 {
+    font-size: 1.8rem;
+}
+
 .card .card-body .card-text #div-to-render {
-    font-size: .85em;
+    font-size: .95em;
 }
 
 .card .card-body .card-text #div-to-render h1 {
