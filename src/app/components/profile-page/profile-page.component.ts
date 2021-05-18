@@ -49,8 +49,10 @@ export class ProfilePageComponent implements OnInit {
     this.paramsSubs = this.route.params.subscribe((params) => {
       this.profileId = params['profid'];
 
-      this.userSubs = this.posts.listProfilePosts(this.profileId).subscribe(posts => {
-        this.userPosts = posts;
+      this.posts.listProfilePosts(this.profileId).then((posts) => {
+        posts.forEach(post => {
+          this.userPosts.push(post.data());
+        });
       });
 
       this.profileSubs = this.usersServices.getProfile(user?.uid).subscribe((data : any) => {
