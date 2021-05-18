@@ -1,0 +1,22 @@
+.modal-content .modal-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.modal-content .modal-body form {
+    height: 100%;
+}
+
+.modal-content .modal-body .form-group, .modal-content .modal-body textarea {
+    height: 80%;
+}
+
+#chapter-view {
+    padding-left: 0;
+}
+
+.form-group .form-control#project-part {
+    height: 8rem;
+    text-overflow: clip;
+    overflow: auto;
+}
