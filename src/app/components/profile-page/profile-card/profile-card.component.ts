@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -17,6 +17,11 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   @Input('userId') public userId: string | undefined = "";
   @Input('editMode') public editbutton: boolean = false;
   @Input('userData') public userData: any = {};
+
+  @Input('projsSize') public projsSize: number = 0;
+  @Input('publicSize') public publicSize: number = 0;
+
+  @Output('content') public content: EventEmitter<string> = new EventEmitter<string>();
   
   @ViewChild('btnFollow') btnFollow!: ElementRef;
   
@@ -142,6 +147,14 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
       console.log(error)
     }
     
+  }
+
+  listPosts() {
+    this.content.emit("posts");
+  }
+
+  listProjects() {
+    this.content.emit("projects");
   }
 
 }

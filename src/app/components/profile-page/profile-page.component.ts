@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
@@ -26,6 +26,8 @@ export class ProfilePageComponent implements OnInit {
 
   public sameUser: boolean = false;
 
+  public pageSelected: number = 0;
+
   private paramsSubs!: Subscription;
 
   private postsSubs!: Subscription;
@@ -49,6 +51,20 @@ export class ProfilePageComponent implements OnInit {
     })
 
     this.loadData();
+  }
+  
+  selectPage(pageSelected: string) {
+    switch (pageSelected) {
+      case "posts":
+        this.pageSelected = 0;
+      break;
+      case "projects":
+        this.pageSelected = 1;
+      break;
+      default:
+        this.pageSelected = 0;
+      break;
+    }
   }
 
   async loadData() {

@@ -5,7 +5,7 @@
     <!-- Profile card and profile contacts -->
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5 offset-md-0 offset-lg-2">
         <!-- binding properties to reuse code -->
-        <profile-card [profileId]="profileId" [userId]="userId" [userData]="userData" [editMode]="sameUser"></profile-card>
+        <profile-card [profileId]="profileId" [userId]="userId" [userData]="userData" [editMode]="sameUser" (content)="selectPage($event)" [publicSize]="userPosts.length" [projsSize]="userProjects.length"></profile-card>
     </div>
 
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5">
@@ -19,12 +19,16 @@
     <div class="col-xs-12 col-sm-10 col-md-6 col-lg-4">
         <!-- Showing user posts -->
         <div class="profile-content">
-            <div class="post-item" *ngFor="let post of userPosts">
-                <publication-card [profileId]="post.profileId" [publication]="post"></publication-card>
+            <div class="posts" *ngIf="!pageSelected">
+                <div class="post-item" *ngFor="let post of userPosts">
+                    <publication-card [profileId]="post.profileId" [publication]="post"></publication-card>
+                </div>
             </div>
-            <div class="post-item" *ngFor="let project of userProjects">
-                <project-card [profileId]="project.profileId" [project]="project"></project-card>
-            </div>
+            <div class="projects" *ngIf="pageSelected">
+                <div class="post-item" *ngFor="let project of userProjects">
+                    <project-card [profileId]="project.profileId" [project]="project"></project-card>
+                </div>
+            </div>                
         </div>
     </div>
 </div>
