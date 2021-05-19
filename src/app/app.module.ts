@@ -36,6 +36,9 @@ import { registerLocaleData } from '@angular/common';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ContactComponent } from './components/profile-page/contact/contact.component';
 import { TermsComponent } from './components/terms/terms.component';
+import { LicenseComponent } from './components/terms/license/license.component';
+import { PrivacyComponent } from './components/terms/privacy/privacy.component';
+import { AccountComponent } from './components/terms/account/account.component';
 
 registerLocaleData(ptBR);
 
@@ -59,6 +62,9 @@ registerLocaleData(ptBR);
     NotFoundComponent,
     ContactComponent,
     TermsComponent,
+    LicenseComponent,
+    PrivacyComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,

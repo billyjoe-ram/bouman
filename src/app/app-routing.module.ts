@@ -13,11 +13,11 @@ import { ProjectComponent } from './components/projects/project-overview/project
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { TermsComponent } from './components/terms/terms.component';
+import { LicenseComponent } from './components/terms/license/license.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },
   { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
-  { path: 'terms', component: TermsComponent },
   { path: 'signup', component: SignupComponent, canActivate: [LoginGuard] },
   { path: 'config',  component: ConfigurateComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
@@ -27,6 +27,9 @@ const routes: Routes = [
   ] },
   { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
   { path: 'profiles/:profid', component: ProfilePageComponent, canActivate: [AuthGuard] },
+  { path: 'terms', component: TermsComponent, children: [
+    { path: 'license', component: LicenseComponent },
+  ] },
   { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
 ];
 
