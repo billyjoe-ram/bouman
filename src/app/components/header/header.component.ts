@@ -2,8 +2,9 @@ import { Component, EventEmitter, OnInit, OnDestroy, Output } from '@angular/cor
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { PostsService } from 'src/app/services/posts.service';
+import { ProfilePic } from 'src/app/interfaces/picture';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private profile!: Subscription;
   private userSubs!: Subscription;
   public searchResult : any[] = [];
+  private profPic!: ProfilePic;
 
   @Output() featureSelected = new EventEmitter<string>();
 
@@ -53,9 +55,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searching() {
     this.postsService.searchingProfiles(this.search).then(data => {
       // Attr all profiles found to the search resulsts
-      this.searchResult = data;            
+      this.searchResult = data;  
+      
+      this.searchResult.forEach((profile, index) => {
+        this.user.getSearchPic(profile.id).then(pic => {
+          this.searchResult[index].picture = pic;
+          console.log('Console da Pic:');
+          console.log(pic);
+        }).catch(error => {
+          this.searchResult[index].picture = this.user.profasset();
+        });
+        console.log('Console do profile:');
+        console.log(profile);
+      });
     });
-
   }
 
   toggleSearchClick(){

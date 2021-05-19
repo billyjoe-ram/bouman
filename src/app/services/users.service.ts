@@ -23,6 +23,12 @@ export class UsersService {
     return fileRef.getDownloadURL();
   }
 
+  getSearchPic(pid: string){
+    const filePath = `profiles/${pid}/profile-pictures/profile${pid}`;
+    const fileRef = this.storage.ref(filePath);
+    return fileRef.getDownloadURL().toPromise();
+  }
+
   profasset(){
     return this.profileImg;
   }
