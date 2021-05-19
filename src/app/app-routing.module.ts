@@ -27,9 +27,8 @@ const routes: Routes = [
   ] },
   { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
   { path: 'profiles/:profid', component: ProfilePageComponent, canActivate: [AuthGuard] },
-  { path: 'terms', component: TermsComponent, children: [
-    { path: 'license', component: LicenseComponent },
-  ] },
+  { path: 'terms', component: TermsComponent },
+  { path: 'terms/license', component: LicenseComponent },
   { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
 ];
 
