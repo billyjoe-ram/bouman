@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
+import { ProjectsService } from '../../services/projects.service';
 
 @Component({
   selector: 'profile-page',
@@ -15,6 +16,9 @@ import { UsersService } from 'src/app/services/users.service';
 export class ProfilePageComponent implements OnInit {
 
   public userPosts: any[] = [];
+
+  public userProjects: any[] = [];
+
   public profileId: string = "";
 
   public userId: string | undefined = "";
@@ -22,17 +26,23 @@ export class ProfilePageComponent implements OnInit {
 
   public sameUser: boolean = false;
 
+  public pageSelected: number = 0;
+
   private paramsSubs!: Subscription;
+
   private postsSubs!: Subscription;
+
   private userSubs!: Subscription;
+  
   private profileSubs!: Subscription;
   
   constructor(
     private posts: PostsService,
+    private projectsService: ProjectsService,
     private route: ActivatedRoute,
     private usersServices: UsersService,
     private profileService: ProfileService,
-    private auth: AuthService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -42,9 +52,23 @@ export class ProfilePageComponent implements OnInit {
 
     this.loadData();
   }
+  
+  selectPage(pageSelected: string) {
+    switch (pageSelected) {
+      case "posts":
+        this.pageSelected = 0;
+      break;
+      case "projects":
+        this.pageSelected = 1;
+      break;
+      default:
+        this.pageSelected = 0;
+      break;
+    }
+  }
 
   async loadData() {
-    const user = await this.auth.getAuth().currentUser;
+    const user = await this.authService.getAuth().currentUser;
 
     this.paramsSubs = this.route.params.subscribe((params) => {
       this.profileId = params['profid'];
@@ -52,6 +76,12 @@ export class ProfilePageComponent implements OnInit {
       this.posts.listProfilePosts(this.profileId).then((posts) => {
         posts.forEach(post => {
           this.userPosts.push(post.data());
+        });
+      });
+
+      this.projectsService.listProfileProjects(this.profileId).then(projects => {
+        projects.forEach(project => {
+          this.userProjects.push(project.data());
         });
       });
 
