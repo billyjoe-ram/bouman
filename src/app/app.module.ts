@@ -66,11 +66,14 @@ registerLocaleData(ptBR);
     ContactComponent,
     PostProjectComponent,
     ProjectCardComponent,
+    FaqComponent,
     TermsComponent,
     PrivacyComponent,
     AccountComponent,
+    LicenseComponent
   ],
   imports: [
+    BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
