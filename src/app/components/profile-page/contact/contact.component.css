@@ -1,7 +1,7 @@
 .card {
     width: 20vw;
     height: fit-content;
-    max-height: 38vh;
+    max-height: 40vh;
 }
 
 .card .card-header {
@@ -21,6 +21,10 @@
     align-items: center;
 }
 
+.card .card-body {
+    padding: 0.4rem 1.25rem 1rem 1.25rem;
+}
+
 .card .card-body ul {
     padding: 0;
     list-style: none;
@@ -28,6 +32,7 @@
 
 .card .card-body .social-network-item {
     margin: 0.25rem 0;
+    font-size: 0.9em;
 }
 
 .modal-footer{
