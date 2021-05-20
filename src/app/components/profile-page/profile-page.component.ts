@@ -73,6 +73,10 @@ export class ProfilePageComponent implements OnInit {
     this.paramsSubs = this.route.params.subscribe((params) => {
       this.profileId = params['profid'];
 
+      // Clearing arrays on changes
+      this.userPosts = [];
+      this.userProjects = [];
+
       this.posts.listProfilePosts(this.profileId).then((posts) => {
         posts.forEach(post => {
           this.userPosts.push(post.data());
