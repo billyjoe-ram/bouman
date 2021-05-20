@@ -132,14 +132,20 @@ a {
 }
 
 /* Links inside the dropdown */
-.dropdown-content a{
+.dropdown-content a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 1%;
+  margin-bottom: 1%;
+
+  padding: 0 3rem 0 1rem;
+
   color: black;
   font-size: 0.9rem;
   font-weight: 500;
-  text-decoration: none;
-  display: block;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  text-decoration: none;  
 }
 
 .dropdown-content a span{
