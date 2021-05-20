@@ -4,7 +4,6 @@ import { UsersService } from 'src/app/services/users.service';
 import { Injectable } from '@angular/core';
 import { from, Subscription } from 'rxjs';
 import { PostsService } from 'src/app/services/posts.service';
-import { ProfilePic } from 'src/app/interfaces/picture';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +23,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private profile!: Subscription;
   private userSubs!: Subscription;
   public searchResult : any[] = [];
-  private profPic!: ProfilePic;
 
   @Output() featureSelected = new EventEmitter<string>();
 
