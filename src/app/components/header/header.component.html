@@ -49,7 +49,7 @@
                         <div class="dropdown-content" id="search" [ngStyle]="{ 'display': search ? 'block' : 'none'}">
                             <a href="#" *ngFor="let prof of searchResult" [routerLink]="['/profiles', prof.id]" (click)="toggleSearchClick()">
                                 <img id="profile-picture" [src]="prof.picture">
-                                <p>{{prof.name}}</p>
+                                <span>{{prof.name}}</span>
                             </a>
                         </div>
                 </div>
