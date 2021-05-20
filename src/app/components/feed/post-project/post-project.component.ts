@@ -132,7 +132,7 @@ export class PostProjectComponent implements OnInit {
 
     if (keywordsArray.length) {
       if (keywordsArray.length <= 8) {      
-        const project = { title: this.selectedProject.title, content: this.selectedProjectText.join('\\n'), keywords: keywordsArray };
+        const project = { title: this.selectedProject.title, content: this.selectedProjectText.join('\n'), keywords: keywordsArray };
   
         if(this.selectedProjectText.length) {
           this.projectsService.addProject(this.profileId, project);
