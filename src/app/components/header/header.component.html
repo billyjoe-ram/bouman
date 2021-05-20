@@ -41,7 +41,10 @@
                 <div class="dropdown">
                         <input type="search" class="form-control" placeholder="Procure um perfil aqui" [(ngModel)]="search" (ngModelChange)="searching()" (focus)="togglesearch()" (blur)="togglesearch()">    
                         <div class="dropdown-content" id="search" [ngStyle]="{ 'display': search ? 'block' : 'none'}">
-                            <a href="#" *ngFor="let prof of searchResult" [routerLink]="['/profiles', prof.id]" (click)="toggleSearchClick()">{{prof.name}}</a>
+                            <a href="#" *ngFor="let prof of searchResult" [routerLink]="['/profiles', prof.id]" (click)="toggleSearchClick()">
+                                <img id="profile-picture" [src]="prof.picture">
+                                <span>{{prof.name}}</span>
+                            </a>
                         </div>
                 </div>
             </div>

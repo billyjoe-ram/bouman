@@ -96,7 +96,7 @@ export class PostsService {
 
     postsResult.forEach(element => {
       postsname.push(element.data() as object);
-      posts.push({id:element.id, name:postsname[i].name});
+      posts.push({id:element.id, name:postsname[i].name, picture: ""});
       i++;
     });
 
@@ -110,7 +110,6 @@ export class PostsService {
 
       return elementLower.startsWith(searchLower);
     });
-
     return posts;
   }
 }

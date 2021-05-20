@@ -2,6 +2,16 @@
     resize: none;
 }
 
+#title{
+    color: white;
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+hr{
+    border-color: rgb(255, 255, 255, 0.5);
+}
+
 button.btn-bouman-modal, button.btn-bouman-form {
     box-sizing: border-box;
     border-radius: 6px;
