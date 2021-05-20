@@ -7,8 +7,8 @@
 }
 
 .card .card-body {
-  height: 30vh;
-  max-height: 30vh;
+  height: 40vh;
+  max-height: 40vh;
 
   padding: 0;
 
@@ -141,7 +141,7 @@
   }
   
   .card .card-body .text-content .card-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
   }
   
@@ -180,8 +180,8 @@
 
 @media (min-width: 1024px) {
   .card .card-body {
-    height: 30vh;
-    max-height: 30vh;
+    height: 24vh;
+    max-height: 24vh;
   
     padding: 0;
   
@@ -202,7 +202,7 @@
   }
   
   .card .card-body .text-content .card-title {
-    font-size: 2.1rem;
+    font-size: 1.2rem;
     font-weight: bold;
   }
   
@@ -240,8 +240,8 @@
 
 @media (min-width: 1440px) {
   .card .card-body {
-    height: 25vh;
-    max-height: 25vh;
+    height: 20vh;
+    max-height: 20vh;
   }
   
   .card .card-body .profile-card-content {
@@ -258,7 +258,7 @@
   }
   
   .card .card-body .text-content .card-title {
-    font-size: 2.1rem;
+    font-size: 1.6rem;
     font-weight: bold;
   }
   
