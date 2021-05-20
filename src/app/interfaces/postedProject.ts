@@ -5,4 +5,5 @@ export interface PostedProject {
     likes: string[],
     publishedAt: Date,
     projectId?: string
+    keywords: string[]
 }

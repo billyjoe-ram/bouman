@@ -11,6 +11,15 @@
     height: 80%;
 }
 
+.form-group textarea.form-control {
+    resize: none;
+}
+
+label[for="keywords"] {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
 #chapter-view {
     padding-left: 0;
 }

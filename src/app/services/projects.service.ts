@@ -38,7 +38,7 @@ export class ProjectsService {
     return projects;
   }
 
-  async addProject(profileId: string | undefined, project: { title: string, content: string }) {
+  async addProject(profileId: string | undefined, project: { title: string, content: string, keywords: string[] }) {
     // Going inside the profile projects
     const userProjects = this.profilesCollection.doc(profileId).collection<PostedProject>('Projects');
 
@@ -49,7 +49,8 @@ export class ProjectsService {
         profileId: profileId,
         content: project.content,
         publishedAt: new Date(),
-        likes: []
+        likes: [],
+        keywords: project.keywords
       });
 
     const postedProject = newProject.update({ projectId: newProject.id });

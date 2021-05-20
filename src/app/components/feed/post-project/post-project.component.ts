@@ -19,15 +19,17 @@ export class PostProjectComponent implements OnInit {
 
   @ViewChild('selectedProjectContent') selectedProjectContent!: ElementRef;
 
-  @ViewChild('checkBoxes') checkBoxes!: ElementRef;  
+  @ViewChild('selectedProjectKeywords') selectedProjectKeywords!: ElementRef;
+
+  @ViewChild('checkBoxes') checkBoxes!: ElementRef;
 
   public selectedProjectObj: { title: string, content: string } = { title: "", content: "" };
-  
+
   public selectedProjectText: string[] = [];
 
   public selectedProject!: any;
-  
-  constructor(private projectsService: ProjectsService, private docsService: DocsService) { }  
+
+  constructor(private projectsService: ProjectsService, private docsService: DocsService) { }
 
   ngOnInit(): void {
   }
@@ -47,7 +49,7 @@ export class PostProjectComponent implements OnInit {
       this.userProjects.sort((a: any, b: any) => {
         return a.lastEdit.seconds - b.lastEdit.seconds;
       }).reverse();
-    });    
+    });
 
     // Triggering modal
     this.projectsModalTrigger.nativeElement.click();
@@ -62,10 +64,10 @@ export class PostProjectComponent implements OnInit {
 
     // Ordering keys that were messed
     const orderedKeys = Object.keys(this.selectedProject.content).sort();
-    
+
     // Creating a new Object: ProjectCotent
     const orderedObject: ProjectContent = { aResum: "", bIntro: "", cObj: "", dMetod: "", eResult: "", fCons: "", gRef: "" };
-    
+
     // For each ordered key, in their order, get the value from the same key of projContent
     orderedKeys.forEach((key) => {
       orderedObject[key] = this.selectedProject.content[key];
@@ -83,25 +85,25 @@ export class PostProjectComponent implements OnInit {
     switch (projPart.trim()) {
       case "Resumo":
         contentKey = "aResum";
-      break;
+        break;
       case "Introdução":
         contentKey = "bIntro";
-      break;
+        break;
       case "Objetivos":
         contentKey = "cObj";
-      break;
+        break;
       case "Metodologia":
         contentKey = "dMetod";
-      break;
+        break;
       case "Resultados":
         contentKey = "eResult";
-      break;
+        break;
       case "Considerações":
         contentKey = "fCons";
-      break;
+        break;
       case "Referências":
         contentKey = "gRef";
-      break;
+        break;
     }
 
     // Return the value of the key
@@ -109,25 +111,52 @@ export class PostProjectComponent implements OnInit {
   }
 
   postProject() {
-    const project = { title: this.selectedProject.title, content: this.selectedProjectText.join('\\n') };
+    const keywords: string = this.selectedProjectKeywords.nativeElement.value;
 
-    if(this.selectedProjectText.length) {
-      this.projectsService.addProject(this.profileId, project);
-    } else {
-      alert("Selecione pelo menos uma parte do projeto...");
-    }
-    
-  }
+    // Creating an array separating by empty strings
+    let keywordsArray = keywords.trim().split(' ');
+
+    // Removing duplicate values
+    keywordsArray = keywordsArray.filter((keyword, index) => {      
+      return keywordsArray.indexOf(keyword) === index;
+    });
+
+    // Removing empty strings
+    keywordsArray = keywordsArray.filter((keyword) => {
+      // Cleaning up giant empty strings
+      keyword = keyword.trim();
+
+      // Returning if it isn't an empty string
+      return keyword !== "";
+    })
+
+    if (keywordsArray.length) {
+      if (keywordsArray.length <= 8) {      
+        const project = { title: this.selectedProject.title, content: this.selectedProjectText.join('\\n'), keywords: keywordsArray };
   
+        if(this.selectedProjectText.length) {
+          this.projectsService.addProject(this.profileId, project);
+        } else {
+          alert("Selecione pelo menos uma parte do projeto");
+        }
+      } else {
+        alert("Adicione apenas até 8 palavras-chave");
+      }
+    } else {
+      alert("Adicione pelo menos uma palavra-chave")
+    }  
+
+  }
+
   private addEvents() {
     // Selecting element
-    const textArea = this.selectedProjectContent.nativeElement;    
+    const textArea = this.selectedProjectContent.nativeElement;
 
     // Checking if the element was created
     if (this.checkBoxes) {
       // Getting the element itself
       const checks = this.checkBoxes.nativeElement;
-      
+
       // Getting its children
       const checkControls = checks.children;
 
@@ -171,10 +200,10 @@ export class PostProjectComponent implements OnInit {
           this.selectedProjectText.forEach(projectChapter => {
             textArea.innerHTML += projectChapter;
           });
-          
+
         });
       }
-      
+
     }
   }
 
