@@ -28,6 +28,7 @@ label.profile-label > span {
 }
 
 hr {
+  border-color: rgb(255, 255, 255, 0.5);
   margin: 1rem 0;
 }
 

@@ -34,7 +34,7 @@
                     <img role="button" (click)="esconder = !esconder"  id="editPen" src="../../../../assets/pen.svg">
                 </div>
                 <ng-template #elseBloco>
-                    <button class="btn btn-bouman" type="button" (click)="saveFotos()">Salvar</button>
+                    <button class="btn btn-bouman" (click)="esconder = !esconder" type="button" (click)="saveFotos()">Salvar</button>
                 </ng-template>
             </div>
 

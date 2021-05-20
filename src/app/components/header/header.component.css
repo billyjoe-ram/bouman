@@ -65,7 +65,7 @@ a.navbar-brand {
   padding-right: 4.8vw;
 }
 
-.nav-item.dropdown a.dropdown-toggle img#profile-picture {
+.nav-item.dropdown a.dropdown-toggle img#profile-picture, .dropdown .dropdown-content img#profile-picture {
   width: 48px;
   height: 48px;
 
@@ -118,6 +118,7 @@ a {
 .dropdown {
   position: relative;
   display: inline-block;
+  width: 130%;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -125,17 +126,30 @@ a {
   display: none;
   position: absolute;
   background-color: #f6f6f6;
-  min-width: 230px;
+  min-width: 100%;
   border: 1px solid #ddd;
   z-index: 1;
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 1%;
+  margin-bottom: 1%;
+
+  padding: 0 3rem 0 1rem;
+
   color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;  
+}
+
+.dropdown-content a span{
+  padding-left: 3%;
 }
 
 /* Change color of dropdown links on hover */
@@ -177,5 +191,12 @@ a {
   .navbar .navbar-nav > li > a {
     display: flex;
     flex-direction: column;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .dropdown {
+    width: 50%;
   }
 }
