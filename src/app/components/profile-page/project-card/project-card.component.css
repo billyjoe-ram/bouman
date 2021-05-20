@@ -36,6 +36,10 @@
     color: #A4A4A4;
 }
 
+.card .card-body span.keywords {
+    margin: 0 0.6rem;
+}
+
 .card .card-body .card-text .publication-picture {
     width: 280px;
     height: 165px;
