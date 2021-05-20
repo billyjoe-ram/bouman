@@ -13,6 +13,8 @@ import { ProjectComponent } from './components/projects/project-overview/project
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FaqComponent } from './components/faq/faq.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { LicenseComponent } from './components/terms/license/license.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },
@@ -28,7 +30,9 @@ const routes: Routes = [
   { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
   { path: 'profiles/:profid', component: ProfilePageComponent, canActivate: [AuthGuard] },
   { path: 'support', component: FaqComponent, canActivate: [AuthGuard] },
-  { path: '**', component: NotFoundComponent }
+  { path: 'terms', component: TermsComponent },
+  { path: 'terms/license', component: LicenseComponent },
+  { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

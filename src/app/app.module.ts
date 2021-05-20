@@ -38,6 +38,10 @@ import { ContactComponent } from './components/profile-page/contact/contact.comp
 import { FaqComponent } from './components/faq/faq.component';
 import { PostProjectComponent } from './components/feed/post-project/post-project.component';
 import { ProjectCardComponent } from './components/profile-page/project-card/project-card.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { LicenseComponent } from './components/terms/license/license.component';
+import { PrivacyComponent } from './components/terms/privacy/privacy.component';
+import { AccountComponent } from './components/terms/account/account.component';
 
 registerLocaleData(ptBR);
 
@@ -60,12 +64,13 @@ registerLocaleData(ptBR);
     ProfileConfigComponent,
     NotFoundComponent,
     ContactComponent,
-    FaqComponent,
     PostProjectComponent,
     ProjectCardComponent,
+    TermsComponent,
+    PrivacyComponent,
+    AccountComponent,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

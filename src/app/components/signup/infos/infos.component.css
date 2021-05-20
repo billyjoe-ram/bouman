@@ -96,6 +96,14 @@
   font-size: 0.85rem;
 }
 
+.bouman-form a {
+  width: 90%;
+  color: #eeeeee;
+  margin: 0 auto;
+  margin-top: 3%;
+  font-size: 0.85rem;
+}
+
 .bouman-form input.ng-invalid.ng-touched {
   border-color: darkred;
   background-color: rgb(255, 158, 158);
