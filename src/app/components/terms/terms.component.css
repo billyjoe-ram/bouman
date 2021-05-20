@@ -1,0 +1,11 @@
+header h1 {
+    text-align: center;
+}
+
+section {
+    padding: 0 5rem;
+}
+
+section p {
+    text-align: justify;
+}
