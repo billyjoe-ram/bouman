@@ -7,7 +7,7 @@
     margin-left: 33%;
 }
 
-.bouman-form label, a{
+.bouman-form label{
     color: #df660f;
 }
 
@@ -18,11 +18,6 @@
 .bouman-form label{
     margin-top: 5%;
 }
-
-/*.bouman-form p {
-    font-size: 1.6rem;
-    font-weight: bold;
-}*/
 
 .bouman-form input.bouman-input {
     box-shadow: 3px 3px 3px #a3a3a3;
@@ -61,4 +56,34 @@
 .bouman-form input.ng-invalid.ng-touched {
     border-color: darkred;
     background-color: rgb(255, 158, 158);
+}
+
+div#changePass button.btn-bouman-modal{
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: white;
+    transition: 0.3s;
+    background: #FA902E;
+    border: 1px solid #DF660F;
+}
+
+div#changePass button.btn-modal-form:hover{
+    background: #DF660F;
+}
+
+div#changePass .modal-footer{
+    justify-content: space-between;
+}
+
+div#changePass .modal-body input#emailChanges{
+    width: 95%;
+}
+
+a#aChange{
+    color: #DF660F;
+    cursor: pointer;
+}
+
+a#aChange:hover{
+    text-decoration: underline;
 }

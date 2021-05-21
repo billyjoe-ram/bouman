@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 // import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,17 +15,22 @@ export class LoginComponent implements OnInit {
   @ViewChild('passwordInput') inputPass!: ElementRef;
 
   @ViewChild('box') boxPass!: ElementRef;
+
+  @ViewChild('formPass') form!: NgForm;
   
   public userLogin: any = {};
 
   public messageError: string = "";
+
+  public messageEmail: string = "";
 
   private userData: { name: string, desc: string, area: string } = { name: '', desc: '', area: '' };
   
   constructor(private authService: AuthService, private router: Router,
     private user: UsersService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+  }
 
   async login() {
     let user;
@@ -92,6 +98,14 @@ export class LoginComponent implements OnInit {
       password.type = "password";
       passbox.checked = false;
     }
+  }
+
+  changePassword() {
+    if(this.form.valid){
+      this.messageEmail = 'O link foi enviado! Por favor, verifique a sua caixa de entrada.';
+      return this.authService.getAuth().sendPasswordResetEmail;
+    }
+    return;
   }
 
 }
