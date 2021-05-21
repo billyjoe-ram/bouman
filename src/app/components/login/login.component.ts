@@ -103,14 +103,19 @@ export class LoginComponent implements OnInit {
   changePassword() {
     if(this.form.valid){
       const email = this.form.value.emailChanges;
-      this.authService.getAuth().sendPasswordResetEmail(email).then(function() {
-        const messageEmail = 'O link foi enviado! Por favor, verifique a sua caixa de entrada.';
-        return messageEmail;
-      }).catch(function(error){
-        console.log(error);
-      });
-    }
-    return;
-  }
+        this.authService.getAuth().sendPasswordResetEmail(email).then(() => {
+          this.messageEmail = 'O link foi enviado! Por favor, verifique a sua caixa de entrada ou o lixo eletrônico.';
+        }).catch(error => {
+          console.log(error);
+          this.messageEmail = 'Ocorreu um erro. Por favor, tente novamente mais tarde.';
+        }).finally(() => {
+          let close = document.getElementById('close');
+          close?.click();
+        });
+      }
 
+      setTimeout(() => {
+        this.messageEmail = "";
+      }, 7000);
+    }
 }

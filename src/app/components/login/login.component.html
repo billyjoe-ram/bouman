@@ -47,6 +47,12 @@
       </div>
     </div>
 
+    <div *ngIf="messageEmail">
+      <div class="alert alert-info" role="alert">
+        {{ messageEmail }}
+      </div>
+    </div>
+
     <div class="modal fade" id="changePass" tabindex="-1" role="dialog" aria-labelledby="changePass" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -59,7 +65,7 @@
               <input class="form-control" id="emailChanges" placeholder="Ex.: bouman@email.com" name="emailChanges" type="email" ngModel email required>
             </div>
             <div class="modal-footer">
-              <button type="button" id="submit" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+              <button type="button" id="close" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
               <button type="submit" class="btn btn-bouman-modal" [disabled]="!formPass.valid">Enviar</button>
             </div>
           </form>
