@@ -102,8 +102,13 @@ export class LoginComponent implements OnInit {
 
   changePassword() {
     if(this.form.valid){
-      this.messageEmail = 'O link foi enviado! Por favor, verifique a sua caixa de entrada.';
-      return this.authService.getAuth().sendPasswordResetEmail;
+      const email = this.form.value.emailChanges;
+      this.authService.getAuth().sendPasswordResetEmail(email).then(function() {
+        const messageEmail = 'O link foi enviado! Por favor, verifique a sua caixa de entrada.';
+        return messageEmail;
+      }).catch(function(error){
+        console.log(error);
+      });
     }
     return;
   }
