@@ -12,8 +12,8 @@ export class UsersService {
 
   private area: string | undefined = "";
 
-  private profileImg: String = "/assets/profile-example.png";
-  private wallpImg: String = "/assets/wallpaper-example.jpg";
+  private profileImg: string = "/assets/profile-example.png";
+  private wallpImg: string = "/assets/wallpaper-example.jpg";
   
   constructor(private authService: AuthService, private storage: AngularFireStorage, private store: AngularFirestore) { }
 

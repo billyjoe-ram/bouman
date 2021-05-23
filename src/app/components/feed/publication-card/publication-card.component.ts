@@ -47,6 +47,8 @@ export class PublicationCardComponent implements OnInit {
 
     this.imageSubs = this.user.getProfilePicture(this.profileId).subscribe(image => {
       this.profileImg = image;
+    }, (error) => {
+      this.profileImg = this.user.profasset();
     });
   }
 
