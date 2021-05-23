@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 // import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,17 +15,22 @@ export class LoginComponent implements OnInit {
   @ViewChild('passwordInput') inputPass!: ElementRef;
 
   @ViewChild('box') boxPass!: ElementRef;
+
+  @ViewChild('formPass') form!: NgForm;
   
   public userLogin: any = {};
 
   public messageError: string = "";
+
+  public messageEmail: string = "";
 
   private userData: { name: string, desc: string, area: string } = { name: '', desc: '', area: '' };
   
   constructor(private authService: AuthService, private router: Router,
     private user: UsersService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+  }
 
   async login() {
     let user;
@@ -94,4 +100,34 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  changePassword() {
+    if(this.form.valid){
+      const email = this.form.value.emailChanges;
+        this.authService.getAuth().sendPasswordResetEmail(email).then(() => {
+          this.messageEmail = 'O link foi enviado! Por favor, verifique a sua caixa de entrada ou o lixo eletrônico.';
+        }).catch(error => {
+          switch(error.code){
+            case 'auth/user-not-found':
+              this.messageEmail = 'Este email não está cadastrado.';
+              break;
+            case 'auth/too-many-requests':
+              this.messageEmail = 'Número de tentativas excedido, tente novamente mais tarde.';
+              break;
+            case 'auth/network-request-failed':
+              this.messageEmail = 'Verifique a sua conexão com a internet e tente novamente.';
+              break;
+            default:
+              this.messageEmail = 'Ocorreu um erro inesperado, tente novamente mais tarde.';
+              break; 
+          }
+        }).finally(() => {
+          let close = document.getElementById('close');
+          close?.click();
+        });
+      }
+
+      setTimeout(() => {
+        this.messageEmail = "";
+      }, 7000);
+    }
 }

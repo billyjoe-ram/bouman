@@ -25,7 +25,11 @@
         <input type="checkbox" #box> Exibir senha
       </div>
 
-      <!-- <p>Esqueceu a sua senha? <a href="#">Clique aqui</a></p> -->
+      <div class="row">
+        <div class="col-md-12">
+          <p>Esqueceu a sua senha? <a id="aChange" data-toggle="modal" data-target="#changePass" #changePass>Clique aqui.</a></p>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col-sm-4 col-md-4 col-lg-4"></div>
@@ -40,6 +44,32 @@
     <div *ngIf="messageError">
       <div class="alert alert-danger" role="alert">
         {{ messageError }}
+      </div>
+    </div>
+
+    <div *ngIf="messageEmail">
+      <div class="alert alert-danger" role="alert">
+        {{ messageEmail }}
+      </div>
+    </div>
+
+    <div class="modal fade" id="changePass" tabindex="-1" role="dialog" aria-labelledby="changePass" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="changePass">Problemas com a sua senha?</h5>
+          </div>
+          <form class="form-group" #formPass="ngForm" (ngSubmit)="changePassword()">
+            <div class="modal-body">
+              <p>Digite o seu endereço de email e enviaremos uma link para alteração da senha.</p>
+              <input class="form-control" id="emailChanges" placeholder="Ex.: bouman@email.com" name="emailChanges" type="email" ngModel email required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="close" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-bouman-modal" [disabled]="!formPass.valid">Enviar</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 
@@ -67,6 +97,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
