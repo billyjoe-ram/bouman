@@ -20,6 +20,8 @@ export class ConfigurateComponent implements OnInit {
   public formConfig! : FormGroup;
   public dataConfig = {
     about: '',
+    area: '',
+    subarea: '',
     state: '',
     city: '',
     birth: '',
@@ -64,6 +66,8 @@ export class ConfigurateComponent implements OnInit {
   createForm(){
     this.formConfig = new FormGroup({
       'about' : new FormControl(this.dataConfig.about, [Validators.required, Validators.minLength(15), Validators.maxLength(300)]),
+      'area' : new FormControl(this.dataConfig.area, [Validators.required]),
+      'subarea' : new FormControl(this.dataConfig.subarea, [Validators.required]),
       'state' : new FormControl(this.dataConfig.state, [Validators.required]),
       'city' : new FormControl(this.dataConfig.city, [Validators.required]),
       'birth' : new FormControl(this.dataConfig.birth, [Validators.required, this.valiDate])
@@ -163,15 +167,17 @@ export class ConfigurateComponent implements OnInit {
     if (this.formConfig.valid) {
 
       const description = this.formConfig.value.about;
+      const area = this.formConfig.value.area;
+      const subarea = this.formConfig.value.subarea;
+      const state = this.formConfig.value.area;
+      const city = this.formConfig.value.subarea;
       const date = this.formConfig.value.birth;
-      const state = this.formConfig.value.state;
-      const city = this.formConfig.value.city;
 
       try {
 
         const userProfile = this.store.collection('Profiles').doc(this.userProfile.profileId);
 
-        await this.store.collection('Users').doc(user?.uid).update({ birth: date, state: state, city: city });
+        await this.store.collection('Users').doc(user?.uid).update({ birth: date, state: state, city: city, area: area, subarea: subarea });
 
         await userProfile.update({ desc: description, following: [] });
 

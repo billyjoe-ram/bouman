@@ -6,9 +6,9 @@
         <div class="col-sm-1 col-md-2 col-lg-3"></div>
 
         <!-- Page title -->
-        <div class="col-sm-10 col-md-8 col-lg-6">
+        <!--<div class="col-sm-10 col-md-8 col-lg-6">
             <span class="title">Comece configurando seu perfil</span>
-        </div>
+        </div>-->
         <div class="col-sm-1 col-md-2 col-lg-3"></div>
     </div>
     <div class="row">
@@ -16,7 +16,7 @@
         <div class="col-sm-10 col-md-8 col-lg-6">
             <div class="bouman-form form-group">
                 <!-- Help text -->
-                <span class="form-title">Dados</span>
+                <span class="form-title">Comece configurando o seu perfil</span>
                 <hr>
                 <!-- Form to finish profile data adding -->
                 <form #configForm [formGroup]="formConfig" (ngSubmit)="onSign(formConfig)">
@@ -31,6 +31,31 @@
                                 </textarea>
                             <p *ngIf="f.about.errors && f.about.touched" class="invalid-feedback">Por favor, insira pelo menos
                                 15 caracteres.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="profile-area" class="profile-label">Área de Atuação</label>
+                            <select class="bouman-select form-control" name="area" placeholder="Selecione uma área"
+                            required formControlName="area">
+                                <!--(change)="fillCities()"
+                                [ngClass]="{ 'is-invalid': f.state.errors && f.state.touched}"
+                                <option *ngFor="let state of states" [value]="state.id">{{ state.sigla }}</option>-->
+                            </select>
+                            <p *ngIf="f.area.errors && f.area.touched" class="invalid-feedback">
+                                Por favor, selecione uma área de atuação.
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="profile-subarea" class="profile-label">Subárea de atuação</label>
+                            <select class="bouman-select form-control" name="subarea" placeholder="Selecione uma cidade" 
+                            required formControlName="subarea">
+                                <!--[ngClass]="{ 'is-invalid': f.subarearrors && f.subarea.touched}"
+                                <option *ngFor="let city of cities" [value]="city.id">{{ city.nome }}</option>-->
+                            </select>
+                            <p *ngIf="f.subarea.errors && f.subarea.touched" class="invalid-feedback">
+                                Por favor, selecione uma subárea de atuação.
                             </p>
                         </div>
                     </div>

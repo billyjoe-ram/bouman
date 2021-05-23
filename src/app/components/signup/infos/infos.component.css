@@ -1,3 +1,7 @@
+.container{
+  margin-top: 10vh;
+}
+
 .bouman-info {
   display: flex;
   flex-direction: column;

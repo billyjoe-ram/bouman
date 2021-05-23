@@ -16,14 +16,24 @@
           <label for="desc">Descrição do perfil</label>
           <textarea type="text" class="form-control" id="desc" name="desc" [(ngModel)]="user.desc"></textarea>
 
-          <!-- Selects the value for the area code that's equal to user area code -->
-          <label for="area">Área de Atuação</label>
-          <select class="custom-select bouman-select" id="area" name="area" [(ngModel)]="user.area">
-            <option *ngFor="let area of areas" [value]="area.value"
-              [attr.selected]="user.area == area.value ? true : null">
-              {{ area.name }}
-            </option>
-          </select>
+          <div class="row">
+            <!-- Selects the value for the area code that's equal to user area code -->
+            <div class="col-md-6">
+              <label for="area">Área de atuação</label>
+              <select class="custom-select bouman-select" id="area" name="area" [(ngModel)]="user.area">
+                <option *ngFor="let area of areas" [value]="area.value"
+                  [attr.selected]="user.area == area.value ? true : null">
+                  {{ area.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="subarea">Subárea de atuação</label>
+              <select class="custom-select bouman-select" id="subarea" name="subarea">
+              </select>
+            </div>
+          </div>
+
         </div>
         <div class="row">
           <div class="col-md-10"></div>

@@ -40,7 +40,7 @@ export class InfosComponent implements OnInit {
       this.userRegister = {
         name: this.form.value.name,
         email: this.form.value.email,
-        area: this.form.value.area,
+        //area: this.form.value.area,
         password: this.form.value.passkey,
       };
 

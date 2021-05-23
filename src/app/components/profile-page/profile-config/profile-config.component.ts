@@ -18,7 +18,7 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   
   @ViewChild('modal') modal !: ElementRef;
 
-  public user: any = { name: '', desc: '', area: '', profileId: '' };
+  public user: any = { name: '', desc: '', area: '', subarea: '', profileId: '' };
 
   public areas: any[] = [];
   
