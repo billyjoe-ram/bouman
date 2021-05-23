@@ -106,8 +106,20 @@ export class LoginComponent implements OnInit {
         this.authService.getAuth().sendPasswordResetEmail(email).then(() => {
           this.messageEmail = 'O link foi enviado! Por favor, verifique a sua caixa de entrada ou o lixo eletrônico.';
         }).catch(error => {
-          console.log(error);
-          this.messageEmail = 'Ocorreu um erro. Por favor, tente novamente mais tarde.';
+          switch(error.code){
+            case 'auth/user-not-found':
+              this.messageEmail = 'Este email não está cadastrado.';
+              break;
+            case 'auth/too-many-requests':
+              this.messageEmail = 'Número de tentativas excedido, tente novamente mais tarde.';
+              break;
+            case 'auth/network-request-failed':
+              this.messageEmail = 'Verifique a sua conexão com a internet e tente novamente.';
+              break;
+            default:
+              this.messageEmail = 'Ocorreu um erro inesperado, tente novamente mais tarde.';
+              break; 
+          }
         }).finally(() => {
           let close = document.getElementById('close');
           close?.click();
