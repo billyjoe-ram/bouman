@@ -31,9 +31,7 @@ export class ProjectsService {
       const query = await projectsRef.where('profileId', '==', profile).get();
 
       projects.push(query);
-    })
-
-    console.log(projects);
+    });
 
     return projects;
   }

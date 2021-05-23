@@ -55,7 +55,7 @@ export class UsersService {
       userObject.area = data.area;
       userObject.profileId = data.profileId;
     });
-    // console.log(userObject);
+    
     return userObject;
   }
 

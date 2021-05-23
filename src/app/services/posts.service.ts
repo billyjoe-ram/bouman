@@ -29,9 +29,7 @@ export class PostsService {
       const query = await postsRef.where('profileId', '==', profile).get();
 
       posts.push(query);
-    })
-
-    console.log(posts);
+    });
 
     return posts;
   }

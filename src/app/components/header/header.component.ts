@@ -62,13 +62,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.searchResult.forEach((profile, index) => {
         this.user.getSearchPic(profile.id).then(pic => {
           this.searchResult[index].picture = pic;
-          console.log('Console da Pic:');
-          console.log(pic);
         }).catch(error => {
           this.searchResult[index].picture = this.user.profasset();
         });
-        console.log('Console do profile:');
-        console.log(profile);
       });
     });
   }

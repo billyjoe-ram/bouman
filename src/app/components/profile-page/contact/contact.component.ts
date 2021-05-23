@@ -50,7 +50,7 @@ export class ContactComponent implements OnInit, OnChanges ,OnDestroy {
       try {
         await this.profileService.updateContact(this.profileId, this.userSocial);
       } catch(error) {
-        console.log(error);
+        console.error(error);
       } finally {
         dismissBtn.click();
       }

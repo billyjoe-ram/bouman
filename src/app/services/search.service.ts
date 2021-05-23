@@ -14,7 +14,6 @@ export class SearchService {
     const collection = this.store.collection("Profiles").ref;
 
     const profile = (await collection.where("name", "==", userName).get()).forEach(profile => {
-      console.log(profile);
       profiles.push(profile)
     });
 

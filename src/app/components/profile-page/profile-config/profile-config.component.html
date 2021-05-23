@@ -51,7 +51,7 @@
                 <div id="listData">
                   <h6 class="listItem">Nome: </h6><span>{{ user.name }}</span>
                   <h6 class="listItem">Descrição: </h6><span>{{ user.desc }}</span>
-                  <h6 class="listItem">Área: </h6><span>{{ areas[+user.area - 1].name }}</span>
+                  <h6 class="listItem">Área: </h6><span *ngIf="user.area">{{ areas[+user.area - 1].name }}</span>
                 </div>
               </div>
               <div class="modal-footer">

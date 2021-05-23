@@ -144,7 +144,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
     try { 
       this.profileService.followProfile(this.profileId, this.userFollowing, this.userProfile);
     } catch(error) {
-      console.log(error)
+      console.error(error)
     }
     
   }

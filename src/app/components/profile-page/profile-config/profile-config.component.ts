@@ -20,7 +20,7 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
 
   public user: any = { name: '', desc: '', area: '', profileId: '' };
 
-  public areas: any = {};
+  public areas: any[] = [];
   
   private profileId: string = "";
 
@@ -32,9 +32,6 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
      private auth: AngularFireAuth, private router: Router) { }
 
   ngOnInit(): void {
-    // this.userService.getCollection().then((coll) => {
-    //   this.user = coll;
-    // });
     this.getData();
 
     this.areas = this.areasService.getAreas();
@@ -44,7 +41,6 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     const user = await this.authService.getAuth().currentUser;
     let submit = document.getElementById('submit')
     const formData = form.value;
-    console.log(this.user.profileId)
     try {
       this.profileId = this.user.profileId;
       this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area });
@@ -56,22 +52,6 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     finally{
       submit?.click();
     }
-
-  }
-
-  async onDelete(form: NgForm) {
-    // Prompt the user to re-provide their sign-in credentials
-    const email: string = form.value.email;
-    const password: string = form.value.senha;
-
-    const user = await this.authService.getAuth().currentUser;
-
-    this.authService.getAuth().credential.subscribe((credential)=>{
-      console.log(credential)
-    })
-    
-    console.log(email);
-    console.log(password);
 
   }
   
