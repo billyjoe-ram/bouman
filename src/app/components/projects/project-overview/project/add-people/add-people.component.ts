@@ -15,6 +15,8 @@ export class AddPeopleComponent implements OnInit {
   private userProfilesFollowed: string[] = [];
 
   private profileId: string | undefined = "";
+
+  private selectedProfile: string = "";
   
   private userSubs!: Subscription;
 
@@ -28,8 +30,10 @@ export class AddPeopleComponent implements OnInit {
     this.loadUserData();
   }
 
-  onProfilesSelected() {
-    console.log("People selected");
+  onProfilesSelected(selectedProfile: string) {
+    this.selectedProfile = selectedProfile;
+
+    console.log(this.selectedProfile);
   }
 
   private async loadUserData() {
@@ -44,8 +48,7 @@ export class AddPeopleComponent implements OnInit {
 
   private loadUserProfileData() {
     this.userProfileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
-      this.userProfilesFollowed = profile.following;
-      
+      this.userProfilesFollowed = profile.following;      
       this.loadProfileFollowings();
     });
   }
@@ -54,6 +57,7 @@ export class AddPeopleComponent implements OnInit {
     this.userProfilesFollowed.forEach((profileFollowed, index) => {
       this.profileService.getProfilePromise(profileFollowed).then((profile) => {
         this.profilesFollowed[index] = profile.data();
+        this.profilesFollowed[index].profileId = profileFollowed;
       });
 
       this.usersService.getSearchPic(profileFollowed).then(pic => {

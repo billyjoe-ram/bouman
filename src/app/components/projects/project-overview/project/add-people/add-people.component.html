@@ -11,7 +11,7 @@
             </div>
             <div class="modal-body">
                 <div class="list-group" role="tablist">
-                    <div class="list-group-item" data-toggle="list" *ngFor="let followed of profilesFollowed" (click)="onProfilesSelected()">
+                    <div class="list-group-item" data-toggle="list" *ngFor="let followed of profilesFollowed" (click)="onProfilesSelected(followed.profileId)">
                         <img [src]="followed.picture" alt="Foto de perfil">
                         
                         {{ followed.name }}
@@ -22,7 +22,7 @@
                 <button type="button" id="submit" class="btn btn-outline-secondary"
                     data-dismiss="modal">Cancelar</button>
                 <!-- Add people -->
-                <button type="button" class="btn btn-bouman" data-dismiss="modal">Confirmar</button>
+                <button type="button" class="btn btn-bouman" data-dismiss="modal">Adicionar</button>
             </div>
         </div>
     </div>
