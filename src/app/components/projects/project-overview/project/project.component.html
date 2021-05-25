@@ -63,17 +63,22 @@
     <div class="col-sm-3 col-md-3 col-lg-3 aside-content">
         <button class="btn btn-bouman" (click)="myProjects()">Meus projetos</button>
 
-        <span>Pessoas neste projeto: </span>
-        <div class="list-group">
-            <div class="list-group-item">
-                Você
+        <div class="people-list-div">
+            <span>Pessoas neste projeto: </span>
+            <div class="list-group">
+                <div class="list-group-item">
+                    Você
+                </div>
             </div>
         </div>
+
+        <button class="btn btn-add-people" (click)="onAdd()">+ Adicionar pessoas</button>
 
     </div>
 
     <!-- Modal Trigger -->
-    <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#errorModal" hidden #modalTrigger></button>
+    <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#errorModal" hidden
+        #modalTrigger></button>
     <!-- Error message -->
     <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
         aria-hidden="true">
@@ -86,8 +91,7 @@
                     Por favor, adicione pelo menos um título e um conteúdo ao seu projeto...
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="submit" class="btn btn-bouman"
-                        data-dismiss="modal">OK</button>
+                    <button type="button" id="submit" class="btn btn-bouman" data-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>

@@ -11,6 +11,20 @@ editor {
     margin: 1rem 0 ;
 }
 
+.aside-content .people-list-div {
+    margin: 1rem 0;
+}
+
+.aside-content button.btn-add-people {
+    background-color: #09a9c2;
+    border: 1px solid #07889B;
+    color: #FFFFFF;
+}
+
+.aside-content button.btn-add-people:hover {
+    background-color: #07889B;
+}
+
 /* Changing default bootstrap background color for active item */
 .list-group .list-group-item.active {
     border-color: #eee;
