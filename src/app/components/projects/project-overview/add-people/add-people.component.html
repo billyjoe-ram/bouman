@@ -1,9 +1,5 @@
 <!-- Following People Modal Trigger -->
-<button class="btn btn-add-people" (click)="onAdd()" data-toggle="modal" data-target="#projectsModalTrigger">+ Adicionar pessoas</button>
-
-<!-- Projects Modal Trigger -->
-<!-- <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectsModalTrigger" hidden
-    #projectsModalTrigger></button> -->
+<button class="btn btn-add-people" data-toggle="modal" data-target="#projectsModalTrigger">+ Adicionar pessoas</button>
 
 <!-- Projects display -->
 <div class="modal fade" id="projectsModalTrigger" tabindex="-1" role="dialog"
@@ -24,9 +20,8 @@
             <div class="modal-footer">
                 <button type="button" id="submit" class="btn btn-outline-secondary"
                     data-dismiss="modal">Cancelar</button>
-                <!-- Projects Options Trigger -->
-                <!-- <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectOptions"
-                    data-dismiss="modal" (click)="showProject()">Confirmar</button> -->
+                <!-- Add people -->
+                <button type="button" class="btn btn-bouman" data-dismiss="modal" (click)="onProfilesSelected()">Confirmar</button>
             </div>
         </div>
     </div>

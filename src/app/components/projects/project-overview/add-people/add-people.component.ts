@@ -7,13 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddPeopleComponent implements OnInit {
 
+  public userProfilesFollowed: string[] = [];
+  
   constructor() { }
 
   ngOnInit(): void {
+    this.loadProfileFollowers();
   }
 
-  onAdd() {
-    console.log("Add people clicked");
+  onProfilesSelected() {
+    console.log("People selected");
+  }
+
+  private loadProfileFollowers() {
+    console.log("Profiles followed:\n", this.userProfilesFollowed);
   }
 
 }
