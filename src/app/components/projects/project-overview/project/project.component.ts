@@ -16,7 +16,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   @ViewChild('articleStructure') article!: ElementRef;
   @ViewChild('modalTrigger') modalTrigger!: ElementRef;
   
-  public projTitle: string = "";
+  public projTitle: string = "";  
 
   public projContent: ProjectContent = {
     aResum: "",
@@ -50,13 +50,15 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   public errorState: boolean = false;
 
+  public profileToAdd: string = "";
+
   private projectWorkingPart: string = "";
 
   private contentKey: string = "";
 
-  // private editMode: boolean = false;
-
   private fullProject: string = "";
+
+  private projectObject: any = {};
   
   constructor(private docServ: DocsService, private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
   
@@ -74,6 +76,11 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {    
     this.addEvents();
+  }
+
+  addProfileToProject(profileToAdd: string) {
+    console.log(profileToAdd);
+    console.log(this.projectObject);
   }
 
   async onSubmit() {
@@ -126,6 +133,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     if (!this.newProj) {
       this.docServ.listProject(docId).then((project) => {
         project.forEach(query => {
+          this.projectObject = query.data();
+
           this.projContent = query.data().content;
 
           this.projForm.setValue({'title': query.data().title, 'content': this.projContent });

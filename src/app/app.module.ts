@@ -42,7 +42,7 @@ import { TermsComponent } from './components/terms/terms.component';
 import { LicenseComponent } from './components/terms/license/license.component';
 import { PrivacyComponent } from './components/terms/privacy/privacy.component';
 import { AccountComponent } from './components/terms/account/account.component';
-import { AddPeopleComponent } from './components/projects/project-overview/add-people/add-people.component';
+import { AddPeopleComponent } from './components/projects/project-overview/project/add-people/add-people.component';
 
 registerLocaleData(ptBR);
 

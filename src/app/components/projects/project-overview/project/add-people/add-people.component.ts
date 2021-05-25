@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -10,6 +10,8 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class AddPeopleComponent implements OnInit {
 
+  @Output('selectedProfile') public selectedProfileEvent: EventEmitter<string> = new EventEmitter<string>();
+  
   public profilesFollowed: any = [];
   
   private userProfilesFollowed: string[] = [];
@@ -30,10 +32,13 @@ export class AddPeopleComponent implements OnInit {
     this.loadUserData();
   }
 
-  onProfilesSelected(selectedProfile: string) {
+  onProfilesSelected(selectedProfile: any) {
+    // this.selectedProfileEvent.emit(selectedProfile);
     this.selectedProfile = selectedProfile;
+  }
 
-    console.log(this.selectedProfile);
+  addProfileToProject() {
+    this.selectedProfileEvent.emit(this.selectedProfile);
   }
 
   private async loadUserData() {
