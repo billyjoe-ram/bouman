@@ -190,10 +190,6 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     this.router.navigate(["/projects/overview"]);
   }
 
-  onAdd() {
-    console.log("Add people clicked");
-  }
-
   private addEvents() {
     if (this.article) {
       const list = this.article.nativeElement;

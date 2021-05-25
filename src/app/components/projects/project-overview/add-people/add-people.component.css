@@ -1,0 +1,14 @@
+button.btn-add-people {
+    background-color: #09a9c2;
+    border: 1px solid #07889B;
+    color: #FFFFFF;
+}
+
+button.btn-add-people:hover {
+    background-color: #07889B;
+}
+
+.modal-content .modal-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+}

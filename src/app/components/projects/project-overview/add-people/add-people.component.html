@@ -1,0 +1,33 @@
+<!-- Following People Modal Trigger -->
+<button class="btn btn-add-people" (click)="onAdd()" data-toggle="modal" data-target="#projectsModalTrigger">+ Adicionar pessoas</button>
+
+<!-- Projects Modal Trigger -->
+<!-- <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectsModalTrigger" hidden
+    #projectsModalTrigger></button> -->
+
+<!-- Projects display -->
+<div class="modal fade" id="projectsModalTrigger" tabindex="-1" role="dialog"
+    aria-labelledby="projectsModalTriggerLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Pessoas que você segue
+            </div>
+            <div class="modal-body">
+                <div class="list-group" role="tablist">
+                    <!-- <div class="list-group-item" data-toggle="list" *ngFor="let project of userProjects"
+                        (click)="selectProject(project)">
+                        {{ project.title }}
+                    </div> -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-outline-secondary"
+                    data-dismiss="modal">Cancelar</button>
+                <!-- Projects Options Trigger -->
+                <!-- <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#projectOptions"
+                    data-dismiss="modal" (click)="showProject()">Confirmar</button> -->
+            </div>
+        </div>
+    </div>
+</div>
