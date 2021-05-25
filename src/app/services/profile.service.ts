@@ -34,6 +34,12 @@ export class ProfileService {
     return collection;
   }
 
+  getProfilePromise(profileId: string | undefined) {
+    const collection = this.store.collection('Profiles').doc(profileId).ref.get();
+    
+    return collection;
+  }
+
   async deleteProfile(id: string | undefined) {
     const user = await this.authService.getAuth().currentUser;
 

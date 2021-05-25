@@ -12,3 +12,10 @@ button.btn-add-people:hover {
     font-size: 1.8rem;
     font-weight: bold;
 }
+
+.modal-body .list-group .list-group-item img {
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid #000000;
+    border-radius: 2rem
+}

@@ -47,16 +47,16 @@ export class UsersService {
   getCollection(id: string | undefined) {
     let userObject: {name: string, desc: string, area: string, profileId: string} = { name: "", desc: "", area: "", profileId: ""};
     
-    const collection = this.store.collection('Users').doc(id).valueChanges();
+    const collection = this.store.collection('Users').doc(id).valueChanges().toPromise();
     
-    collection.subscribe((data: any) => {
-      userObject.name = data.name;
-      userObject.desc = data.desc;
-      userObject.area = data.area;
-      userObject.profileId = data.profileId;
-    });
+    // collection.subscribe((data: any) => {
+    //   userObject.name = data.name;
+    //   userObject.desc = data.desc;
+    //   userObject.area = data.area;
+    //   userObject.profileId = data.profileId;
+    // });
     
-    return userObject;
+    return collection;
   }
 
   getProfile(id: string | undefined) {

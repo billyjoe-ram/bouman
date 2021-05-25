@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ProfileService } from 'src/app/services/profile.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'add-people',
@@ -7,20 +10,73 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddPeopleComponent implements OnInit {
 
-  public userProfilesFollowed: string[] = [];
+  public profilesFollowed: any = [];
   
-  constructor() { }
+  private userProfilesFollowed: string[] = [];
+
+  private profileId: string | undefined = "";
+  
+  private userSubs!: Subscription;
+
+  private userProfileSubs!: Subscription;
+
+  private followingSubs!: Subscription;
+  
+  constructor(private usersService: UsersService, private profileService: ProfileService) { }
 
   ngOnInit(): void {
-    this.loadProfileFollowers();
+    this.loadUserData();
   }
 
   onProfilesSelected() {
     console.log("People selected");
   }
 
-  private loadProfileFollowers() {
-    console.log("Profiles followed:\n", this.userProfilesFollowed);
+  private async loadUserData() {
+    const uid: string | undefined = await this.usersService.getUid();
+
+    this.userSubs = this.usersService.getProfile(uid).subscribe((user: any) => {
+      this.profileId =  user.profileId;
+
+      this.loadUserProfileData();
+    });
+  }
+
+  private loadUserProfileData() {
+    this.userProfileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
+      this.userProfilesFollowed = profile.following;
+      
+      this.loadProfileFollowings();
+    });
+  }
+
+  private loadProfileFollowings() {
+    this.userProfilesFollowed.forEach((profileFollowed, index) => {
+      this.profileService.getProfilePromise(profileFollowed).then((profile) => {
+        this.profilesFollowed[index] = profile.data();
+      });
+
+      this.usersService.getSearchPic(profileFollowed).then(pic => {
+        this.profilesFollowed[index].picture = pic;
+      }).catch(() => {
+        this.profilesFollowed[index].picture = this.usersService.profasset();
+      });
+
+    });    
+  }
+
+  ngOnDestroy() {
+    if (this.userSubs) {
+      this.userSubs.unsubscribe();
+    }
+
+    if(this.userProfileSubs) {
+      this.userProfileSubs.unsubscribe();
+    }
+
+    if (this.followingSubs) {
+      this.followingSubs.unsubscribe();
+    }
   }
 
 }
