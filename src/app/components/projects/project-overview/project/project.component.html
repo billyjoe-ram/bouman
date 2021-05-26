@@ -66,8 +66,8 @@
         <div class="people-list-div">
             <span>Pessoas neste projeto: </span>
             <div class="list-group">
-                <div class="list-group-item">
-                    Você
+                <div class="list-group-item" *ngFor="let profile of projectMembers">
+                    {{ profile }}
                 </div>
             </div>
         </div>

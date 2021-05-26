@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DocsService } from 'src/app/services/docs.service';
 import { ProjectContent } from 'src/app/interfaces/projectContent';
 import { UsersService } from 'src/app/services/users.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-project',
@@ -53,6 +54,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   public profileToAdd: string = "";
 
+  public projectMembers: string[] = [];
+
   private projectWorkingPart: string = "";
 
   private contentKey: string = "";
@@ -63,7 +66,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   private mainProjectProfile: string = "";
   
-  constructor(private docServ: DocsService, private auth: AuthService, private router: Router, private route: ActivatedRoute, private usersService: UsersService) { }
+  constructor(private docServ: DocsService, private auth: AuthService, private router: Router, private route: ActivatedRoute, private usersService: UsersService, private profileService: ProfileService) { }
   
   ngOnInit(): void {
     const docId = this.route.snapshot.params['id'];
@@ -85,6 +88,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     const docId = this.route.snapshot.params['id'];
 
     this.docServ.addProfileToProject(this.projectObject, profileToAdd);
+
+    this.loadProjectMembers();
   }
 
   async onSubmit() {
@@ -144,6 +149,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
       this.docServ.listProject(docId).then((project) => {
 
         this.projectObject = project.data();
+
+        this.projectMembers = this.projectObject.members;
 
         this.projContent = this.projectObject.content;
 
@@ -208,6 +215,19 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     this.router.navigate(["/projects/overview"]);
   }
 
+  private loadProjectMembers() {
+    // For each profile / index
+    this.projectMembers.forEach((profile, index) => {
+      this.profileService.getProfilePromise(profile).then((profile: any) => {
+        this.projectMembers[index] = profile.data().name;
+
+        // Splicing long names
+        this.projectMembers[index] = this.projectMembers[index].split(" ").splice(0, 3).join(" ");
+      })
+
+    });
+  }
+
   private addEvents() {
     if (this.article) {
       const list = this.article.nativeElement;
@@ -255,6 +275,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     for (let key in this.projContent) {
       this.editorText += this.projContent[key];
     }
+
+    this.loadProjectMembers();
   }
 
   private async loadOwnerProfile() {
