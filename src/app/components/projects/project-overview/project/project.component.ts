@@ -82,8 +82,9 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   addProfileToProject(profileToAdd: string) {
-    console.log(profileToAdd);
-    console.log(this.projectObject);
+    const docId = this.route.snapshot.params['id'];
+
+    this.docServ.addProfileToProject(this.projectObject, profileToAdd);
   }
 
   async onSubmit() {
@@ -141,15 +142,14 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     // Preventing loading in new projects
     if (!this.newProj) {
       this.docServ.listProject(docId).then((project) => {
-        project.forEach(query => {
-          this.projectObject = query.data();
 
-          this.projContent = query.data().content;
+        this.projectObject = project.data();
 
-          this.projForm.setValue({'title': query.data().title, 'content': this.projContent });
+        this.projContent = this.projectObject.content;
 
-          this.loadProjectContent()
-        });
+        this.projForm.setValue({'title': project.data()?.title, 'content': this.projContent });
+
+        this.loadProjectContent();
       });
 
       // After loading, save a copy to compare it later to see if content changed;

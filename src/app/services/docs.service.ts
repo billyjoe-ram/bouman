@@ -4,17 +4,18 @@ import { Project } from '../interfaces/project';
 import { ProjectContent } from '../interfaces/projectContent';
 import { User } from '../interfaces/user';
 import { AuthService } from './auth.service';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocsService {
 
-  // Path to users collection
-  private usersCollection = this.store.collection<User>('Users');
+  // Path to profiles collection  
+  private profilesCollection = this.store.collection<User>('Profiles');
 
   // Importing modules and services
-  constructor(private store: AngularFirestore, private auth: AuthService) { }
+  constructor(private store: AngularFirestore, private auth: AuthService, private userService: UsersService) { }
 
   // List projects acording to the logged user
   async listProjects() {
@@ -22,7 +23,9 @@ export class DocsService {
     const owner = await this.auth.getAuth().currentUser;
     
     // Retrieving the doc with this user uid
-    const userCollec = this.usersCollection.doc(owner?.uid);
+    const userCollec = this.profilesCollection.doc(owner?.uid);
+
+
 
     // Creating a ref
     const projects = await userCollec.collection<Project>('Projects').ref.get();
@@ -35,20 +38,18 @@ export class DocsService {
     // Current user object
     const owner = await this.auth.getAuth().currentUser;
 
-    // Retrieving the doc with this user uid
-    const userCollec = this.usersCollection.doc(owner?.uid);
+    const userCollec = await this.userService.getCollection(owner?.uid);
 
-    // Retrieving the doc observable
-    const projectRef = userCollec.collection<Project>('Projects').doc(id).valueChanges();
+    const profileId = (userCollec.data() as any).profileId;
+
+    // Retrieving the doc with this user uid
+    const profileCollec = this.profilesCollection.doc(profileId);
 
     // Creating a reference to thihs doc
-    const queryRef = userCollec.collection<Project>('Projects').ref;
-
-    // avoiding that a document saved wrong (not from the user comes)
-    const query = queryRef.where("docId", "==", id).get();
+    const queryRef = profileCollec.collection<Project>('Projects').ref.doc(id).get();
 
     // Returning that query
-    return query;
+    return queryRef;
   }
   
   // Add a project to your user's subcollection
@@ -56,16 +57,19 @@ export class DocsService {
     // Current user object
     const owner = await this.auth.getAuth().currentUser;
 
+    const userCollec = await this.userService.getCollection(owner?.uid);
+
+    const profileId = (userCollec.data() as any).profileId;
+
     // Retrieving the doc with this user uid
-    const userCollec = this.usersCollection.doc(owner?.uid);
+    const profileCollec = this.profilesCollection.doc(profileId); 
 
     // Adding the project to the subcollection
-    const newDoc = await userCollec.collection<Project>('Projects').add(project);
+    const newDoc = await profileCollec.collection<Project>('Projects').add(project);
 
     // Creating a new field with this added doc id, for consulting
     newDoc.update({ "docId": newDoc.id });
-
-    // Returning for if the code needs some more information
+    
     return newDoc;
   }
 
@@ -74,12 +78,37 @@ export class DocsService {
     // Current user object
     const owner = await this.auth.getAuth().currentUser;
 
+    const userCollec = await this.userService.getCollection(owner?.uid);
+
+    const profileId = (userCollec.data() as any).profileId;
+
     // Retrieving the doc with this user uid
-    const userCollec = this.usersCollection.doc(owner?.uid);
+    const profileCollec = this.profilesCollection.doc(profileId);
 
-    const oldDoc = userCollec.collection<Project>('Projects').doc(id);
+    const oldDoc = profileCollec.collection<Project>('Projects').doc(id);
 
-    const updatedDoc = await oldDoc.update({ title: project.title, content: project.content, lastEdit: project.lastEdit });
+    const updatedDoc = oldDoc.update({ title: project.title, content: project.content, lastEdit: project.lastEdit });
+
+    return updatedDoc;
+  }
+
+  addProfileToProject(project: Project, profileId: string) {
+    const projectsCollection = this.profilesCollection.doc(project.ownerId)
+    .collection<Project>('Projects').doc(project.docId);
+
+    let projectMembers = project.members;
+
+    if (!projectMembers.includes(profileId)) {
+      projectMembers.push(profileId);
+    } else {
+      projectMembers = projectMembers.filter((member) => {
+        return member !== profileId;
+      });
+    }
+
+    console.log(projectMembers);
+
+    const updatedDoc = projectsCollection.update({ members: projectMembers })
 
     return updatedDoc;
   }
@@ -87,7 +116,7 @@ export class DocsService {
   async deleteProject(id: string) {
     const owner = await this.auth.getAuth().currentUser;
 
-    const userCollec = this.usersCollection.doc(owner?.uid);
+    const userCollec = this.profilesCollection.doc(owner?.uid);
 
     const oldDoc = userCollec.collection<Project>('Projects').doc(id);
 
