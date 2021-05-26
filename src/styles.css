@@ -53,3 +53,9 @@ button.btn-bouman-secondary:hover {
 
     background: #07889B;       
 }
+
+/* Changing default bootstrap background color for active item */
+.list-group .list-group-item.active {
+    border-color: #eee;
+    background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
+}
