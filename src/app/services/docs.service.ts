@@ -23,12 +23,15 @@ export class DocsService {
     const owner = await this.auth.getAuth().currentUser;
     
     // Retrieving the doc with this user uid
-    const userCollec = this.profilesCollection.doc(owner?.uid);
+    const userCollec = await this.userService.getCollection(owner?.uid);
 
+    const profileId = (userCollec.data() as any).profileId;
 
+    // Retrieving the doc with this user uid
+    const profileCollec = this.profilesCollection.doc(profileId);
 
     // Creating a ref
-    const projects = await userCollec.collection<Project>('Projects').ref.get();
+    const projects = await profileCollec.collection<Project>('Projects').ref.get();
     
     return projects;
   }
@@ -45,7 +48,7 @@ export class DocsService {
     // Retrieving the doc with this user uid
     const profileCollec = this.profilesCollection.doc(profileId);
 
-    // Creating a reference to thihs doc
+    // Creating a reference to this doc
     const queryRef = profileCollec.collection<Project>('Projects').ref.doc(id).get();
 
     // Returning that query
