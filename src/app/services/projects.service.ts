@@ -16,7 +16,7 @@ export class ProjectsService {
   constructor(private store: AngularFirestore) { }
 
   listProfileProjects(profileId: string) {
-    const projectsRef = this.profilesCollection.doc(profileId).collection('Projects');
+    const projectsRef = this.profilesCollection.doc(profileId).collection('PostedProjects');
     
     const profileProjects = projectsRef.ref.get();
     
@@ -38,7 +38,7 @@ export class ProjectsService {
 
   async addProject(profileId: string | undefined, project: { title: string, content: string, keywords: string[] }) {
     // Going inside the profile projects
-    const userProjects = this.profilesCollection.doc(profileId).collection<PostedProject>('Projects');
+    const userProjects = this.profilesCollection.doc(profileId).collection<PostedProject>('PostedProjects');
 
     // Adding a new projects
     const newProject = await userProjects.add(
@@ -59,7 +59,7 @@ export class ProjectsService {
 
   deleteProject(profileId: string | undefined, projectId: string) {
     // Going inside the profile projects
-    const userProjects = this.profilesCollection.doc(profileId).collection('Projects');
+    const userProjects = this.profilesCollection.doc(profileId).collection('PostedProjects');
 
     // Deleting a project
     const deletedProj = userProjects.doc(projectId).delete();
@@ -72,7 +72,7 @@ export class ProjectsService {
     let likes: string[] = project.likes;
 
     // Going inside the profile projects
-    const userPosts = this.profilesCollection.doc(project.profileId).collection('Projects');
+    const userPosts = this.profilesCollection.doc(project.profileId).collection('PostedProjects');
 
     if (likes.includes(profileId as string)) {
       likes = likes.filter(element => {
