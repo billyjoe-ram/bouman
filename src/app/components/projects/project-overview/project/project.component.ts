@@ -224,7 +224,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
         this.projectMembersName[index] = profile.data().name;
 
         // Splicing long names
-        this.projectMembersName[index] = this.projectMembers[index].split(" ").splice(0, 3).join(" ");
+        this.projectMembersName[index] = this.projectMembersName[index].split(" ").splice(0, 3).join(" ");
       })
 
     });

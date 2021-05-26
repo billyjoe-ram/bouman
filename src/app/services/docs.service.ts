@@ -109,8 +109,6 @@ export class DocsService {
       });
     }
 
-    console.log(projectMembers);
-
     const updatedDoc = projectsCollection.update({ members: projectMembers })
 
     return updatedDoc;

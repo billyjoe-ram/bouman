@@ -16,7 +16,6 @@ export class ProjectOverviewComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.docServ.listProjects().then(data => {
-      console.log(data);
       data.forEach((query) => {
         this.projects.push(query.data());
       });
