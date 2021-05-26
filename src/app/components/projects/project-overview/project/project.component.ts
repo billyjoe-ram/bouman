@@ -56,6 +56,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   public projectMembers: string[] = [];
 
+  public projectMembersName: string[] = [];
+
   private projectWorkingPart: string = "";
 
   private contentKey: string = "";
@@ -219,10 +221,10 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     // For each profile / index
     this.projectMembers.forEach((profile, index) => {
       this.profileService.getProfilePromise(profile).then((profile: any) => {
-        this.projectMembers[index] = profile.data().name;
+        this.projectMembersName[index] = profile.data().name;
 
         // Splicing long names
-        this.projectMembers[index] = this.projectMembers[index].split(" ").splice(0, 3).join(" ");
+        this.projectMembersName[index] = this.projectMembers[index].split(" ").splice(0, 3).join(" ");
       })
 
     });
