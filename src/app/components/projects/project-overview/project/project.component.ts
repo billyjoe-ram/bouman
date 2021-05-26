@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DocsService } from 'src/app/services/docs.service';
 import { ProjectContent } from 'src/app/interfaces/projectContent';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-project',
@@ -59,8 +60,10 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   private fullProject: string = "";
 
   private projectObject: any = {};
+
+  private mainProjectProfile: string = "";
   
-  constructor(private docServ: DocsService, private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private docServ: DocsService, private auth: AuthService, private router: Router, private route: ActivatedRoute, private usersService: UsersService) { }
   
   ngOnInit(): void {
     const docId = this.route.snapshot.params['id'];
@@ -95,12 +98,16 @@ export class ProjectComponent implements OnInit, AfterViewInit {
       if (this.newProj) {
         // Loading object key
         const projContent = this.projectWorkingPart;
+
+        const projMembers: string[] = [];
+
+        projMembers.push(this.mainProjectProfile);
   
         // Saving content from the form value to the object
         this.projContent[projContent] = this.projForm.value.content;
   
         // Creating a new object based on the content and aditional information
-        const project = { ownerId: user?.uid, title: submitted.title, content: this.projContent, createdAt: date, lastEdit: date };
+        const project = { ownerId: this.mainProjectProfile, title: submitted.title, content: this.projContent, createdAt: date, lastEdit: date, members: projMembers  };
   
         // Adding a project, then back to your projects
         this.docServ.addProject(project).finally(() => {
@@ -128,6 +135,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   loadProject() {
     const docId: string = this.route.snapshot.params['id'];
+
+    this.loadOwnerProfile();
 
     // Preventing loading in new projects
     if (!this.newProj) {
@@ -246,6 +255,14 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     for (let key in this.projContent) {
       this.editorText += this.projContent[key];
     }
+  }
+
+  private async loadOwnerProfile() {
+    const user = await this.auth.getAuth().currentUser;
+
+    this.usersService.getCollection(user?.uid).then((user: any) => {
+      this.mainProjectProfile = user.data().profileId;
+    });
   }
 
 }

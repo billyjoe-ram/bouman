@@ -25,12 +25,9 @@ export class DocsService {
     const userCollec = this.usersCollection.doc(owner?.uid);
 
     // Creating a ref
-    const projectsRef = await userCollec.collection<Project>('Projects').ref;
-
-    // Create a query against the collection.
-    const query = projectsRef.where("ownerId", "==", `${owner?.uid}`).get();
+    const projects = await userCollec.collection<Project>('Projects').ref.get();
     
-    return query;
+    return projects;
   }
 
   // List one specific project

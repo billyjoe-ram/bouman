@@ -47,7 +47,7 @@ export class UsersService {
   getCollection(id: string | undefined) {
     let userObject: {name: string, desc: string, area: string, profileId: string} = { name: "", desc: "", area: "", profileId: ""};
     
-    const collection = this.store.collection('Users').doc(id).valueChanges().toPromise();
+    const collection = this.store.collection('Users').doc(id).ref.get();
     
     // collection.subscribe((data: any) => {
     //   userObject.name = data.name;
@@ -59,8 +59,8 @@ export class UsersService {
     return collection;
   }
 
-  getProfile(id: string | undefined) {
-    const collection = this.store.collection('Users').doc(id).valueChanges();
+  getProfile(uid: string | undefined) {
+    const collection = this.store.collection('Users').doc(uid).valueChanges();
     
     return collection;
   }
