@@ -31,7 +31,7 @@ export class DocsService {
     const projects = this.projectsCollection.ref;
 
     // Creating a query
-    const query = projects.where(profileId, "in", "members").get();
+    const query = projects.where("members", 'array-contains', profileId).get();
     
     return query;
   }
