@@ -25,7 +25,7 @@ export class ProfileService {
 
   updateProfile(id: string | undefined, profileId: string | undefined, user: { name: string, description: string, area: string, subarea: string }) {
     this.profileCollection.doc(profileId).update({name: user.name, desc: user.description});
-    this.userCollection.doc(id).update({area: user.area});
+    this.userCollection.doc(id).update({area: user.area, subarea: user.subarea });
   }
 
   getProfile(profileId: string | undefined) {

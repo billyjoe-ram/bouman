@@ -3,6 +3,7 @@ export interface User {
     name?: string;
     email: string;
     area?: string;
+    subarea?: string
     desc?: string;
     birth?: Date;
     state?: string;

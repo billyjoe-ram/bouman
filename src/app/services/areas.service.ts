@@ -30,8 +30,6 @@ export class AreasService {
     subareasCollection.forEach((subarea) => {
       subareas[index] = subarea.data();
       index ++;
-      console.log('Subarea da Service:');
-      console.log(subarea);
     });
 
     return subareas;
@@ -40,9 +38,5 @@ export class AreasService {
   async getProjectAreas(area: string, subarea: string){
 
   }
-
-  // Adding only to the array
-  /*addArea(area: Area) {
-    this.areas.push(area);
-  }*/
+    
 }

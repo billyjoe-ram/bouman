@@ -21,9 +21,9 @@
             <div class="col-md-6">
               <label for="area">Área de atuação</label>
               <select class="custom-select bouman-select" id="area" name="area" [(ngModel)]="user.area"
-              (change)="getSubareas(user.area)" formControlName="area">
+              (change)="getSubareas()">
                 <option *ngFor="let area of areas"
-                  [attr.selected]="user.area == area.value ? true : null">
+                  [attr.selected]="user.area == area.value ? true : null" [value]="area.value">
                   {{ area.name }}
                 </option>
               </select>
@@ -33,7 +33,7 @@
               <select class="custom-select bouman-select" id="subarea" name="subarea" [(ngModel)]="user.subarea"
                 formControlName="subarea">
                 <option *ngFor="let subarea of subareas"
-                  [attr.selected]="user.subarea == subarea.value ? true : null">
+                  [attr.selected]="user.subarea == subarea.value ? true : null" [value]="subarea.value">
                   {{ subarea.name }}
                 </option>
               </select>
@@ -67,7 +67,7 @@
                 <div id="listData">
                   <h6 class="listItem">Nome: </h6><span>{{ user.name }}</span>
                   <h6 class="listItem">Descrição: </h6><span>{{ user.desc }}</span>
-                  <h6 class="listItem">Área: </h6><span *ngIf="user.area">{{ areas[+user.area - 1].name }}</span>
+                  <h6 class="listItem">Área: </h6><span *ngIf="user.area">{{ areas[+user.area].name }}</span>
                 </div>
               </div>
               <div class="modal-footer">

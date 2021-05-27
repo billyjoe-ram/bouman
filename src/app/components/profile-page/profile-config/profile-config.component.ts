@@ -16,7 +16,8 @@ import { Router } from '@angular/router';
 })
 export class ProfileConfigComponent implements OnInit, OnDestroy {
   
-  @ViewChild('modal') modal !: ElementRef;
+  @ViewChild('modal') modal!: ElementRef;
+  @ViewChild('profConfForm') form!: NgForm;
 
   public user: any = { name: '', desc: '', area: '', subarea: '', profileId: '' };
 
@@ -60,12 +61,15 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   
   async getData(){
     const user = await this.authService.getAuth().currentUser;
-    this.getcoll = this.userService.getProfile(user?.uid).subscribe((data:any)=>{
-      this.user = data;
-      this.getprof = this.service.getProfile(this.user.profileId).subscribe((data : any)=>{
+    this.getcoll = this.userService.getProfile(user?.uid).subscribe((data:any) => {
+      this.user.area = data.area;
+      console.log(data);
+      this.user.subarea = data.subarea || "00";
+      this.user.profileId = data.profileId;
+      this.getprof = this.service.getProfile(this.user.profileId).subscribe((data : any) => {
         this.user.name = data.name;
-        this.user.desc = data.desc;
-    })
+        this.user.desc = data.desc;        
+      });
     });
   }
 
@@ -77,16 +81,15 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   getAreas(){
     this.areasService.getAreas().then((areas) => {
       this.areas = areas;
-      console.log('Areas do TS:');
-      console.log(this.areas);
     });
   }
 
-  getSubareas(area: string){
-    this.areasService.getSubarea(area).then((subareas) => {
+  getSubareas() {
+    this.subareas = [];
+    const areaId = this.form.value.area;
+
+    this.areasService.getSubarea(areaId).then((subareas) => {
       this.subareas = subareas;
-      console.log('Subareas do TS:');
-      console.log(this.subareas);
     });
   }
 
