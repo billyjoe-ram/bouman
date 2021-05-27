@@ -68,6 +68,7 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     })
     });
   }
+
   ngOnDestroy(){
     this.getcoll.unsubscribe();
     this.getprof.unsubscribe();
@@ -76,6 +77,16 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   getAreas(){
     this.areasService.getAreas().then((areas) => {
       this.areas = areas;
+      console.log('Areas do TS:');
+      console.log(this.areas);
+    });
+  }
+
+  getSubareas(area: string){
+    this.areasService.getSubarea(area).then((subareas) => {
+      this.subareas = subareas;
+      console.log('Subareas do TS:');
+      console.log(this.subareas);
     });
   }
 

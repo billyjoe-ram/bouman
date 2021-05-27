@@ -38,10 +38,10 @@
                         <div class="col-sm-12 col-md-6 col-lg-6">
                             <label for="profile-area" class="profile-label">Área de Atuação</label>
                             <select class="bouman-select form-control" name="area" placeholder="Selecione uma área"
-                            required formControlName="area">
-                                <!--(change)="fillCities()"
-                                [ngClass]="{ 'is-invalid': f.state.errors && f.state.touched}"
-                                <option *ngFor="let state of states" [value]="state.id">{{ state.sigla }}</option>-->
+                            (change)="getSubareas()" required formControlName="area" [ngClass]="{ 'is-invalid': f.area.errors && f.area.touched}">
+                                <option *ngFor="let area of areas" [value]="area.id">
+                                    {{ area.name }}
+                                </option>
                             </select>
                             <p *ngIf="f.area.errors && f.area.touched" class="invalid-feedback">
                                 Por favor, selecione uma área de atuação.
@@ -50,9 +50,10 @@
                         <div class="col-sm-12 col-md-6 col-lg-6">
                             <label for="profile-subarea" class="profile-label">Subárea de atuação</label>
                             <select class="bouman-select form-control" name="subarea" placeholder="Selecione uma cidade" 
-                            required formControlName="subarea">
-                                <!--[ngClass]="{ 'is-invalid': f.subarearrors && f.subarea.touched}"
-                                <option *ngFor="let city of cities" [value]="city.id">{{ city.nome }}</option>-->
+                            required formControlName="subarea" [ngClass]="{ 'is-invalid': f.subarearrors && f.subarea.touched}">
+                                <option *ngFor="let subarea of subareas" [value]="subarea.id">
+                                    {{ subarea.name }}
+                                </option>
                             </select>
                             <p *ngIf="f.subarea.errors && f.subarea.touched" class="invalid-feedback">
                                 Por favor, selecione uma subárea de atuação.

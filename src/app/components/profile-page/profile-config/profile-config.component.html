@@ -20,8 +20,9 @@
             <!-- Selects the value for the area code that's equal to user area code -->
             <div class="col-md-6">
               <label for="area">Área de atuação</label>
-              <select class="custom-select bouman-select" id="area" name="area" [(ngModel)]="user.area">
-                <option *ngFor="let area of areas" [value]="area.value"
+              <select class="custom-select bouman-select" id="area" name="area" [(ngModel)]="user.area"
+              (change)="getSubareas(user.area)" formControlName="area">
+                <option *ngFor="let area of areas"
                   [attr.selected]="user.area == area.value ? true : null">
                   {{ area.name }}
                 </option>
@@ -29,8 +30,9 @@
             </div>
             <div class="col-md-6">
               <label for="subarea">Subárea de atuação</label>
-              <select class="custom-select bouman-select" id="subarea" name="subarea" [(ngModel)]="user.subarea">
-                <option *ngFor="let subarea of subareas" [value]="subarea.value"
+              <select class="custom-select bouman-select" id="subarea" name="subarea" [(ngModel)]="user.subarea"
+                formControlName="subarea">
+                <option *ngFor="let subarea of subareas"
                   [attr.selected]="user.subarea == subarea.value ? true : null">
                   {{ subarea.name }}
                 </option>

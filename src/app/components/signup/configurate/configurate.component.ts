@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AbstractControl, FormBuilder, NgForm, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { IbgeService } from 'src/app/services/ibge.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -37,6 +38,9 @@ export class ConfigurateComponent implements OnInit {
 
   private profileSubs!: Subscription;
 
+  public areas: any[] = [];
+  public subareas: any[] = [];
+
   messageError: string = '';
 
   private userProfile: any = {};
@@ -47,7 +51,8 @@ export class ConfigurateComponent implements OnInit {
     private ibgeService: IbgeService,
     private router: Router,
     private usersService: UsersService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private areasService: AreasService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +61,8 @@ export class ConfigurateComponent implements OnInit {
     this.getStates();
 
     this.getData();
+
+    this.getAreas();
   }
 
   //retorna os controles do formulário('about', 'state', 'city' e 'birth') para serem utilizados no *ngIf do formulário no HTML
@@ -252,6 +259,26 @@ export class ConfigurateComponent implements OnInit {
       });
     });
     
+  }
+
+  getAreas(){
+    this.areasService.getAreas().then((areas) => {
+      this.areas = areas;
+    });
+
+    console.log('Areas do TS de config');
+    console.log(this.areas);
+  }
+
+  getSubareas(){
+    const id = this.formConfig.value.subarea;
+
+    this.areasService.getSubarea(id).then((subareas) => {
+      this.subareas = subareas;
+    });
+
+    console.log('Subareas do TS de config');
+    console.log(this.subareas);
   }
 
   async getData(){
