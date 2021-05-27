@@ -45,7 +45,7 @@ export class UsersService {
   }
   
   getCollection(id: string | undefined) {
-    let userObject: {name: string, desc: string, area: string, profileId: string} = { name: "", desc: "", area: "", profileId: ""};
+    let userObject: {name: string, desc: string, area: string, subarea: string, profileId: string} = { name: "", desc: "", area: "", subarea: "", profileId: ""};
     
     const collection = this.store.collection('Users').doc(id).valueChanges();
     
@@ -53,6 +53,7 @@ export class UsersService {
       userObject.name = data.name;
       userObject.desc = data.desc;
       userObject.area = data.area;
+      userObject.area = data.subarea;        
       userObject.profileId = data.profileId;
     });
     

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Area } from '../interfaces/areas';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { Area } from '../interfaces/areas';
 export class AreasService {
 
   // This is only temporary, in future the data will come from DB
-  private areas: Area[] = [
+  /*private areas: Area[] = [
     { name: 'Administração', value: 1 },
     { name: 'Arquitetura e Urbanismo', value: 2 },
     { name: 'Ciências Biológicas', value: 3 },
@@ -37,17 +38,26 @@ export class AreasService {
     { name: 'Química', value: 27 },
     { name: 'Serviço Social', value: 28 },
     { name: 'Outros', value: 0 }
-  ];
+  ];*/
   
-  constructor() { }
+  constructor(private store: AngularFirestore) { }
 
   // Getting Areas
-  getAreas() {
-    return this.areas;
+  async getAreas() {
+    const areasStore = this.store.collection("Fapesp");
+    const areasCollection = await areasStore.ref.get();
+    const areas : any[] = [];
+    let index = 0;
+    areasCollection.forEach((area) => {
+      areas[index] = area.data();
+      index ++;
+    });
+
+    return areas;
   }
 
   // Adding only to the array
-  addArea(area: Area) {
+  /*addArea(area: Area) {
     this.areas.push(area);
-  }
+  }*/
 }

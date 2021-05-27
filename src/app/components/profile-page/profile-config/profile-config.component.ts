@@ -21,6 +21,8 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   public user: any = { name: '', desc: '', area: '', subarea: '', profileId: '' };
 
   public areas: any[] = [];
+
+  public subareas: any[] = [];
   
   private profileId: string = "";
 
@@ -34,7 +36,8 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getData();
 
-    this.areas = this.areasService.getAreas();
+    this.getAreas();
+    //this.areas = this.areasService.getAreas();
   }
 
   async onSubmit(form: NgForm) {
@@ -43,7 +46,7 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     const formData = form.value;
     try {
       this.profileId = this.user.profileId;
-      this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area });
+      this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area, subarea: formData.subarea });
       this.router.navigate(["/profiles/", this.profileId]);
     }
     catch(err){
@@ -68,6 +71,12 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     this.getcoll.unsubscribe();
     this.getprof.unsubscribe();
+  }
+
+  getAreas(){
+    this.areasService.getAreas().then((areas) => {
+      this.areas = areas;
+    });
   }
 
 }
