@@ -8,16 +8,18 @@ import { AuthService } from '../services/auth.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private ngAuth: AuthService) {}
+  constructor(private ngAuth: AuthService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Promise(resolve => {
       this.ngAuth.getAuth().onAuthStateChanged(user => {
-        if (!user?.emailVerified) {
-          this.ngAuth.logout();        
-        }
+        if (user) {                  
+          if (user.emailVerified) {
+            this.router.navigate(["/feed"]);
+          }
+        }        
 
         resolve(user?.emailVerified ? true : false);
       });

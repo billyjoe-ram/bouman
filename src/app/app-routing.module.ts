@@ -15,12 +15,13 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { LicenseComponent } from './components/terms/license/license.component';
+import { ConfigGuard } from './guards/config.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },
   { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [LoginGuard] },
-  { path: 'config',  component: ConfigurateComponent, canActivate: [AuthGuard] },
+  { path: 'config',  component: ConfigurateComponent, canActivate: [ConfigGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard], children: [
   { path: '',  redirectTo: 'overview', pathMatch: 'full'},
