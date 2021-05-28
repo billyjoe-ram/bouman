@@ -65,7 +65,6 @@ export class ConfigurateComponent implements OnInit {
     this.getAreas();
   }
 
-  //retorna os controles do formulário('about', 'state', 'city' e 'birth') para serem utilizados no *ngIf do formulário no HTML
   get f() {
     return this.formConfig.controls; 
   }
@@ -204,6 +203,7 @@ export class ConfigurateComponent implements OnInit {
             this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
             break;
         }
+        console.log(error);
 
       }
     }
@@ -220,10 +220,11 @@ export class ConfigurateComponent implements OnInit {
       user.sendEmailVerification().then(() => {
         // Email enviado corretamente.
 
-        user.providerData.forEach((profile:any) => {
+        user.providerData.forEach(() => {
           document.getElementById("ModalVerify")?.click();
         });
       }).catch((error) => {
+        console.log(error);
         // Um erro ocorreu.        
         window.alert('Um erro ocorreu, verifique se na sua caixa de entrada já não possui um link de verificação...');        
       });
@@ -281,7 +282,7 @@ export class ConfigurateComponent implements OnInit {
     let profileId = "";
         
     this.profileSubs = this.usersService.getProfile(user?.uid).subscribe((profile: any) => {
-      this.userProfile = profile.profileId;
+      this.userProfile.profileId = profile.profileId;
     });
   }
 
