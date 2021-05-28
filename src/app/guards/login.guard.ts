@@ -9,8 +9,8 @@ import { UsersService} from '../services/users.service';
 })
 export class LoginGuard implements CanActivate {
 
-  constructor(private ngAuth: AuthService, private router: Router, private userService : UsersService) {}
-  userdata : {name : string, desc : string, area : string} = {name: "", desc: "", area: ""};
+  constructor(private ngAuth: AuthService, private router: Router) {}
+  
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

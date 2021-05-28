@@ -26,10 +26,23 @@ export class LoginComponent implements OnInit {
 
   private userData: { name: string, desc: string, area: string } = { name: '', desc: '', area: '' };
   
-  constructor(private authService: AuthService, private router: Router,
-    private user: UsersService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private user: UsersService
+  ) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    this.authService.getAuth().onAuthStateChanged((user) => {
+      if (user && !user?.emailVerified) {
+        this.messageError =  "Parece que este e-mail ainda não está verificado.";
+      }
+
+      // if(!user?.emailVerified) {
+      //   this.messageError =  "Parece que este e-mail ainda não está verificado.";
+      // }
+
+    });
   }
 
   async login() {
