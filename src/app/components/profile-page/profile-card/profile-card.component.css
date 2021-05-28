@@ -83,15 +83,25 @@
 }
 
 .changeProfile {
+  display: block;
   position: absolute;
-
+  opacity: 0%;
   margin-top: 10%;
   margin-left: 2%;
 }
+.changeProfile:hover{
+  opacity: 80%;
+}
 
 .changeWall{
+  text-shadow: #000000 0px 0px 10px;
+  opacity: 20%;
   text-align: center;
   width: 50%;
+}
+
+.changeWall:hover {
+  opacity: 80%;
 }
 
 .card .card-body #labelPerfil {

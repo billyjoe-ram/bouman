@@ -22,9 +22,9 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   @Input('publicSize') public publicSize: number = 0;
 
   @Output('content') public content: EventEmitter<string> = new EventEmitter<string>();
-  
+
   @ViewChild('btnFollow') btnFollow!: ElementRef;
-  
+
   public esconder: boolean = false;
 
   public profileImg: any = "";
@@ -33,8 +33,8 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   private userProfile: string = "";
   private userFollowing: string[] = [];
 
-  private i: number = 0;
-  
+  private checkorder: number = 0;
+
   private profile!: Subscription;
   private wallpaper!: Subscription;
 
@@ -54,19 +54,19 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
     private auth: AuthService,
     private user: UsersService,
     private profileService: ProfileService,
-    private usersServices : UsersService,
+    private usersServices: UsersService,
     private route: ActivatedRoute) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngOnChanges() {
     this.esconder = false;
 
-    if(this.profileId) {
+    if (this.profileId) {
       // Loading profile data
-      this.loadData();      
+      this.loadData();
     }
-       
+
   }
 
   ngOnDestroy() {
@@ -77,33 +77,61 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
     this.userProfileSubs.unsubscribe();
   }
 
+  loadPhoto(file: any, type: any) {
+    const reader = new FileReader();
+    reader.addEventListener('load', (evento) => {
+      if (type == 'profile') {
+        this.profileImg = evento.target?.result;
+      }
+      if (type == 'background') {
+        this.wallpImg = evento.target?.result;
+      }
+
+    });
+    reader.readAsDataURL(file);
+  }
+
   getProfileImg(event: any) {
     this.imgPath = event.target.files[0];
     this.imgcheck = true;
+    // Check if the file is an image.
+    if (this.imgPath.type && !this.imgPath.type.startsWith('image/')) {
+      console.log('File is not an image.', this.imgPath.type, this.imgPath);
+      return;
+    }
+    this.loadPhoto(this.imgPath, 'profile');
   }
 
   getWallpImg(event: any) {
     this.backgroundPath = event.target.files[0];
-    this.backcheck = true
+    this.backcheck = true;
+    if (this.backgroundPath.type && !this.backgroundPath.type.startsWith('image/')) {
+      console.log('File is not an image.', this.imgPath.type, this.imgPath);
+      return;
+    }
+    this.loadPhoto(this.backgroundPath, 'background');
   }
 
   async saveFotos() {
-
-    const profImgPath = `profiles/${this.profileId}/profile-pictures/profile${this.profileId}`;
-    const wlppImgPath = `profiles/${this.profileId}/wallpaper-pictures/wallpaper${this.profileId}`;
-    if (this.imgcheck == true) {
-      const refProf = await this.storage.upload(profImgPath, this.imgPath);
-      refProf.ref.getDownloadURL().then(url => {
-        this.profileImg = url;
-      });
+    this.checkorder++;
+    console.log(this.checkorder)
+    if (this.checkorder == 1) {
+      const profImgPath = `profiles/${this.profileId}/profile-pictures/profile${this.profileId}`;
+      const wlppImgPath = `profiles/${this.profileId}/wallpaper-pictures/wallpaper${this.profileId}`;
+      if (this.imgcheck == true) {
+        const refProf = await this.storage.upload(profImgPath, this.imgPath);
+        refProf.ref.getDownloadURL().then(url => {
+          this.profileImg = url;
+        });
+      }
+      if (this.backcheck == true) {
+        const refWlpp = await this.storage.upload(wlppImgPath, this.backgroundPath);
+        refWlpp.ref.getDownloadURL().then(url => {
+          this.wallpImg = url;
+        });
+      }
+      this.checkorder = 0;
     }
-    if (this.backcheck == true) {
-      const refWlpp = await this.storage.upload(wlppImgPath, this.backgroundPath);
-      refWlpp.ref.getDownloadURL().then(url => {
-        this.wallpImg = url;
-      });
-    }
-
   }
 
   async loadData() {
@@ -122,7 +150,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
     this.userSubs = (await this.usersServices.getProfile(this.userId)).subscribe((user: any) => {
 
       this.userProfile = user.profileId;
-      
+
       this.userProfileSubs = this.profileService.getProfile(user.profileId).subscribe((profile: any) => {
         this.userFollowing = profile.following;
 
@@ -141,12 +169,12 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onFollow() {
-    try { 
+    try {
       this.profileService.followProfile(this.profileId, this.userFollowing, this.userProfile);
-    } catch(error) {
+    } catch (error) {
       console.error(error)
     }
-    
+
   }
 
   listPosts() {

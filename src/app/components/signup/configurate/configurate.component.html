@@ -2,7 +2,7 @@
 <secondary-header></secondary-header>
 
 <div class="container">
-    <div class="row">        
+    <div class="row">
         <div class="col-sm-1 col-md-2 col-lg-3"></div>
 
         <!-- Page title -->
@@ -26,10 +26,11 @@
                                     caracteres</span></label>
                             <textarea name="about" id="profile-about" maxlength="300" minlength="15"
                                 placeholder="Descreva um pouco de quem você é e do seu trabalho para a comunidade."
-                                name="desc" class="form-control" required formControlName="about" 
+                                name="desc" class="form-control" required formControlName="about"
                                 [ngClass]="{ 'is-invalid': f.about.errors && f.about.touched}">
                                 </textarea>
-                            <p *ngIf="f.about.errors && f.about.touched" class="invalid-feedback">Por favor, insira pelo menos
+                            <p *ngIf="f.about.errors && f.about.touched" class="invalid-feedback">Por favor, insira pelo
+                                menos
                                 15 caracteres.
                             </p>
                         </div>
@@ -38,7 +39,8 @@
                         <div class="col-sm-12 col-md-6 col-lg-6">
                             <label for="profile-area" class="profile-label">Área de Atuação</label>
                             <select class="bouman-select form-control" name="area" placeholder="Selecione uma área"
-                            (change)="getSubareas()" formControlName="area" [ngClass]="{ 'is-invalid': f.area.errors && f.area.touched}">
+                                (change)="getSubareas()" formControlName="area"
+                                [ngClass]="{ 'is-invalid': f.area.errors && f.area.touched}">
                                 <option *ngFor="let area of areas" [value]="area.value">
                                     {{ area.name }}
                                 </option>
@@ -49,7 +51,9 @@
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-6">
                             <label for="profile-subarea" class="profile-label">Subárea de atuação</label>
-                            <select class="bouman-select form-control" name="subarea" placeholder="Selecione uma cidade" formControlName="subarea" [ngClass]="{ 'is-invalid': f.subarearrors && f.subarea.touched}">
+                            <select class="bouman-select form-control" name="subarea" placeholder="Selecione uma cidade"
+                                formControlName="subarea"
+                                [ngClass]="{ 'is-invalid': f.subarearrors && f.subarea.touched}">
                                 <option *ngFor="let subarea of subareas" [value]="subarea.value">
                                     {{ subarea.name }}
                                 </option>
@@ -74,8 +78,8 @@
                         <div class="col-md-1 col-lg-1"></div>
                         <div class="col-sm-12 col-md-7 col-lg-7">
                             <label for="profile-city" class="profile-label">Cidade</label>
-                            <select class="bouman-select form-control" name="city"
-                                placeholder="Selecione uma cidade" required formControlName="city"
+                            <select class="bouman-select form-control" name="city" placeholder="Selecione uma cidade"
+                                required formControlName="city"
                                 [ngClass]="{ 'is-invalid': f.city.errors && f.city.touched}">
                                 <option *ngFor="let city of cities" [value]="city.id">{{ city.nome }}</option>
                             </select>
@@ -89,15 +93,18 @@
                             <label for="profile-date" class="profile-label">Data de nascimento</label>
                             <input type="date" name="date" id="bouman-input" class="form-control" required
                                 formControlName="birth" [ngClass]="{ 'is-invalid': f.birth.errors && f.birth.touched}">
-                            <p *ngIf="f.birth.errors && f.birth.touched" class="invalid-feedback">Por favor, informe uma data
+                            <p *ngIf="f.birth.errors && f.birth.touched" class="invalid-feedback">Por favor, informe uma
+                                data
                                 válida.
                             </p>
                         </div>
                         <div class="col-md-6"></div>
                     </div>
 
-                    <button type="submit" class="btn" [disabled]="!formConfig.valid" *ngIf="collection=='Users'">Confirmar</button>
-                    <button type="submit" class="btn" [disabled]="!f.about.valid" *ngIf="collection!='Users'">Confirmar</button>
+                    <button type="submit" class="btn" [disabled]="!formConfig.valid"
+                        *ngIf="collection=='Users'">Confirmar</button>
+                    <button type="submit" class="btn" [disabled]="!f.about.valid"
+                        *ngIf="collection!='Users'">Confirmar</button>
                 </form>
             </div>
 

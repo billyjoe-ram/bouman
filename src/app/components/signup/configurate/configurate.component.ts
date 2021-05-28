@@ -16,7 +16,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class ConfigurateComponent implements OnInit {
   @ViewChild('boumanForm') form!: NgForm;
 
-  public formConfig! : FormGroup;
+  public formConfig!: FormGroup;
   public dataConfig = {
     about: '',
     area: '',
@@ -26,9 +26,9 @@ export class ConfigurateComponent implements OnInit {
     birth: '',
   };
 
-  public states: { id: number, sigla: string }[] = [];  
-  public cities: { id: number, nome: string }[] = [];  
-  
+  public states: { id: number, sigla: string }[] = [];
+  public cities: { id: number, nome: string }[] = [];
+
   private emailverified!: any;
 
   private statesSubs!: Subscription;
@@ -42,7 +42,7 @@ export class ConfigurateComponent implements OnInit {
   messageError: string = '';
 
   private userProfile: any = {};
-  public collection!: string ;
+  public collection!: string;
 
   constructor(
     private authService: AuthService,
@@ -50,7 +50,7 @@ export class ConfigurateComponent implements OnInit {
     private ibgeService: IbgeService,
     private usersService: UsersService,
     private areasService: AreasService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -64,26 +64,26 @@ export class ConfigurateComponent implements OnInit {
   }
 
   get f() {
-    return this.formConfig.controls; 
+    return this.formConfig.controls;
   }
 
-  createForm(){
+  createForm() {
     this.formConfig = new FormGroup({
-      'about' : new FormControl(this.dataConfig.about, [Validators.required, Validators.minLength(15), Validators.maxLength(300)]),
-      'area' : new FormControl(this.dataConfig.area, [Validators.required]),
-      'subarea' : new FormControl(this.dataConfig.subarea, [Validators.required]),
-      'state' : new FormControl(this.dataConfig.state, [Validators.required]),
-      'city' : new FormControl(this.dataConfig.city, [Validators.required]),
-      'birth' : new FormControl(this.dataConfig.birth, [Validators.required, this.valiDate])
+      'about': new FormControl(this.dataConfig.about, [Validators.required, Validators.minLength(15), Validators.maxLength(300)]),
+      'area': new FormControl(this.dataConfig.area, [Validators.required]),
+      'subarea': new FormControl(this.dataConfig.subarea, [Validators.required]),
+      'state': new FormControl(this.dataConfig.state, [Validators.required]),
+      'city': new FormControl(this.dataConfig.city, [Validators.required]),
+      'birth': new FormControl(this.dataConfig.birth, [Validators.required, this.valiDate])
     });
   }
 
   // Validador personalizado para data de nascimento
-  valiDate(input: AbstractControl): ValidationErrors | null{
+  valiDate(input: AbstractControl): ValidationErrors | null {
     const today = new Date();
     let birthString: string = input.value;
     let birthDate: string[] = [];
-    
+
     // Separando a string em um array
     birthDate = birthString.split("-");
 
@@ -98,7 +98,7 @@ export class ConfigurateComponent implements OnInit {
 
     // Segundo índice - dia
     birthDate[1] = birthDate[2];
-    
+
     // Terceiro índice - ano
     birthDate[2] = birthDate[3];
 
@@ -109,7 +109,7 @@ export class ConfigurateComponent implements OnInit {
     birthString = birthDate.join("/");
 
     // Sem a perda de tempo
-    const profileBirth = new Date(birthString);    
+    const profileBirth = new Date(birthString);
 
     //pegando o ano de cada data
     const todayYear = today.getFullYear();
@@ -124,42 +124,42 @@ export class ConfigurateComponent implements OnInit {
     const birthDay = profileBirth.getDate();
 
     //se a diferença de anos for igual a 14 (14 anos)
-    if((todayYear - birthYear) === 14){
+    if ((todayYear - birthYear) === 14) {
       //e o mês atual for igual ao mês de nascimento
-      if(todayMon === birthMon){
+      if (todayMon === birthMon) {
         //mas o dia de nascimento for menor que o atual, o usuário ainda não fez aniversário
         //ou seja, não completou 14 anos
-        if(toDay < birthDay){
-          return {'response': true};
+        if (toDay < birthDay) {
+          return { 'response': true };
         }
       }
       //se o mês atual for menor que o mês de nascimento, o usuário ainda não fez aniversário
       //ou seja, não completo 16 anos
-      else if(todayMon < birthMon){
-        return {'response': true};
+      else if (todayMon < birthMon) {
+        return { 'response': true };
       }
     }
     //se a diferença entre os anos for menor que 14, usuário menor de 14 anos
-    if((todayYear - birthYear) < 14){
-      return {'response': true};
+    if ((todayYear - birthYear) < 14) {
+      return { 'response': true };
     }
     //se a diferença entre os anos for igual a 100
-    if((todayYear - birthYear) === 100){
+    if ((todayYear - birthYear) === 100) {
       //e o mês atual for igual ao mês de nascimento
-      if(todayMon === birthMon) {
+      if (todayMon === birthMon) {
         //mas o dia atual é maior que o dia de nascimento, usuário já fez aniversário
         //ou seja, já completou 100 anos
-        if(toDay > birthDay || toDay === birthDay){          
-          return {'response': true};
+        if (toDay > birthDay || toDay === birthDay) {
+          return { 'response': true };
         }
       }
-      if(todayMon > birthMon) {
-        return {'response': true};
+      if (todayMon > birthMon) {
+        return { 'response': true };
       }
     }
     //se a diferença entre os anos for maior que 100, usuário maior de 100 anos
-    if((todayYear - birthYear) > 100){
-      return {'response': true};
+    if ((todayYear - birthYear) > 100) {
+      return { 'response': true };
     }
     //caso nenhuma das alternativas, data de nascimento válida
     return null;
@@ -180,16 +180,16 @@ export class ConfigurateComponent implements OnInit {
       try {
         const userProfile = this.store.collection('Profiles').doc(this.userProfile.profileId);
 
-        await this.store.collection(this.collection).doc(user?.uid).update({ birth: date, state: state, city: city,  area: area, subarea: subarea});
+        await this.store.collection(this.collection).doc(user?.uid).update({ birth: date, state: state, city: city, area: area, subarea: subarea });
 
         await userProfile.update({ desc: description, following: [] });
 
         this.authService.logout();
-      
+
         this.verifyEmail();
 
       } catch (error) {
-        switch(error.code){
+        switch (error.code) {
           case 'auth/argument-error':
             this.messageError = 'Por favor, preencha os campos corretamente.';
             break;
@@ -202,8 +202,8 @@ export class ConfigurateComponent implements OnInit {
         }
 
       }
-    }    
-    
+    }
+
     if (this.formConfig.get('about')?.valid || this.collection == 'Companies') {
 
       const description = this.formConfig.value.about;
@@ -214,11 +214,11 @@ export class ConfigurateComponent implements OnInit {
         await userProfile.update({ desc: description, following: [] });
 
         this.authService.logout();
-      
+
         this.verifyEmail();
 
       } catch (error) {
-        switch(error.code){
+        switch (error.code) {
           case 'auth/argument-error':
             this.messageError = 'Por favor, preencha os campos corretamente.';
             break;
@@ -239,7 +239,7 @@ export class ConfigurateComponent implements OnInit {
 
     this.emailverified = user?.emailVerified;
 
-    if (!this.emailverified && user != null){
+    if (!this.emailverified && user != null) {
 
       user.sendEmailVerification().then(() => {
         // Email enviado corretamente.
@@ -250,29 +250,29 @@ export class ConfigurateComponent implements OnInit {
       }).catch((error) => {
         console.log(error);
         // Um erro ocorreu.        
-        window.alert('Um erro ocorreu, verifique se na sua caixa de entrada já não possui um link de verificação...');        
+        window.alert('Um erro ocorreu, verifique se na sua caixa de entrada já não possui um link de verificação...');
       });
-      
+
     }
 
   }
 
   getStates() {
-    this.statesSubs =  this.ibgeService.getStates().subscribe((res) => {
+    this.statesSubs = this.ibgeService.getStates().subscribe((res) => {
       const data: any = res as any;
-      
+
       data.forEach((element: any) => {
         const id: number = element.id;
         const sigla: string = element.sigla;
         this.states.push({ id, sigla });
-      });          
+      });
     });
   }
 
   fillCities() {
     const id = this.formConfig.value.state;
     this.cities = [];
-    
+
     this.citiesSubs = this.ibgeService.getCities(id).subscribe(res => {
       const data: any = res as any;
 
@@ -283,16 +283,16 @@ export class ConfigurateComponent implements OnInit {
         this.cities.push({ id, nome });
       });
     });
-    
+
   }
 
-  getAreas(){
+  getAreas() {
     this.areasService.getAreas().then((areas) => {
       this.areas = areas;
     });
   }
 
-  getSubareas(){
+  getSubareas() {
     const id = this.formConfig.value.area;
 
     this.areasService.getSubarea(id).then((subareas) => {
@@ -300,18 +300,18 @@ export class ConfigurateComponent implements OnInit {
     });
   }
 
-  async getData(){
+  async getData() {
     const user = await this.authService.getAuth().currentUser;
-    if (user != null){
-    this.collection = await this.usersService.checkusercompany(user.uid);
+    if (user != null) {
+      this.collection = await this.usersService.checkusercompany(user.uid);
       this.usersService.getProfile(user?.uid).then(res => {
         this.profileSubs = res.subscribe((profile: any) => {
-        this.userProfile = profile;
+          this.userProfile = profile;
+        });
       });
-    });
-  } else {
-    console.log('O usuário não existe.');
-  }
+    } else {
+      console.log('O usuário não existe.');
+    }
   }
 
   ngOnDestroy() {

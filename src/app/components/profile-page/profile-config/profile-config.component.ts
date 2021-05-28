@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile-config.component.css']
 })
 export class ProfileConfigComponent implements OnInit, OnDestroy {
-  
+
   @ViewChild('modal') modal!: ElementRef;
   @ViewChild('profConfForm') form!: NgForm;
 
@@ -24,7 +24,7 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   public checkcollection = false;
 
   public subareas: any[] = [];
-  
+
   private profileId: string = "";
 
   private getcoll!: Subscription;
@@ -50,13 +50,13 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     const formData = form.value;
     try {
       this.profileId = this.user.profileId;
-      if (this.checkcollection == true){
+      if (this.checkcollection == true) {
 
 
         this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area, subarea: formData.subarea });
       }
-      else{
-        this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc});
+      else {
+        this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc });
       }
 
       this.router.navigate(["/profiles/", this.profileId]);
@@ -67,19 +67,19 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     }
 
   }
-  
+
   async getData() {
     const user = await this.authService.getAuth().currentUser;
 
-    this.getcoll = (await this.userService.getProfile(user?.uid)).subscribe((data:any) => {
+    this.getcoll = (await this.userService.getProfile(user?.uid)).subscribe((data: any) => {
       this.user.area = data.area;
-      this.user.subarea = data.subarea;      
+      this.user.subarea = data.subarea;
       this.user.profileId = data.profileId;
-      
+
       this.getAreas();
       this.getSubareas();
 
-      this.getprof = this.service.getProfile(this.user.profileId).subscribe((data : any) => {
+      this.getprof = this.service.getProfile(this.user.profileId).subscribe((data: any) => {
         this.user.name = data.name;
         this.user.desc = data.desc;
       });
@@ -87,7 +87,7 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     if (this.getcoll) {
       this.getcoll.unsubscribe();
     }
@@ -98,22 +98,22 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
 
   }
 
-  getAreas(){
+  getAreas() {
     this.areasService.getAreas().then((areas) => {
       this.areas = areas;
     });
   }
 
-  checkColl(){
-    this.authService.getAuth().currentUser.then((user : any) =>{
-      this.userService.checkusercompany(user.uid).then(async res =>{
-        if (res == 'Users'){
+  checkColl() {
+    this.authService.getAuth().currentUser.then((user: any) => {
+      this.userService.checkusercompany(user.uid).then(async res => {
+        if (res == 'Users') {
           this.checkcollection = true;
           this.areas = await this.areasService.getAreas();
         }
-        if (res == 'Companies'){
+        if (res == 'Companies') {
           this.checkcollection = false;
-          this.areas = [{name: '', value: ''}];
+          this.areas = [{ name: '', value: '' }];
         }
       })
     });

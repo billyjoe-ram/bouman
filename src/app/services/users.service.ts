@@ -74,8 +74,8 @@ export class UsersService {
   }
 
   getProfile(uid: string | undefined) {
-    return this.authService.getAuth().currentUser.then((user:any)=>{
-      return this.checkusercompany(user.uid).then((res)=>{
+    return this.authService.getAuth().currentUser.then((user: any) => {
+      return this.checkusercompany(user.uid).then((res) => {
         const collection = this.store.collection(res).doc(uid).valueChanges();
         return collection;
       });

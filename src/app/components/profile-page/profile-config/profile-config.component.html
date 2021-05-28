@@ -7,8 +7,8 @@
     <div class="col-md-6">
       <!-- form to edit profile -->
       <form (ngSubmit)="onSubmit(profConfForm)" #profConfForm="ngForm" id="backForm">
-        <h2 id="title">Altere os dados do seu perfil:</h2> 
-        <hr/>
+        <h2 id="title">Altere os dados do seu perfil:</h2>
+        <hr />
         <div class="form-group">
           <label for="name">Seu nome</label>
           <input type="text" class="form-control" id="name" name="name" [(ngModel)]="user.name">
@@ -20,10 +20,10 @@
             <!-- Selects the value for the area code that's equal to user area code -->
             <div class="col-md-6">
               <label for="area">Área de atuação</label>
-              <select *ngIf='checkcollection' class="custom-select bouman-select" id="area" name="area" [(ngModel)]="user.area"
-              (change)="getSubareas()">
-                <option *ngFor="let area of areas"
-                  [attr.selected]="user.area == area.value ? true : null" [value]="area.value">
+              <select *ngIf='checkcollection' class="custom-select bouman-select" id="area" name="area"
+                [(ngModel)]="user.area" (change)="getSubareas()">
+                <option *ngFor="let area of areas" [attr.selected]="user.area == area.value ? true : null"
+                  [value]="area.value">
                   {{ area.name }}
                 </option>
               </select>
@@ -31,8 +31,8 @@
             <div class="col-md-6">
               <label for="subarea">Subárea de atuação</label>
               <select class="custom-select bouman-select" id="subarea" name="subarea" [(ngModel)]="user.subarea">
-                <option *ngFor="let subarea of subareas"
-                  [attr.selected]="user.subarea == subarea.value ? true : null" [value]="subarea.value">
+                <option *ngFor="let subarea of subareas" [attr.selected]="user.subarea == subarea.value ? true : null"
+                  [value]="subarea.value">
                   {{ subarea.name }}
                 </option>
               </select>
@@ -62,11 +62,13 @@
                 </button>
               </div>
               <div class="modal-body">
-                <p>Essas informações também serão alteradas para grupos em que você participa e para aqueles que te seguem.</p>
+                <p>Essas informações também serão alteradas para grupos em que você participa e para aqueles que te
+                  seguem.</p>
                 <div id="listData">
                   <h6 class="listItem">Nome: </h6> <span>{{ user.name }} </span>
                   <h6 class="listItem">Descrição: </h6> <span>{{ user.desc }} </span>
-                  <h6 class="listItem" *ngIf='checkcollection'>Área: </h6> <span *ngIf="user.area && areas.length">{{ areas[+user.area].name }} </span>
+                  <h6 class="listItem" *ngIf='checkcollection'>Área: </h6> <span *ngIf="user.area && areas.length">{{
+                    areas[+user.area].name }} </span>
                 </div>
               </div>
               <div class="modal-footer">
