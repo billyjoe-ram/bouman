@@ -114,7 +114,6 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   async saveFotos() {
     this.checkorder++;
-    console.log(this.checkorder)
     if (this.checkorder == 1) {
       const profImgPath = `profiles/${this.profileId}/profile-pictures/profile${this.profileId}`;
       const wlppImgPath = `profiles/${this.profileId}/wallpaper-pictures/wallpaper${this.profileId}`;
