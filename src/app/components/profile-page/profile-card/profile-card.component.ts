@@ -106,7 +106,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   }
 
-  loadData() {
+  async loadData() {
     this.profile = this.user.getProfilePicture(this.profileId).subscribe((url: any) => {
       this.profileImg = url;
     }, (err: any) => {
@@ -119,7 +119,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
       this.wallpImg = this.user.wallpasset();
     });
 
-    this.userSubs = this.usersServices.getProfile(this.userId).subscribe((user: any) => {
+    this.userSubs = (await this.usersServices.getProfile(this.userId)).subscribe((user: any) => {
 
       this.userProfile = user.profileId;
       

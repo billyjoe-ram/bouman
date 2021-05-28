@@ -81,7 +81,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   async getData() {
     const user = await this.authService.getAuth().currentUser;
 
-    this.userSubs = this.user.getProfile(user?.uid).subscribe((profile: any) => {
+    this.userSubs = (await this.user.getProfile(user?.uid)).subscribe((profile: any) => {
       this.profileId = profile.profileId;
 
       this.profile = this.user.getProfilePicture(this.profileId).subscribe((url: any) => {

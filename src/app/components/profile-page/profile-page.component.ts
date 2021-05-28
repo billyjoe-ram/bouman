@@ -70,7 +70,7 @@ export class ProfilePageComponent implements OnInit {
   async loadData() {
     const user = await this.authService.getAuth().currentUser;
 
-    this.paramsSubs = this.route.params.subscribe((params) => {
+    this.paramsSubs = this.route.params.subscribe(async (params) => {
       this.profileId = params['profid'];
 
       // Clearing arrays on changes
@@ -89,7 +89,7 @@ export class ProfilePageComponent implements OnInit {
         });
       });
 
-      this.profileSubs = this.usersServices.getProfile(user?.uid).subscribe((data : any) => {
+      this.profileSubs = (await this.usersServices.getProfile(user?.uid)).subscribe((data : any) => {
 
         if (this.profileId == data.profileId) {
           this.sameUser = true;

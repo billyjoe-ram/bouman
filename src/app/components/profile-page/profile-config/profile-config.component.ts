@@ -65,7 +65,7 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   async getData() {
     const user = await this.authService.getAuth().currentUser;
 
-    this.getcoll = this.userService.getProfile(user?.uid).subscribe((data:any) => {
+    this.getcoll = (await this.userService.getProfile(user?.uid)).subscribe((data:any) => {
       this.user.area = data.area;
       this.user.subarea = data.subarea;      
       this.user.profileId = data.profileId;

@@ -1,14 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AbstractControl, FormBuilder, NgForm, ValidationErrors, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { AbstractControl, NgForm, ValidationErrors, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { IbgeService } from 'src/app/services/ibge.service';
 import { UsersService } from 'src/app/services/users.service';
-import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { User } from '../../../interfaces/user';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'configurate',
@@ -44,25 +42,25 @@ export class ConfigurateComponent implements OnInit {
   messageError: string = '';
 
   private userProfile: any = {};
-  
+  public collection!: string ;
+
   constructor(
     private authService: AuthService,
     private store: AngularFirestore,
     private ibgeService: IbgeService,
-    private router: Router,
     private usersService: UsersService,
-    private fb: FormBuilder,
     private areasService: AreasService
   ) {}
 
   ngOnInit(): void {
-    this.createForm();
-
-    this.getStates();
 
     this.getData();
 
+    this.getStates();
+
     this.getAreas();
+
+    this.createForm();
   }
 
   get f() {
@@ -170,7 +168,7 @@ export class ConfigurateComponent implements OnInit {
   async onSign(form: any) {
     const user = await this.authService.getAuth().currentUser;
 
-    if (this.formConfig.valid) {
+    if (this.formConfig.valid || this.collection == 'Users') {
 
       const description = this.formConfig.value.about;
       const area = this.formConfig.value.area;
@@ -180,15 +178,14 @@ export class ConfigurateComponent implements OnInit {
       const date = this.formConfig.value.birth;
 
       try {
-
         const userProfile = this.store.collection('Profiles').doc(this.userProfile.profileId);
 
-        await this.store.collection('Users').doc(user?.uid).update({ birth: date, state: state, city: city, area: area, subarea: subarea });
+        await this.store.collection(this.collection).doc(user?.uid).update({ birth: date, state: state, city: city,  area: area, subarea: subarea});
 
         await userProfile.update({ desc: description, following: [] });
 
         this.authService.logout();
-
+      
         this.verifyEmail();
 
       } catch (error) {
@@ -203,11 +200,38 @@ export class ConfigurateComponent implements OnInit {
             this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
             break;
         }
-        console.log(error);
+
+      }
+    }    
+    
+    if (this.formConfig.get('about')?.valid || this.collection == 'Companies') {
+
+      const description = this.formConfig.value.about;
+
+      try {
+        const userProfile = this.store.collection('Profiles').doc(this.userProfile.profileId);
+
+        await userProfile.update({ desc: description, following: [] });
+
+        this.authService.logout();
+      
+        this.verifyEmail();
+
+      } catch (error) {
+        switch(error.code){
+          case 'auth/argument-error':
+            this.messageError = 'Por favor, preencha os campos corretamente.';
+            break;
+          case 'auth/network-request-failed':
+            this.messageError = 'Verifique a sua conexão com a internet e tente novamente.';
+            break;
+          default:
+            this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
+            break;
+        }
 
       }
     }
-
   }
 
   async verifyEmail() {
@@ -278,12 +302,16 @@ export class ConfigurateComponent implements OnInit {
 
   async getData(){
     const user = await this.authService.getAuth().currentUser;
-    
-    let profileId = "";
-        
-    this.profileSubs = this.usersService.getProfile(user?.uid).subscribe((profile: any) => {
-      this.userProfile.profileId = profile.profileId;
+    if (user != null){
+    this.collection = await this.usersService.checkusercompany(user.uid);
+      this.usersService.getProfile(user?.uid).then(res => {
+        this.profileSubs = res.subscribe((profile: any) => {
+        this.userProfile = profile;
+      });
     });
+  } else {
+    console.log('O usuário não existe.');
+  }
   }
 
   ngOnDestroy() {

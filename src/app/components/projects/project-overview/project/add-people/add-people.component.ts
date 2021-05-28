@@ -44,7 +44,7 @@ export class AddPeopleComponent implements OnInit {
   private async loadUserData() {
     const uid: string | undefined = await this.usersService.getUid();
 
-    this.userSubs = this.usersService.getProfile(uid).subscribe((user: any) => {
+    this.userSubs = (await this.usersService.getProfile(uid)).subscribe((user: any) => {
       this.profileId =  user.profileId;
 
       this.loadUserProfileData();
