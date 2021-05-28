@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -31,14 +31,17 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
 
   private getprof!: Subscription;
 
-  constructor(private authService: AuthService, private userService: UsersService, private areasService: AreasService, private service: ProfileService,
-     private auth: AngularFireAuth, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private userService: UsersService,
+    private areasService: AreasService,
+    private service: ProfileService,
+    private auth: AngularFireAuth,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.getData();
-
-    this.getAreas();
-    //this.areas = this.areasService.getAreas();
   }
 
   async onSubmit(form: NgForm) {
@@ -47,35 +50,46 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     const formData = form.value;
     try {
       this.profileId = this.user.profileId;
+
       this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area, subarea: formData.subarea });
+
       this.router.navigate(["/profiles/", this.profileId]);
-    }
-    catch(err){
+    } catch (err) {
       console.error(err);
-    }
-    finally{
+    } finally {
       submit?.click();
     }
 
   }
   
-  async getData(){
+  async getData() {
     const user = await this.authService.getAuth().currentUser;
+
     this.getcoll = this.userService.getProfile(user?.uid).subscribe((data:any) => {
       this.user.area = data.area;
-      console.log(data);
-      this.user.subarea = data.subarea || "00";
+      this.user.subarea = data.subarea;      
       this.user.profileId = data.profileId;
+      
+      this.getAreas();
+      this.getSubareas();
+
       this.getprof = this.service.getProfile(this.user.profileId).subscribe((data : any) => {
         this.user.name = data.name;
-        this.user.desc = data.desc;        
+        this.user.desc = data.desc;
       });
+
     });
   }
 
   ngOnDestroy(){
-    this.getcoll.unsubscribe();
-    this.getprof.unsubscribe();
+    if (this.getcoll) {
+      this.getcoll.unsubscribe();
+    }
+
+    if (this.getprof) {
+      this.getprof.unsubscribe();
+    }
+
   }
 
   getAreas(){
@@ -86,11 +100,14 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
 
   getSubareas() {
     this.subareas = [];
-    const areaId = this.form.value.area;
+    const areaId = this.user.area;
 
-    this.areasService.getSubarea(areaId).then((subareas) => {
-      this.subareas = subareas;
-    });
+    if (areaId) {
+      this.areasService.getSubarea(areaId).then((subareas) => {
+        this.subareas = subareas;
+      });
+    }
+
   }
 
 }
