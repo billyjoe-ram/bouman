@@ -11,7 +11,7 @@ import { UsersService } from './users.service';
 export class ProfileService {
 
   private followAction: string = "";
-  
+
   private userProfileId: string = "";
 
   private userCollection = this.store.collection<User>('Users');
@@ -23,20 +23,22 @@ export class ProfileService {
     return this.userCollection.add(user);
   }
 
-  updateProfile(id: string | undefined, profileId: string | undefined, user: { name: string, description: string, area: string, subarea: string }) {
-    this.profileCollection.doc(profileId).update({name: user.name, desc: user.description});
-    this.userCollection.doc(id).update({area: user.area, subarea: user.subarea });
+  updateProfile(id: string | undefined, profileId: string | undefined, user: { name: string, description: string, area?: string, subarea?: string }) {
+    this.profileCollection.doc(profileId).update({ name: user.name, desc: user.description });
+    if (user.area != undefined) {
+      this.userCollection.doc(id).update({ area: user.area });
+    };
   }
 
   getProfile(profileId: string | undefined) {
     const collection = this.store.collection('Profiles').doc(profileId).valueChanges();
-    
+
     return collection;
   }
 
   getProfilePromise(profileId: string | undefined) {
     const collection = this.store.collection('Profiles').doc(profileId).ref.get();
-    
+
     return collection;
   }
 
@@ -62,8 +64,8 @@ export class ProfileService {
   }
 
   followProfile(profileId: string, followingProfiles: string[], userProfile: string) {
-    const profileFollowing = this.profileCollection.doc(userProfile);    
-    
+    const profileFollowing = this.profileCollection.doc(userProfile);
+
     if (this.followAction === "Seguindo") {
       followingProfiles = followingProfiles.filter(profile => {
         return profile !== profileId;
@@ -75,18 +77,18 @@ export class ProfileService {
 
       return profileFollowing.update({ following: followingProfiles });
     }
-    
+
   }
 
-  verifyFollowing(profileId: string, following: string[] ): string {
-    
+  verifyFollowing(profileId: string, following: string[]): string {
+
     if (following.includes(profileId)) {
       this.followAction = "Seguindo";
     } else {
       this.followAction = "Seguir";
     }
-    
-    return this.followAction;    
+
+    return this.followAction;
   }
 
   updateContact(profileId: string, contact: { email: string, linkedin: string, other: string }) {

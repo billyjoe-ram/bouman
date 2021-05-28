@@ -1,11 +1,9 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { FormsModule } from '@angular/forms'
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -23,6 +21,8 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
 
   public areas: any[] = [];
 
+  public checkcollection = false;
+
   public subareas: any[] = [];
   
   private profileId: string = "";
@@ -36,11 +36,11 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     private userService: UsersService,
     private areasService: AreasService,
     private service: ProfileService,
-    private auth: AngularFireAuth,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.checkColl();
     this.getData();
   }
 
@@ -50,8 +50,14 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     const formData = form.value;
     try {
       this.profileId = this.user.profileId;
+      if (this.checkcollection == true){
 
-      this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area, subarea: formData.subarea });
+
+        this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area, subarea: formData.subarea });
+      }
+      else{
+        this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc});
+      }
 
       this.router.navigate(["/profiles/", this.profileId]);
     } catch (err) {
@@ -95,6 +101,21 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
   getAreas(){
     this.areasService.getAreas().then((areas) => {
       this.areas = areas;
+    });
+  }
+
+  checkColl(){
+    this.authService.getAuth().currentUser.then((user : any) =>{
+      this.userService.checkusercompany(user.uid).then(async res =>{
+        if (res == 'Users'){
+          this.checkcollection = true;
+          this.areas = await this.areasService.getAreas();
+        }
+        if (res == 'Companies'){
+          this.checkcollection = false;
+          this.areas = [{name: '', value: ''}];
+        }
+      })
     });
   }
 

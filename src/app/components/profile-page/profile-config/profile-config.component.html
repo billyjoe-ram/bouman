@@ -16,11 +16,11 @@
           <label for="desc">Descrição do perfil</label>
           <textarea type="text" class="form-control" id="desc" name="desc" [(ngModel)]="user.desc"></textarea>
 
-          <div class="row">
+          <div *ngIf='checkcollection' class="row">
             <!-- Selects the value for the area code that's equal to user area code -->
             <div class="col-md-6">
               <label for="area">Área de atuação</label>
-              <select class="custom-select bouman-select" id="area" name="area" [(ngModel)]="user.area"
+              <select *ngIf='checkcollection' class="custom-select bouman-select" id="area" name="area" [(ngModel)]="user.area"
               (change)="getSubareas()">
                 <option *ngFor="let area of areas"
                   [attr.selected]="user.area == area.value ? true : null" [value]="area.value">
@@ -66,7 +66,7 @@
                 <div id="listData">
                   <h6 class="listItem">Nome: </h6> <span>{{ user.name }} </span>
                   <h6 class="listItem">Descrição: </h6> <span>{{ user.desc }} </span>
-                  <h6 class="listItem">Área: </h6> <span *ngIf="user.area && areas.length">{{ areas[+user.area].name }} </span>
+                  <h6 class="listItem" *ngIf='checkcollection'>Área: </h6> <span *ngIf="user.area && areas.length">{{ areas[+user.area].name }} </span>
                 </div>
               </div>
               <div class="modal-footer">
