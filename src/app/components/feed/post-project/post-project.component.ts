@@ -1,15 +1,18 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { Project } from 'src/app/interfaces/project';
 import { ProjectContent } from 'src/app/interfaces/projectContent';
+import { AreasService } from 'src/app/services/areas.service';
 import { DocsService } from 'src/app/services/docs.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { ProjectsService } from 'src/app/services/projects.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'post-project',
   templateUrl: './post-project.component.html',
   styleUrls: ['./post-project.component.css']
 })
-export class PostProjectComponent implements OnInit {
+export class PostProjectComponent implements OnInit, OnChanges {
 
   @Input('projects') userProjects: Project[] = [];
 
@@ -21,6 +24,8 @@ export class PostProjectComponent implements OnInit {
 
   @ViewChild('selectedProjectKeywords') selectedProjectKeywords!: ElementRef;
 
+  @ViewChild('selectedProjectSubarea') selectedProjectSubarea!: ElementRef;  
+
   @ViewChild('checkBoxes') checkBoxes!: ElementRef;
 
   public selectedProjectObj: { title: string, content: string } = { title: "", content: "" };
@@ -29,9 +34,22 @@ export class PostProjectComponent implements OnInit {
 
   public selectedProject!: any;
 
-  constructor(private projectsService: ProjectsService, private docsService: DocsService) { }
+  public userArea: { area: string, subarea: string } = { area: "", subarea: "" };
 
-  ngOnInit(): void {
+  public userSpecificSubareas: { name: string, value: string }[] = [];
+
+  constructor(
+    private projectsService: ProjectsService,
+    private docsService: DocsService,
+    private usersService: UsersService,
+    private areasService: AreasService
+  ) { }
+
+  ngOnInit(): void {    
+  }
+
+  ngOnChanges() {
+    this.loadUserAreas();
   }
 
   importProject() {
@@ -131,7 +149,16 @@ export class PostProjectComponent implements OnInit {
     })
 
     if (keywordsArray.length) {
-      if (keywordsArray.length <= 8) {      
+      if (keywordsArray.length <= 3) {
+
+        // Saving the specific subarea name
+        let specificSubarea: any = this.userSpecificSubareas.filter((specificSubarea) => {
+          return specificSubarea.value == this.selectedProjectSubarea.nativeElement.value;
+        });        
+
+        // Becasuse there is only one code with that name, I can use the first index
+        keywordsArray.unshift(specificSubarea[0].name);
+
         const project = { title: this.selectedProject.title, content: this.selectedProjectText.join('\n'), keywords: keywordsArray };
   
         if(this.selectedProjectText.length) {
@@ -140,10 +167,10 @@ export class PostProjectComponent implements OnInit {
           alert("Selecione pelo menos uma parte do projeto");
         }
       } else {
-        alert("Adicione apenas até 8 palavras-chave");
+        alert("Adicione apenas até 3 palavras-chave");
       }
     } else {
-      alert("Adicione pelo menos uma palavra-chave")
+      alert("Adicione pelo menos uma palavra-chave");
     }  
 
   }
@@ -205,6 +232,47 @@ export class PostProjectComponent implements OnInit {
       }
 
     }
+  }
+
+  // Load user area / subarea from the database
+  private loadUserAreas() {
+    // Creating a variable to store userDID after promise is completed
+    let userUID: string | undefined = "";
+
+    // Asking for the logged user UID
+    this.usersService.getUid().then((uid) => {
+      // Passing this async function return to the variable
+      userUID = uid;
+
+      // Asking for the collection with this userUID
+      this.usersService.getCollection(userUID).then((user) => {
+        // Creating a const to make code reading more easy
+        const userData: any = user.data();
+  
+        // Preventing attribution if data is undefined
+        if (userData) {
+          // Passing to a userArea object (class attribute)
+          this.userArea.area = userData.area;
+          this.userArea.subarea = userData.subarea;
+  
+          // Loading subareas to the select El
+          this.loadAreasSelect();
+        }
+  
+      });
+    });
+    
+  }
+
+  // Load the user area / subarea in a <select>
+  private loadAreasSelect() {
+    const area = this.userArea.area;
+
+    const subarea = this.userArea.subarea;
+
+    this.areasService.getProjectAreas(area, subarea).then((specificSubareas) => {
+      this.userSpecificSubareas = specificSubareas;
+    });
   }
 
 }

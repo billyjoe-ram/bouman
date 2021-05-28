@@ -106,6 +106,11 @@
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             <label for="keywords">Palavras-chave: </label>
+                            <select #selectedProjectSubarea>
+                                <option value="" *ngFor="let specificSubarea of userSpecificSubareas" [attr.selected]="specificSubarea.value == '00' ? true : null" [value]="specificSubarea.value">
+                                    {{ specificSubarea.name }}
+                                </option>
+                            </select>
                             <textarea id="keywords" class="form-control" placeholder="Informa algumas palavras-chave, separando por espaço" #selectedProjectKeywords></textarea>
                         </div>
                     </div>                    

@@ -7,8 +7,9 @@
     height: 100%;
 }
 
-.modal-content .modal-body .form-group, .modal-content .modal-body textarea {
-    height: 80%;
+.modal-content .modal-body .form-group, .modal-content .modal-body select {
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 .form-group textarea.form-control {

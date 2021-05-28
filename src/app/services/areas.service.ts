@@ -25,7 +25,7 @@ export class AreasService {
   async getSubarea(area: string){
     const subareasStore = this.store.collection("Fapesp").doc(area).collection("Subareas");
     const subareasCollection = await subareasStore.ref.get();
-    const subareas : any[] = [];
+    const subareas: any[] = [];
     let index = 0;
     subareasCollection.forEach((subarea) => {
       subareas[index] = subarea.data();
@@ -36,7 +36,22 @@ export class AreasService {
   }
 
   async getProjectAreas(area: string, subarea: string){
+    const specificSubareasArray: any[] = []
 
+    const areasCollection = this.store.collection("Fapesp").doc(area);
+    const subareasCollection = areasCollection.collection("Subareas").doc(subarea);
+
+    const specificSubareas = await subareasCollection.collection("Subareas").ref.get();
+
+    let index = 0;
+
+    specificSubareas.forEach((specificSubarea) => {
+      specificSubareasArray[index] = specificSubarea.data();
+
+      index++;
+    });
+
+    return specificSubareasArray;
   }
     
 }
