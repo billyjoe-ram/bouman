@@ -16,8 +16,8 @@ export class AuthGuard implements CanActivate {
     return new Promise(resolve => {
       this.ngAuth.getAuth().onAuthStateChanged(user => {
         if (user) {                  
-          if (user.emailVerified) {
-            this.router.navigate(["/feed"]);
+          if (!user.emailVerified) {
+            this.ngAuth.logout();
           }
         }        
 
