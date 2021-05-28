@@ -265,39 +265,39 @@ export class ConfigurateComponent implements OnInit {
     this.areasService.getAreas().then((areas) => {
       this.areas = areas;
     });
-
-    console.log('Areas do TS de config');
-    console.log(this.areas);
   }
 
   getSubareas(){
-    const id = this.formConfig.value.subarea;
+    const id = this.formConfig.value.area;
 
     this.areasService.getSubarea(id).then((subareas) => {
       this.subareas = subareas;
     });
-
-    console.log('Subareas do TS de config');
-    console.log(this.subareas);
   }
 
   async getData(){
     const user = await this.authService.getAuth().currentUser;
     
-    let profileId;
+    let profileId = "";
         
     this.profileSubs = this.usersService.getProfile(user?.uid).subscribe((profile: any) => {
-      profileId = profile.profileId;
-
-      this.userProfile = profile;      
+      this.userProfile = profile.profileId;
     });
   }
 
   ngOnDestroy() {
-    this.statesSubs.unsubscribe();
-    this.citiesSubs.unsubscribe();
+    if (this.statesSubs) {
+      this.statesSubs.unsubscribe();
+    }
 
-    this.profileSubs.unsubscribe();
+    if (this.citiesSubs) {
+      this.citiesSubs.unsubscribe();
+    }
+
+    if (this.profileSubs) {
+      this.profileSubs.unsubscribe();
+    }
+
   }
 
 }

@@ -38,8 +38,8 @@
                         <div class="col-sm-12 col-md-6 col-lg-6">
                             <label for="profile-area" class="profile-label">Área de Atuação</label>
                             <select class="bouman-select form-control" name="area" placeholder="Selecione uma área"
-                            (change)="getSubareas()" required formControlName="area" [ngClass]="{ 'is-invalid': f.area.errors && f.area.touched}">
-                                <option *ngFor="let area of areas" [value]="area.id">
+                            (change)="getSubareas()" formControlName="area" [ngClass]="{ 'is-invalid': f.area.errors && f.area.touched}">
+                                <option *ngFor="let area of areas" [value]="area.value">
                                     {{ area.name }}
                                 </option>
                             </select>
@@ -49,9 +49,8 @@
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-6">
                             <label for="profile-subarea" class="profile-label">Subárea de atuação</label>
-                            <select class="bouman-select form-control" name="subarea" placeholder="Selecione uma cidade" 
-                            required formControlName="subarea" [ngClass]="{ 'is-invalid': f.subarearrors && f.subarea.touched}">
-                                <option *ngFor="let subarea of subareas" [value]="subarea.id">
+                            <select class="bouman-select form-control" name="subarea" placeholder="Selecione uma cidade" formControlName="subarea" [ngClass]="{ 'is-invalid': f.subarearrors && f.subarea.touched}">
+                                <option *ngFor="let subarea of subareas" [value]="subarea.value">
                                     {{ subarea.name }}
                                 </option>
                             </select>
@@ -88,7 +87,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <label for="profile-date" class="profile-label">Data de nascimento</label>
-                            <input type="date" name="date" id="bouman-input" class="form-control" ngModel required
+                            <input type="date" name="date" id="bouman-input" class="form-control" required
                                 formControlName="birth" [ngClass]="{ 'is-invalid': f.birth.errors && f.birth.touched}">
                             <p *ngIf="f.birth.errors && f.birth.touched" class="invalid-feedback">Por favor, informe uma data
                                 válida.
