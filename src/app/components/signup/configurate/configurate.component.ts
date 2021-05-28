@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AbstractControl, FormBuilder, NgForm, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { IbgeService } from 'src/app/services/ibge.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -20,6 +21,8 @@ export class ConfigurateComponent implements OnInit {
   public formConfig! : FormGroup;
   public dataConfig = {
     about: '',
+    area: '',
+    subarea: '',
     state: '',
     city: '',
     birth: '',
@@ -35,6 +38,9 @@ export class ConfigurateComponent implements OnInit {
 
   private profileSubs!: Subscription;
 
+  public areas: any[] = [];
+  public subareas: any[] = [];
+
   messageError: string = '';
 
   private userProfile: any = {};
@@ -45,7 +51,8 @@ export class ConfigurateComponent implements OnInit {
     private ibgeService: IbgeService,
     private router: Router,
     private usersService: UsersService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private areasService: AreasService
   ) {}
 
   ngOnInit(): void {
@@ -54,9 +61,10 @@ export class ConfigurateComponent implements OnInit {
     this.getStates();
 
     this.getData();
+
+    this.getAreas();
   }
 
-  //retorna os controles do formulário('about', 'state', 'city' e 'birth') para serem utilizados no *ngIf do formulário no HTML
   get f() {
     return this.formConfig.controls; 
   }
@@ -64,6 +72,8 @@ export class ConfigurateComponent implements OnInit {
   createForm(){
     this.formConfig = new FormGroup({
       'about' : new FormControl(this.dataConfig.about, [Validators.required, Validators.minLength(15), Validators.maxLength(300)]),
+      'area' : new FormControl(this.dataConfig.area, [Validators.required]),
+      'subarea' : new FormControl(this.dataConfig.subarea, [Validators.required]),
       'state' : new FormControl(this.dataConfig.state, [Validators.required]),
       'city' : new FormControl(this.dataConfig.city, [Validators.required]),
       'birth' : new FormControl(this.dataConfig.birth, [Validators.required, this.valiDate])
@@ -163,15 +173,17 @@ export class ConfigurateComponent implements OnInit {
     if (this.formConfig.valid) {
 
       const description = this.formConfig.value.about;
+      const area = this.formConfig.value.area;
+      const subarea = this.formConfig.value.subarea;
+      const state = this.formConfig.value.area;
+      const city = this.formConfig.value.subarea;
       const date = this.formConfig.value.birth;
-      const state = this.formConfig.value.state;
-      const city = this.formConfig.value.city;
 
       try {
 
         const userProfile = this.store.collection('Profiles').doc(this.userProfile.profileId);
 
-        await this.store.collection('Users').doc(user?.uid).update({ birth: date, state: state, city: city });
+        await this.store.collection('Users').doc(user?.uid).update({ birth: date, state: state, city: city, area: area, subarea: subarea });
 
         await userProfile.update({ desc: description, following: [] });
 
@@ -191,6 +203,7 @@ export class ConfigurateComponent implements OnInit {
             this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
             break;
         }
+        console.log(error);
 
       }
     }
@@ -207,10 +220,11 @@ export class ConfigurateComponent implements OnInit {
       user.sendEmailVerification().then(() => {
         // Email enviado corretamente.
 
-        user.providerData.forEach((profile:any) => {
+        user.providerData.forEach(() => {
           document.getElementById("ModalVerify")?.click();
         });
       }).catch((error) => {
+        console.log(error);
         // Um erro ocorreu.        
         window.alert('Um erro ocorreu, verifique se na sua caixa de entrada já não possui um link de verificação...');        
       });
@@ -248,23 +262,43 @@ export class ConfigurateComponent implements OnInit {
     
   }
 
+  getAreas(){
+    this.areasService.getAreas().then((areas) => {
+      this.areas = areas;
+    });
+  }
+
+  getSubareas(){
+    const id = this.formConfig.value.area;
+
+    this.areasService.getSubarea(id).then((subareas) => {
+      this.subareas = subareas;
+    });
+  }
+
   async getData(){
     const user = await this.authService.getAuth().currentUser;
     
-    let profileId;
+    let profileId = "";
         
     this.profileSubs = this.usersService.getProfile(user?.uid).subscribe((profile: any) => {
-      profileId = profile.profileId;
-
-      this.userProfile = profile;      
+      this.userProfile.profileId = profile.profileId;
     });
   }
 
   ngOnDestroy() {
-    this.statesSubs.unsubscribe();
-    this.citiesSubs.unsubscribe();
+    if (this.statesSubs) {
+      this.statesSubs.unsubscribe();
+    }
 
-    this.profileSubs.unsubscribe();
+    if (this.citiesSubs) {
+      this.citiesSubs.unsubscribe();
+    }
+
+    if (this.profileSubs) {
+      this.profileSubs.unsubscribe();
+    }
+
   }
 
 }

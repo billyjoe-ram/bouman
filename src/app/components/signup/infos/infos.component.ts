@@ -40,11 +40,8 @@ export class InfosComponent implements OnInit {
       this.userRegister = {
         name: this.form.value.name,
         email: this.form.value.email,
-        area: this.form.value.area,
         password: this.form.value.passkey,
       };
-
-      const userObject = { area: this.userRegister.area };
 
       const profileObject = { name: this.userRegister.name };
 
@@ -56,13 +53,10 @@ export class InfosComponent implements OnInit {
         
         const user = newUser.user?.uid;
 
-        // Save the own user doc in users collection
-        await this.store.collection('Users').doc(user).set(userObject);
-
         const profile = await this.store.collection('Profiles').add(profileObject);
         
         // Adding an id field
-        await this.store.collection('Users').doc(user).update({ profileId: profile.id });
+        await this.store.collection('Users').doc(user).set({ profileId: profile.id });
 
         this.router.navigate(["/config"]);
       } catch (error) {

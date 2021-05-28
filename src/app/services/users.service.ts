@@ -45,16 +45,9 @@ export class UsersService {
   }
   
   getCollection(id: string | undefined) {
-    let userObject: {name: string, desc: string, area: string, profileId: string} = { name: "", desc: "", area: "", profileId: ""};
+    let userObject: {name: string, desc: string, area: string, subarea: string, profileId: string} = { name: "", desc: "", area: "", subarea: "", profileId: ""};
     
-    const collection = this.store.collection('Users').doc(id).ref.get();
-    
-    // collection.subscribe((data: any) => {
-    //   userObject.name = data.name;
-    //   userObject.desc = data.desc;
-    //   userObject.area = data.area;
-    //   userObject.profileId = data.profileId;
-    // });
+    const collection = this.store.collection('Users').doc(id).ref.get();    
     
     return collection;
   }
