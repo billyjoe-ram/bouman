@@ -21,8 +21,40 @@
         <div class="col-md-1"></div>
         <div class="col-md-5">
             <!-- Form to signup user -->
+            <button class="btn btn-default" (click)='checkingForm(true)'> Usuário</button>
+            <button class="btn btn-default" (click)='checkingForm(false)'> Empresa</button>
             <div class="bouman-form">
-                <form #boumanForm="ngForm" (ngSubmit)="signup()">
+                <form #boumanFormEmpresa='ngForm' (ngSubmit)='signup()' *ngIf='!checkForm'>
+
+                    <label for="username">Nome da Empresa</label>
+                    <input type="text" name="name" id="username" placeholder="Sua Empresa" minlength="3" ngModel
+                        required #nome="ngModel">
+                    <p *ngIf="!nome.valid && nome.touched" class="help-invalid">Por favor, preencha o campo
+                        corretamente.</p>
+
+                    <label for="useremail">E-mail</label>
+                    <input type="email" name="email" id="useremail" placeholder="Ex.: bouman@email.com" ngModel required
+                        #mail="ngModel">
+                    <p *ngIf="!mail.valid && mail.touched" class="help-invalid">Por favor, insira um e-mail válido.</p>
+
+                    <label for="cnpj">CNPJ</label>
+                    <input type="text" name="cnpj" id="cnpj" placeholder="Ex.: 11.222.333/4444-55" minlength='14'
+                        ngModel required #cnpj="ngModel" data-js="cnpj" mask="00.000.000/0000-00">
+                    <p *ngIf="!cnpj.valid && cnpj.touched" class="help-invalid">Por favor, insira um CNPJ
+                        válido.</p>
+
+                    <label for="userkey">Senha</label>
+                    <input type="password" name="passkey" id="userkey" placeholder="Ex.: @Bouman2021" minlength='8'
+                        ngModel required #passkey="ngModel">
+                    <p *ngIf="!passkey.valid && passkey.touched" class="help-invalid">Por favor, insira uma senha
+                        válida.</p>
+
+                    <span>
+                        A senha precisa ter pelo menos 8 caracteres.
+                    </span>
+                    <button type="submit" [disabled]="!boumanFormEmpresa.valid" class="btn">Cadastrar</button>
+                </form>
+                <form #boumanForm="ngForm" (ngSubmit)="signup()" *ngIf='checkForm'>
                     <label for="username">Nome Completo</label>
                     <input type="text" name="name" id="username" placeholder="Seu nome" minlength="3" ngModel required
                         #nome="ngModel">
@@ -32,13 +64,12 @@
                     <label for="usermail">E-mail</label>
                     <input type="email" name="email" id="usermail" placeholder="Ex.: bouman@email.com" ngModel required
                         email #mail="ngModel">
-                    <p *ngIf="!mail.valid && mail.touched"
-                        class="help-invalid">Por favor, insira um e-mail válido.</p>
+                    <p *ngIf="!mail.valid && mail.touched" class="help-invalid">Por favor, insira um e-mail válido.</p>
 
-                    <!--<label for="area">Área de Atuação</label>
+                    <!-- <label for="area">Área de Atuação</label>
                     <select class="custom-select bouman-select" id="area" name="area" ngModel required>
                         <option *ngFor="let area of areas" [value]="area.value">{{ area.name }}</option>
-                    </select>-->
+                    </select> -->
 
                     <label for="userkey">Senha</label>
                     <input type="password" name="passkey" id="userkey" placeholder="Ex.: @Bouman2021" ngModel required
@@ -54,7 +85,8 @@
                 </form>
                 <!-- Add the link to the terms here in an anchor tag -->
                 <p>
-                    Ao se cadastrar, você concorda com nossos <a routerLink="/terms" target="_blank">Termos de Serviço e Privacidade </a>, e receber emails
+                    Ao se cadastrar, você concorda com nossos <a routerLink="/terms" target="_blank">Termos de Serviço e
+                        Privacidade </a>, e receber emails
                     nossos.
                 </p>
             </div>

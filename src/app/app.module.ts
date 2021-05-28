@@ -43,6 +43,7 @@ import { LicenseComponent } from './components/terms/license/license.component';
 import { PrivacyComponent } from './components/terms/privacy/privacy.component';
 import { AccountComponent } from './components/terms/account/account.component';
 import { AddPeopleComponent } from './components/projects/project-overview/project/add-people/add-people.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 registerLocaleData(ptBR);
 
@@ -84,7 +85,8 @@ registerLocaleData(ptBR);
     AngularFireAuthModule,
     AngularFirestoreModule,
     HttpClientModule,
-    EditorModule
+    EditorModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [ { provide: LOCALE_ID, useValue: "pt-BR" } ],
   bootstrap: [AppComponent],
