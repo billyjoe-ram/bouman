@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { Project } from 'src/app/interfaces/project';
 import { ProjectContent } from 'src/app/interfaces/projectContent';
 import { AreasService } from 'src/app/services/areas.service';
@@ -17,6 +17,8 @@ export class PostProjectComponent implements OnInit, OnChanges {
   @Input('projects') userProjects: Project[] = [];
 
   @Input('profileId') profileId: string | undefined = "";
+
+  @Output('projectPosted') projectPosted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild('projectsModalTrigger') projectsModalTrigger!: ElementRef;
 
@@ -163,6 +165,8 @@ export class PostProjectComponent implements OnInit, OnChanges {
   
         if(this.selectedProjectText.length) {
           this.projectsService.addProject(this.profileId, project);
+
+          this.projectPosted.emit(true);
         } else {
           alert("Selecione pelo menos uma parte do projeto");
         }

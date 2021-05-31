@@ -112,8 +112,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
             // Ordering by date
             this.feedPosts.sort((a: any, b: any) => {
-              const aDate = a.data.publishedAt.seconds;
-              const bDate = b.data.publishedAt.seconds;
+              const aDate = a.data.publishedAt;
+              const bDate = b.data.publishedAt;
 
               return aDate.seconds - bDate.seconds;
             }).reverse();
@@ -123,7 +123,13 @@ export class FeedComponent implements OnInit, OnDestroy {
       });
       
     });    
-  }   
+  }
+
+  reloadData(postedProject: boolean) {
+    if (postedProject) {
+      this.loadData();
+    }
+  }
 
   handleError(errorMsg: string) {
     this.errorMsg = errorMsg;
