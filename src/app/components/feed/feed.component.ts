@@ -1,17 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Post } from 'src/app/interfaces/posts';
 import { Project } from 'src/app/interfaces/project';
-import { ProjectContent } from 'src/app/interfaces/projectContent';
 import { AuthService } from 'src/app/services/auth.service';
-import { DocsService } from 'src/app/services/docs.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { UsersService } from 'src/app/services/users.service';
 import { DocumentData } from '@angular/fire/firestore';
-// firebase.firestore.DocumentData
 
 @Component({
   selector: 'feed',
@@ -76,17 +72,19 @@ export class FeedComponent implements OnInit, OnDestroy {
     const user = await this.auth.getAuth().currentUser;
 
     // Subscribing to current user to get the profileId
-    this.userSubs = (await this.user.getProfile(user?.uid)).subscribe((user: any) => {
+    this.user.getCollection(user?.uid).then((user: any) => {
 
       // Passing to attribute
-      this.profileId = user.profileId;
+      this.profileId = user.data().profileId;
 
       // Executing the service method to get profile data
-      this.profileSubs = this.profile.getProfile(this.profileId).subscribe((profile: any) => {
+      this.profile.getProfilePromise(this.profileId).then((profile: any) => {
+
+        const profileData = profile.data()
 
         // Passing following profiles to array
-        if (profile.following.length > 0) {
-          this.profilesFollowing = profile.following;
+        if (profileData.following.length > 0) {
+          this.profilesFollowing = profileData.following;
         }
 
         // In pratical terms, you "follow yourself", but not in the database, only in the attribute
