@@ -1,5 +1,5 @@
 <!-- Post card -->
-<div class="card">
+<div class="card" *ngIf="pubType === 'post'; else project">
     <!-- Post content and user data -->
     <div class="card-body">
         <div class="profile-details">
@@ -31,3 +31,8 @@
         
     </div>
 </div>
+
+<!-- Project card -->
+<ng-template #project>
+    <project-card [profileId]="profileId" [project]="publication"></project-card>
+</ng-template>

@@ -10,6 +10,8 @@ import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { UsersService } from 'src/app/services/users.service';
+import { DocumentData } from '@angular/fire/firestore';
+// firebase.firestore.DocumentData
 
 @Component({
   selector: 'feed',
@@ -28,7 +30,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public profileId!: string | undefined;
 
-  public feedPosts: Post[] = [];
+  public feedPosts: { data: DocumentData, type: string }[] = [];
 
   public userProjects: Project[] = [];
 
@@ -47,7 +49,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     private posts: PostsService,
     private user: UsersService,
     private profile: ProfileService,
-    private docs: DocsService) { }
+    private projectsService: ProjectsService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -99,13 +101,22 @@ export class FeedComponent implements OnInit, OnDestroy {
           this.posts.listProfilePosts(profile).then((profilePosts) => {
             // Pushing each post object feed content array
             profilePosts.forEach(query => {              
-              this.feedPosts.push(query.data() as Post);
+              this.feedPosts.push({ data: query.data(), type: 'post' } as any);
+            });
+          });
+
+          this.projectsService.listProfileProjects(profile).then((postedProject) => {
+            postedProject.forEach((query) => {
+              this.feedPosts.push({ data: query.data(), type: 'project' } as any);
             });
 
             // Ordering by date
             this.feedPosts.sort((a: any, b: any) => {
-              return a.publishedAt.seconds - b.publishedAt.seconds;
-            }).reverse();                        
+              const aDate = a.data.publishedAt.seconds;
+              const bDate = b.data.publishedAt.seconds;
+
+              return aDate.seconds - bDate.seconds;
+            }).reverse();
           });
 
         });        

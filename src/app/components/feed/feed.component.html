@@ -32,7 +32,7 @@
             <!-- Feed and posts -->
             <div class="feed-content">
                 <div class="post-item" *ngFor="let post of feedPosts">
-                    <publication-card [profileId]="post.profileId" [userProfile]="this.profileId" [publication]="post" ></publication-card>
+                    <publication-card [profileId]="post.data.profileId" [userProfile]="this.profileId" [publication]="post.data" [pubType]="post.type"></publication-card>
                 </div>
             </div>
 

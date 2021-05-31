@@ -12,6 +12,8 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class PublicationCardComponent implements OnInit {
 
+  @Input('pubType') public pubType: string = "post";
+  
   @Input('publication') public publication!: any;
 
   @Input('profileId') public profileId: string = "";
