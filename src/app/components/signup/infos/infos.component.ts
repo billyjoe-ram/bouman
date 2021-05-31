@@ -39,9 +39,7 @@ export class InfosComponent implements OnInit {
   async signup() {
     const user = await this.authService.getAuth().currentUser;
 
-
-    if (this.checkForm == true) {
-
+    if (this.checkForm) {
       if (this.form.valid && !user) {
         this.userRegister = {
           name: this.form.value.name,
@@ -51,14 +49,12 @@ export class InfosComponent implements OnInit {
 
         const profileObject = { name: this.userRegister.name };
 
-        const where_name = (await this.store.collection('Profiles').ref.where('name', '==', profileObject.name).get()).docs;
-        if (where_name[0] == undefined) {
-
+        const whereName = (await this.store.collection('Profiles').ref.where('name', '==', profileObject.name).get()).docs;
+        
+        if (!whereName[0]) {
           try {
             // User sign-up
             const newUser = await this.authService.register(this.userRegister);
-
-            this.form.reset();
 
             const user = newUser.user?.uid;
 
@@ -68,6 +64,10 @@ export class InfosComponent implements OnInit {
             await this.store.collection('Users').doc(user).set({ profileId: profile.id });
 
             this.router.navigate(["/config"]);
+
+            this.form.reset();
+
+            console.log("Vou cadastrar uma pessoa!");
           } catch (error) {
             switch (error.code) {
               case 'auth/network-request-failed':
@@ -79,22 +79,13 @@ export class InfosComponent implements OnInit {
               default:
                 this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
                 break;
-            }
-
-            console.error(this.messageError);
-            console.error(error);
-          } /*finally {   
-          //Está parte agora está localizada no final do TRY acima     
-            this.router.navigate(["/config"]);
-          
-        }*/
+            }            
+          }
         } else {
           this.messageError = "O nome já está sendo usado."
         }
       }
-    }
-
-    if (this.checkForm == false) {
+    } else {
       if (cnpj.isValid(this.formEmpresa.value.cnpj)) {
         if (this.formEmpresa.valid && !user) {
           this.userRegister = {
@@ -104,33 +95,28 @@ export class InfosComponent implements OnInit {
             password: this.formEmpresa.value.passkey,
           };
 
-          const profileObject = { name: this.userRegister.name, cnpj: this.userRegister.cnpj };
+          const profileObject = { name: this.userRegister.name, cnpj: this.userRegister.cnpj };          
 
-          const where_cnpj = (await this.store.collection('Profiles').ref.where('cnpj', '==', profileObject.cnpj).get()).docs;
+          const whereCnpj = (await this.store.collection('Profiles').ref.where('cnpj', '==', profileObject.cnpj).get()).docs;          
 
-          if (where_cnpj[0] == undefined) {
+          if (!whereCnpj[0]) {
+            const whereName = (await this.store.collection('Profiles').ref.where('name', '==', profileObject.name).get()).docs;
 
-
-            const where_name = (await this.store.collection('Profiles').ref.where('name', '==', profileObject.name).get()).docs;
-            if (where_name[0] == undefined) {
-
+            if (!whereName[0]) {
               try {
                 // User sign-up
-
-
                 const newUser = await this.authService.register(this.userRegister);
 
-                this.formEmpresa.reset();
-
-                const user = newUser.user?.uid;
+                const user = newUser.user?.uid;                
 
                 // Save the own user doc in users collection
 
-                const profile = await this.store.collection('Profiles').add(profileObject);
-                console.log(profile)
+                const profile = await this.store.collection('Profiles').add(profileObject);                
 
                 // Adding an id field
                 await this.store.collection('Companies').doc(user).set({ profileId: profile.id });
+                
+                this.formEmpresa.reset();
 
                 this.router.navigate(["/config"]);
               } catch (error) {
@@ -145,14 +131,8 @@ export class InfosComponent implements OnInit {
                     this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
                     break;
                 }
-
-                console.error(this.messageError);
-                console.error(error);
-              } /*finally {   
-            //Está parte agora está localizada no final do TRY acima     
-              this.router.navigate(["/config"]);
-            
-          }*/
+                
+              }
             } else {
               this.messageError = "O nome já está sendo usado."
             }
@@ -160,8 +140,7 @@ export class InfosComponent implements OnInit {
             this.messageError = "CNPJ já está sendo usado.";
           }
         }
-      }
-      else {
+      } else {
         this.messageError = 'Digite um CNPJ válido'
       }
     }
