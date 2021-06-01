@@ -60,7 +60,6 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
   searching() {
     this.postsService.searchingProfiles(this.search).then(data => {
       // Attr all profiles found to the search resulsts
-      console.log(data)
       this.searchResult = data;  
       
       this.searchResult.forEach((profile, index) => {
@@ -70,6 +69,7 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
           this.searchResult[index].picture = this.user.profasset();
         });
       });
+      if (data.length == 0) this.searchResult = []; 
     });
   }
 
@@ -101,7 +101,6 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
     this.authService.getAuth().currentUser.then((user: any) => {
       console.log(user.uid)
       this.user.checkusercompany(user.uid).then(async res => {
-        console.log(res);
         if (res == 'Users') {
           this.isCompany = false;
         }
