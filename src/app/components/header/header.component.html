@@ -21,12 +21,18 @@
                     Início
                 </a>
             </li>
-            <li>
-                <a [routerLink]="isCompany ? '/edicts/overview' : '/projects/overview' ">
+            <li *ngIf="isCompany === false">
+                <a routerLink="/projects/overview">
                     <img src="/assets/testplan.svg" alt="Seus projetos">
-                    {{ isCompany ? 'Editais' : 'Projetos' }}
+                    Projetos
                 </a>
             </li>
+            <li>
+                <a routerLink="/edicts">
+                    <img src="/assets/edict.svg" alt="Seus projetos">
+                    Editais
+                </a>
+            </li>       
             <!-- <li>
                 <a>
                     <img src="/assets/notification.svg" alt="Notificação">

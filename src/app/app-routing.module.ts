@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { FeedComponent } from './components/feed/feed.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { ConfigurateComponent } from './components/signup/configurate/configurate.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { AuthGuard } from './guards/auth.guard';
-import { LoginGuard } from './guards/login.guard';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectOverviewComponent } from './components/projects/project-overview/project-overview.component';
 import { ProjectComponent } from './components/projects/project-overview/project/project.component';
@@ -15,6 +14,10 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { LicenseComponent } from './components/terms/license/license.component';
+import { EdictsComponent } from './components/edits/edits.component';
+
+import { AuthGuard } from './guards/auth.guard';
+import { LoginGuard } from './guards/login.guard';
 import { ConfigGuard } from './guards/config.guard';
 
 const routes: Routes = [
@@ -33,6 +36,7 @@ const routes: Routes = [
   { path: 'support', component: FaqComponent, canActivate: [AuthGuard] },
   { path: 'terms', component: TermsComponent },
   { path: 'terms/license', component: LicenseComponent },
+  { path: 'edicts', component: EdictsComponent },
   { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
 ];
 

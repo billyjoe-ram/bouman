@@ -15,7 +15,7 @@ import { PostsService } from 'src/app/services/posts.service';
   providedIn: 'root',
 })
 
-export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   @Output('isCompany') isCompanyEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   
@@ -25,12 +25,10 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
   public search: string = "";
   public searchResult : any[] = [];
 
-  public isCompany: boolean = false;
+  public isCompany!: boolean;
   
   private profile!: Subscription;
   private userSubs!: Subscription;
-
-  @Output() featureSelected = new EventEmitter<string>();
 
   collapsed = true;
 
@@ -38,10 +36,6 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.getData();
-  }
-
-  ngOnChanges() {
-    console.log(this.isCompany);
   }
 
   ngOnDestroy() {
