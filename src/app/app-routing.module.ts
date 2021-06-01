@@ -19,6 +19,8 @@ import { EdictsComponent } from './components/edits/edits.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginGuard } from './guards/login.guard';
 import { ConfigGuard } from './guards/config.guard';
+import { EditComponent } from './components/edits/edit/edit.component';
+import { OverviewComponent } from './components/edits/overview/overview.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },
@@ -36,7 +38,11 @@ const routes: Routes = [
   { path: 'support', component: FaqComponent, canActivate: [AuthGuard] },
   { path: 'terms', component: TermsComponent },
   { path: 'terms/license', component: LicenseComponent },
-  { path: 'edicts', component: EdictsComponent },
+  { path: 'edicts', component: EdictsComponent, canActivate: [AuthGuard], children: [
+    { path: '', redirectTo: 'overview', pathMatch: 'full' },
+    { path: 'overview', component: OverviewComponent },
+    { path: ':id', component: EditComponent },
+  ] },  
   { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
 ];
 

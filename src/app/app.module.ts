@@ -46,6 +46,7 @@ import { AddPeopleComponent } from './components/projects/project-overview/proje
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { EdictsComponent } from './components/edits/edits.component';
 import { EditComponent } from './components/edits/edit/edit.component';
+import { OverviewComponent } from './components/edits/overview/overview.component';
 
 registerLocaleData(ptBR);
 
@@ -77,7 +78,8 @@ registerLocaleData(ptBR);
     LicenseComponent,
     AddPeopleComponent,
     EdictsComponent,
-    EditComponent
+    EditComponent,
+    OverviewComponent
   ],
   imports: [
     BrowserModule,
