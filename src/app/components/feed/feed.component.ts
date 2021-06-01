@@ -17,9 +17,9 @@ import { DocumentData } from '@angular/fire/firestore';
 export class FeedComponent implements OnInit, OnDestroy {
 
   @ViewChild('errorModalTrigger') errorModalTrigger!: ElementRef;
-  
+
   // @ViewChild('projectsModalTrigger') projectsModalTrigger!: ElementRef;
-  
+
   public content: string = "";
 
   public profilesFollowing: string[] = [];
@@ -31,7 +31,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   public userProjects: Project[] = [];
 
   public errorMsg: string = "";
-  
+
   private userSubs!: Subscription;
 
   private profileSubs!: Subscription;
@@ -64,7 +64,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     } else {
       this.handleError("Não há nada na sua postagem");
     }
-    
+
   }
 
   async loadData() {
@@ -90,14 +90,14 @@ export class FeedComponent implements OnInit, OnDestroy {
         if (!this.profilesFollowing.includes(this.profileId as string)) {
           this.profilesFollowing.push(this.profileId as string);
         }
-      
+
         // Interating over each profile followed
         this.profilesFollowing.forEach(profile => {
-          
+
           // For this profile (brought by iteration), bring its posts and add in the object array
           this.posts.listProfilePosts(profile).then((profilePosts) => {
             // Pushing each post object feed content array
-            profilePosts.forEach(query => {              
+            profilePosts.forEach(query => {
               this.feedPosts.push({ data: query.data(), type: 'post' } as any);
             });
           });
@@ -106,20 +106,21 @@ export class FeedComponent implements OnInit, OnDestroy {
             postedProject.forEach((query) => {
               this.feedPosts.push({ data: query.data(), type: 'project' } as any);
             });
+            if (this.feedPosts.length != 0) {
+              // Ordering by date
+              this.feedPosts.sort((a: any, b: any) => {
+                const aDate = a.data.publishedAt;
+                const bDate = b.data.publishedAt;
 
-            // Ordering by date
-            this.feedPosts.sort((a: any, b: any) => {
-              const aDate = a.data.publishedAt;
-              const bDate = b.data.publishedAt;
-
-              return aDate.seconds - bDate.seconds;
-            }).reverse();
+                return aDate.seconds - bDate.seconds;
+              }).reverse();
+            }
           });
 
-        });        
+        });
       });
-      
-    });    
+
+    });
   }
 
   reloadData(postedProject: boolean) {
@@ -130,7 +131,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   handleError(errorMsg: string) {
     this.errorMsg = errorMsg;
-    
+
     this.errorModalTrigger.nativeElement.click();
   }
 

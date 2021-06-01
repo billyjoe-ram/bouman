@@ -5,7 +5,9 @@
     <!-- Profile card and profile contacts -->
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5 offset-md-0 offset-lg-2">
         <!-- binding properties to reuse code -->
-        <profile-card [profileId]="profileId" [userId]="userId" [userData]="userData" [editMode]="sameUser" (content)="selectPage($event)" [publicSize]="userPosts.length" [projsSize]="userProjects.length"></profile-card>
+        <profile-card [profileId]="profileId" [userId]="userId" [userData]="userData" [editMode]="sameUser"
+            (content)="selectPage($event)" [publicSize]="userPosts.length" [projsSize]="userProjects.length">
+        </profile-card>
     </div>
 
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5">
@@ -23,12 +25,25 @@
                 <div class="post-item" *ngFor="let post of userPosts">
                     <publication-card [profileId]="post.profileId" [publication]="post"></publication-card>
                 </div>
+                <div class='theresnothing' *ngIf="userPosts.length == 0">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <span>{{ userData.name }} não tem uma postagem.</span>
+                </div>
             </div>
             <div class="projects" *ngIf="pageSelected">
                 <div class="post-item" *ngFor="let project of userProjects">
                     <project-card [profileId]="project.profileId" [project]="project"></project-card>
                 </div>
-            </div>                
+                <div class='theresnothing' *ngIf="userProjects.length == 0">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <span>{{ userData.name }} não tem um projeto.</span>
+                </div>
+            </div>
+
         </div>
-    </div>
-</div>

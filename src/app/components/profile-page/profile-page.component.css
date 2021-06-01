@@ -5,3 +5,9 @@
 .profile-content {
     margin-top: 5%;
 }
+.theresnothing{
+    font-style: inherit;
+    font-size: 200%;
+    font-family:monospace;
+    text-align: center;
+}

@@ -40,3 +40,9 @@ content span {
     font-size: 1.8rem;
     font-weight: bold;
 }
+.theresnothing{
+    font-style: inherit;
+    font-size: 200%;
+    font-family:monospace;
+    text-align: center;
+}
