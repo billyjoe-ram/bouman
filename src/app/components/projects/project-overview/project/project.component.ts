@@ -58,6 +58,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   public projectMembersName: string[] = [];
 
+  public isOwner: boolean = false;
+
   private projectWorkingPart: string = "";
 
   private contentKey: string = "";
@@ -79,7 +81,9 @@ export class ProjectComponent implements OnInit, AfterViewInit {
       this.newProj = false;
     }
 
-    this.loadProject();
+    this.loadOwnerProfile().then(() => {
+      this.loadProject();
+    });    
   }
 
   ngAfterViewInit() {    
@@ -144,12 +148,17 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   loadProject() {
     const docId: string = this.route.snapshot.params['id'];
 
-    this.loadOwnerProfile();
-
     // Preventing loading in new projects
     if (!this.newProj) {
       this.docServ.listProject(docId).then((project) => {
+        const projOwner = project.data()?.ownerId;
 
+        if (this.mainProjectProfile === projOwner) {
+          this.isOwner = true;
+        } else {
+          this.isOwner = false;
+        }
+        
         this.projectObject = project.data();
 
         this.projectMembers = this.projectObject.members;
@@ -284,9 +293,15 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   private async loadOwnerProfile() {
     const user = await this.auth.getAuth().currentUser;
 
-    this.usersService.getCollection(user?.uid).then((user: any) => {
-      this.mainProjectProfile = user.data().profileId;
-    });
+    const userData = this.usersService.getCollection(user?.uid);
+
+    this.mainProjectProfile = ((await userData).data() as any).profileId;
+
+    // this.usersService.getCollection(user?.uid).then((user: any) => {
+    //   console.log(user.data());
+    //   console.log(user.data().profileId);
+    //   this.mainProjectProfile = user.data().profileId;
+    // });
   }
 
 }

@@ -67,7 +67,6 @@ export class UsersService {
   }
 
   getCollection(id: string | undefined) {
-
     const collection = this.store.collection('Users').doc(id).ref.get();
 
     return collection;

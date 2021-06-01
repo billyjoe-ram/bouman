@@ -72,6 +72,7 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
           this.searchResult[index].picture = this.user.profasset();
         });
       });
+      if (data.length == 0) this.searchResult = []; 
     });
   }
 

@@ -81,7 +81,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       // Executing the service method to get profile data
       this.profile.getProfilePromise(this.profileId).then((profile: any) => {
 
-        const profileData = profile.data();
+        const profileData = profile.data()
 
         // Passing following profiles to array
         if (profileData.following.length > 0) {
@@ -120,7 +120,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
         });        
       });
-    });
+      
+    });    
   }
 
   reloadData(postedProject: boolean) {
