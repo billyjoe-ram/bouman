@@ -67,8 +67,10 @@ export class UsersService {
   }
 
   getCollection(id: string | undefined) {
-
-    const collection = this.store.collection('Users').doc(id).ref.get();
+    
+    const collection = this.checkusercompany(id).then((res: any) => {
+      return this.store.collection(res).doc(id).ref.get();
+    });
 
     return collection;
   }

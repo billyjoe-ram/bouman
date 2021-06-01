@@ -57,6 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searching() {
     this.postsService.searchingProfiles(this.search).then(data => {
       // Attr all profiles found to the search resulsts
+      console.log(data)
       this.searchResult = data;  
       
       this.searchResult.forEach((profile, index) => {
