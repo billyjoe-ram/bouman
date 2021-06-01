@@ -1,5 +1,42 @@
 <app-header></app-header>
 
 <div class="container">
-    <p>Edicts works!</p>
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Listing user projects -->
+            <ul class="list-group">
+                <!-- <li class="list-group-item" style="cursor: pointer;" *ngFor="let project of projects" [routerLink]="['/projects', project.docId]">
+                    
+                    <div class="project-card">
+                        <div class="project-header">
+                            {{ project.title }}
+                        </div>
+                        <div class="project-body" #projectsList>
+                        </div>
+                    </div>
+            
+                </li> -->
+    
+                <!-- *ngIf="!projects.length" -->
+                <li class="list-group-item">
+                    <div class="project-card">
+                        <div class="project-header">
+                            Nenhum edital publicado ainda
+                        </div>
+                        <div>
+                            Comece a publicar seus editais no Bouman para que outros cientistas possam participar
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Create new project -->
+        <div class="col-md-3">
+            <button class="btn btn-bouman" routerLink="/edicts/new">
+                Novo edital
+            </button>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
 </div>
