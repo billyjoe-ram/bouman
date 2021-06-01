@@ -73,7 +73,6 @@ export class FeedComponent implements OnInit, OnDestroy {
 
     // Subscribing to current user to get the profileId
     this.user.getCollection(user?.uid).then((user: any) => {
-
       // Passing to attribute
       this.profileId = user.data().profileId;
 

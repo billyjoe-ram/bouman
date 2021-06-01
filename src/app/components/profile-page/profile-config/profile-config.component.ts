@@ -50,9 +50,7 @@ export class ProfileConfigComponent implements OnInit, OnDestroy {
     const formData = form.value;
     try {
       this.profileId = this.user.profileId;
-      if (this.checkcollection == true) {
-
-
+      if (this.checkcollection) {
         this.service.updateProfile(user?.uid, this.user.profileId, { name: formData.name, description: formData.desc, area: formData.area, subarea: formData.subarea });
       }
       else {

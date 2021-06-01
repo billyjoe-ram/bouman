@@ -42,8 +42,8 @@
                     <div class="col-sm-7 col-md-6 col-lg-4">
                         <button class="btn btn-outline-success" type="submit"
                             [disabled]="!projForm.valid">Salvar</button>
-                        <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteProject"
-                            *ngIf="!newProj">Excluir</button>
+                        <button class="btn btn-danger" type="button" (click)="deleteProject()"
+                            *ngIf="!newProj && isOwner">Excluir</button>
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
             </div>
         </div>
 
-        <add-people (selectedProfile)="addProfileToProject($event)"></add-people>
+        <add-people (selectedProfile)="addProfileToProject($event)" *ngIf="isOwner"></add-people>
 
     </div>
 

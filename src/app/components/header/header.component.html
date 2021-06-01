@@ -40,11 +40,14 @@
             <div class="form-group">
                 <div class="dropdown">
                         <input type="search" class="form-control" placeholder="Procure um perfil aqui" [(ngModel)]="search" (ngModelChange)="searching()" (focus)="togglesearch()" (blur)="togglesearch()">    
-                        <div class="dropdown-content" id="search" [ngStyle]="{ 'display': search ? 'block' : 'none'}">
-                            <a href="#" *ngFor="let prof of searchResult" [routerLink]="['/profiles', prof.id]" (click)="toggleSearchClick()">
+                        <div *ngIf='searchResult[0] != undefined' class="dropdown-content" id="search" [ngStyle]="{ 'display': search ? 'block' : 'none'}">
+                            <a  href="#" *ngFor="let prof of searchResult" [routerLink]="['/profiles', prof.id]" (click)="toggleSearchClick()">
                                 <img id="profile-picture" [src]="prof.picture">
                                 <span>{{prof.name}}</span>
                             </a>
+                        </div>
+                        <div class="dropdown-content noresultsdiv" id="search" [ngStyle]="{ 'display': search ? 'block' : 'none'}" *ngIf='searchResult[0] == undefined'>
+                            <span>No Results</span>
                         </div>
                 </div>
             </div>
@@ -58,7 +61,7 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li class="nav-item"><a [routerLink]="['/profiles', profileId]" (click)="onSelect('profile')" class="nav-link">Perfil</a></li>
+                    <li class="nav-item"><a [routerLink]="['/profiles', profileId]" class="nav-link">Perfil</a></li>
                     <li class="nav-item"><a routerLink="/profile-config" class="nav-link">Configurações</a></li>
                     <li class="nav-item"><a routerLink="/support" class="nav-link">Apoio</a></li>
                     <!-- <li class="nav-item"><a class="nav-link">Suporte</a></li> -->

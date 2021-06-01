@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnDestroy, Output, OnChanges } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Injectable } from '@angular/core';
@@ -15,14 +15,17 @@ import { PostsService } from 'src/app/services/posts.service';
   providedIn: 'root',
 })
 
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   public profileImg: any = "";
   public profileId: string = "";
   public search: string = "";
+  public searchResult : any[] = [];
+
+  private isCompany: boolean = false;
+  
   private profile!: Subscription;
   private userSubs!: Subscription;
-  public searchResult : any[] = [];
 
   @Output() featureSelected = new EventEmitter<string>();
 
@@ -34,6 +37,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.getData();
   }
 
+  ngOnChanges() {
+    this.checkColl();
+  }
+
   ngOnDestroy() {
     if (this.profile) {
       this.profile.unsubscribe();
@@ -42,11 +49,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if(this.userSubs) {
       this.userSubs.unsubscribe();
     }    
-  }
-
-  onSelect(feature: string) {
-    this.featureSelected.emit(feature);
-  }
+  }  
   
   togglesearch(){
     if (this.search == ""){
@@ -66,6 +69,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.searchResult[index].picture = this.user.profasset();
         });
       });
+      if (data.length == 0) this.searchResult = []; 
     });
   }
 
@@ -91,6 +95,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
     });
 
+  }
+
+  checkColl() {
+    this.authService.getAuth().currentUser.then((user: any) => {
+      console.log(user.uid)
+      this.user.checkusercompany(user.uid).then(async res => {
+        if (res == 'Users') {
+          this.isCompany = false;
+        }
+        if (res == 'Companies') {
+          this.isCompany = true;
+        }
+      })
+    });
   }
 
 }
