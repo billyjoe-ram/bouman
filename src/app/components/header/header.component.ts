@@ -19,10 +19,11 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   public profileImg: any = "";
   public profileId: string = "";
+
   public search: string = "";
   public searchResult : any[] = [];
 
-  private isCompany: boolean = false;
+  public isCompany: boolean = false;
   
   private profile!: Subscription;
   private userSubs!: Subscription;
@@ -38,7 +39,7 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    this.checkColl();
+    console.log(this.isCompany);
   }
 
   ngOnDestroy() {
@@ -84,6 +85,8 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
   async getData() {
     const user = await this.authService.getAuth().currentUser;
 
+    this.checkColl(user?.uid)
+
     this.userSubs = (await this.user.getProfile(user?.uid)).subscribe((profile: any) => {
       this.profileId = profile.profileId;
 
@@ -96,19 +99,15 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   }
 
-  checkColl() {
-    this.authService.getAuth().currentUser.then((user: any) => {
-      console.log(user.uid)
-      this.user.checkusercompany(user.uid).then(async res => {
-        console.log(res);
-        if (res == 'Users') {
-          this.isCompany = false;
-        }
-        if (res == 'Companies') {
-          this.isCompany = true;
-        }
-      })
-    });
+  checkColl(userUid: string | undefined) {
+    this.user.checkusercompany(userUid).then(async res => {
+      if (res == 'Users') {
+        this.isCompany = false;
+      }
+      if (res == 'Companies') {
+        this.isCompany = true;
+      }      
+    })
   }
 
 }
