@@ -42,7 +42,7 @@
                     <div class="col-sm-7 col-md-6 col-lg-4">
                         <button class="btn btn-outline-success" type="submit"
                             [disabled]="!projForm.valid">Salvar</button>
-                        <button class="btn btn-danger" type="button" (click)="deleteProject()"
+                        <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteProject"
                             *ngIf="!newProj">Excluir</button>
                     </div>
                 </div>
@@ -56,7 +56,26 @@
                 </div>
             </div>
         </form>
+    </div>
 
+    <div class="modal fade" id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProject"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteProject">Excluir projeto</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Você deseja mesmo excluir permanentemente o seu projeto?</p>
+                    <span>Ao concordar, você está ciente de que todos os membros não poderão mais visualizar o
+                        projeto.</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" (click)="deleteProject()">Excluir</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Navigate page and contributors -->

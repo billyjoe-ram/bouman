@@ -1,5 +1,5 @@
 .modal-content .modal-header {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: bold;
 }
 
@@ -29,4 +29,8 @@ label[for="keywords"] {
     height: 8rem;
     text-overflow: clip;
     overflow: auto;
+}
+
+.modal-footer{
+    justify-content: space-between;
 }
