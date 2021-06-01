@@ -75,20 +75,11 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.user.getCollection(user?.uid).then((user: any) => {
       // Passing to attribute
       this.profileId = user.data().profileId;
-      console.log(this.profileId);
-    }).catch(async () => {
-      const companyData = await this.user.getCompany(user?.uid);
-      // .then((company: any) => {
-      //   // Passing to attribute
-      //   this.profileId = company.data().profileId;
-      //   console.log(this.profileId);
-      // });
-      this.profileId = (companyData.data() as any).profileId;
-    }).finally(() => {
+
       // Executing the service method to get profile data
       this.profile.getProfilePromise(this.profileId).then((profile: any) => {
 
-        const profileData = profile.data();
+        const profileData = profile.data()
 
         // Passing following profiles to array
         if (profileData.following.length > 0) {
@@ -127,7 +118,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
         });        
       });
-    });
+      
+    });    
   }
 
   reloadData(postedProject: boolean) {

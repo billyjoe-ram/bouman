@@ -75,13 +75,6 @@ export class UsersService {
     return collection;
   }
 
-  getCompany(id: string | undefined) {
-
-    const collection = this.store.collection('Companies').doc(id).ref.get();
-
-    return collection;
-  }
-
   getProfile(uid: string | undefined) {
     return this.authService.getAuth().currentUser.then((user: any) => {
       return this.checkusercompany(user.uid).then((res) => {
