@@ -47,3 +47,7 @@ editor {
     font-size: 1.8rem;
     font-weight: bold;
 }
+
+.modal-footer{
+    justify-content: space-between;
+}

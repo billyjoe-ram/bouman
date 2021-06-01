@@ -220,6 +220,9 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     this.docServ.deleteProject(docId).then(() => {
       this.myProjects();
     });
+
+    let close = document.getElementById('close');
+    close?.click();
   }
 
   myProjects() {    
