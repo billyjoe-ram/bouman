@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-edicts',
-  templateUrl: './edicts.component.html',
-  styleUrls: ['./edicts.component.css']
+  templateUrl: './edits.component.html',
+  styleUrls: ['./edits.component.css']
 })
 export class EdictsComponent implements OnInit {
 
