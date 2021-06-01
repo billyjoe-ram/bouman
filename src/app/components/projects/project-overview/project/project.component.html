@@ -42,7 +42,7 @@
                     <div class="col-sm-7 col-md-6 col-lg-4">
                         <button class="btn btn-outline-success" type="submit"
                             [disabled]="!projForm.valid">Salvar</button>
-                        <button class="btn btn-danger" type="button" (click)="deleteProject()"
+                        <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteProject"
                             *ngIf="!newProj && isOwner">Excluir</button>
                     </div>
                 </div>
