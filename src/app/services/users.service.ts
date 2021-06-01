@@ -42,6 +42,10 @@ export class UsersService {
     return this.wallpImg;
   }
 
+  checkusercompanyobs(uid: string | undefined) {
+    return this.store.collection('Users').doc(uid).valueChanges();
+  }
+
   async checkusercompany(uid: string | undefined) {
     let check = this.store.collection('Users').doc(uid).ref.get().then((datauser) => {
       if (datauser.data() == undefined) {
