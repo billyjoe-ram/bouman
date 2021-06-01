@@ -43,7 +43,7 @@
                         <button class="btn btn-outline-success" type="submit"
                             [disabled]="!projForm.valid">Salvar</button>
                         <button class="btn btn-danger" type="button" (click)="deleteProject()"
-                            *ngIf="!newProj">Excluir</button>
+                            *ngIf="!newProj && isOwner">Excluir</button>
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <add-people (selectedProfile)="addProfileToProject($event)"></add-people>
+        <add-people (selectedProfile)="addProfileToProject($event)" *ngIf="isOwner"></add-people>
 
     </div>
 
