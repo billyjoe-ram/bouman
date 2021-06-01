@@ -49,6 +49,8 @@ export class ProjectCardComponent implements OnInit {
 
     this.imageSubs = this.userService.getProfilePicture(this.profileId).subscribe(image => {
       this.profileImg = image;
+    }, (error)=>{
+      this.profileImg = this.userService.profasset();
     });
 
     this.loadProjectText()

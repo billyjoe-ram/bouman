@@ -56,6 +56,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     if (this.content.trim()) {
       try {
         const post = this.posts.addPost(this.profileId, this.content);
+        this.reloadData(true);
       } catch (err) {
         console.error(err);
       } finally {
@@ -69,6 +70,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   async loadData() {
     // Awaiting current user id for profile id
+    
     const user = await this.auth.getAuth().currentUser;
 
     // Subscribing to current user to get the profileId
@@ -79,7 +81,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       // Executing the service method to get profile data
       this.profile.getProfilePromise(this.profileId).then((profile: any) => {
 
-        const profileData = profile.data()
+        const profileData = profile.data();
 
         // Passing following profiles to array
         if (profileData.following.length > 0) {
@@ -90,7 +92,8 @@ export class FeedComponent implements OnInit, OnDestroy {
         if (!this.profilesFollowing.includes(this.profileId as string)) {
           this.profilesFollowing.push(this.profileId as string);
         }
-
+        
+        let i = 0;
         // Interating over each profile followed
         this.profilesFollowing.forEach(profile => {
 
@@ -98,13 +101,15 @@ export class FeedComponent implements OnInit, OnDestroy {
           this.posts.listProfilePosts(profile).then((profilePosts) => {
             // Pushing each post object feed content array
             profilePosts.forEach(query => {
-              this.feedPosts.push({ data: query.data(), type: 'post' } as any);
+              this.feedPosts[i] = { data: query.data(), type: 'post' } as any;
+              i++;
             });
           });
 
           this.projectsService.listProfileProjects(profile).then((postedProject) => {
             postedProject.forEach((query) => {
-              this.feedPosts.push({ data: query.data(), type: 'project' } as any);
+              this.feedPosts[i] = ({ data: query.data(), type: 'project' } as any);
+              i++;
             });
             if (this.feedPosts.length != 0) {
               // Ordering by date
