@@ -44,6 +44,7 @@ import { PrivacyComponent } from './components/terms/privacy/privacy.component';
 import { AccountComponent } from './components/terms/account/account.component';
 import { AddPeopleComponent } from './components/projects/project-overview/project/add-people/add-people.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { EdictsComponent } from './components/edicts/edicts.component';
 
 registerLocaleData(ptBR);
 
@@ -73,7 +74,8 @@ registerLocaleData(ptBR);
     PrivacyComponent,
     AccountComponent,
     LicenseComponent,
-    AddPeopleComponent
+    AddPeopleComponent,
+    EdictsComponent
   ],
   imports: [
     BrowserModule,

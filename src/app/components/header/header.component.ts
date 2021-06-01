@@ -17,6 +17,8 @@ import { PostsService } from 'src/app/services/posts.service';
 
 export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
+  @Output('isCompany') isCompanyEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  
   public profileImg: any = "";
   public profileId: string = "";
 
@@ -102,11 +104,12 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
   checkColl(userUid: string | undefined) {
     this.user.checkusercompany(userUid).then(async res => {
       if (res == 'Users') {
-        this.isCompany = false;
-      }
-      if (res == 'Companies') {
+        this.isCompany = false;        
+      } else if (res == 'Companies') {
         this.isCompany = true;
-      }      
+      }
+      
+      this.isCompanyEvent.emit(this.isCompany);
     })
   }
 

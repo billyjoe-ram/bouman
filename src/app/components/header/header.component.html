@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li>
-                <a routerLink="/projects/overview">
+                <a [routerLink]="isCompany ? '/edicts/overview' : '/projects/overview' ">
                     <img src="/assets/testplan.svg" alt="Seus projetos">
                     {{ isCompany ? 'Editais' : 'Projetos' }}
                 </a>
