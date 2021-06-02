@@ -29,10 +29,21 @@ export class InfosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.checkingForm(true);
     this.areas = this.areasService.getAreas();
   }
 
+  
+
   checkingForm(check: boolean) {
+    if (check == true){
+      document.getElementById('btncompany')?.classList.remove('btnselected');
+      document.getElementById('btnuser')?.classList.add('btnselected');
+    }
+    else{
+      document.getElementById('btnuser')?.classList.remove('btnselected');
+      document.getElementById('btncompany')?.classList.add('btnselected');
+    }
     this.checkForm = check;
   }
 
