@@ -34,3 +34,22 @@ label[for="keywords"] {
 .modal-footer{
     justify-content: space-between;
 }
+.button{
+    padding: 5px 10px 5px 10px;
+    border-style:none;
+    background: none;
+    color:#000000;
+    outline-width:0px;
+    outline-color: rgba(255, 255, 255, 0);
+    outline-style:solid;
+    transition: 0.15s;
+  }
+  .button:hover{
+    padding: 5px 10px 5px 10px;
+    border-style:none;
+    background: none;
+    color:#141414;
+    outline-width:1px;
+    text-shadow: 0px 0px 5px rgb(255, 255, 255);
+    outline-style:solid;
+  }
