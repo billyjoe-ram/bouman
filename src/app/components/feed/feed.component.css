@@ -41,8 +41,8 @@ content span {
     font-weight: bold;
 }
 .theresnothing{
-    font-style: inherit;
-    font-size: 200%;
-    font-family:monospace;
+    /* font-style: inherit; */
+    font-size: 2rem;
+    /* font-family: monospace; */
     text-align: center;
 }

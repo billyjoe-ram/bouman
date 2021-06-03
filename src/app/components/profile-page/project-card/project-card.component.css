@@ -36,6 +36,11 @@
     color: #A4A4A4;
 }
 
+.card .card-body button#clear-btn {
+    background-color: transparent;
+    border: none;
+}
+
 .card .card-body span.keywords {
     margin: 0 0.6rem;
 }

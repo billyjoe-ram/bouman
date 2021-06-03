@@ -2,14 +2,23 @@
 <div class="card" *ngIf="pubType === 'post'; else project">
     <!-- Post content and user data -->
     <div class="card-body">
-        <div class="profile-details">
-            <!-- User informations -->
-            <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture">
-            <div class="profile-info">
-                {{ profileName }}
-                <span>{{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
+        <div class="row">
+            <div class="profile-details col-sm-11 col-md-11 col-lg-11">
+                <!-- User informations -->
+                <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture">
+                <div class="profile-info">
+                    {{ profileName }}
+                    <span>{{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
+                </div>
             </div>
-        </div>
+
+            <div class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
+                <button id="clear-btn">
+                    <img src="../../../../assets/more_vert_black_24dp.svg" alt="Mais">
+                </button>
+            </div>
+        </div>        
+        
         <!-- Post text with text limiting pipe -->
         <p class="card-text">
             {{ publication.content | slice:0:limit  }}<span [hidden]="sMDisabled" (click)="showMore()">ver mais...</span>
