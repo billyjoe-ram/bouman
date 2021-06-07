@@ -18,7 +18,7 @@ export class PublicationCardComponent implements OnInit {
 
   @Input('profileId') public profileId!: string;
 
-  @Input('userProfile') public userProfile!: string;
+  @Input('userProfile') public userProfile!: string | undefined;
 
   public profileName: any = "";  
 
