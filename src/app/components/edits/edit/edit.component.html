@@ -1,1 +1,68 @@
-<p>edit works!</p>
+<div class="row justify-content-center">
+    <div class="col-sm-8 col-md-8 col-lg-8">
+        <!-- Project form -->
+        <form (ngSubmit)="onSubmit(edictForm)" #edictForm="ngForm">
+            <!-- Project informations -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-5 col-md-6 col-lg-8">
+                        <input type="text" class="form-control" placeholder="Título para o edital" name="title" required [(ngModel)]="edict.title">
+                    </div>
+                    <div class="col-sm-7 col-md-6 col-lg-4">
+                        <button class="btn btn-outline-success" type="submit" [disabled]="!edictForm.valid">Salvar</button>
+                        <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteProject"
+                            *ngIf="!newEdict">Excluir</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <!-- Text editor -->
+                        <textarea [(ngModel)]="edict.content" class="form-control">{{ edict.content }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProject"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteProject">Excluir projeto</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Você deseja mesmo excluir permanentemente o seu projeto?</p>
+                    <span>Ao concordar, você está ciente de que todos os membros não poderão mais visualizar o
+                        projeto.</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" (click)="onDelete()">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Trigger -->
+    <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#errorModal" hidden
+        #modalTrigger></button>
+    <!-- Error message -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Algo não parece certo
+                </div>
+                <div class="modal-body">
+                    Por favor, adicione pelo menos um título e um conteúdo ao seu edital...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submit" class="btn btn-bouman" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
