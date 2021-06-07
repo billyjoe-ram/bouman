@@ -69,6 +69,11 @@
     cursor: pointer;
 }
 
+.card .card-body button#clear-btn {
+    background-color: transparent;
+    border: none;
+}
+
 .card .card-footer {
     display: flex;
 

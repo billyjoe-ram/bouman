@@ -13,6 +13,11 @@ export class PostsService {
 
   constructor(private store: AngularFirestore) { }
 
+  async getSinglePost(post : Post){
+    const posts = await this.postsCollection.doc(post.profileId).collection('Posts').doc(post.postId).ref.get();
+    return (posts!=undefined || posts!= null ? posts.data(): `Houve um erro, O post agora está ${posts}`);
+  }
+
   listProfilePosts(profileId: string) {
     const postsRef = this.postsCollection.doc(profileId).collection('Posts');
     

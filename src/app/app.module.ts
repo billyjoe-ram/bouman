@@ -43,10 +43,11 @@ import { LicenseComponent } from './components/terms/license/license.component';
 import { PrivacyComponent } from './components/terms/privacy/privacy.component';
 import { AccountComponent } from './components/terms/account/account.component';
 import { AddPeopleComponent } from './components/projects/project-overview/project/add-people/add-people.component';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { EdictsComponent } from './components/edits/edits.component';
 import { EditComponent } from './components/edits/edit/edit.component';
 import { OverviewComponent } from './components/edits/overview/overview.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 registerLocaleData(ptBR);
 
@@ -79,7 +80,8 @@ registerLocaleData(ptBR);
     AddPeopleComponent,
     EdictsComponent,
     EditComponent,
-    OverviewComponent
+    OverviewComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

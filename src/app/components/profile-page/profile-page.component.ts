@@ -33,9 +33,9 @@ export class ProfilePageComponent implements OnInit {
   private postsSubs!: Subscription;
 
   private userSubs!: Subscription;
-  
+
   private profileSubs!: Subscription;
-  
+
   constructor(
     private posts: PostsService,
     private projectsService: ProjectsService,
@@ -52,18 +52,18 @@ export class ProfilePageComponent implements OnInit {
 
     this.loadData();
   }
-  
+
   selectPage(pageSelected: string) {
     switch (pageSelected) {
       case "posts":
         this.pageSelected = 0;
-      break;
+        break;
       case "projects":
         this.pageSelected = 1;
-      break;
+        break;
       default:
         this.pageSelected = 0;
-      break;
+        break;
     }
   }
 
@@ -89,14 +89,14 @@ export class ProfilePageComponent implements OnInit {
         });
       });
 
-      this.profileSubs = (await this.usersServices.getProfile(user?.uid)).subscribe((data : any) => {
+      this.profileSubs = (await this.usersServices.getProfile(user?.uid)).subscribe((data: any) => {
 
         if (this.profileId == data.profileId) {
           this.sameUser = true;
         } else {
           this.sameUser = false;
         }
-        
+
       });
 
       this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {

@@ -40,3 +40,15 @@ content span {
     font-size: 1.8rem;
     font-weight: bold;
 }
+.theresnothing{
+    /* font-style: inherit; */
+    font-size: 2rem;
+    /* font-family: monospace; */
+    text-align: center;
+}
+
+spinner{
+    margin: 0;
+    padding:0;
+    align-content: center;
+}

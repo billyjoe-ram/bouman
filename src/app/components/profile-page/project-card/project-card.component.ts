@@ -49,6 +49,8 @@ export class ProjectCardComponent implements OnInit {
 
     this.imageSubs = this.userService.getProfilePicture(this.profileId).subscribe(image => {
       this.profileImg = image;
+    }, (error)=>{
+      this.profileImg = this.userService.profasset();
     });
 
     this.loadProjectText()
@@ -79,6 +81,8 @@ export class ProjectCardComponent implements OnInit {
 
   async onLikePost(project: PostedProject) {
     this.projectsService.likeProject(project, this.userProfile);
+    this.project = await this.projectsService.getSingleProject(project);
+    debugger
   }
 
   ngOnDestroy() {

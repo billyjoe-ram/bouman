@@ -33,7 +33,7 @@ export class ConfigurateComponent implements OnInit {
 
   private statesSubs!: Subscription;
   private citiesSubs!: Subscription;
-
+  private obscheck !: Subscription;
   private profileSubs!: Subscription;
 
   public areas: any[] = [];
@@ -271,6 +271,7 @@ export class ConfigurateComponent implements OnInit {
 
   fillCities() {
     const id = this.formConfig.value.state;
+    console.log(id)
     this.cities = [];
 
     this.citiesSubs = this.ibgeService.getCities(id).subscribe(res => {
@@ -303,7 +304,13 @@ export class ConfigurateComponent implements OnInit {
   async getData() {
     const user = await this.authService.getAuth().currentUser;
     if (user != null) {
-      this.collection = await this.usersService.checkusercompany(user.uid);
+      this.obscheck = this.usersService.checkusercompanyobs(user.uid).subscribe((datauser) => {
+        if (datauser == undefined) {
+          this.collection = 'Companies';
+        } else {
+          this.collection = 'Users';
+        }
+      });
       this.usersService.getProfile(user?.uid).then(res => {
         this.profileSubs = res.subscribe((profile: any) => {
           this.userProfile = profile;
@@ -315,6 +322,9 @@ export class ConfigurateComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    if (this.obscheck){
+      this.obscheck.unsubscribe();
+    }
     if (this.statesSubs) {
       this.statesSubs.unsubscribe();
     }

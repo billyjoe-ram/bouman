@@ -28,8 +28,10 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public userProjects: Project[] = [];
 
+  public loaded: boolean = false;
+
   public errorMsg: string = "";
-  
+
   private userSubs!: Subscription;
 
   private profileSubs!: Subscription;
@@ -54,6 +56,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     if (this.content.trim()) {
       try {
         const post = this.posts.addPost(this.profileId, this.content);
+        this.reloadData(true);
       } catch (err) {
         console.error(err);
       } finally {
@@ -62,11 +65,13 @@ export class FeedComponent implements OnInit, OnDestroy {
     } else {
       this.handleError("Não há nada na sua postagem");
     }
-    
+
   }
 
   async loadData() {
+    this.loaded = false;
     // Awaiting current user id for profile id
+    
     const user = await this.auth.getAuth().currentUser;
 
     // Subscribing to current user to get the profileId
@@ -81,7 +86,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       // Executing the service method to get profile data
       this.profile.getProfilePromise(this.profileId).then((profile: any) => {
 
-        const profileData = profile.data()
+        const profileData = profile.data();
 
         // Passing following profiles to array
         if (profileData.following.length > 0) {
@@ -92,36 +97,41 @@ export class FeedComponent implements OnInit, OnDestroy {
         if (!this.profilesFollowing.includes(this.profileId as string)) {
           this.profilesFollowing.push(this.profileId as string);
         }
-      
+        
+        let i = 0;
         // Interating over each profile followed
         this.profilesFollowing.forEach(profile => {
-          
+
           // For this profile (brought by iteration), bring its posts and add in the object array
           this.posts.listProfilePosts(profile).then((profilePosts) => {
             // Pushing each post object feed content array
-            profilePosts.forEach(query => {              
-              this.feedPosts.push({ data: query.data(), type: 'post' } as any);
+            profilePosts.forEach(query => {
+              this.feedPosts[i] = { data: query.data(), type: 'post' } as any;
+              i++;
+              this.loaded = true;
             });
           });
 
           this.projectsService.listProfileProjects(profile).then((postedProject) => {
             postedProject.forEach((query) => {
-              this.feedPosts.push({ data: query.data(), type: 'project' } as any);
+              this.feedPosts[i] = ({ data: query.data(), type: 'project' } as any);
+              i++;
             });
+            if (this.feedPosts.length != 0) {
+              // Ordering by date
+              this.feedPosts.sort((a: any, b: any) => {
+                const aDate = a.data.publishedAt;
+                const bDate = b.data.publishedAt;
 
-            // Ordering by date
-            this.feedPosts.sort((a: any, b: any) => {
-              const aDate = a.data.publishedAt;
-              const bDate = b.data.publishedAt;
-
-              return aDate.seconds - bDate.seconds;
-            }).reverse();
+                return aDate.seconds - bDate.seconds;
+              }).reverse();
+            }
+            this.loaded = true;
           });
-
-        });        
+        });
       });
-      
-    });    
+
+    });
   }
 
   reloadData(postedProject: boolean) {
@@ -132,7 +142,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   handleError(errorMsg: string) {
     this.errorMsg = errorMsg;
-    
+
     this.errorModalTrigger.nativeElement.click();
   }
 

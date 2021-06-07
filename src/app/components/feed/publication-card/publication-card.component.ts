@@ -16,9 +16,9 @@ export class PublicationCardComponent implements OnInit {
   
   @Input('publication') public publication!: any;
 
-  @Input('profileId') public profileId: string = "";
+  @Input('profileId') public profileId!: string;
 
-  @Input('userProfile') public userProfile: string | undefined = "";
+  @Input('userProfile') public userProfile!: string;
 
   public profileName: any = "";  
 
@@ -60,7 +60,8 @@ export class PublicationCardComponent implements OnInit {
   }
 
   async onLikePost(post: Post) {
-    this.post.likePost(post, this.userProfile);
+    await this.post.likePost(post, this.userProfile);
+    this.publication = await this.post.getSinglePost(post);
   }
 
   ngOnDestroy() {
