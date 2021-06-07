@@ -30,6 +30,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public userProjects: Project[] = [];
 
+  public loaded: boolean = false;
+
   public errorMsg: string = "";
 
   private userSubs!: Subscription;
@@ -69,6 +71,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   async loadData() {
+    this.loaded = false;
     // Awaiting current user id for profile id
     
     const user = await this.auth.getAuth().currentUser;
@@ -103,6 +106,7 @@ export class FeedComponent implements OnInit, OnDestroy {
             profilePosts.forEach(query => {
               this.feedPosts[i] = { data: query.data(), type: 'post' } as any;
               i++;
+              this.loaded = true;
             });
           });
 
@@ -120,8 +124,8 @@ export class FeedComponent implements OnInit, OnDestroy {
                 return aDate.seconds - bDate.seconds;
               }).reverse();
             }
+            this.loaded = true;
           });
-
         });
       });
 

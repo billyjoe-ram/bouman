@@ -15,6 +15,11 @@ export class ProjectsService {
 
   constructor(private store: AngularFirestore) { }
 
+  async getSingleProject(project : any){
+    const posts = await this.profilesCollection.doc(project.profileId).collection('PostedProjects').doc(project.projectId).ref.get();
+    return (posts!=undefined || posts!= null ? posts.data(): `Houve um erro, O post agora está ${posts}`);
+  }
+
   listProfileProjects(profileId: string) {
     const projectsRef = this.profilesCollection.doc(profileId).collection('PostedProjects');
     

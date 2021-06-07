@@ -46,3 +46,9 @@ content span {
     /* font-family: monospace; */
     text-align: center;
 }
+
+spinner{
+    margin: 0;
+    padding:0;
+    align-content: center;
+}
