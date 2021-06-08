@@ -54,6 +54,6 @@
     <div class="card-footer">
         <p (click)="listPosts()" class="clickable"> <span> Postagens </span> {{ publicSize }}
         <p>
-        <p (click)="listProjects()" class="clickable"> <span> Projetos </span> {{ projsSize }} </p>
+        <p (click)="listProjects()" class="clickable"> <span> {{ isCompany === true ? 'Editais' : '' }} {{ isCompany === false ? 'Projetos': '' }}</span> {{ projsSize }} </p>
     </div>
 </div>

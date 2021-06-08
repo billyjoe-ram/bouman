@@ -1,8 +1,6 @@
-import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -30,6 +28,8 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   public profileImg: any = "";
   public wallpImg: any = "";
 
+  public isCompany: boolean | undefined = undefined;
+
   private userProfile: string = "";
   private userFollowing: string[] = [];
 
@@ -43,19 +43,15 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   private backgroundPath: any = "";
   private backcheck: boolean = false;
 
-  private profileSubs!: Subscription;
   private userSubs!: Subscription;
   private userProfileSubs!: Subscription;
 
-  private paramsSubs!: Subscription;
-
   constructor(
-    private storage: AngularFireStorage,
-    private auth: AuthService,
+    private storage: AngularFireStorage,    
     private user: UsersService,
     private profileService: ProfileService,
-    private usersServices: UsersService,
-    private route: ActivatedRoute) { }
+    private usersServices: UsersService
+  ) { }
 
   ngOnInit(): void { }
 
@@ -64,7 +60,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
     if (this.profileId) {
       // Loading profile data
-      this.loadData();
+      this.loadData().then(() => { this.checkProfile(); });
     }
 
   }
@@ -182,6 +178,15 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   listProjects() {
     this.content.emit("projects");
+  }
+
+  private async checkProfile() {
+    const checkCompany = await this.usersServices.checkusercompany(this.userId);
+    if (checkCompany === "Companies") {
+      this.isCompany = true;
+    } else {
+      this.isCompany = false;
+    }
   }
 
 }
