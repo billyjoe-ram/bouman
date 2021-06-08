@@ -9,7 +9,7 @@
                         <input type="text" class="form-control" placeholder="Título para o edital" name="title" required [(ngModel)]="edict.title">
                     </div>
                     <div class="col-sm-7 col-md-6 col-lg-4">
-                        <button class="btn btn-outline-success" type="submit" [disabled]="!edictForm.valid">Salvar</button>
+                        <button class="btn btn-outline-success" type="submit" [disabled]="!edictForm.valid" *ngIf="newEdict">Salvar</button>
                         <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteProject"
                             *ngIf="!newEdict">Excluir</button>
                     </div>
@@ -25,6 +25,7 @@
         </form>
     </div>
 
+    <!-- Delete confirmation modal -->
     <div class="modal fade" id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProject"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -34,12 +35,11 @@
                 </div>
                 <div class="modal-body">
                     <p>Você deseja mesmo excluir permanentemente o seu projeto?</p>
-                    <span>Ao concordar, você está ciente de que todos os membros não poderão mais visualizar o
-                        projeto.</span>
+                    <span>Ao concordar, você está ciente de que todos os cientistas associados a este edital não o poderão mais visualizar, nem você poderá acessar os dados deles por meio deste. </span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="close" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" (click)="onDelete()">Excluir</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onDelete()">Excluir</button>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Edict } from 'src/app/interfaces/edict';
 
 import { EdictsService } from 'src/app/services/edicts.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -14,7 +15,14 @@ export class EditComponent implements OnInit {
 
   @ViewChild('edictForm') edictForm!: NgForm;
 
-  public edict: { title: string, content: string } = { title: "", content: "" };
+  public edict: Edict = {
+    edictId: "",
+    companyId: "",
+    title: "",
+    content: "",
+    createdAt: new Date(),
+    profilesApplied: []
+  };
 
   public newEdict: boolean = false;
   
@@ -39,6 +47,10 @@ export class EditComponent implements OnInit {
     } else {
       this.newEdict = false;
     }
+
+    this.loadCompany().then(() => {
+      this.loadEdict();
+    });
   }
 
   onSubmit() {
@@ -56,9 +68,6 @@ export class EditComponent implements OnInit {
           createdAt: date,
           profilesApplied: []
         }).finally(() => { this.router.navigate(["/edicts/overview"]) });
-
-      } else {
-        alert("Edital não alterável");
       }
     } else {
       alert("Preencha corretamente o edital");
@@ -67,23 +76,21 @@ export class EditComponent implements OnInit {
   }
 
   loadEdict() {
-    const docId: string = this.route.snapshot.params['id'];
+    const docId: string = this.route.snapshot.params['id'];    
 
     // Preventing loading in new projects
     if (!this.newEdict) {
       this.edictServ.listEdict(this.edictCompany, docId).then((edict: any) => {
-        this.edict = edict.data();
+        this.edict = edict.data();        
 
-        this.edictForm.setValue(this.edict);
-      });
-      console.log("not a new project");
-      console.log(this.edictCompany);
+        this.edictForm.setValue({ title: this.edict.title, content: this.edict.content });
+      });      
     }
         
   }
 
   onDelete() {
-    console.log("Bruh I can't delete this right now");
+    this.edictServ.deleteEdict(this.edict).finally(() => { this.router.navigate(["/edicts/overview"]) });
   }
 
   private async loadCompany() {

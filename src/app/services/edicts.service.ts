@@ -76,4 +76,15 @@ export class EdictsService {
     // Returning the process promise
     return updatedEdict;
   }
+
+  deleteEdict(edict: Edict) {
+    const edictsRef = this.profilesCollection.doc(edict.companyId);
+
+    const edictToDelete = edictsRef.collection('Edicts').doc(edict.edictId);
+
+    const deletedEdict = edictToDelete.delete();
+
+    return deletedEdict;
+  }
+  
 }
