@@ -22,11 +22,14 @@ export class ProfilePageComponent implements OnInit {
   public profileId: string = "";
 
   public userId: string | undefined = "";
+
   public userData: any = {};
 
   public sameUser: boolean = false;
 
   public pageSelected: number = 0;
+
+  public isCompany: boolean | undefined = undefined;
 
   private paramsSubs!: Subscription;
 
@@ -57,18 +60,28 @@ export class ProfilePageComponent implements OnInit {
     switch (pageSelected) {
       case "posts":
         this.pageSelected = 0;
-        break;
+      break;
       case "projects":
         this.pageSelected = 1;
-        break;
+      break;
+      case "edicts":
+        this.pageSelected = 1;
+      break;
       default:
         this.pageSelected = 0;
-        break;
+      break;
     }
   }
 
   async loadData() {
     const user = await this.authService.getAuth().currentUser;
+
+    const checkCompany = await this.usersServices.checkusercompany(user?.uid);
+    if (checkCompany === "Companies") {
+      this.isCompany = true;
+    } else {
+      this.isCompany = false;
+    }
 
     this.paramsSubs = this.route.params.subscribe(async (params) => {
       this.profileId = params['profid'];
