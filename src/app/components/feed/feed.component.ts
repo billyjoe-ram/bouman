@@ -22,7 +22,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public profilesFollowing: string[] = [];
 
-  public profileId!: string | undefined;
+  public profileId!: string;
 
   public feedPosts: { data: DocumentData, type: string }[] = [];
 
