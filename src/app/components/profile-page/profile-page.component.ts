@@ -20,6 +20,7 @@ export class ProfilePageComponent implements OnInit {
   public userProjects: any[] = [];
 
   public profileId: string = "";
+  public userProfileId!: string;
 
   public userId: string | undefined = "";
 
@@ -103,7 +104,7 @@ export class ProfilePageComponent implements OnInit {
       });
 
       this.profileSubs = (await this.usersServices.getProfile(user?.uid)).subscribe((data: any) => {
-
+        this.userProfileId = data.profileId;
         if (this.profileId == data.profileId) {
           this.sameUser = true;
         } else {
