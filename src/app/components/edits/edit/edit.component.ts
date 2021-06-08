@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { DocsService } from 'src/app/services/docs.service';
 import { EdictsService } from 'src/app/services/edicts.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -14,8 +13,6 @@ import { UsersService } from 'src/app/services/users.service';
 export class EditComponent implements OnInit {
 
   @ViewChild('edictForm') edictForm!: NgForm;
-  
-  public textareaText: string = "Textarea text";
 
   public edict: { title: string, content: string } = { title: "", content: "" };
 
@@ -26,9 +23,11 @@ export class EditComponent implements OnInit {
   private edictCompany: string = "";
   
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private edictServ: EdictsService,
-    private usersService: UsersService) { }
+    private usersService: UsersService
+  ) { }
 
   ngOnInit(): void {
     const docId = this.route.snapshot.params['id'];
@@ -42,11 +41,29 @@ export class EditComponent implements OnInit {
     }
   }
 
-  onSubmit(form?: NgForm) {
-    if(form) {
-      console.log(form);
+  onSubmit() {
+    const date = new Date();
+
+    const formValue = this.edictForm.form.value;
+
+    if (formValue.title.trim() && formValue.content.trim()) {
+      
+      if (this.newEdict) {
+        this.edictServ.addEdict({ 
+          companyId: this.edictCompany,
+          title: formValue.title,
+          content: formValue.content,
+          createdAt: date,
+          profilesApplied: []
+        }).finally(() => { this.router.navigate(["/edicts/overview"]) });
+
+      } else {
+        alert("Edital não alterável");
+      }
+    } else {
+      alert("Preencha corretamente o edital");
     }
-    console.log(this.edictForm);
+
   }
 
   loadEdict() {
@@ -72,7 +89,7 @@ export class EditComponent implements OnInit {
   private async loadCompany() {
     const companyUid = await this.usersService.getUid();
 
-    const companyData = await this.usersService.getCollection(companyUid);
+    const companyData = await this.usersService.getCompany(companyUid);
 
     const companyProfile = (companyData.data() as any).profileId;
 

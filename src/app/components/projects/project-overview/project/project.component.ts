@@ -98,8 +98,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     this.loadProjectMembers();
   }
 
-  async onSubmit() {
-    const user = await this.auth.getAuth().currentUser;
+  onSubmit() {
     const docId = this.route.snapshot.params['id'];
     const date = new Date();    
 

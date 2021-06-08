@@ -1,5 +1,7 @@
 textarea {        
     width: 65.5%;
+    height: 65vh;
+    max-height: 65vh;
 
     resize: none;
 

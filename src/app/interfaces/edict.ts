@@ -3,6 +3,6 @@ export interface Edict {
     companyId: string;
     title: string;
     content: string;
-    createdAt: string;
+    createdAt: Date;
     profilesApplied?: string[];
 }
