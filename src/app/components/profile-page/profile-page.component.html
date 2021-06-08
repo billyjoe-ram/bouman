@@ -26,10 +26,6 @@
                     <publication-card [profileId]="post.profileId" [publication]="post"></publication-card>
                 </div>
                 <div class='theresnothing' *ngIf="userPosts.length == 0">
-                    <br>
-                    <br>
-                    <br>
-                    <br>
                     <span>{{ userData.name }} não tem uma postagem.</span>
                 </div>
             </div>
@@ -38,11 +34,7 @@
                     <project-card [profileId]="project.profileId" [project]="project"></project-card>
                 </div>
                 <div class='theresnothing' *ngIf="userProjects.length == 0">
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <span>{{ userData.name }} não tem um projeto.</span>
+                    <span>{{ userData.name }} não tem um {{ isCompany === true ? 'edital' : '' }}{{ isCompany === false ? 'projeto': '' }}.</span>
                 </div>
             </div>
 

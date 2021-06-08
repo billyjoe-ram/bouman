@@ -177,7 +177,12 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   listProjects() {
-    this.content.emit("projects");
+    if (this.isCompany === true) {
+      this.content.emit("edicts");
+    } else if (this.isCompany === false) {
+      this.content.emit("projects");
+    }
+
   }
 
   private async checkProfile() {
