@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { EdictsService } from 'src/app/services/edicts.service';
 
 @Component({
   selector: 'app-overview',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('edictsList') private pBody!: ElementRef;
+
+  public edicts: any[] = [];
+
+  constructor(private edictsService: EdictsService) { }
 
   ngOnInit(): void {
-  }
+    this.edictsService.listCompanyEdicts().then(data => {
+      data.forEach((query) => {
+        this.edicts.push(query.data());
+      });
+
+      // Ordering by date
+      this.edicts.sort((a: any, b: any) => {
+        return a.createdAt.seconds - b.createdAt.seconds;
+      }).reverse();
+    });
+  }  
 
 }

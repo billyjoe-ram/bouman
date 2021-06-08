@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Edict } from '../interfaces/edict';
+import { AuthService } from './auth.service';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,22 +11,36 @@ export class EdictsService {
    
   private profilesCollection = this.store.collection('Profiles');
 
-  constructor(private store: AngularFirestore) { }
+  constructor(
+    private store: AngularFirestore,
+    private authService: AuthService,
+    private usersService: UsersService
+  ) { }
 
-  addEdict(edict: Edict) {
+  async addEdict(edict: Edict) {
     const edictsRef = this.profilesCollection.doc(edict.companyId).collection('Edicts');
     
-    const addedEdict = edictsRef.add(edict);
+    const edictAddedToColl = await edictsRef.add(edict);
+
+    const addedEdict = edictsRef.doc(edictAddedToColl.id).update({ edictId: edictAddedToColl.id });
     
     return addedEdict;
-  }
+  }  
   
-  listCompanyEdicts(companyId: string) {
+  async listCompanyEdicts() {
+    // Current user object
+    const owner = await this.authService.getAuth().currentUser;
+    
+    // Retrieving the doc with this user uid
+    const userCollec = await this.usersService.getCompany(owner?.uid);
+
+    const companyId = (userCollec.data() as any).profileId;
+
     const edictsRef = this.profilesCollection.doc(companyId).collection('Edicts');
     
-    const profileProjects = edictsRef.ref.get();
+    const companyEdicts = edictsRef.ref.get();
     
-    return profileProjects;
+    return companyEdicts;
   }
 
   listEdict(companyId: string, edictId: string) {

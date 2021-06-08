@@ -2,20 +2,20 @@
     <div class="col-md-8">
         <!-- Listing user projects -->
         <ul class="list-group">
-            <!-- <li class="list-group-item" style="cursor: pointer;" *ngFor="let project of projects" [routerLink]="['/projects', project.docId]">
+            <li class="list-group-item" style="cursor: pointer;" *ngFor="let edict of edicts" [routerLink]="['/edicts', edict.edictId]">
                 
                 <div class="project-card">
                     <div class="project-header">
-                        {{ project.title }}
+                        {{ edict.title }}
                     </div>
-                    <div class="project-body" #projectsList>
+                    <div class="project-body" >
+                        {{ edict.content | slice:0:180 }}...
                     </div>
                 </div>
         
-            </li> -->
-
-            <!-- *ngIf="!projects.length" -->
-            <li class="list-group-item">
+            </li>
+            
+            <li class="list-group-item" *ngIf="!edicts.length">
                 <div class="project-card">
                     <div class="project-header">
                         Nenhum edital publicado ainda
