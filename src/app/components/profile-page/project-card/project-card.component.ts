@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PostedProject } from 'src/app/interfaces/postedProject';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -10,7 +10,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css']
 })
-export class ProjectCardComponent implements OnInit {
+export class ProjectCardComponent implements OnInit, AfterViewInit {
 
   @Input('project') public project!: any;
 
@@ -19,6 +19,8 @@ export class ProjectCardComponent implements OnInit {
   @Input('userProfile') public userProfile: string | undefined = "";
 
   @ViewChild('projectContent') public projectContent!: ElementRef;
+
+  public button !: any;
 
   public profileName: any = "";  
 
@@ -56,6 +58,11 @@ export class ProjectCardComponent implements OnInit {
     this.loadProjectText()
   }
 
+  ngAfterViewInit(): void{
+    this.gettingId();
+    console.log(this.button)
+  }
+
   showMore() {
     this.limit = this.project.content.length;
     this.sMDisabled = !this.sMDisabled;
@@ -85,6 +92,12 @@ export class ProjectCardComponent implements OnInit {
     await this.projectsService.likeProject(project, this.userProfile);
     this.project = await this.projectsService.getSingleProject(project);
     button.disabled = false;
+  }
+
+  gettingId(){
+    this.button = <HTMLInputElement> document.getElementById("likeButtonProject");
+    this.button?.setAttribute('id', this.project.projectId);
+    console.log(this.button)
   }
 
   ngOnDestroy() {

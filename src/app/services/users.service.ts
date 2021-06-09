@@ -77,9 +77,9 @@ export class UsersService {
 
   async checkusercompanyprofile(id: string | undefined) {
     let check = this.store.collection('Profiles').doc(id).ref.get().then((data: any) => {
-      let teste = data.data();
-      if (teste.cnpj != undefined || teste.cnpj != null) {
-        return teste.cnpj
+      let company = data.data();
+      if (company.cnpj != undefined || company.cnpj != null) {
+        return company.cnpj;
       }
       else {
         return undefined;

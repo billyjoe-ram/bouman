@@ -18,7 +18,7 @@
                     <img src="../../../../assets/more_vert_black_24dp.svg" alt="Mais">
                 </button>
             </div>
-        </div>        
+        </div>
         <div class="card">
             <div class="card-header">
                 <h1> {{ project.title }} </h1>
@@ -33,11 +33,12 @@
         </div>
         <span class="badge badge-info keywords" *ngFor="let keyword of project.keywords"> {{ keyword }} </span>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" *ngIf='profileId != userProfile'>
         <!-- This should be commented out when interactions are implemented -->
         <button class="btn btn-default" (click)="onLikePost(project)" id="likeButtonProject">
-           <span> {{ project.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir">Curtir
+            <span> {{ project.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir">Curtir
         </button>
+    </div>
 
         <!-- <button class="btn btn-default">
             <img src="/assets/comment-gray.svg" alt="Comentar">Comentar
@@ -46,6 +47,4 @@
         <button class="btn btn-default">
             <img src="/assets/share-gray.svg" alt="Compartilhar">Compartilhar
         </button> -->
-        
-    </div>
 </div>

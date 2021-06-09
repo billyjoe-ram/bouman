@@ -21,6 +21,7 @@ export class ProfilePageComponent implements OnInit {
   public userEdicts: any[] = [];
 
   public profileId: string = "";
+
   public userProfileId!: string;
 
   public userId: string | undefined = "";
@@ -62,28 +63,38 @@ export class ProfilePageComponent implements OnInit {
     switch (pageSelected) {
       case "posts":
         this.pageSelected = 0;
-      break;
+        break;
       case "projects":
         this.pageSelected = 1;
-      break;
+        break;
       case "edicts":
         this.pageSelected = 1;
-      break;
+        break;
       default:
         this.pageSelected = 0;
-      break;
+        break;
     }
   }
 
   async loadData() {
+<<<<<<< Updated upstream
     const user = await this.authService.getAuth().currentUser;    
+=======
+    const user = await this.authService.getAuth().currentUser;
+>>>>>>> Stashed changes
 
     this.paramsSubs = this.route.params.subscribe(async (params) => {
       this.profileId = params['profid'];
 
+<<<<<<< Updated upstream
       const checkCompany = await this.usersServices.findUserCompany(this.profileId);
       
       if (checkCompany === "Companies") {
+=======
+
+      const checkCompany = await this.usersServices.checkusercompanyprofile(this.profileId);
+      if (checkCompany !== undefined) {
+>>>>>>> Stashed changes
         this.isCompany = true;
       } else {
         this.isCompany = false;
@@ -118,7 +129,6 @@ export class ProfilePageComponent implements OnInit {
       this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
         this.userData = profile;
       });
-
     });
 
   }
