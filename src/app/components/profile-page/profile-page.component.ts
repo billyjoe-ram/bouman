@@ -99,20 +99,35 @@ export class ProfilePageComponent implements OnInit {
         posts.forEach(post => {
           this.userPosts.push(post.data());
         });
+
+        // Ordering by date
+        this.userPosts.sort((a: any, b: any) => {
+          return a.publishedAt.seconds - b.publishedAt.seconds;
+        }).reverse();
       });
 
       this.projectsService.listProfileProjects(this.profileId).then(projects => {
         projects.forEach(project => {
           this.userProjects.push(project.data());
         });
+
+        // Ordering by date
+        this.userProjects.sort((a: any, b: any) => {
+          return a.publishedAt.seconds - b.publishedAt.seconds;
+        }).reverse();
       });
 
       this.edictsService.listCompanyEdicts().then((edicts) => {
         edicts.forEach((edict) => {
           if (edict.data()) {
             this.userEdicts.push(edict.data());
-          }          
+          }
         });
+
+        // Ordering by date
+        this.userEdicts.sort((a: any, b: any) => {
+          return a.createdAt.seconds - b.createdAt.seconds;
+        }).reverse();
       });
 
       this.profileSubs = (await this.usersServices.getProfile(user?.uid)).subscribe((data: any) => {

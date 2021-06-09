@@ -33,7 +33,12 @@
                 <div class="post-item" *ngFor="let project of userProjects">
                     <project-card [profileId]="project.profileId" [project]="project"></project-card>
                 </div>
-                <div class='theresnothing' *ngIf="userProjects.length == 0">
+                <div *ngIf="userEdicts.length">
+                    <div class="post-item" *ngFor="let edict of userEdicts">
+                        <edict-card [edict]="edict" [profileId]="edict.companyId"></edict-card>
+                    </div>
+                </div>
+                <div class='theresnothing' *ngIf="userProjects.length == 0 && userEdicts.length == 0">
                     <span>{{ userData.name }} não tem um {{ isCompany === true ? 'edital' : '' }}{{ isCompany === false
                         ? 'projeto': '' }}.</span>
                 </div>
