@@ -77,24 +77,13 @@ export class ProfilePageComponent implements OnInit {
   }
 
   async loadData() {
-<<<<<<< Updated upstream
-    const user = await this.authService.getAuth().currentUser;    
-=======
     const user = await this.authService.getAuth().currentUser;
->>>>>>> Stashed changes
 
     this.paramsSubs = this.route.params.subscribe(async (params) => {
       this.profileId = params['profid'];
 
-<<<<<<< Updated upstream
-      const checkCompany = await this.usersServices.findUserCompany(this.profileId);
-      
-      if (checkCompany === "Companies") {
-=======
-
       const checkCompany = await this.usersServices.checkusercompanyprofile(this.profileId);
       if (checkCompany !== undefined) {
->>>>>>> Stashed changes
         this.isCompany = true;
       } else {
         this.isCompany = false;
