@@ -60,8 +60,18 @@ export class PublicationCardComponent implements OnInit {
   }
 
   async onLikePost(post: Post) {
+    const button = <HTMLInputElement> document.getElementById("likeButtonPost");
+    button.disabled = true;
+    try{
     await this.post.likePost(post, this.userProfile);
     this.publication = await this.post.getSinglePost(post);
+    button.disabled = false;  
+    }
+    catch(err){
+      console.log(err);
+      button.disabled = false;
+    }
+
   }
 
   ngOnDestroy() {

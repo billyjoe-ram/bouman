@@ -80,9 +80,11 @@ export class ProjectCardComponent implements OnInit {
   }
 
   async onLikePost(project: PostedProject) {
-    this.projectsService.likeProject(project, this.userProfile);
+    const button = <HTMLInputElement> document.getElementById("likeButtonProject");
+    button.disabled = true;
+    await this.projectsService.likeProject(project, this.userProfile);
     this.project = await this.projectsService.getSingleProject(project);
-    debugger
+    button.disabled = false;
   }
 
   ngOnDestroy() {
