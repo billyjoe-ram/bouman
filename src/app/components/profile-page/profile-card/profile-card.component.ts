@@ -186,7 +186,10 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private async checkProfile() {
-    const checkCompany = await this.usersServices.checkusercompany(this.userId);
+    const checkCompany = await this.usersServices.findUserCompany(this.profileId);
+
+    console.log(checkCompany);
+
     if (checkCompany === "Companies") {
       this.isCompany = true;
     } else {

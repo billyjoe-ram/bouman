@@ -1,7 +1,6 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Post } from 'src/app/interfaces/posts';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -18,6 +17,8 @@ export class ProfilePageComponent implements OnInit {
   public userPosts: any[] = [];
 
   public userProjects: any[] = [];
+
+  public userEdicts: any[] = [];
 
   public profileId: string = "";
   public userProfileId!: string;
@@ -75,17 +76,18 @@ export class ProfilePageComponent implements OnInit {
   }
 
   async loadData() {
-    const user = await this.authService.getAuth().currentUser;
-
-    const checkCompany = await this.usersServices.checkusercompany(user?.uid);
-    if (checkCompany === "Companies") {
-      this.isCompany = true;
-    } else {
-      this.isCompany = false;
-    }
+    const user = await this.authService.getAuth().currentUser;    
 
     this.paramsSubs = this.route.params.subscribe(async (params) => {
       this.profileId = params['profid'];
+
+      const checkCompany = await this.usersServices.findUserCompany(this.profileId);
+      
+      if (checkCompany === "Companies") {
+        this.isCompany = true;
+      } else {
+        this.isCompany = false;
+      }
 
       // Clearing arrays on changes
       this.userPosts = [];
