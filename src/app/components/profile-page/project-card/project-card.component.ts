@@ -93,4 +93,8 @@ export class ProjectCardComponent implements OnInit {
     this.imageSubs.unsubscribe();
   }
 
+  deletePost(){
+    
+  }
+
 }
