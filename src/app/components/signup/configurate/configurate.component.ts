@@ -226,6 +226,7 @@ export class ConfigurateComponent implements OnInit {
             this.messageError = 'Verifique a sua conexão com a internet e tente novamente.';
             break;
           default:
+            console.log(error)
             this.messageError = 'Ocorreu um erro inesperado, tente novamente.';
             break;
         }
@@ -271,7 +272,6 @@ export class ConfigurateComponent implements OnInit {
 
   fillCities() {
     const id = this.formConfig.value.state;
-    console.log(id)
     this.cities = [];
 
     this.citiesSubs = this.ibgeService.getCities(id).subscribe(res => {

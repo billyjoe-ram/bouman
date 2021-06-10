@@ -13,6 +13,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   @ViewChild('edictsList') private pBody!: ElementRef;
 
   public edicts: any[] = [];
+  public loaded: any = false;
 
   private edictsSubs!: Subscription;
 
@@ -23,13 +24,17 @@ export class OverviewComponent implements OnInit, OnDestroy {
   }
 
   private async loadEdicts() {
+
+    this.loaded = false;
+
     const profileUid = await this.usersService.getUid();
 
-    const companyProfile = await this.usersService.getCompany(profileUid);    
+    const companyProfile = await this.usersService.getCompany(profileUid);
 
-    const profileId = (companyProfile.data() as any).profileId;    
+    const profileId = (companyProfile.data() as any).profileId;
 
-    this.edictsSubs = this.edictsService.listCompanyEdicts(profileId).subscribe(data => {      
+    this.edictsSubs = this.edictsService.listCompanyEdicts(profileId).subscribe(data => {
+      this.loaded = false;
       data.forEach((query) => {
         this.edicts.push(query);
       });
@@ -38,7 +43,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
       this.edicts.sort((a: any, b: any) => {
         return a.createdAt.seconds - b.createdAt.seconds;
       }).reverse();
-    });
+      this.loaded = true;
+    })
   }
 
   ngOnDestroy() {

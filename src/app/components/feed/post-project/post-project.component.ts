@@ -36,6 +36,8 @@ export class PostProjectComponent implements OnInit, OnChanges {
 
   public selectedProject!: any;
 
+  public loaded: any = false;
+
   public userArea: { area: string, subarea: string } = { area: "", subarea: "" };
 
   public userSpecificSubareas: { name: string, value: string }[] = [];
@@ -55,6 +57,7 @@ export class PostProjectComponent implements OnInit, OnChanges {
   }
 
   importProject() {
+    this.loaded =false;
     // Reset the array
     this.userProjects = [];
 
@@ -69,6 +72,8 @@ export class PostProjectComponent implements OnInit, OnChanges {
       this.userProjects.sort((a: any, b: any) => {
         return a.lastEdit.seconds - b.lastEdit.seconds;
       }).reverse();
+    }).finally(()=>{
+    this.loaded = true;
     });
 
     // Triggering modal

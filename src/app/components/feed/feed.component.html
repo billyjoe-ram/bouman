@@ -30,7 +30,7 @@
                 </div>
             </form>
             <!-- Feed and posts -->
-            <div class="feed-content" *ngIf="feedPosts.length && loaded">
+            <div class="feed-content" *ngIf="feedPosts.length && loadedPosts && loadedProj">
                 <div class="post-item" *ngFor="let post of feedPosts">
                     <publication-card [profileId]="post.data.profileId" [userProfile]="profileId"
                         [publication]="post.data" [pubType]="post.type"></publication-card>
@@ -38,8 +38,8 @@
             </div>
 
             <!-- Showing if there're no posts -->
-            <spinner *ngIf='!feedPosts.length && !loaded'></spinner>
-            <div class='theresnothing' *ngIf="!feedPosts.length && loaded">
+            <spinner *ngIf='!feedPosts.length && (!loadedPosts || !loadedProj)'></spinner>
+            <div class='theresnothing' *ngIf="!feedPosts.length && loadedPosts && loadedProj">
                 <br>
                 <span>Não há nada no Feed...</span>
                 <br>
