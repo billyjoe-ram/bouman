@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
@@ -20,6 +20,8 @@ export class PublicationCardComponent implements OnInit {
   @Input('profileId') public profileId!: string;
 
   @Input('userProfile') public userProfile!: string | undefined;
+
+  @Output('postDeleted') postDeleted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public profileName: any = "";  
 
@@ -83,13 +85,9 @@ export class PublicationCardComponent implements OnInit {
   }
 
   async onDelete(){
-
-    console.log(this.profileId);
-    console.log(this.publication.postId);
-    console.log(this.publication);
-
     try{
-      await this.post.deletePost(this.profileId, this.publication.postid);
+      await this.post.deletePost(this.profileId, this.publication.postId);
+      this.postDeleted.emit(true);
     } catch (error){
       console.log(error);
     } finally {
