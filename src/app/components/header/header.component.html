@@ -27,7 +27,7 @@
                     Projetos
                 </a>
             </li>
-            <li>
+            <li *ngIf="isCompany === true">
                 <a routerLink="/edicts">
                     <img src="/assets/edict.svg" alt="Seus projetos">
                     Editais

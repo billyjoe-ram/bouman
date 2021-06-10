@@ -80,12 +80,16 @@
     justify-content: space-between;
 
     background-color: #FA902E;
-
-    font-weight: bold;
 }
 
 .card .card-footer .btn.btn-default {
     color: white;
+    font-weight: bold;
+}
+
+.card .card-footer .btn.btn-default.is-applied {
+    color: #FA902E;
+    background-color: white;
 }
 
 .card .card-footer img {
