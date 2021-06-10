@@ -87,11 +87,16 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   }
 
   async onLikePost(project: PostedProject) {
-    const button = <HTMLInputElement> document.getElementById("likeButtonProject");
-    button.disabled = true;
+    this.button.disabled = true;
+    try{
     await this.projectsService.likeProject(project, this.userProfile);
     this.project = await this.projectsService.getSingleProject(project);
-    button.disabled = false;
+    this.button.disabled = false;
+    }
+    catch(err){
+      console.log(err);
+      this.button.disabled = false;
+    }
   }
 
   gettingId(){
