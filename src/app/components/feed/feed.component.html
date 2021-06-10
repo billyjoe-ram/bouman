@@ -34,7 +34,7 @@
             <div class="feed-content" *ngIf="feedPosts.length && loaded">
                 <div class="post-item" *ngFor="let post of feedPosts">
                     <publication-card [profileId]="post.data.profileId" [userProfile]="profileId"
-                        [publication]="post.data" [pubType]="post.type" (postDeleted)="reloadData($event)"></publication-card>
+                        [publication]="post.data" [pubType]="post.type" (postDeleted)="updateDataPost($event)"></publication-card>
                 </div>
             </div>
 

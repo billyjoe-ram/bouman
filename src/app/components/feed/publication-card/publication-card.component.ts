@@ -21,7 +21,7 @@ export class PublicationCardComponent implements OnInit {
 
   @Input('userProfile') public userProfile!: string | undefined;
 
-  @Output('postDeleted') postDeleted: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output('postDeleted') postDeleted: EventEmitter<string> = new EventEmitter<string>();
 
   public profileName: any = "";  
 
@@ -87,7 +87,12 @@ export class PublicationCardComponent implements OnInit {
   async onDelete(){
     try{
       await this.post.deletePost(this.profileId, this.publication.postId);
-      this.postDeleted.emit(true);
+
+      this.postDeleted.emit(this.publication.postId);
+
+      console.log('onDelete:');
+      console.log(this.publication.postId, this.profileId);
+
     } catch (error){
       console.log(error);
     } finally {
