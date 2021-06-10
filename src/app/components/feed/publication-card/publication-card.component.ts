@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
 import { PostsService } from 'src/app/services/posts.service';
@@ -10,7 +10,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './publication-card.component.html',
   styleUrls: ['./publication-card.component.css']
 })
-export class PublicationCardComponent implements OnInit {
+export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   @Input('pubType') public pubType: string = "post";
   
@@ -19,6 +19,8 @@ export class PublicationCardComponent implements OnInit {
   @Input('profileId') public profileId!: string;
 
   @Input('userProfile') public userProfile!: string | undefined;
+
+  public button!: any;
 
   public profileName: any = "";  
 
@@ -54,25 +56,34 @@ export class PublicationCardComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.gettingId();
+  }
+
+
   showMore() {
     this.limit = this.publication.content.length;
     this.sMDisabled = !this.sMDisabled;
   }
 
   async onLikePost(post: Post) {
-    const button = <HTMLInputElement> document.getElementById("likeButtonPost");
-    button.disabled = true;
+    this.button.disabled = true;
     try{
     await this.post.likePost(post, this.userProfile);
     this.publication = await this.post.getSinglePost(post);
-    button.disabled = false;  
+    this.button.disabled = false;  
     }
     catch(err){
       console.log(err);
-      button.disabled = false;
+      this.button.disabled = false;
     }
 
+
   }
+    gettingId(){
+      this.button = <HTMLInputElement> document.getElementById("likeButtonPost");
+      this.button?.setAttribute('id', this.publication.postId);
+    }
 
   ngOnDestroy() {
     this.profileSubs.unsubscribe();

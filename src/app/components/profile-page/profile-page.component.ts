@@ -2,6 +2,7 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { EdictsService } from 'src/app/services/edicts.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -21,6 +22,7 @@ export class ProfilePageComponent implements OnInit {
   public userEdicts: any[] = [];
 
   public profileId: string = "";
+
   public userProfileId!: string;
 
   public userId: string | undefined = "";
@@ -44,6 +46,7 @@ export class ProfilePageComponent implements OnInit {
   constructor(
     private posts: PostsService,
     private projectsService: ProjectsService,
+    private edictsService: EdictsService,
     private route: ActivatedRoute,
     private usersServices: UsersService,
     private profileService: ProfileService,
@@ -62,28 +65,27 @@ export class ProfilePageComponent implements OnInit {
     switch (pageSelected) {
       case "posts":
         this.pageSelected = 0;
-      break;
+        break;
       case "projects":
         this.pageSelected = 1;
-      break;
+        break;
       case "edicts":
         this.pageSelected = 1;
-      break;
+        break;
       default:
         this.pageSelected = 0;
-      break;
+        break;
     }
   }
 
   async loadData() {
-    const user = await this.authService.getAuth().currentUser;    
+    const user = await this.authService.getAuth().currentUser;
 
     this.paramsSubs = this.route.params.subscribe(async (params) => {
       this.profileId = params['profid'];
 
-      const checkCompany = await this.usersServices.findUserCompany(this.profileId);
-      
-      if (checkCompany === "Companies") {
+      const checkCompany = await this.usersServices.checkusercompanyprofile(this.profileId);
+      if (checkCompany !== undefined) {
         this.isCompany = true;
       } else {
         this.isCompany = false;
@@ -92,17 +94,41 @@ export class ProfilePageComponent implements OnInit {
       // Clearing arrays on changes
       this.userPosts = [];
       this.userProjects = [];
+      this.userEdicts = [];
 
       this.posts.listProfilePosts(this.profileId).then((posts) => {
         posts.forEach(post => {
           this.userPosts.push(post.data());
         });
+
+        // Ordering by date
+        this.userPosts.sort((a: any, b: any) => {
+          return a.publishedAt.seconds - b.publishedAt.seconds;
+        }).reverse();
       });
 
       this.projectsService.listProfileProjects(this.profileId).then(projects => {
         projects.forEach(project => {
           this.userProjects.push(project.data());
         });
+
+        // Ordering by date
+        this.userProjects.sort((a: any, b: any) => {
+          return a.publishedAt.seconds - b.publishedAt.seconds;
+        }).reverse();
+      });
+
+      this.edictsService.listCompanyEdicts().then((edicts) => {
+        edicts.forEach((edict) => {
+          if (edict.data()) {
+            this.userEdicts.push(edict.data());
+          }
+        });
+
+        // Ordering by date
+        this.userEdicts.sort((a: any, b: any) => {
+          return a.createdAt.seconds - b.createdAt.seconds;
+        }).reverse();
       });
 
       this.profileSubs = (await this.usersServices.getProfile(user?.uid)).subscribe((data: any) => {
@@ -118,7 +144,6 @@ export class ProfilePageComponent implements OnInit {
       this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
         this.userData = profile;
       });
-
     });
 
   }

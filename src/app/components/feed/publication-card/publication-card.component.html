@@ -1,5 +1,5 @@
 <!-- Post card -->
-<div class="card" *ngIf="pubType === 'post'; else project">
+<div class="card" *ngIf="pubType === 'post'; else project" (onload)="gettingId()">
     <!-- Post content and user data -->
     <div class="card-body">
         <div class="row">
