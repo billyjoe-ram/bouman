@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
 import { PostsService } from 'src/app/services/posts.service';
@@ -36,7 +37,8 @@ export class PublicationCardComponent implements OnInit {
   
   constructor(private user: UsersService,
     private profile: ProfileService,
-    private post: PostsService) { }
+    private post: PostsService, 
+    private store: AngularFirestore) { }
 
   ngOnInit(): void {
     if (this.publication.content.length < this.limit) {
@@ -78,6 +80,22 @@ export class PublicationCardComponent implements OnInit {
     this.profileSubs.unsubscribe();
 
     this.imageSubs.unsubscribe();
+  }
+
+  async onDelete(){
+
+    console.log(this.profileId);
+    console.log(this.publication.postId);
+    console.log(this.publication);
+
+    try{
+      await this.post.deletePost(this.profileId, this.publication.postid);
+    } catch (error){
+      console.log(error);
+    } finally {
+      let close = document.getElementById('close');
+      close?.click();
+    }
   }
 
 }

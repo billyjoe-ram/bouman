@@ -93,3 +93,20 @@
 .card .card-footer img {
     margin: 0 1rem;
 }
+
+.modal-footer{
+    justify-content: space-between;
+}
+
+button.btn-bouman-modal{
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: white;
+    transition: 0.3s;
+    background: #FA902E;
+    border: 1px solid #DF660F;
+}
+
+button.btn-modal-form:hover{
+    background: #DF660F;
+}
