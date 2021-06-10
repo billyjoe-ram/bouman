@@ -7,3 +7,10 @@ textarea {
 
     margin-top: 2%;
 }
+
+.people-list-div img {
+    width: 20%;
+    height: 100%;
+    border-radius: 50%;
+    margin-right: 10%;
+}
