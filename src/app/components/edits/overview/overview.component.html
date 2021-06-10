@@ -14,8 +14,8 @@
                 </div>
         
             </li>
-            
-            <li class="list-group-item" *ngIf="!edicts.length">
+            <spinner *ngIf='!loaded'></spinner>
+            <li class="list-group-item" *ngIf="!edicts.length && loaded">
                 <div class="project-card">
                     <div class="project-header">
                         Nenhum edital publicado ainda
