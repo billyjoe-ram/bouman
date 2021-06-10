@@ -43,6 +43,8 @@ export class ProfilePageComponent implements OnInit {
 
   private profileSubs!: Subscription;
 
+  private edictsSubs!: Subscription;
+
   constructor(
     private posts: PostsService,
     private projectsService: ProjectsService,
@@ -118,11 +120,14 @@ export class ProfilePageComponent implements OnInit {
         }).reverse();
       });
 
-      this.edictsService.listCompanyEdicts(this.profileId).then((edicts) => {
+      this.edictsSubs = this.edictsService.listCompanyEdicts(this.profileId).subscribe((edicts) => {
+        let i = 0;
+
         edicts.forEach((edict) => {
-          if (edict.data()) {
-            this.userEdicts.push(edict.data());
+          if (edict) {
+            this.userEdicts[i] = edict;
           }
+          i++
         });
 
         // Ordering by date
@@ -163,6 +168,10 @@ export class ProfilePageComponent implements OnInit {
 
     if (this.profileSubs) {
       this.profileSubs.unsubscribe();
+    }
+
+    if(this.edictsSubs) {
+      this.edictsSubs.unsubscribe();
     }
 
   }

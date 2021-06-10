@@ -30,7 +30,7 @@ export class EdictsService {
   listCompanyEdicts(companyId: string) {
     const edictsRef = this.profilesCollection.doc(companyId).collection('Edicts');
     
-    const companyEdicts = edictsRef.ref.get();
+    const companyEdicts = edictsRef.valueChanges();
     
     return companyEdicts;
   }
@@ -46,20 +46,18 @@ export class EdictsService {
   }
 
   applyToEdict(edict: Edict, profileId: string) {
-    console.log(edict.companyId);
-    console.log(profileId);
-
     let profilesApplied: string[] = edict.profilesApplied || [];
 
     // Going inside the company edicts
     const companyEdicts = this.profilesCollection.doc(edict.companyId).collection('Edicts');
 
-    if (profilesApplied.includes(profileId)) {
-      profilesApplied = profilesApplied.filter((profile) => {
-        return profile !== profileId;
-      });
-    } else {
+    if (!profilesApplied.includes(profileId)) {
       profilesApplied.push(profileId);
+      // profilesApplied = profilesApplied.filter((profile) => {
+      //   return profile !== profileId;
+      // });
+    } else {
+      profilesApplied = profilesApplied;
     }
 
     // Updating edict

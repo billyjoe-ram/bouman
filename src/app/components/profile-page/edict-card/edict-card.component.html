@@ -28,6 +28,6 @@
         </p>
     </div>
     <div class="card-footer justify-content-center">
-        <button class="btn btn-default" (click)="onCandidate()">Candidatar-se</button>
+        <button class="btn btn-default" (click)="onCandidate()" [ngClass]="{ 'is-applied': profileAppl }">{{ profileAppl ? 'Perfil já enviado' : 'Candidatar-se' }}</button>
     </div>
 </div>
