@@ -18,6 +18,7 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input('projsSize') public projsSize: number = 0;
   @Input('publicSize') public publicSize: number = 0;
+  @Input('edictsSize') public edictsSize: number = 0;
 
   @Output('content') public content: EventEmitter<string> = new EventEmitter<string>();
 
@@ -186,8 +187,9 @@ export class ProfileCardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private async checkProfile() {
-    const checkCompany = await this.usersServices.checkusercompanyprofile(this.profileId);
-    if (checkCompany !== undefined) {
+    const checkCompany = await this.usersServices.findUserCompany(this.profileId);
+
+    if (checkCompany === "Companies") {
       this.isCompany = true;
     } else {
       this.isCompany = false;
