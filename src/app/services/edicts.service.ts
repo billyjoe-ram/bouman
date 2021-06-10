@@ -27,15 +27,7 @@ export class EdictsService {
     return addedEdict;
   }  
   
-  async listCompanyEdicts() {
-    // Current user object
-    const owner = await this.authService.getAuth().currentUser;
-    
-    // Retrieving the doc with this user uid
-    const userCollec = await this.usersService.getCompany(owner?.uid);
-
-    const companyId = (userCollec.data() as any).profileId;
-
+  listCompanyEdicts(companyId: string) {
     const edictsRef = this.profilesCollection.doc(companyId).collection('Edicts');
     
     const companyEdicts = edictsRef.ref.get();

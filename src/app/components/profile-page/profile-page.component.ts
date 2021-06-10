@@ -118,7 +118,7 @@ export class ProfilePageComponent implements OnInit {
         }).reverse();
       });
 
-      this.edictsService.listCompanyEdicts().then((edicts) => {
+      this.edictsService.listCompanyEdicts(this.profileId).then((edicts) => {
         edicts.forEach((edict) => {
           if (edict.data()) {
             this.userEdicts.push(edict.data());
