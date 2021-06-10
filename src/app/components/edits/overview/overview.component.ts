@@ -15,16 +15,17 @@ export class OverviewComponent implements OnInit {
   constructor(private edictsService: EdictsService) { }
 
   ngOnInit(): void {
-    this.edictsService.listCompanyEdicts().then(data => {
-      data.forEach((query) => {
-        this.edicts.push(query.data());
-      });
+    // Tenho que achar um jeito de pegar o profileId e jogar aqui se for company
+    // this.edictsService.listCompanyEdicts().then(data => {
+    //   data.forEach((query) => {
+    //     this.edicts.push(query.data());
+    //   });
 
-      // Ordering by date
-      this.edicts.sort((a: any, b: any) => {
-        return a.createdAt.seconds - b.createdAt.seconds;
-      }).reverse();
-    });
+    //   // Ordering by date
+    //   this.edicts.sort((a: any, b: any) => {
+    //     return a.createdAt.seconds - b.createdAt.seconds;
+    //   }).reverse();
+    // });
   }  
 
 }

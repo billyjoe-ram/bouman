@@ -60,7 +60,6 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void{
     this.gettingId();
-    console.log(this.button)
   }
 
   showMore() {
@@ -102,7 +101,6 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   gettingId(){
     this.button = <HTMLInputElement> document.getElementById("likeButtonProject");
     this.button?.setAttribute('id', this.project.projectId);
-    console.log(this.button)
   }
 
   ngOnDestroy() {
