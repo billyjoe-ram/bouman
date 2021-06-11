@@ -13,16 +13,28 @@ import { UsersService } from 'src/app/services/users.service';
 export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   @Input('pubType') public pubType: string = "post";
-  
+
   @Input('publication') public publication!: any;
 
   @Input('profileId') public profileId!: string;
 
   @Input('userProfile') public userProfile!: string | undefined;
 
+  public postComments: any = [];
+
+  public commentOnLoad: any = false;
+
+  public commentsArray: any = [];
+
+  public loadingComments: any = false;
+
+  public isCommentsBtnClicked: any = false;
+
   public button!: any;
 
-  public profileName: any = "";  
+  public comment: any;
+
+  public profileName: any = "";
 
   public profileImg: string = "";
 
@@ -35,7 +47,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
   private profileSubs!: Subscription;
 
   private imageSubs!: Subscription;
-  
+
   constructor(private user: UsersService,
     private profile: ProfileService,
     private post: PostsService) { }
@@ -66,24 +78,61 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
     this.sMDisabled = !this.sMDisabled;
   }
 
+  async btncomments() {
+    //apenas para fazer a troca do btn booleano.
+    if (!this.loadingComments) {
+      try {
+        const idToGet = await this.post.listsAllCommentsIds(this.publication);
+        idToGet.forEach((element:any) => {
+          this.commentsArray = element.id;
+          console.log(this.commentsArray)
+        });
+        this.loadingComments = false;
+      } catch (error) {
+        console.error(error);
+        this.loadingComments = false;
+      }
+    }
+    this.isCommentsBtnClicked = !this.isCommentsBtnClicked;
+  }
+
+  async comments(form: any) {
+    //submit do form, do comentário.
+    try {
+      if (!this.commentOnLoad) {
+        this.commentOnLoad = true;
+        if (form.valid) {
+          await this.post.addComment(this.userProfile, form.value.commentarea, this.publication);
+        }
+        else {
+          //catch de algum erro.
+        }
+        this.commentOnLoad = false;
+      }
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
   async onLikePost(post: Post) {
     this.button.disabled = true;
-    try{
-    await this.post.likePost(post, this.userProfile);
-    this.publication = await this.post.getSinglePost(post);
-    this.button.disabled = false;  
+    try {
+      await this.post.likePost(post, this.userProfile);
+      this.publication = await this.post.getSinglePost(post);
+      this.button.disabled = false;
     }
-    catch(err){
-      console.log(err);
+    catch (err) {
+      console.error(err);
       this.button.disabled = false;
     }
 
 
   }
-    gettingId(){
-      this.button = <HTMLInputElement> document.getElementById("likeButtonPost");
-      this.button?.setAttribute('id', this.publication.postId);
-    }
+  gettingId() {
+    this.button = <HTMLInputElement>document.getElementById("likeButtonPost");
+    this.button?.setAttribute('id', this.publication.postId);
+  }
 
   ngOnDestroy() {
     this.profileSubs.unsubscribe();
