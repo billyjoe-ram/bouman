@@ -1,11 +1,12 @@
-import { Component, EventEmitter, OnInit, OnDestroy, Output, OnChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Injectable } from '@angular/core';
-import { from, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { PostsService } from 'src/app/services/posts.service';
 import { NgForm } from '@angular/forms';
 import { SearchService } from 'src/app/services/search.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -36,7 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   collapsed = true;
 
-  constructor(private authService: AuthService, private user: UsersService, private postsService: PostsService, private searchService: SearchService) { }
+  constructor(private authService: AuthService, private user: UsersService, private postsService: PostsService, private searchService: SearchService, private router: Router) { }
 
   ngOnInit(): void {
     this.getData();
@@ -118,7 +119,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (event.key === "Enter" && inputText.length) {
       this.searchService.attrSearch(inputText);
 
-      this.searchService.searchByParam();
+      this.router.navigate(["/results"], { queryParams: { search: inputText } });
+
+      // this.searchService.searchByParam();
     }
   }
 
