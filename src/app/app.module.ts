@@ -49,6 +49,7 @@ import { OverviewComponent } from './components/edits/overview/overview.componen
 import { NgxMaskModule } from 'ngx-mask';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { EdictCardComponent } from './components/profile-page/edict-card/edict-card.component';
+import { SearchResultsComponent } from './components/header/search-results/search-results.component';
 
 registerLocaleData(ptBR);
 
@@ -83,7 +84,8 @@ registerLocaleData(ptBR);
     EditComponent,
     OverviewComponent,
     SpinnerComponent,
-    EdictCardComponent
+    EdictCardComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,

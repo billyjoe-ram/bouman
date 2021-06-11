@@ -21,6 +21,7 @@ import { LoginGuard } from './guards/login.guard';
 import { ConfigGuard } from './guards/config.guard';
 import { EditComponent } from './components/edits/edit/edit.component';
 import { OverviewComponent } from './components/edits/overview/overview.component';
+import { SearchResultsComponent } from './components/header/search-results/search-results.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },
@@ -42,7 +43,8 @@ const routes: Routes = [
     { path: '', redirectTo: 'overview', pathMatch: 'full' },
     { path: 'overview', component: OverviewComponent },
     { path: ':id', component: EditComponent },
-  ] },  
+  ] },
+  { path: 'results', component: SearchResultsComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
 ];
 

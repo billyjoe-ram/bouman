@@ -1,9 +1,11 @@
-import { Component, EventEmitter, OnInit, OnDestroy, Output, OnChanges } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnDestroy, Output, OnChanges, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Injectable } from '@angular/core';
 import { from, Subscription } from 'rxjs';
 import { PostsService } from 'src/app/services/posts.service';
+import { NgForm } from '@angular/forms';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +19,8 @@ import { PostsService } from 'src/app/services/posts.service';
 
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  @ViewChild('form') form!: NgForm;
+  
   @Output('isCompany') isCompanyEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   
   public profileImg: any = "";
@@ -32,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   collapsed = true;
 
-  constructor(private authService: AuthService, private user: UsersService, private postsService: PostsService) { }
+  constructor(private authService: AuthService, private user: UsersService, private postsService: PostsService, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -106,6 +110,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
       
       this.isCompanyEvent.emit(this.isCompany);
     })
+  }
+
+  onSendSearch(event: KeyboardEvent) {
+    const inputText: string = this.form.value.searchParam.trim();
+
+    if (event.key === "Enter" && inputText.length) {
+      this.searchService.attrSearch(inputText);
+
+      this.searchService.searchByParam();
+    }
   }
 
 }
