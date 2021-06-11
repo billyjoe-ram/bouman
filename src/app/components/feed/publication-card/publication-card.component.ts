@@ -44,6 +44,8 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   public limit: number = 286;
 
+  public userImage !: Subscription;
+
   private profileSubs!: Subscription;
 
   private imageSubs!: Subscription;
@@ -79,21 +81,56 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
   }
 
   async btncomments() {
-    //apenas para fazer a troca do btn booleano.
-    if (!this.loadingComments) {
-      try {
-        const idToGet = await this.post.listsAllCommentsIds(this.publication);
-        idToGet.forEach((element:any) => {
-          this.commentsArray = element.id;
+    //carrega os comentários e faz a troca do btn booleano.
+    if (this.isCommentsBtnClicked == false) {
+      if (this.loadingComments == false) {
+        this.loadingComments = true;
+        if (this.userImage) {
+          this.userImage.unsubscribe();
+        }
+        try {
+          this.post.listsAllCommentsIds(this.publication).then(async (res)=>{
+            
+            const idToGet = res;
+
+            await idToGet.forEach(async (element: any, index: any) => {
+
+              this.post.getEachComment(element.id, this.publication);
+  
+              this.commentsArray[index] = (((await this.post.getEachComment(element.id, this.publication)).data()));
+  
+              const tempData: any = (await this.profile.getProfilePromise(this.commentsArray[index].profileId)).data();
+  
+              this.commentsArray[index].userName = tempData.name;
+              this.userImage = this.user.getProfilePicture(this.commentsArray[index].profileId).subscribe((res: any) => {
+  
+                this.commentsArray[index].userImg = res;
+  
+              });
+              console.log(this.commentsArray[index])
+            })
+          }).then((res:any)=>{
+            console.log('entrou no THEN.')
+          });
           console.log(this.commentsArray)
-        });
+            // Ordering by date
+            this.commentsArray.sort((a: any, b: any) => {
+              console.log(a)
+              const aDate = a.publishedAt;
+              const bDate = b.publishedAt;
+
+              return aDate.seconds - bDate.seconds;
+            }).reverse();
+        } catch (error) {
+          console.error(error);
+        }
         this.loadingComments = false;
-      } catch (error) {
-        console.error(error);
-        this.loadingComments = false;
+        this.isCommentsBtnClicked = !this.isCommentsBtnClicked;
       }
     }
-    this.isCommentsBtnClicked = !this.isCommentsBtnClicked;
+    else {
+      this.isCommentsBtnClicked = false;
+    }
   }
 
   async comments(form: any) {
