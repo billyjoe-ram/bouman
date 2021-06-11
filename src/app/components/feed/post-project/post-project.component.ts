@@ -166,6 +166,10 @@ export class PostProjectComponent implements OnInit, OnChanges {
         // Becasuse there is only one code with that name, I can use the first index
         keywordsArray.unshift(specificSubarea[0].name);
 
+        keywordsArray = keywordsArray.map((keyword) => {
+          return keyword.toLowerCase();
+        });
+
         const project = { title: this.selectedProject.title, content: this.selectedProjectText.join('\n'), keywords: keywordsArray };
   
         if(this.selectedProjectText.length) {
