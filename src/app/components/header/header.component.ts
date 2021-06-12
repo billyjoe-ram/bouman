@@ -117,11 +117,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const inputText: string = this.form.value.searchParam.trim();
 
     if (event.key === "Enter" && inputText.length) {
-      this.searchService.attrSearch(inputText);
 
-      this.router.navigate(["/results"], { queryParams: { search: inputText } });
+      const searchParam = inputText.toLowerCase().split(" ").join("+");
 
-      // this.searchService.searchByParam();
+      this.searchService.attrSearch(searchParam);
+
+      this.router.navigate(["/results"], { queryParams: { search: searchParam } });
+
+      this.searchService.searchByParam();
     }
   }
 

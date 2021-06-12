@@ -27,7 +27,7 @@ export class SearchService {
   }
 
   async searchByParam() {
-    const search = this.searchParam.toLowerCase();
+    const search = this.searchParam.toLowerCase().split("+").join(" ");
 
     const profilesCollec = this.store.collection("Profiles");
     const profiles = await profilesCollec.ref.get();
@@ -40,9 +40,7 @@ export class SearchService {
       const postedProjectsCollec = profilesCollec.doc(profileId).collection("PostedProjects");
       const postedProjects = await postedProjectsCollec.ref.get();
 
-      postedProjects.forEach((postedProject) => {
-        console.log(profileId, "Exists posted projects?", postedProject.exists);
-
+      postedProjects.forEach((postedProject) => {        
         if (postedProject.exists) {
           const searchPromise = postedProjectsCollec.ref.where("keywords", "array-contains", search).get();
 
