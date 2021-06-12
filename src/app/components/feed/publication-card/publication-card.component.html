@@ -56,7 +56,7 @@
                         <p> {{ comments.userName }} </p>
                     </div>
                     <div class='col-5 date'>
-                        <p> {{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </p>
+                        <p> {{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy HH:mm'}} </p>
                     </div>
                 </div>
                 <div class='commentcontent'>
@@ -72,7 +72,7 @@
                 </div>
                 <form #form="ngForm" (ngSubmit)="comments(form)">
                     <textarea class='form-control comment-input' [(ngModel)]='comment' name='commentarea'
-                        placeholder="Digite seu comentário aqui..."></textarea>
+                        placeholder="Digite seu comentário aqui..." required></textarea>
                     <button type="submit" class="btn btn-bouman">Postar</button>
                 </form>
             </div>

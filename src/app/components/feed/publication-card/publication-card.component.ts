@@ -32,7 +32,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   public button!: any;
 
-  public comment: any;
+  public comment: string = '';
 
   public profileName: any = "";
 
@@ -89,38 +89,40 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
           this.userImage.unsubscribe();
         }
         try {
-          this.post.listsAllCommentsIds(this.publication).then(async (res)=>{
-            
+          this.post.listsAllCommentsIds(this.publication).then((res) => {
+
             const idToGet = res;
 
-            await idToGet.forEach(async (element: any, index: any) => {
+            idToGet.forEach((element: any, index: any) => {
 
               this.post.getEachComment(element.id, this.publication);
-  
-              this.commentsArray[index] = (((await this.post.getEachComment(element.id, this.publication)).data()));
-  
-              const tempData: any = (await this.profile.getProfilePromise(this.commentsArray[index].profileId)).data();
-  
-              this.commentsArray[index].userName = tempData.name;
-              this.userImage = this.user.getProfilePicture(this.commentsArray[index].profileId).subscribe((res: any) => {
-  
-                this.commentsArray[index].userImg = res;
-  
-              });
-              console.log(this.commentsArray[index])
-            })
-          }).then((res:any)=>{
-            console.log('entrou no THEN.')
-          });
-          console.log(this.commentsArray)
-            // Ordering by date
-            this.commentsArray.sort((a: any, b: any) => {
-              console.log(a)
-              const aDate = a.publishedAt;
-              const bDate = b.publishedAt;
 
-              return aDate.seconds - bDate.seconds;
-            }).reverse();
+              this.post.getEachComment(element.id, this.publication).then((res: any) => {
+                this.commentsArray[index] = res.data();
+
+                this.profile.getProfilePromise(this.commentsArray[index].profileId).then((res: any) => {
+
+                  const tempData: any = res.data();
+
+                  this.commentsArray[index].userName = tempData.name;
+
+                  this.userImage = this.user.getProfilePicture(this.commentsArray[index].profileId).subscribe((res: any) => {
+
+                    this.commentsArray[index].userImg = res;
+
+                  });
+                  console.log(this.commentsArray)
+                  // Ordering by date
+                  this.commentsArray.sort((a: any, b: any) => {
+                    const aDate = a.publishedAt;
+                    const bDate = b.publishedAt;
+      
+                    return aDate.seconds - bDate.seconds;
+                  }).reverse();
+                });
+              });
+            })
+          })
         } catch (error) {
           console.error(error);
         }
@@ -138,8 +140,8 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
     try {
       if (!this.commentOnLoad) {
         this.commentOnLoad = true;
-        if (form.valid) {
-          await this.post.addComment(this.userProfile, form.value.commentarea, this.publication);
+        if (form.valid && this.comment.length <= this.limit && this.comment.trim().length) {
+          await this.post.addComment(this.userProfile, this.comment, this.publication);
         }
         else {
           //catch de algum erro.
