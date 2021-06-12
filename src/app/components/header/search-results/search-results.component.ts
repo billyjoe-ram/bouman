@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ProjectContent } from 'src/app/interfaces/projectContent';
+import { AuthService } from 'src/app/services/auth.service';
 import { SearchService } from 'src/app/services/search.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-search-results',
@@ -8,15 +11,71 @@ import { SearchService } from 'src/app/services/search.service';
   styleUrls: ['./search-results.component.css']
 })
 export class SearchResultsComponent implements OnInit {
-  
+
   public param: string = "";
-  
-  constructor(private route: ActivatedRoute, private searchService: SearchService) { }
+
+  public results: any[] = [];
+
+  public limit: number = 286;
+
+  public profileId: string = "";
+
+  @Output() public pageLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  constructor(
+    private route: ActivatedRoute,
+    private searchService: SearchService,
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) { }
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.queryParams["search"];
 
-    this.searchService.searchByParam();
+    // this.searchService.searchByParam();
+
+    this.loadProfile().then(() => {
+      this.searchService.searchByParam().then(() => {
+        this.results = this.searchService.searchResult;
+      });
+    });
+  }
+
+  loadProjectText(result: ProjectContent) {
+    console.log("hey");
+
+    // Selecting paragraph to render
+    const pToRender = document.querySelector("#div-to-render");
+
+    console.log(pToRender);
+
+    if (pToRender) {
+      console.log(result);
+      // Selecting project text
+      let projectText: string = result.content.trim();
+
+      // Slicing
+      projectText = projectText.slice(0, this.limit);
+
+      // Addind project text to paragraph
+      pToRender.innerHTML = projectText;
+      console.log(projectText);
+    }
+  }
+
+  private async loadProfile() {
+    // Awaiting current user id for profile id    
+    const user = await this.authService.getAuth().currentUser;
+
+    // Subscribing to current user to get the profileId
+    this.usersService.getCollection(user?.uid).then((user: any) => {
+      // Passing to attribute
+      this.profileId = user.data().profileId;
+    }).catch(async () => {
+      const companyData = await this.usersService.getCompany(user?.uid);
+      
+      this.profileId = (companyData.data() as any).profileId;
+    });
   }
 
 }

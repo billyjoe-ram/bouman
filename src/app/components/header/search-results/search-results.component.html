@@ -1,3 +1,11 @@
 <app-header></app-header>
 
-<p>{{ param }}</p>
+<div class="row justify-content-center">
+    <div class="col-sm-5 col-md-5 col-lg-5">
+        <ul>
+            <li *ngFor="let result of results" style="cursor: pointer;">
+                <project-card [project]="result" [profileId]="result.profileId" [userProfile]="profileId"></project-card>        
+            </li>
+        </ul>
+    </div>
+</div>
