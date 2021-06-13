@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectContent } from 'src/app/interfaces/projectContent';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,6 +12,8 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class SearchResultsComponent implements OnInit {
 
+  @ViewChild('tabList') tabList!: ElementRef;
+  
   public param: string = "";
 
   public allResults: any[] = [];
@@ -21,6 +23,8 @@ export class SearchResultsComponent implements OnInit {
   public limit: number = 286;
 
   public profileId: string = "";
+
+  public selectedSect: string = "";
 
   @Output() public pageLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -35,6 +39,7 @@ export class SearchResultsComponent implements OnInit {
     const routeParams = this.route.snapshot.queryParams["search"];
 
     this.loadProfile().then(() => {
+      this.addEvents();
       this.searchService.searchProjects().then(() => {
         this.projectsResults = this.searchService.searchResult;
       });
@@ -60,7 +65,7 @@ export class SearchResultsComponent implements OnInit {
       }
     }
     
-  }
+  }  
 
   private async loadProfile() {
     // Awaiting current user id for profile id    
@@ -75,6 +80,32 @@ export class SearchResultsComponent implements OnInit {
       
       this.profileId = (companyData.data() as any).profileId;
     });
+  }
+
+  private addEvents() {
+    // Checking if the element was created
+    if (this.tabList) {
+      // Getting the element itself
+      const list = this.tabList.nativeElement;
+
+      // Getting its children
+      const listItems = list.children;
+
+      // For each .form-check, handle 
+      for (let listItem of listItems) {
+        // Add a callback attached to click
+        listItem.addEventListener("click", (event: any) => {
+          // Event target
+          let input = event.target;
+
+          // Input label
+          const itemText = input.innerHTML;
+
+          this.selectedSect = itemText;
+        });
+      }
+
+    }
   }
 
 }

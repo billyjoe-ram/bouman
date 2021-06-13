@@ -3,14 +3,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-3 col-md-3 col-lg-3">
-            <div class="list-group" role="tablist">
+            <div class="list-group" role="tablist" #tabList>
                 <div class="list-group-item active" data-toggle="list">Projetos</div>
                 <div class="list-group-item" data-toggle="list">Perfis</div>
             </div>
         </div>
         <div class="col-sm-5 col-md-5 col-lg-5">
             <h1>Resultados da pesquisa: </h1>
-            <div id="projects-results">
+            <div id="projects-results" *ngIf="selectedSect === 'Projetos'">
                 <ul *ngIf="projectsResults.length; else noProjects">
                     <li *ngFor="let result of projectsResults">
                         <project-card [project]="result" [profileId]="result.profileId" [userProfile]="profileId"></project-card>
@@ -20,7 +20,7 @@
                     <span>Não foi encontrado nenhum projeto com estas informações.</span>
                 </ng-template>
             </div>
-            <div id="profiles-results">
+            <div id="profiles-results" *ngIf="selectedSect === 'Perfis'">
                 <ul *ngIf="profilesResults.length; else noProfiles">
                     <li *ngFor="let result of profilesResults">
                         <div class="card">
