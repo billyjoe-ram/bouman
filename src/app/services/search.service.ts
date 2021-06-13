@@ -8,6 +8,9 @@ export class SearchService {
 
   public searchParam: string = "";
 
+  public searchResult: any[] = [];
+  public profileResults: any[] = [];
+
   constructor(private store: AngularFirestore) { }
 
   async searchProfile(userName: string) {
@@ -26,38 +29,31 @@ export class SearchService {
     this.searchParam = param;
   }
 
-  async searchByParam() {
-    const search = this.searchParam.toLowerCase();
+  async searchProjects() {
+    const search = this.searchParam.toLowerCase().split("+").join(" ");
 
     const profilesCollec = this.store.collection("Profiles");
     const profiles = await profilesCollec.ref.get();
-
-    let searchResult = [];
+        
+    let searchIndex: number = 0;
     
     profiles.forEach(async (profile) => {
       let profileId = profile.id;
 
       const postedProjectsCollec = profilesCollec.doc(profileId).collection("PostedProjects");
       const postedProjects = await postedProjectsCollec.ref.get();
-
-      postedProjects.forEach((postedProject) => {
-        console.log(profileId, "Exists posted projects?", postedProject.exists);
-
+      
+      postedProjects.forEach(async (postedProject) => {
         if (postedProject.exists) {
-          const searchPromise = postedProjectsCollec.ref.where("keywords", "array-contains", search).get();
+          const searchPromise = await postedProjectsCollec.ref.where("keywords", "array-contains", search).get();
 
-          searchPromise.then((results) => {
-            let index = 0;
-            results.forEach((result) => {
-              console.log(result.data());
+          searchPromise.forEach((result) => {
+            this.searchResult[searchIndex] = result.data();
 
-              searchResult[index] = result.data();
-
-              index++;
-            })
+            searchIndex++;
           });
         }
-      });      
+      });
     });
 
   }
