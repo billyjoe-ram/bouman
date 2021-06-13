@@ -50,13 +50,14 @@
                 <!-- the comment itself-->
                 <div class='row commentuser'>
                     <div class='col-1'>
-                        <img [src]="comments.userImg" alt="Foto de Perfil" class="comment-profile-picture">
+                        <spinner *ngIf='!comments.userImg && !pubImgLoaded' class="comment-profile-picture"></spinner>
+                        <img *ngIf='comments.userImg && pubImgLoaded' [src]="comments.userImg" alt="Foto de Perfil" class="comment-profile-picture">
                     </div>
                     <div class='col-6'>
                         <p> {{ comments.userName }} </p>
                     </div>
                     <div class='col-5 date'>
-                        <p> {{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy HH:mm'}} </p>
+                        <p> {{ comments.publishedAt.seconds * 1000 | date: 'd MMM yy HH:mm'}} </p>
                     </div>
                 </div>
                 <div class='commentcontent'>
