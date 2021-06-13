@@ -14,8 +14,9 @@ export class SearchResultsComponent implements OnInit {
 
   public param: string = "";
 
-  public profileResults: any[] = [];
-  public results: any[] = [];
+  public allResults: any[] = [];
+  public profilesResults: any[] = [];
+  public projectsResults: any[] = [];
 
   public limit: number = 286;
 
@@ -35,10 +36,10 @@ export class SearchResultsComponent implements OnInit {
 
     this.loadProfile().then(() => {
       this.searchService.searchProjects().then(() => {
-        this.results = this.searchService.searchResult;
+        this.projectsResults = this.searchService.searchResult;
       });
 
-      this.profileResults = this.searchService.profileResults;
+      this.profilesResults = this.searchService.profileResults;
     });
   }
 

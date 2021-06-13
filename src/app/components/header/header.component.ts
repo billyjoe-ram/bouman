@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searching() {
     this.postsService.searchingProfiles(this.search).then(data => {
       // Attr all profiles found to the search resulsts
-      this.profileResults = data;  
+      this.profileResults = data;
       
       this.profileResults.forEach((profile, index) => {
         this.user.getSearchPic(profile.id).then(pic => {
@@ -127,8 +127,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.searching();
 
       this.searchService.profileResults = this.profileResults;
-
-      // console.log(this.searchService.profileResults);
       
       this.searchService.searchProjects();
     }

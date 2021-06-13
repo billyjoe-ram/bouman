@@ -91,15 +91,15 @@ export class PostsService {
 
   async searchingProfiles(input:string){
     let posts: any[] = [];
-    const postsname: any[] = [];
+    const postsName: any[] = [];
 
     let i : number = 0;
 
     const postsResult= (await this.postsCollection.ref.orderBy("name", "asc").startAt(input.toUpperCase()+'\uf8ff').endAt(input.toLowerCase()+'\uf8ff').limit(10).get());
 
     postsResult.forEach(element => {
-      postsname.push(element.data() as object);
-      posts.push({id:element.id, name:postsname[i].name, picture: ""});
+      postsName.push(element.data() as object);
+      posts.push({ id:element.id, name: postsName[i].name, picture: "", desc: postsName[i].desc });
       i++;
     });
 
