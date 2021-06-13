@@ -20,7 +20,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('projectContent') public projectContent!: ElementRef;
 
-  public button !: any;
+  public button!: any;
 
   public profileName: any = "";  
 
@@ -55,7 +55,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
       this.profileImg = this.userService.profasset();
     });
 
-    this.loadProjectText()
+    this.loadProjectText();
   }
 
   ngAfterViewInit(): void{
