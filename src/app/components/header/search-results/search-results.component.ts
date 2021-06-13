@@ -49,7 +49,6 @@ export class SearchResultsComponent implements OnInit {
       const pToRender = document.querySelector("#div-to-render");
 
       if (pToRender) {
-        console.log(result);
         // Selecting project text
         let projectText: string = result.content.trim();
 
@@ -58,7 +57,6 @@ export class SearchResultsComponent implements OnInit {
 
         // Addind project text to paragraph
         pToRender.innerHTML = projectText;
-        console.log(projectText);
       }
     }
     
