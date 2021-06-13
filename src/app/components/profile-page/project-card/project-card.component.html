@@ -15,10 +15,11 @@
             </div>
             <div class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
                 <button id="clear-btn">
-                    <img src="../../../../assets/trash.png" data-toggle="modal" data-target="#deleteProject" alt="Delete">
+                    <img src="../../../../assets/trash.png" data-toggle="modal" data-target="#deleteProject"
+                        alt="Delete">
                 </button>
             </div>
-        </div>        
+        </div>
         <div class="card">
             <div class="card-header">
                 <h1> {{ project.title }} </h1>
@@ -33,24 +34,25 @@
         </div>
         <span class="badge badge-info keywords" *ngFor="let keyword of project.keywords"> {{ keyword }} </span>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" *ngIf='profileId != userProfile'>
         <!-- This should be commented out when interactions are implemented -->
         <button class="btn btn-default" (click)="onLikePost(project)" id="likeButtonProject">
-           <span> {{ project.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir">Curtir
+            <span> {{ project.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir">Curtir
         </button>
+    </div>
 
-        <!-- <button class="btn btn-default">
+    <!-- <button class="btn btn-default">
             <img src="/assets/comment-gray.svg" alt="Comentar">Comentar
         </button>
 
         <button class="btn btn-default">
             <img src="/assets/share-gray.svg" alt="Compartilhar">Compartilhar
         </button> -->
-        
-    </div>
+
 </div>
 
-<div class="modal fade" id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProject" aria-hidden="true">
+<div class="modal fade" id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProject"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
