@@ -14,6 +14,7 @@ export class SearchResultsComponent implements OnInit {
 
   public param: string = "";
 
+  public profileResults: any[] = [];
   public results: any[] = [];
 
   public limit: number = 286;
@@ -32,35 +33,34 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit(): void {
     const routeParams = this.route.snapshot.queryParams["search"];
 
-    // this.searchService.searchByParam();
-
     this.loadProfile().then(() => {
-      this.searchService.searchByParam().then(() => {
+      this.searchService.searchProjects().then(() => {
         this.results = this.searchService.searchResult;
       });
+
+      this.profileResults = this.searchService.profileResults;
     });
   }
 
   loadProjectText(result: ProjectContent) {
-    console.log("hey");
+    if (result) {
+      // Selecting paragraph to render
+      const pToRender = document.querySelector("#div-to-render");
 
-    // Selecting paragraph to render
-    const pToRender = document.querySelector("#div-to-render");
+      if (pToRender) {
+        console.log(result);
+        // Selecting project text
+        let projectText: string = result.content.trim();
 
-    console.log(pToRender);
+        // Slicing
+        projectText = projectText.slice(0, this.limit);
 
-    if (pToRender) {
-      console.log(result);
-      // Selecting project text
-      let projectText: string = result.content.trim();
-
-      // Slicing
-      projectText = projectText.slice(0, this.limit);
-
-      // Addind project text to paragraph
-      pToRender.innerHTML = projectText;
-      console.log(projectText);
+        // Addind project text to paragraph
+        pToRender.innerHTML = projectText;
+        console.log(projectText);
+      }
     }
+    
   }
 
   private async loadProfile() {

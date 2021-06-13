@@ -1,11 +1,22 @@
 <app-header></app-header>
 
-<div class="row justify-content-center">
-    <div class="col-sm-5 col-md-5 col-lg-5">
-        <ul>
-            <li *ngFor="let result of results" style="cursor: pointer;">
-                <project-card [project]="result" [profileId]="result.profileId" [userProfile]="profileId"></project-card>        
-            </li>
-        </ul>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <div class="list-group" role="tablist">
+                <div class="list-group-item" data-toggle="list">Todos</div>
+                <div class="list-group-item" data-toggle="list">Projetos</div>
+                <div class="list-group-item" data-toggle="list">Perfis</div>
+            </div>
+        </div>
+        <div class="col-sm-5 col-md-5 col-lg-5">
+            <h1>Resultados da pesquisa</h1>
+            <ul *ngIf="results.length">
+                <li *ngFor="let result of results" style="cursor: pointer;">
+                    <project-card [project]="result" [profileId]="result.profileId" [userProfile]="profileId"></project-card>        
+                    <!-- <p>{{ result.profileId }}</p> -->
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

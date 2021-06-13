@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public profileId: string = "";
 
   public search: string = "";
-  public searchResult : any[] = [];
+  public profileResults : any[] = [];
 
   public isCompany!: boolean;
   
@@ -62,16 +62,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searching() {
     this.postsService.searchingProfiles(this.search).then(data => {
       // Attr all profiles found to the search resulsts
-      this.searchResult = data;  
+      this.profileResults = data;  
       
-      this.searchResult.forEach((profile, index) => {
+      this.profileResults.forEach((profile, index) => {
         this.user.getSearchPic(profile.id).then(pic => {
-          this.searchResult[index].picture = pic;
+          this.profileResults[index].picture = pic;
         }).catch(error => {
-          this.searchResult[index].picture = this.user.profasset();
+          this.profileResults[index].picture = this.user.profasset();
         });
       });
-      if (data.length == 0) this.searchResult = []; 
+      if (data.length == 0) this.profileResults = []; 
     });
   }
 
@@ -124,7 +124,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
       this.router.navigate(["/results"], { queryParams: { search: searchParam } });
 
-      this.searchService.searchByParam();
+      this.searching();
+
+      this.searchService.profileResults = this.profileResults;
+
+      // console.log(this.searchService.profileResults);
+      
+      this.searchService.searchProjects();
     }
   }
 

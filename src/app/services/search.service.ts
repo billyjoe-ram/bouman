@@ -9,6 +9,7 @@ export class SearchService {
   public searchParam: string = "";
 
   public searchResult: any[] = [];
+  public profileResults: any[] = [];
 
   constructor(private store: AngularFirestore) { }
 
@@ -28,7 +29,7 @@ export class SearchService {
     this.searchParam = param;
   }
 
-  async searchByParam() {
+  async searchProjects() {
     const search = this.searchParam.toLowerCase().split("+").join(" ");
 
     const profilesCollec = this.store.collection("Profiles");
