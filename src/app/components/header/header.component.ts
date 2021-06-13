@@ -1,12 +1,9 @@
-import { Component, EventEmitter, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnDestroy, Output, OnChanges } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { PostsService } from 'src/app/services/posts.service';
-import { NgForm } from '@angular/forms';
-import { SearchService } from 'src/app/services/search.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,15 +17,13 @@ import { Router } from '@angular/router';
 
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  @ViewChild('form') form!: NgForm;
-  
   @Output('isCompany') isCompanyEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   
   public profileImg: any = "";
   public profileId: string = "";
 
   public search: string = "";
-  public profileResults : any[] = [];
+  public searchResult : any[] = [];
 
   public isCompany!: boolean;
   
@@ -37,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   collapsed = true;
 
-  constructor(private authService: AuthService, private user: UsersService, private postsService: PostsService, private searchService: SearchService, private router: Router) { }
+  constructor(private authService: AuthService, private user: UsersService, private postsService: PostsService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -62,16 +57,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searching() {
     this.postsService.searchingProfiles(this.search).then(data => {
       // Attr all profiles found to the search resulsts
-      this.profileResults = data;
+      this.searchResult = data;  
       
-      this.profileResults.forEach((profile, index) => {
+      this.searchResult.forEach((profile, index) => {
         this.user.getSearchPic(profile.id).then(pic => {
-          this.profileResults[index].picture = pic;
+          this.searchResult[index].picture = pic;
         }).catch(error => {
-          this.profileResults[index].picture = this.user.profasset();
+          this.searchResult[index].picture = this.user.profasset();
         });
       });
-      if (data.length == 0) this.profileResults = []; 
+      if (data.length == 0) this.searchResult = []; 
     });
   }
 
@@ -111,25 +106,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       
       this.isCompanyEvent.emit(this.isCompany);
     })
-  }
-
-  onSendSearch(event: KeyboardEvent) {
-    const inputText: string = this.form.value.searchParam.trim();
-
-    if (event.key === "Enter" && inputText.length) {
-
-      const searchParam = inputText.toLowerCase().split(" ").join("+");
-
-      this.searchService.attrSearch(searchParam);
-
-      this.router.navigate(["/results"], { queryParams: { search: searchParam } });
-
-      this.searching();
-
-      this.searchService.profileResults = this.profileResults;
-      
-      this.searchService.searchProjects();
-    }
   }
 
 }

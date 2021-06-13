@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PostedProject } from 'src/app/interfaces/postedProject';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -10,7 +10,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css']
 })
-export class ProjectCardComponent implements OnInit, AfterViewInit {
+export class ProjectCardComponent implements OnInit {
 
   @Input('project') public project!: any;
 
@@ -19,8 +19,6 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   @Input('userProfile') public userProfile: string | undefined = "";
 
   @ViewChild('projectContent') public projectContent!: ElementRef;
-
-  public button!: any;
 
   public profileName: any = "";  
 
@@ -55,11 +53,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
       this.profileImg = this.userService.profasset();
     });
 
-    this.loadProjectText();
-  }
-
-  ngAfterViewInit(): void{
-    this.gettingId();
+    this.loadProjectText()
   }
 
   showMore() {
@@ -86,21 +80,11 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   }
 
   async onLikePost(project: PostedProject) {
-    this.button.disabled = true;
-    try{
+    const button = <HTMLInputElement> document.getElementById("likeButtonProject");
+    button.disabled = true;
     await this.projectsService.likeProject(project, this.userProfile);
     this.project = await this.projectsService.getSingleProject(project);
-    this.button.disabled = false;
-    }
-    catch(err){
-      console.log(err);
-      this.button.disabled = false;
-    }
-  }
-
-  gettingId(){
-    this.button = <HTMLInputElement> document.getElementById("likeButtonProject");
-    this.button?.setAttribute('id', this.project.projectId);
+    button.disabled = false;
   }
 
   ngOnDestroy() {

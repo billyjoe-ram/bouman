@@ -298,6 +298,12 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     const userData = this.usersService.getCollection(user?.uid);
 
     this.mainProjectProfile = ((await userData).data() as any).profileId;
+
+    // this.usersService.getCollection(user?.uid).then((user: any) => {
+    //   console.log(user.data());
+    //   console.log(user.data().profileId);
+    //   this.mainProjectProfile = user.data().profileId;
+    // });
   }
 
 }

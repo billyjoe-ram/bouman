@@ -6,7 +6,7 @@
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5 offset-md-0 offset-lg-2">
         <!-- binding properties to reuse code -->
         <profile-card [profileId]="profileId" [userId]="userId" [userData]="userData" [editMode]="sameUser"
-            (content)="selectPage($event)" [publicSize]="userPosts.length" [projsSize]="userProjects.length" [edictsSize]="userEdicts.length">
+            (content)="selectPage($event)" [publicSize]="userPosts.length" [projsSize]="userProjects.length">
         </profile-card>
     </div>
 
@@ -33,16 +33,9 @@
                 <div class="post-item" *ngFor="let project of userProjects">
                     <project-card [profileId]="project.profileId" [project]="project" [userProfile]="userProfileId"></project-card>
                 </div>
-                <div *ngIf="userEdicts.length">
-                    <div class="post-item" *ngFor="let edict of userEdicts">
-                        <edict-card [edict]="edict" [profileId]="edict.companyId"></edict-card>
-                    </div>
-                </div>
-                <div class='theresnothing' *ngIf="userProjects.length == 0 && userEdicts.length == 0">
-                    <span>{{ userData.name }} não tem um {{ isCompany === true ? 'edital' : '' }}{{ isCompany === false
-                        ? 'projeto': '' }}.</span>
+                <div class='theresnothing' *ngIf="userProjects.length == 0">
+                    <span>{{ userData.name }} não tem um {{ isCompany === true ? 'edital' : '' }}{{ isCompany === false ? 'projeto': '' }}.</span>
                 </div>
             </div>
+
         </div>
-    </div>
-</div>

@@ -36,8 +36,6 @@ export class PostProjectComponent implements OnInit, OnChanges {
 
   public selectedProject!: any;
 
-  public loaded: any = false;
-
   public userArea: { area: string, subarea: string } = { area: "", subarea: "" };
 
   public userSpecificSubareas: { name: string, value: string }[] = [];
@@ -57,7 +55,6 @@ export class PostProjectComponent implements OnInit, OnChanges {
   }
 
   importProject() {
-    this.loaded =false;
     // Reset the array
     this.userProjects = [];
 
@@ -72,8 +69,6 @@ export class PostProjectComponent implements OnInit, OnChanges {
       this.userProjects.sort((a: any, b: any) => {
         return a.lastEdit.seconds - b.lastEdit.seconds;
       }).reverse();
-    }).finally(()=>{
-    this.loaded = true;
     });
 
     // Triggering modal
@@ -165,10 +160,6 @@ export class PostProjectComponent implements OnInit, OnChanges {
 
         // Becasuse there is only one code with that name, I can use the first index
         keywordsArray.unshift(specificSubarea[0].name);
-
-        keywordsArray = keywordsArray.map((keyword) => {
-          return keyword.toLowerCase();
-        });
 
         const project = { title: this.selectedProject.title, content: this.selectedProjectText.join('\n'), keywords: keywordsArray };
   
