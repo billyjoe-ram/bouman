@@ -11,10 +11,12 @@ export class ProjectOverviewComponent implements OnInit, AfterViewInit {
   @ViewChild('projectsList') private pBody!: ElementRef;
   
   public projects: any[] = [];
+  public loaded: any = false;
 
   constructor(private docServ: DocsService) { }
 
   ngOnInit(): void {
+    this.loaded = false;
     this.docServ.listProjects().then(data => {
       data.forEach((query) => {
         this.projects.push(query.data());
@@ -24,6 +26,8 @@ export class ProjectOverviewComponent implements OnInit, AfterViewInit {
       this.projects.sort((a: any, b: any) => {
         return a.lastEdit.seconds - b.lastEdit.seconds;
       }).reverse();
+    }).finally(()=>{
+      this.loaded = true;
     });
   }
 

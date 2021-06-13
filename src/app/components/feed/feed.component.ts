@@ -28,7 +28,9 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public userProjects: Project[] = [];
 
-  public loaded: boolean = false;
+  public loadedPosts: boolean = false;
+
+  public loadedProj: boolean = false;
 
   public errorMsg: string = "";
 
@@ -69,9 +71,10 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   async loadData() {
-    this.loaded = false;
-    // Awaiting current user id for profile id
+    this.loadedPosts = false;
+    this.loadedProj = false;
     
+    // Awaiting current user id for profile id    
     const user = await this.auth.getAuth().currentUser;
 
     // Subscribing to current user to get the profileId
@@ -108,8 +111,9 @@ export class FeedComponent implements OnInit, OnDestroy {
             profilePosts.forEach(query => {
               this.feedPosts[i] = { data: query.data(), type: 'post' } as any;
               i++;
-              this.loaded = true;
             });
+          }).finally(()=>{
+            this.loadedPosts = true;
           });
 
           this.projectsService.listProfileProjects(profile).then((postedProject) => {
@@ -126,7 +130,8 @@ export class FeedComponent implements OnInit, OnDestroy {
                 return aDate.seconds - bDate.seconds;
               }).reverse();
             }
-            this.loaded = true;
+          }).finally(()=>{
+            this.loadedProj = true;
           });
         });
       });
