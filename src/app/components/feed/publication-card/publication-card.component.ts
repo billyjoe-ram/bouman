@@ -33,6 +33,8 @@ export class PublicationCardComponent implements OnInit {
 
   public limit: number = 286;
 
+  public btnDeletePost: any;
+
   private profileSubs!: Subscription;
 
   private imageSubs!: Subscription;
@@ -56,6 +58,10 @@ export class PublicationCardComponent implements OnInit {
     }, (error) => {
       this.profileImg = this.user.profasset();
     });
+  }
+
+  ngAfterViewInit(){
+    this.getPostId();
   }
 
   showMore() {
@@ -82,6 +88,11 @@ export class PublicationCardComponent implements OnInit {
     this.profileSubs.unsubscribe();
 
     this.imageSubs.unsubscribe();
+  }
+
+  getPostId(){
+    const btnDelete = <HTMLInputElement>document.getElementById("btnDelete");
+    this.btnDeletePost = btnDelete.setAttribute('id', this.publication.postId);
   }
 
   async onDelete(){
