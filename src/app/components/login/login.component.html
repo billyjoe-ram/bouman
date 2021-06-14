@@ -31,15 +31,6 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-4 col-md-4 col-lg-4"></div>
-        <div class="col-sm-4 col-md-4 col-lg-4">
-          <button id="btnLogin" (click)="login()" class="btn">Login</button>
-        </div>
-        <div class="col-sm-4 col-md-4 col-lg-4"></div>
-      </div>
-    </form>
-
     <!-- Error messages -->
     <div *ngIf="messageError">
       <div class="alert alert-danger" role="alert">
@@ -52,6 +43,15 @@
         {{ messageEmail }}
       </div>
     </div>
+
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4"></div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <button id="btnLogin" (click)="login()" class="btn">Login</button>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4"></div>
+      </div>
+    </form>
 
     <div class="modal fade" id="changePass" tabindex="-1" role="dialog" aria-labelledby="changePass" aria-hidden="true">
       <div class="modal-dialog" role="document">
