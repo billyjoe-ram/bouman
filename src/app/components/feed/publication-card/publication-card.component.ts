@@ -91,8 +91,10 @@ export class PublicationCardComponent implements OnInit {
   }
 
   getPostId(){
-    const btnDelete = <HTMLInputElement>document.getElementById("btnDelete");
-    this.btnDeletePost = btnDelete.setAttribute('id', this.publication.postId);
+    const btnDelete = <HTMLInputElement> document.getElementById('btnDelete');
+    if(btnDelete){
+      this.btnDeletePost = btnDelete.setAttribute('id', 'delete' + this.publication.postId);
+    }
   }
 
   async onDelete(){
