@@ -29,6 +29,11 @@ editor {
     background-color: #07889B;
 }
 
+.aside-content aside {
+    padding: 2%;
+    text-align: center;
+}
+
 /* Changing default bootstrap background color for active item */
 .list-group .list-group-item.active {
     border-color: #eee;

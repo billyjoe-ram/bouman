@@ -39,7 +39,7 @@
         <form #form="ngForm">
             <div class="form-group">
                 <div class="dropdown">
-                        <input type="search" class="form-control" autocomplete="off" placeholder="Procure um perfil aqui" [(ngModel)]="search" (ngModelChange)="searching()" (focus)="togglesearch()" (blur)="togglesearch()" name="searchParam" (keydown)="onSendSearch($event)">
+                        <input type="search" class="form-control" autocomplete="off" placeholder="Pesquise aqui" [(ngModel)]="search" (ngModelChange)="searching()" (focus)="togglesearch()" (blur)="togglesearch()" name="searchParam" (keydown)="onSendSearch($event)">
                         <div *ngIf='profileResults[0] != undefined' class="dropdown-content" id="search" [ngStyle]="{ 'display': search ? 'block' : 'none'}">
                             <a  href="#" *ngFor="let prof of profileResults" [routerLink]="['/profiles', prof.id]" (click)="toggleSearchClick()">
                                 <img id="profile-picture" [src]="prof.picture">
