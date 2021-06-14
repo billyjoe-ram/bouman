@@ -22,6 +22,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   public postComments: any = [];
 
+  public pubImgLoaded: any = false;
   public commentOnLoad: any = false;
 
   public commentsArray: any = [];
@@ -86,6 +87,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
       if (this.loadingComments == false) {
         this.loadingComments = true;
         if (this.userImage) {
+          this.pubImgLoaded = false;
           this.userImage.unsubscribe();
         }
         try {
@@ -110,15 +112,12 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
                     this.commentsArray[index].userImg = res;
 
+                    
+                    this.pubImgLoaded = true;
+
                   });
-                  console.log(this.commentsArray)
                   // Ordering by date
-                  this.commentsArray.sort((a: any, b: any) => {
-                    const aDate = a.publishedAt;
-                    const bDate = b.publishedAt;
-      
-                    return aDate.seconds - bDate.seconds;
-                  }).reverse();
+
                 });
               });
             })

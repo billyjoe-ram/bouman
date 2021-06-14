@@ -27,7 +27,7 @@
                 <!-- Project text with text limiting pipe -->
                 <div class="card-text">
                     <div id="div-to-render"></div>
-                    <span [hidden]="sMDisabled" (click)="showMore()">+ ver mais</span>
+                    <span [hidden]="project.content.length < limit" (click)="showMore()">+ ver {{ sMDisabled ? 'menos' : 'mais' }}</span>
                 </div>
             </div>
         </div>
