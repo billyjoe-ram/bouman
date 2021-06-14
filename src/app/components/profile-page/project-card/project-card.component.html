@@ -15,7 +15,7 @@
             </div>
             <div *ngIf="profileId == userProfile" class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
                 <button id="btnDeleteProject" data-toggle="modal" data-target="#deleteProject" (click)='deleteclick(project)'
-                [ngClass]="'btnDelete'">
+                [ngClass]="'btnDelete'" [disabled]="profileId != userProfile">
                     <img src="../../../../assets/trash.png" alt="Delete">
                 </button>
             </div>
