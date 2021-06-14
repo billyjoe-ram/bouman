@@ -27,7 +27,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   public commentsArray: any = [];
 
-  public loadingComments: any = false;
+  public loadingComments: boolean = false;
 
   public isCommentsBtnClicked: any = false;
 
@@ -84,17 +84,25 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
   async btncomments() {
     //carrega os comentários e faz a troca do btn booleano.
     if (this.isCommentsBtnClicked == false) {
+      console.log(this.loadingComments)
       if (this.loadingComments == false) {
+        console.log('oi')
         this.loadingComments = true;
         if (this.userImage) {
           this.pubImgLoaded = false;
           this.userImage.unsubscribe();
         }
         try {
+          
+          console.log(this.loadingComments)
           this.post.listsAllCommentsIds(this.publication).then((res) => {
-
             const idToGet = res;
 
+            if (idToGet.length == 0){
+              this.loadingComments = false;
+              console.log('não tem nenhum comentário.')
+            }
+            else{
             idToGet.forEach((element: any, index: any) => {
 
               this.post.getEachComment(element.id, this.publication);
@@ -112,20 +120,29 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
                     this.commentsArray[index].userImg = res;
 
-                    
+                    console.log(this.loadingComments)
                     this.pubImgLoaded = true;
 
                   });
-                  // Ordering by date
-
+                }).catch((err)=>{
+                  console.error(err)
+                  this.loadingComments = false;
+                }).finally(()=>{
+                  this.loadingComments = false;
                 });
+              }).catch((err)=>{
+                console.error(err);                
+                this.loadingComments = false;
               });
-            })
-          })
+            });
+            }
+          }).catch((err)=>{
+            console.error(err)
+            this.loadingComments = false;
+          });
         } catch (error) {
           console.error(error);
         }
-        this.loadingComments = false;
         this.isCommentsBtnClicked = !this.isCommentsBtnClicked;
       }
     }
