@@ -22,7 +22,10 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   public postComments: any = [];
 
+  public commentsLength :any = [];
+
   public pubImgLoaded: any = false;
+  
   public commentOnLoad: any = false;
 
   public commentsArray: any = [];
@@ -58,6 +61,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
     private post: PostsService) { }
 
   ngOnInit(): void {
+    this.getCommentsLength(this.publication);
     if (this.publication.content.length < this.limit) {
       this.sMDisabled = true;
     }
@@ -105,6 +109,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
                 console.log(this.nocomments)
             }
             else{
+            this.getCommentsLength(this.publication);
             idToGet.forEach((element: any, index: any) => {
 
               this.post.getEachComment(element.id, this.publication);
@@ -152,6 +157,10 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
     else {
       this.isCommentsBtnClicked = false;
     }
+  }
+
+  async getCommentsLength(post:Post){
+    this.commentsLength = await this.post.listsAllCommentsIds(post);
   }
 
   async comments(form: any) {
