@@ -102,7 +102,7 @@ export class PublicationCardComponent implements OnInit {
     }
   }
 
-  async onDelete(post:Post){
+  async onDelete(){
     try{
       const delpostid = document.getElementById('deletePost')?.getAttribute('data-post');
       const delprofileid = document.getElementById('deletePost')?.getAttribute('data-profileId');
