@@ -91,11 +91,25 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   addProfileToProject(profileToAdd: string) {
-    const docId = this.route.snapshot.params['id'];
+    // If the person is not there, add
+    if (!this.projectMembers.includes(profileToAdd)) {
+      this.docServ.addProfileToProject(this.projectObject, profileToAdd);
 
-    this.docServ.addProfileToProject(this.projectObject, profileToAdd);
+      this.loadProjectMembers();
+    }    
+    
+  }
 
-    this.loadProjectMembers();
+  removeProfileFromProject(profileToRemove: string) {
+    // If the person is there, remove it
+    if (this.projectMembers.includes(profileToRemove)) {
+      const profileIndex = this.projectMembers.indexOf(profileToRemove);
+
+      this.projectMembersName.splice(profileIndex);
+
+      // The method toggle the member from the project
+      this.docServ.addProfileToProject(this.projectObject, profileToRemove);
+    }
   }
 
   onSubmit() {
@@ -142,6 +156,23 @@ export class ProjectComponent implements OnInit, AfterViewInit {
       this.modalTrigger.nativeElement.click();
     }  
     
+  }
+
+  showMenu(event: Event, index: number, profileId: string) {
+    // Only owner can remove
+    if (this.isOwner) {
+      event.preventDefault();
+
+      const listItem = (event.target as HTMLDivElement);
+      
+      if (index) {
+        // Setting the dropdown config
+        listItem.setAttribute("data-toggle", "dropdown");
+        
+        // Clicking it
+        listItem?.click();
+      }
+    }    
   }
 
   loadProject() {
@@ -229,6 +260,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   private loadProjectMembers() {
+    console.log("Loading project members");
     // For each profile / index
     this.projectMembers.forEach((profile, index) => {
       this.profileService.getProfilePromise(profile).then((profile: any) => {
