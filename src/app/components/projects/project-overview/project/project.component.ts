@@ -158,18 +158,21 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     
   }
 
-  showMenu(event: Event, index: number) {
-    event.preventDefault();
+  showMenu(event: Event, index: number, profileId: string) {
+    // Only owner can remove
+    if (this.isOwner) {
+      event.preventDefault();
 
-    const listItem = (event.target as HTMLDivElement);
-    
-    if (index) {
-      // Setting the dropdown config
-      listItem.setAttribute("data-toggle", "dropdown");
+      const listItem = (event.target as HTMLDivElement);
       
-      // Clicking it
-      listItem?.click();
-    }
+      if (index) {
+        // Setting the dropdown config
+        listItem.setAttribute("data-toggle", "dropdown");
+        
+        // Clicking it
+        listItem?.click();
+      }
+    }    
   }
 
   loadProject() {

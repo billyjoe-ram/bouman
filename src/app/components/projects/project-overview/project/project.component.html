@@ -85,7 +85,7 @@
         <div class="people-list-div">
             <span>Pessoas neste projeto: </span>
             <div class="list-group dropleft">
-                <div class="list-group-item" *ngFor="let profileName of projectMembersName; let i = index;" (contextmenu)="showMenu($event, i)" >
+                <div class="list-group-item" *ngFor="let profileName of projectMembersName; let i = index;" (contextmenu)="showMenu($event, i, projectMembers[i])" >
                     
                     <a [routerLink]="['/profiles/', projectMembers[i]]" target="_blank">{{ profileName }}</a>
 
