@@ -67,7 +67,7 @@ export class ContactComponent implements OnInit, OnChanges ,OnDestroy {
         if (profile.social) {
           this.hasSocial = true;
           this.userSocial = profile.social;
-          // Checking if isn't empy string
+          // Checking if isn't empty string
           if(!profile.social.email){
             profile.social.email = "E-mail não informado"
           }
