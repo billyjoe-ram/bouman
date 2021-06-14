@@ -146,8 +146,10 @@ export class FeedComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateDataProject(){
-
+  updateDataProject(projectDeleted: string){
+    this.feedPosts = this.feedPosts.filter((project) => {
+      return project.data.postId != projectDeleted;
+    });
   }
 
   handleError(errorMsg: string) {

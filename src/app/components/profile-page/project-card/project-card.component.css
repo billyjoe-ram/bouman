@@ -94,3 +94,8 @@
 .card .card-footer img {
     margin: 0 1rem;
 }
+
+.btnDelete{
+    background-color: transparent;
+    border: none;
+}

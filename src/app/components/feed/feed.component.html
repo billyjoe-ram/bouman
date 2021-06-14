@@ -15,7 +15,7 @@
                             <!-- <button class="btn btn-bouman-primary" type="button" (click)="importProject()">Importar
                                 projeto</button> -->
                             <post-project [projects]="userProjects" [profileId]="profileId"
-                                (projectPosted)="reloadData($event)"></post-project>
+                                (projectPosted)="reloadData($event)" (projectDeleted)="updateDataProject($event)"></post-project>
                         </div>
 
                         <div class="card-body">
