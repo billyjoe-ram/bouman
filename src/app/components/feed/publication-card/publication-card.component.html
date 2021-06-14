@@ -31,15 +31,6 @@
         <button class="btn btn-default" (click)="onLikePost(publication)" id="likeButtonPost">
             <span> {{ publication.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir">Curtir
         </button>
-
-        <!-- <button class="btn btn-default">
-            <img src="/assets/comment-gray.svg" alt="Comentar">Comentar
-        </button>
-
-        <button class="btn btn-default">
-            <img src="/assets/share-gray.svg" alt="Compartilhar">Compartilhar
-        </button> -->
-
     </div>
 </div>
 
@@ -53,8 +44,8 @@
                 Ao clicar em "Excluir", a publicação seja excluída permanentemente.
             </div>
             <div class="modal-footer">
-                <button type="button" id="close" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-bouman-modal" (click)="onDelete()">Excluir</button>
+                <button type="button" id="close" class="btn btn-bouman" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-outline-danger" (click)="onDelete()" data-dismiss="modal">Excluir</button>
             </div>
         </div>
     </div>

@@ -114,19 +114,22 @@ export class ProjectCardComponent implements OnInit {
   }
 
   async onDelete(){
-    try{
-      const delprojectid = document.getElementById('deleteProject')?.getAttribute('data-project');
-      const delprofileid = document.getElementById('deleteProject')?.getAttribute('data-profileId');
-      if (delprofileid != null && delprojectid != null){
-      await this.projectsService.deleteProject(delprofileid, delprojectid);
-      this.projectDeleted.emit(delprojectid);
-    }
-    } catch (error){
-      console.error(error);
-    } finally {
-      let close = document.getElementById('close');
-      close?.click();
-    }
+    // If the user is the user, then he can delete it
+    if (this.profileId === this.userProfile) {
+      try{
+        const delprojectid = document.getElementById('deleteProject')?.getAttribute('data-project');
+        const delprofileid = document.getElementById('deleteProject')?.getAttribute('data-profileId');
+        if (delprofileid != null && delprojectid != null){
+        await this.projectsService.deleteProject(delprofileid, delprojectid);
+        this.projectDeleted.emit(delprojectid);
+      }
+      } catch (error){
+        console.error(error);
+      } finally {
+        let close = document.getElementById('close');
+        close?.click();
+      }
+    }    
   }
 
 }

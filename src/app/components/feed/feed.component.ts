@@ -137,6 +137,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   reloadData(postedProject: boolean) {
     if (postedProject) {
       this.loadData();
+      console.log(this.feedPosts);
     }
   }
 
@@ -144,12 +145,16 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.feedPosts = this.feedPosts.filter((post) => {
       return post.data.postId != postDeleted;
     });
+
+    this.reloadData(true);
   }
 
   updateDataProject(projectDeleted: string){
     this.feedPosts = this.feedPosts.filter((project) => {
       return project.data.projectId != projectDeleted;
     });
+
+    this.reloadData(true);
   }
 
   handleError(errorMsg: string) {
