@@ -7,15 +7,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                Pessoas que você segue
+                Pessoas que você segue e te seguem
             </div>
             <div class="modal-body">
                 <div class="list-group" role="tablist">
-                    <div class="list-group-item" data-toggle="list" *ngFor="let followed of profilesFollowed" (click)="onProfilesSelected(followed.profileId)">
-                        <img [src]="followed.picture" alt="Foto de perfil">
-                        
-                        {{ followed.name }}
-                    </div>
+                    <!-- Creating an item for each profileFollowed -->
+                    <div *ngFor="let followed of profilesFollowed">
+                        <!-- But only if it's a follow <-> follow case -->
+                        <div class="list-group-item" data-toggle="list" (click)="onProfilesSelected(followed.profileId)" *ngIf="followed.isFollowing">
+                            <img [src]="followed.picture" alt="Foto de perfil">
+                            
+                            {{ followed.name }}
+                        </div>
+                    </div>                    
                 </div>
             </div>
             <div class="modal-footer">

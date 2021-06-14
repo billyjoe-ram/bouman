@@ -12,7 +12,7 @@ export class AddPeopleComponent implements OnInit {
 
   @Output('selectedProfile') public selectedProfileEvent: EventEmitter<string> = new EventEmitter<string>();
   
-  public profilesFollowed: { profileId: string, name: string, picture: string }[] = [];
+  public profilesFollowed: { profileId: string, name: string, picture: string, isFollowing: boolean }[] = [];
   
   private userProfilesFollowed: string[] = [];
 
@@ -60,14 +60,23 @@ export class AddPeopleComponent implements OnInit {
 
   private loadProfileFollowings() {
     this.userProfilesFollowed.forEach((profileFollowed, index) => {
-      console.log(profileFollowed);;
       this.profileService.getProfilePromise(profileFollowed).then((profile) => {
-        // If there's an id in the document (profile exists)                
+        // If there's an id in the document (profile exists)  
         if (profile.id) {
+          const emptyValueObject = { profileId: "", name: "", picture: "", isFollowing: false };
+          const profFolFollows: (string | undefined)[] = (profile.data() as any).following;
+
           // Creating and empty value object in that index position
-          this.profilesFollowed[index] = { profileId: "", name: "", picture: "" };
+          this.profilesFollowed[index] = emptyValueObject;
           this.profilesFollowed[index].name = (profile.data() as any).name;
           this.profilesFollowed[index].profileId = profileFollowed;
+
+          // If the profile is following you, isFollowing = true
+          if (profFolFollows.includes(this.profileId)) {
+            this.profilesFollowed[index].isFollowing = true;
+          } else {
+            this.profilesFollowed[index].isFollowing = false;
+          }
         }        
       });
 
