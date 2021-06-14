@@ -103,10 +103,12 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   removeProfileFromProject(profileToRemove: string) {
     // If the person is there, remove it
     if (this.projectMembers.includes(profileToRemove)) {
+      const profileIndex = this.projectMembers.indexOf(profileToRemove);
+
+      this.projectMembersName.splice(profileIndex);
+
       // The method toggle the member from the project
       this.docServ.addProfileToProject(this.projectObject, profileToRemove);
-
-      this.loadProjectMembers();
     }
   }
 
@@ -157,6 +159,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   showMenu(event: Event, index: number) {
+    event.preventDefault();
+
     const listItem = (event.target as HTMLDivElement);
     
     if (index) {
@@ -253,6 +257,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   private loadProjectMembers() {
+    console.log("Loading project members");
     // For each profile / index
     this.projectMembers.forEach((profile, index) => {
       this.profileService.getProfilePromise(profile).then((profile: any) => {

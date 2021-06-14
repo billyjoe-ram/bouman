@@ -87,10 +87,10 @@
             <div class="list-group dropleft">
                 <div class="list-group-item" *ngFor="let profileName of projectMembersName; let i = index;" (contextmenu)="showMenu($event, i)" >
                     
-                    <a [routerLink]="['/profiles/', projectMembers[i] ]" target="_blank">{{ profileName }}</a>
+                    <a [routerLink]="['/profiles/', projectMembers[i]]" target="_blank">{{ profileName }}</a>
 
                     <div [ngClass]="i !== 0 ? 'dropdown-menu' : ''" [hidden]="i === 0">
-                        <a class="dropdown-item">Remover pessoa</a>
+                        <a class="dropdown-item" (click)="removeProfileFromProject(projectMembers[i])">Remover pessoa</a>
                     </div>
                 </div>
             </div>

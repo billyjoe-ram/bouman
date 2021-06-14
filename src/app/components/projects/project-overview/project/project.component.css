@@ -16,7 +16,7 @@ editor {
 }
 
 .aside-content .people-list-div .list-group-item {
-    cursor: context-menu;
+    cursor: context-menu;    
 }
 
 .aside-content button.btn-add-people {
@@ -45,6 +45,13 @@ editor {
 .list-group .list-group-item:nth-child(2) {
     border: 1px solid rgba(0, 0, 0, .125);
     border-radius: inherit;
+}
+
+/* Using bootstrap color */
+.list-group .list-group-item .dropdown-item {
+    color: var(--red);
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .modal-content .modal-header {
