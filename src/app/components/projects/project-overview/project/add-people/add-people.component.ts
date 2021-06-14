@@ -12,7 +12,7 @@ export class AddPeopleComponent implements OnInit {
 
   @Output('selectedProfile') public selectedProfileEvent: EventEmitter<string> = new EventEmitter<string>();
   
-  public profilesFollowed: any = [];
+  public profilesFollowed: { profileId: string, name: string, picture: string }[] = [];
   
   private userProfilesFollowed: string[] = [];
 
@@ -60,9 +60,15 @@ export class AddPeopleComponent implements OnInit {
 
   private loadProfileFollowings() {
     this.userProfilesFollowed.forEach((profileFollowed, index) => {
+      console.log(profileFollowed);;
       this.profileService.getProfilePromise(profileFollowed).then((profile) => {
-        this.profilesFollowed[index] = profile.data();
-        this.profilesFollowed[index].profileId = profileFollowed;
+        // If there's an id in the document (profile exists)                
+        if (profile.id) {
+          // Creating and empty value object in that index position
+          this.profilesFollowed[index] = { profileId: "", name: "", picture: "" };
+          this.profilesFollowed[index].name = (profile.data() as any).name;
+          this.profilesFollowed[index].profileId = profileFollowed;
+        }        
       });
 
       this.usersService.getSearchPic(profileFollowed).then(pic => {
