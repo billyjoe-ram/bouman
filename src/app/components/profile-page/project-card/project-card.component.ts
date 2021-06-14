@@ -102,7 +102,7 @@ export class ProjectCardComponent implements OnInit {
   }
 
   deleteclick(post:any){
-    document.getElementById('deleteProject')?.setAttribute('data-project', this.project.postId);
+    document.getElementById('deleteProject')?.setAttribute('data-project', this.project.projectId);
     document.getElementById('deleteProject')?.setAttribute('data-profileId', this.project.profileId);
   }
 
