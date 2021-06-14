@@ -61,5 +61,5 @@
 
 <!-- Project card -->
 <ng-template #project>
-    <project-card [profileId]="profileId" [project]="publication" [userProfile]='userProfile'></project-card>
+    <project-card [profileId]="profileId" [project]="publication" [userProfile]='userProfile' (projectDeleted)="emitProjecDeleted($event)"></project-card>
 </ng-template>

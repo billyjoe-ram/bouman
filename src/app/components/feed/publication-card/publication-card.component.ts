@@ -23,6 +23,8 @@ export class PublicationCardComponent implements OnInit {
 
   @Output('postDeleted') postDeleted: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output('projectDeleted') projectDeleted: EventEmitter<string> = new EventEmitter<string>();
+
   public profileName: any = "";  
 
   public profileImg: string = "";
@@ -82,6 +84,10 @@ export class PublicationCardComponent implements OnInit {
       button.disabled = false;
     }
 
+  }
+
+  emitProjecDeleted(project: string) {
+    this.projectDeleted.emit(project);
   }
 
   ngOnDestroy() {
