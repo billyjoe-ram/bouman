@@ -63,7 +63,12 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   }
 
   showMore() {
-    this.limit = this.project.content.length;
+    if (!this.sMDisabled) {
+      this.limit = this.project.content.length;
+    } else {
+      this.limit = 286;
+    }
+
     this.sMDisabled = !this.sMDisabled;
 
     this.loadProjectText();
