@@ -13,7 +13,7 @@
             </div>
 
             <div class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
-                <button id="btnDelete" data-toggle="modal" data-target="#deletePost" [ngClass]="'btnDelete'">
+                <button id="btnDelete" data-toggle="modal" data-target="#deletePost" (click)='deleteclick(publication)' [ngClass]="'btnDelete'">
                     <img src="../../../../assets/trash.png" alt="Delete">
                 </button>
             </div>
@@ -53,7 +53,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="close" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-bouman-modal" (click)="onDelete()">Excluir</button>
+                <button type="submit" class="btn btn-bouman-modal" (click)="onDelete(publication)" value="">Excluir</button>
             </div>
         </div>
     </div>

@@ -78,7 +78,7 @@ export class PublicationCardComponent implements OnInit {
     button.disabled = false;  
     }
     catch(err){
-      console.log(err);
+      console.error(err);
       button.disabled = false;
     }
 
@@ -90,6 +90,11 @@ export class PublicationCardComponent implements OnInit {
     this.imageSubs.unsubscribe();
   }
 
+  deleteclick(post:any){
+    document.getElementById('deletePost')?.setAttribute('data-post', this.publication.postId);
+    document.getElementById('deletePost')?.setAttribute('data-profileId', this.publication.profileId);
+  }
+
   getPostId(){
     const btnDelete = <HTMLInputElement> document.getElementById('btnDelete');
     if(btnDelete){
@@ -97,17 +102,16 @@ export class PublicationCardComponent implements OnInit {
     }
   }
 
-  async onDelete(){
+  async onDelete(post:Post){
     try{
-      await this.post.deletePost(this.profileId, this.publication.postId);
-
-      this.postDeleted.emit(this.publication.postId);
-
-      console.log('onDelete:');
-      console.log(this.publication.postId, this.profileId);
-
+      const delpostid = document.getElementById('deletePost')?.getAttribute('data-post');
+      const delprofileid = document.getElementById('deletePost')?.getAttribute('data-profileId');
+      if (delprofileid != null && delpostid != null){
+      await this.post.deletePost(delprofileid, delpostid);
+      this.postDeleted.emit(delpostid);
+    }
     } catch (error){
-      console.log(error);
+      console.error(error);
     } finally {
       let close = document.getElementById('close');
       close?.click();
