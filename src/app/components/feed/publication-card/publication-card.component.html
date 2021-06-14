@@ -45,7 +45,7 @@
         <div>
             <p class="commentsHeader"> COMENTÁRIOS </p>
         </div>
-        <div *ngIf='!loadingComments && !nocomments'>
+        <div *ngIf='!loadingComments'>
 
             <div *ngFor='let comments of commentsArray'>
                 <div class='comment'>
@@ -72,9 +72,6 @@
         
     <div *ngIf='loadingComments'>
         <spinner></spinner>
-</div>
-<div *ngIf='nocomments' class='nocomments'>
-    <p> Seja o primeiro a comentar</p>
 </div>
         <div class='comment-upload'>
 

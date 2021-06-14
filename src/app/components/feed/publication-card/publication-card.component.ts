@@ -43,8 +43,6 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   public sMDisabled: boolean = false;
 
-  public nocomments: any  = false;
-
   public limit: number = 286;
 
   public userImage !: Subscription;
@@ -95,14 +93,14 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
           this.userImage.unsubscribe();
         }
         try {
-          this.nocomments = false;
+          
+          console.log(this.loadingComments)
           this.post.listsAllCommentsIds(this.publication).then((res) => {
             const idToGet = res;
 
             if (idToGet.length == 0){
-                this.loadingComments = false;
-                this.nocomments = true;
-                console.log(this.nocomments)
+              this.loadingComments = false;
+              console.log('não tem nenhum comentário.')
             }
             else{
             idToGet.forEach((element: any, index: any) => {
@@ -110,7 +108,6 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
               this.post.getEachComment(element.id, this.publication);
 
               this.post.getEachComment(element.id, this.publication).then((res: any) => {
-
                 this.commentsArray[index] = res.data();
 
                 this.profile.getProfilePromise(this.commentsArray[index].profileId).then((res: any) => {
