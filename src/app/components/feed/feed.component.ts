@@ -34,13 +34,13 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public errorMsg: string = "";
 
+  public isCompany: boolean | null = null;
+
   private userSubs!: Subscription;
 
   private profileSubs!: Subscription;
 
   private postsSubs!: Subscription;
-
-  private docSubs!: Subscription;
 
   constructor(
     private auth: AuthService,
@@ -81,10 +81,14 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.user.getCollection(user?.uid).then((user: any) => {
       // Passing to attribute
       this.profileId = user.data().profileId;
+
+      this.isCompany = false;
     }).catch(async () => {
       const companyData = await this.user.getCompany(user?.uid);
       
       this.profileId = (companyData.data() as any).profileId;
+
+      this.isCompany = true;
     }).finally(() => {
       // Executing the service method to get profile data
       this.profile.getProfilePromise(this.profileId).then((profile: any) => {

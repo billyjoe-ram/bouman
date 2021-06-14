@@ -10,12 +10,8 @@
                 <div class="form-group">
                     <div class="card">
                         <div class="card-header">
-                            <!-- <button class="btn btn-bouman-primary">Imagem</button> -->
-                            <!-- <button class="btn btn-bouman-primary">Enquete</button> -->
-                            <!-- <button class="btn btn-bouman-primary" type="button" (click)="importProject()">Importar
-                                projeto</button> -->
                             <post-project [projects]="userProjects" [profileId]="profileId"
-                                (projectPosted)="reloadData($event)"></post-project>
+                                (projectPosted)="reloadData($event)" *ngIf="isCompany === false"></post-project>
                         </div>
 
                         <div class="card-body">
