@@ -33,7 +33,6 @@ export class AddPeopleComponent implements OnInit {
   }
 
   onProfilesSelected(selectedProfile: any) {
-    // this.selectedProfileEvent.emit(selectedProfile);
     this.selectedProfile = selectedProfile;
   }
 
