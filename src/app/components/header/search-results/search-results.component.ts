@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProjectContent } from 'src/app/interfaces/projectContent';
 import { AuthService } from 'src/app/services/auth.service';
+import { PostsService } from 'src/app/services/posts.service';
 import { SearchService } from 'src/app/services/search.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -36,6 +37,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     private searchService: SearchService,
     private authService: AuthService,
     private usersService: UsersService,
+    private postsService: PostsService
   ) { }
 
   ngOnInit(): void {
@@ -48,15 +50,18 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       
       this.loadProfile().then(() => {
         this.addEvents();
+
+        this.postsService.searchingProfiles(queryParams).then((data) => {
+          this.profilesResults = data;
+        });
         
         this.searchService.searchProjects().then(() => {
           this.projectsResults = this.searchService.searchResult;
         });
   
-        this.profilesResults = this.searchService.profileResults;
+        // this.profilesResults = this.searchService.profileResults;
       });
     });
-    // ["search"]    
   }
 
   loadProjectText(result: ProjectContent) {

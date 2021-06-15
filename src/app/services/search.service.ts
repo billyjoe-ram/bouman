@@ -14,6 +14,7 @@ export class SearchService {
   constructor(private store: AngularFirestore) { }
 
   async searchProfile(userName: string) {
+    const search = this.searchParam.toLowerCase().split("+").join(" ");
     const profiles: any[] = [];
 
     const collection = this.store.collection("Profiles").ref;
