@@ -36,6 +36,11 @@
     color: #A4A4A4;
 }
 
+.profile-details .profile-info a, .profile-details .profile-info a:link {
+    color: black; 
+
+}
+
 .card .card-body button#clear-btn {
     background-color: transparent;
     border: none;

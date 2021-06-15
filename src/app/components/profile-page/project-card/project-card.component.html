@@ -6,9 +6,9 @@
             <div class="col-sm-11 col-md-11 col-lg-11">
                 <div class="profile-details">
                     <!-- User informations -->
-                    <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture">
+                    <img [src]="profileImg" target="_blank" [routerLink]="['/profiles/', profileId]" alt="Foto de Perfil" class="profile-picture">
                     <div class="profile-info">
-                        {{ profileName }}
+                        <a target="_blank" [routerLink]="['/profiles/', profileId]"> {{ profileName }} </a>
                         <span>{{ project.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
                     </div>
                 </div>

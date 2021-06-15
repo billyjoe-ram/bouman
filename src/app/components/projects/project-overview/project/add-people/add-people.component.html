@@ -17,7 +17,7 @@
                         <div class="list-group-item" data-toggle="list" (click)="onProfilesSelected(followed.profileId)" *ngIf="followed.isFollowing">
                             <img [src]="followed.picture" alt="Foto de perfil">
                             
-                            {{ followed.name }}
+                            <a target="_blank" [routerLink]="['/profiles/', followed.profileId]"> {{ followed.name }} </a>
                         </div>
                     </div>                    
                 </div>

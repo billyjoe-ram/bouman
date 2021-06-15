@@ -59,10 +59,7 @@ export class InfosComponent implements OnInit {
         };
 
         const profileObject = { name: this.userRegister.name };
-
-        const whereName = (await this.store.collection('Profiles').ref.where('name', '==', profileObject.name).get()).docs;
-        
-        if (!whereName[0]) {
+          
           try {
             // User sign-up
             const newUser = await this.authService.register(this.userRegister);
@@ -90,9 +87,6 @@ export class InfosComponent implements OnInit {
                 break;
             }            
           }
-        } else {
-          this.messageError = "O nome já está sendo usado."
-        }
       }
     } else {
       if (cnpj.isValid(this.formEmpresa.value.cnpj)) {

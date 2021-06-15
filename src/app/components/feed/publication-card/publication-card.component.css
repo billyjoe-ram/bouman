@@ -53,6 +53,11 @@
     color: #A4A4A4;
 }
 
+.profile-details .profile-info a, .profile-details .profile-info a:link {
+    color: black; 
+
+}
+
 .card .card-body .card-text .publication-picture {
     width: 280px;
     height: 165px;

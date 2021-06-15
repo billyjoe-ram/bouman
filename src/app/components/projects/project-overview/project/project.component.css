@@ -64,6 +64,10 @@ editor {
     font-weight: bold;
 }
 
+.list-group-item a {
+    color: black;
+}
+
 .modal-footer{
     justify-content: space-between;
 }
