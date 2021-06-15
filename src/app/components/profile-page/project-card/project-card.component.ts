@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PostedProject } from 'src/app/interfaces/postedProject';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -10,7 +10,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css']
 })
-export class ProjectCardComponent implements OnInit {
+export class ProjectCardComponent implements OnInit, AfterViewInit {
 
   @Input('project') public project!: any;
 
@@ -18,9 +18,9 @@ export class ProjectCardComponent implements OnInit {
 
   @Input('userProfile') public userProfile: string | undefined = "";
 
-  @Output('projectDeleted') projectDeleted: EventEmitter<string> = new EventEmitter<string>();
-
   @ViewChild('projectContent') public projectContent!: ElementRef;
+
+  public button!: any;
 
   public profileName: any = "";  
 
@@ -35,8 +35,6 @@ export class ProjectCardComponent implements OnInit {
   private profileSubs!: Subscription;
 
   private imageSubs!: Subscription;
-
-  public btnDeleteProject: any;
   
   constructor(private userService: UsersService,
     private profileService: ProfileService,
@@ -57,11 +55,11 @@ export class ProjectCardComponent implements OnInit {
       this.profileImg = this.userService.profasset();
     });
 
-    this.loadProjectText()
+    this.loadProjectText();
   }
 
-  ngAfterViewInit(){
-    this.getProjectId();
+  ngAfterViewInit(): void{
+    this.gettingId();
   }
 
   showMore() {
@@ -93,48 +91,27 @@ export class ProjectCardComponent implements OnInit {
   }
 
   async onLikePost(project: PostedProject) {
-    const button = <HTMLInputElement> document.getElementById("likeButtonProject");
-    button.disabled = true;
+    this.button.disabled = true;
+    try{
     await this.projectsService.likeProject(project, this.userProfile);
     this.project = await this.projectsService.getSingleProject(project);
-    button.disabled = false;
+    this.button.disabled = false;
+    }
+    catch(err){
+      console.log(err);
+      this.button.disabled = false;
+    }
+  }
+
+  gettingId(){
+    this.button = <HTMLInputElement> document.getElementById("likeButtonProject");
+    this.button?.setAttribute('id', this.project.projectId);
   }
 
   ngOnDestroy() {
     this.profileSubs.unsubscribe();
 
     this.imageSubs.unsubscribe();
-  }
-
-  deleteclick(post:any){
-    document.getElementById('deleteProject')?.setAttribute('data-project', this.project.projectId);
-    document.getElementById('deleteProject')?.setAttribute('data-profileId', this.project.profileId);
-  }
-
-  getProjectId(){
-    const btnDelete = <HTMLInputElement> document.getElementById('btnDelete');
-    if(btnDelete){
-      this.btnDeleteProject = btnDelete.setAttribute('id', 'delete' + this.project.postId);
-    }
-  }
-
-  async onDelete(){
-    // If the user is the user, then he can delete it
-    if (this.profileId === this.userProfile) {
-      try{
-        const delprojectid = document.getElementById('deleteProject')?.getAttribute('data-project');
-        const delprofileid = document.getElementById('deleteProject')?.getAttribute('data-profileId');
-        if (delprofileid != null && delprojectid != null){
-        await this.projectsService.deleteProject(delprofileid, delprojectid);
-        this.projectDeleted.emit(delprojectid);
-      }
-      } catch (error){
-        console.error(error);
-      } finally {
-        let close = document.getElementById('close');
-        close?.click();
-      }
-    }    
   }
 
 }

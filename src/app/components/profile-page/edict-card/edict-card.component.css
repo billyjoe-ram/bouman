@@ -1,8 +1,26 @@
-. .card-body .card {
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1));
+.card {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
     margin-bottom: 5vh;
 
     border: none;
+}
+
+.card .card-header {    
+    display: flex;
+    align-items: center;
+
+    height: 2.25rem;
+
+    padding-left: 0.625rem;
+
+    background: #FFFFFF;
+
+    border: 2px solid #FA902E;
+    border-radius: 4px 4px 0 0;
+
+    font-weight: bold;    
+    font-size: 0.85rem;
+    color: #DF660F;
 }
 
 .card .profile-details {
@@ -36,20 +54,6 @@
     color: #A4A4A4;
 }
 
-.profile-details .profile-info a, .profile-details .profile-info a:link {
-    color: black; 
-
-}
-
-.card .card-body button#clear-btn {
-    background-color: transparent;
-    border: none;
-}
-
-.card .card-body span.keywords {
-    margin: 0 0.6rem;
-}
-
 .card .card-body .card-text .publication-picture {
     width: 280px;
     height: 165px;
@@ -57,27 +61,15 @@
     margin: 1rem;
 }
 
-.card .card-header {
-    color: #08715D;
-}
-
-.card .card-header h1 {
-    font-size: 1.8rem;
-}
-
-.card .card-body .card-text #div-to-render {
-    font-size: .95em;
-}
-
-.card .card-body .card-text #div-to-render h1 {
-    font-size: 1.6em;
-    font-weight: bold;
-}
-
 .card .card-body .card-text span {
     margin-left: 0.4rem;
     color: #185c66;
     cursor: pointer;
+}
+
+.card .card-body button#clear-btn {
+    background-color: transparent;
+    border: none;
 }
 
 .card .card-footer {
@@ -88,12 +80,16 @@
     justify-content: space-between;
 
     background-color: #FA902E;
-
-    font-weight: bold;
 }
 
 .card .card-footer .btn.btn-default {
     color: white;
+    font-weight: bold;
+}
+
+.card .card-footer .btn.btn-default.is-applied {
+    color: #FA902E;
+    background-color: white;
 }
 
 .card .card-footer img {

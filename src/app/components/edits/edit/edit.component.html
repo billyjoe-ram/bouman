@@ -25,6 +25,20 @@
         </form>
     </div>
 
+    <div class="col-sm-4 col-md-4 col-lg-4 aside-content">
+        <div class="people-list-div">
+            <span>Perfis neste edital: </span>
+            <div class="list-group">                
+                <div class="list-group-item" *ngFor="let edictMember of edictMembersData">
+                    <a [routerLink]="'/profiles/' + edictMember.profileId" style="cursor: pointer;" target="_blank">
+                        <img [src]="edictMember.profilePicture">
+                        <span>{{ edictMember.name }}</span>
+                    </a>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Delete confirmation modal -->
     <div class="modal fade" id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProject"
         aria-hidden="true">
