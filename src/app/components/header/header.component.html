@@ -15,19 +15,19 @@
 
         <!-- Links to pages -->
         <ul class="nav navbar-nav">
-            <li>
+            <li routerLinkActive="active">
                 <a routerLink="/feed">
                     <img src="/assets/home.svg" alt="Página Inicial">
                     Início
                 </a>
             </li>
-            <li *ngIf="isCompany === false">
+            <li *ngIf="isCompany === false" routerLinkActive="active">
                 <a routerLink="/projects/overview">
                     <img src="/assets/testplan.svg" alt="Seus projetos">
                     Projetos
                 </a>
             </li>
-            <li *ngIf="isCompany === true">
+            <li *ngIf="isCompany === true" routerLinkActive="active">
                 <a routerLink="/edicts">
                     <img src="/assets/edict.svg" alt="Seus projetos">
                     Editais

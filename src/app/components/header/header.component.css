@@ -46,6 +46,12 @@ input {
   align-items: center;
 }
 
+.navbar .navbar-nav  li.active  a {
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;  
+}
+
 .navbar-default .navbar-toggle {
   border-color: #fa902e;
   background-color: white;
