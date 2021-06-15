@@ -24,7 +24,7 @@ export class SearchResultsComponent implements OnInit {
 
   public profileId: string = "";
 
-  public selectedSect: string = "";
+  public selectedSect: string = "Projetos";
 
   @Output() public pageLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -40,6 +40,7 @@ export class SearchResultsComponent implements OnInit {
 
     this.loadProfile().then(() => {
       this.addEvents();
+      
       this.searchService.searchProjects().then(() => {
         this.projectsResults = this.searchService.searchResult;
       });
