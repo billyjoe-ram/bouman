@@ -135,9 +135,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
   async btncomments() {
     //carrega os comentários e faz a troca do btn booleano.
     if (this.isCommentsBtnClicked == false) {
-      console.log(this.loadingComments)
       if (this.loadingComments == false) {
-        console.log('oi')
         this.loadingComments = true;
         if (this.userImage) {
           this.pubImgLoaded = false;
