@@ -23,6 +23,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   @Output('postDeleted') postDeleted: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output('projectDeleted') projectDeleted: EventEmitter<string> = new EventEmitter<string>();
 
   public postComments: any = [];
 
@@ -88,21 +89,35 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
     this.gettingId();
     this.getPostId();
   }
+  
+  emitProjecDeleted(project: string) {
+    this.projectDeleted.emit(project);
+  }
+
 
   async onDelete() {
+    // If the user is the user, then he can delete it
 
-    try {
-      await this.post.deletePost(this.profileId, this.publication.postId);
-      this.postDeleted.emit(this.publication.postId);
-      console.log('onDelete:');
-      console.log(this.publication.postId, this.profileId);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      let close = document.getElementById('close');
-      close?.click();
+      const delpostid = document.getElementById('deletePost')?.getAttribute('data-post');
+      const delprofileid = document.getElementById('deletePost')?.getAttribute('data-profileId');
+     
+      if (delprofileid == this.userProfile) {
+        try {
+          console.log(delpostid)
+          console.log(delprofileid)
+          if (delprofileid != null && delpostid != null) {
+            await this.post.deletePost(delprofileid, delpostid);
+            this.postDeleted.emit(delpostid);
+          }
+        } catch (error) {
+        console.error(error);
+      } finally {
+        let close = document.getElementById('close');
+        close?.click();
+      }
     }
   }
+  
 
   showMore() {
     this.limit = this.publication.content.length;
@@ -188,6 +203,11 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
       this.isCommentsBtnClicked = false;
     }
   }
+
+  deleteclick(){
+  document.getElementById('deleteProject')?.setAttribute('data-project', this.publication.postId);
+  document.getElementById('deleteProject')?.setAttribute('data-profileId', this.publication.profileId);
+}
 
   async getCommentsLength(post: Post) {
     this.commentsLength = await this.post.listsAllCommentsIds(post);

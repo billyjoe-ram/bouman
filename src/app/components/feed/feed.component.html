@@ -11,7 +11,7 @@
                     <div class="card">
                         <div class="card-header">
                             <post-project [projects]="userProjects" [profileId]="profileId"
-                            *ngIf="isCompany === false" (projectPosted)="reloadData($event)" (projectDeleted)="updateDataProject($event)">
+                            *ngIf="isCompany === false" (projectPosted)="reloadData($event)">
                         </post-project>
                         </div>
 
@@ -30,7 +30,8 @@
             <div class="feed-content" *ngIf="feedPosts.length && loadedPosts && loadedProj">
                 <div class="post-item" *ngFor="let post of feedPosts">
                     <publication-card [profileId]="post.data.profileId" [userProfile]="profileId"
-                    [publication]="post.data" [pubType]="post.type" (postDeleted)="updateDataPost($event)"></publication-card>
+                    [publication]="post.data" [pubType]="post.type" (postDeleted)="updateDataPost($event)" (projectDeleted)="updateDataProject($event)">
+                </publication-card>
                 </div>
             </div>
 

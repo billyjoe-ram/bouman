@@ -14,15 +14,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
-                <button id="clear-btn">
-                    <img src="../../../../assets/trash.png" data-toggle="modal" data-target="#deleteProject"
-                        alt="Delete">
-                </button>
-            </div>
-            <div class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
-                <button id="btnDeleteProject" data-toggle="modal" data-target="#deleteProject" (click)='deleteclick(project)'
-                [ngClass]="'btnDelete'">
+            <div *ngIf="profileId == userProfile" class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
+                <button id="btnDeleteProject" data-toggle="modal" data-target="#deleteProject"
+                    (click)='deleteclick()' [ngClass]="'btnDelete'" [disabled]="profileId != userProfile">
                     <img src="../../../../assets/trash.png" alt="Delete">
                 </button>
             </div>
@@ -67,8 +61,8 @@
                 Ao clicar em "Excluir", a publicação deste projeto seja excluída permanentemente.
             </div>
             <div class="modal-footer">
-                <button type="button" id="close" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-bouman-modal" (click)="onDelete()">Excluir</button>
+                <button type="button" id="close" class="btn btn-bouman" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-outline-danger" (click)="onDelete()">Excluir</button>
             </div>
         </div>
     </div>
