@@ -111,8 +111,6 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
      
       if (delprofileid == this.userProfile) {
         try {
-          console.log(delpostid)
-          console.log(delprofileid)
           if (delprofileid != null && delpostid != null) {
             await this.post.deletePost(delprofileid, delpostid);
             this.postDeleted.emit(delpostid);
