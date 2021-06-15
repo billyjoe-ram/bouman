@@ -220,13 +220,14 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
     try {
       if (!this.commentOnLoad) {
         this.commentOnLoad = true;
-        if (form.valid && this.comment.length <= this.limit && this.comment.trim().length) {
+        if (form.valid && this.comment.length <= this.limit && this.comment.trim().length && this.comment!= null && this.comment != undefined) {
           await this.post.addComment(this.userProfile, this.comment, this.publication);
-
           this.reloadCmments();
+          this.comment = '';
         }
         else {
           //catch de algum erro.
+          this.comment = '';
         }
         this.commentOnLoad = false;
       }
@@ -234,6 +235,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
     catch (error) {
       console.error(error);
     }
+    
   }
   
   reloadCmments() {
