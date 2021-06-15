@@ -1,0 +1,33 @@
+<!-- Following People Modal Trigger -->
+<button class="btn btn-add-people" data-toggle="modal" data-target="#projectsModalTrigger">+ Adicionar pessoas</button>
+
+<!-- Projects display -->
+<div class="modal fade" id="projectsModalTrigger" tabindex="-1" role="dialog"
+    aria-labelledby="projectsModalTriggerLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Pessoas que você segue e te seguem
+            </div>
+            <div class="modal-body">
+                <div class="list-group" role="tablist">
+                    <!-- Creating an item for each profileFollowed -->
+                    <div *ngFor="let followed of profilesFollowed">
+                        <!-- But only if it's a follow <-> follow case -->
+                        <div class="list-group-item" data-toggle="list" (click)="onProfilesSelected(followed.profileId)" *ngIf="followed.isFollowing">
+                            <img [src]="followed.picture" alt="Foto de perfil">
+                            
+                            <a target="_blank" [routerLink]="['/profiles/', followed.profileId]"> {{ followed.name }} </a>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-outline-secondary"
+                    data-dismiss="modal">Cancelar</button>
+                <!-- Add people -->
+                <button type="button" class="btn btn-bouman" data-dismiss="modal" (click)="addProfileToProject()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>

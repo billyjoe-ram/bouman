@@ -1,0 +1,137 @@
+.card-body .card {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1));
+    margin-bottom: 5vh;
+
+    border: none;
+}
+.card {
+    margin-bottom: 5vh;
+
+    border: none; 
+}
+
+.card .profile-details {
+    display: flex;    
+}
+
+.card .profile-details img {
+    position: relative;
+    width: 4rem;
+    height: 4rem;
+
+    border: 1px solid #000000;
+    border-radius: 4rem;
+
+    margin: 0 3% 3% 0;
+}
+
+.card .profile-details .profile-info {
+    display: flex;
+    flex-direction: column;
+
+    font-weight: bold;
+    font-size: 1rem;
+}
+.margindiv{
+    margin-bottom : 5vh;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.3));
+}
+
+.card .profile-details .profile-info span {
+    font-size: 0.75rem;
+
+    font-weight: normal;
+
+    color: #A4A4A4;
+}
+
+.profile-details .profile-info a, .profile-details .profile-info a:link {
+    color: black; 
+
+}
+
+.card .card-body button#clear-btn {
+    background-color: transparent;
+    border: none;
+}
+
+.card .card-body span.keywords {
+    margin: 0 0.6rem;
+}
+
+.card .card-body .card-text .publication-picture {
+    width: 280px;
+    height: 165px;
+
+    margin: 1rem;
+}
+
+.card .card-header {
+    color: #08715D;
+}
+
+.card .card-header h1 {
+    font-size: 1.8rem;
+}
+
+.card .card-body .card-text #div-to-render {
+    font-size: .95em;
+}
+
+.card .card-body .card-text #div-to-render h1 {
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.card .card-body .card-text span {
+    margin-left: 0.4rem;
+    color: #185c66;
+    cursor: pointer;
+}
+
+.card .card-footer {
+    display: flex;
+
+    padding: 0.25rem 1.5rem;
+
+    justify-content: space-between;
+
+    background-color: #FA902E;
+
+    font-weight: bold;
+}
+
+.card .card-footer .btn.btn-default {
+    color: white;
+}
+
+.card .card-footer img {
+    margin: 0 1rem;
+}
+.btnDelete{
+    background-color: transparent;
+    border: none;
+}.modal-footer{
+    justify-content: space-between;
+}
+
+button.btn-bouman-modal{
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: white;
+    transition: 0.3s;
+    background: #FA902E;
+    border: 1px solid #DF660F;
+}
+
+button.btn-modal-form:hover{
+    background: #DF660F;
+}
+.card .card-footer button.has-liked {
+    background-color: white;    
+}
+
+.card-footer button.has-liked span {
+    color: #FA902E;
+    font-weight: bold;
+}

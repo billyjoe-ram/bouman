@@ -1,30 +1,50 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { FeedComponent } from './components/feed/feed.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { ConfigurateComponent } from './components/signup/configurate/configurate.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { AuthGuard } from './guards/auth.guard';
-import { LoginGuard } from './guards/login.guard';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectOverviewComponent } from './components/projects/project-overview/project-overview.component';
 import { ProjectComponent } from './components/projects/project-overview/project/project.component';
 import { ProfileConfigComponent } from './components/profile-page/profile-config/profile-config.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { LicenseComponent } from './components/terms/license/license.component';
+import { EdictsComponent } from './components/edits/edits.component';
+
+import { AuthGuard } from './guards/auth.guard';
+import { LoginGuard } from './guards/login.guard';
+import { ConfigGuard } from './guards/config.guard';
+import { EditComponent } from './components/edits/edit/edit.component';
+import { OverviewComponent } from './components/edits/overview/overview.component';
+import { SearchResultsComponent } from './components/header/search-results/search-results.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "signup", pathMatch: 'full' },
   { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [LoginGuard] },
-  { path: 'config',  component: ConfigurateComponent, canActivate: [AuthGuard] },
+  { path: 'config',  component: ConfigurateComponent, canActivate: [ConfigGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard], children: [
+  { path: '',  redirectTo: 'overview', pathMatch: 'full'},
   { path: 'overview', component: ProjectOverviewComponent },
-  { path: ':id', component: ProjectComponent }
+  { path: ':id', component: ProjectComponent },  
   ] },
   { path: 'profile-config', component: ProfileConfigComponent, canActivate: [AuthGuard] },
   { path: 'profiles/:profid', component: ProfilePageComponent, canActivate: [AuthGuard] },
+  { path: 'support', component: FaqComponent, canActivate: [AuthGuard] },
+  { path: 'terms', component: TermsComponent },
+  { path: 'terms/license', component: LicenseComponent },
+  { path: 'edicts', component: EdictsComponent, canActivate: [AuthGuard], children: [
+    { path: '', redirectTo: 'overview', pathMatch: 'full' },
+    { path: 'overview', component: OverviewComponent },
+    { path: ':id', component: EditComponent },
+  ] },
+  { path: 'results', component: SearchResultsComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
 ];
 

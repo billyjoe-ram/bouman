@@ -1,6 +1,7 @@
-export interface Post { 
-    profileId: string;
+export interface Post {     
     content: string;
+    likes: string[];
+    postId?: string;
+    profileId: string;
     publishedAt: Date;
-    likes: number;
 }

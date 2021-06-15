@@ -10,33 +10,67 @@
                 <div class="form-group">
                     <div class="card">
                         <div class="card-header">
-                            <!-- <button class="btn btn-bouman-primary">Imagem</button>
-                            <button class="btn btn-bouman-primary">Enquete</button>
-                            <button class="btn btn-bouman-primary">Importar projeto</button> -->
+                            <post-project [projects]="userProjects" [profileId]="profileId"
+                            *ngIf="isCompany === false" (projectPosted)="reloadData($event)">
+                        </post-project>
                         </div>
 
                         <div class="card-body">
-                            <textarea class="form-control textarea" id="post-textarea" placeholder="Escreva sua postagem aqui" name="content" [(ngModel)]="content"></textarea>
+                            <textarea class="form-control textarea" id="post-textarea"
+                                placeholder="Escreva sua postagem aqui" name="content" [(ngModel)]="content"></textarea>
                         </div>
 
                         <div class="card-footer">
                             <button type="submit" class="btn btn-bouman">Publicar</button>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </form>
 
-            <!-- Feed and posts -->
-            <div class="feed-content">
-                <div class="post-item" *ngFor="let profile of feedPosts">
-                    <publication-card [profileId]="profile.profileId" [publication]="post" *ngFor="let post of profile.posts"></publication-card>
-                </div>                
+            <div *ngIf="errorDelete" class="errorDelete">
+                <span>{{errorDelete}}</span>
             </div>
-        <div>
-        
-        <!-- Showing if there're no posts -->
-        <div *ngIf="!feedPosts">
-            <span>Crie uma postagem ou siga alguém para começar!</span>
+
+            <!-- Feed and posts -->
+            <div class="feed-content" *ngIf="feedPosts.length && loadedPosts && loadedProj">
+                <div class="post-item" *ngFor="let post of feedPosts">
+                    <publication-card [profileId]="post.data.profileId" [userProfile]="profileId"
+                    [publication]="post.data" [pubType]="post.type" (postDeleted)="updateDataPost($event)" (projectDeleted)="updateDataProject($event)">
+                </publication-card>
+                </div>
+            </div>
+
+            <!-- Showing if there're no posts -->
+            <spinner *ngIf='!feedPosts.length && (!loadedPosts || !loadedProj)'></spinner>
+            <div class='theresnothing' *ngIf="!feedPosts.length && loadedPosts && loadedProj">
+                <br>
+                <span>Não há nada no Feed...</span>
+                <br>
+                <br>
+                <br>
+                <span>Crie uma postagem ou siga alguém para começar!</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Error Modal Trigger -->
+<button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#errorModal" hidden
+    #errorModalTrigger></button>
+<!-- Error message -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Algo não parece certo
+            </div>
+            <div class="modal-body">
+                {{ errorMsg }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-bouman" data-dismiss="modal">OK</button>
+            </div>
         </div>
     </div>
 </div>

@@ -1,33 +1,117 @@
 <!-- Post card -->
-<div class="card">
-    <!-- Post content and user data -->
-    <div class="card-body">
-        <div class="profile-details">
-            <!-- User informations -->
-            <img [src]="profileImg" alt="Foto de Perfil" class="profile-picture">
-            <div class="profile-info">
-                {{ profileName }}
-                <span>{{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
+<div class='margindiv' *ngIf="pubType === 'post'; else project">
+    <div class="card" (onload)="gettingId()">
+        <!-- Post content and user data -->
+        <div class="card-body">
+            <div class="row">
+                <div class="profile-details col-sm-11 col-md-11 col-lg-11">
+                    <!-- User informations -->
+                    <img [src]="profileImg" target="_blank" [routerLink]="['/profiles/', profileId]"
+                        alt="Foto de Perfil" class="profile-picture">
+                    <div class="profile-info">
+                        <a target="_blank" [routerLink]="['/profiles/', profileId]">{{ profileName }}</a>
+                        <span>{{ publication.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
+                    </div>
+                </div>
+                <div *ngIf="profileId == userProfile" class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
+                    <button id="btnDelete" data-toggle="modal" data-target="#deletePost" (click)='deleteclick()'
+                        [ngClass]="'btnDelete'" [disabled]="profileId != userProfile">
+                        <img src="../../../../assets/trash.png" alt="Delete">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Post text with text limiting pipe -->
+            <p class="card-text">
+                {{ publication.content | slice:0:limit }}<span [hidden]="sMDisabled" (click)="showMore()">ver
+                    mais...</span>
+            </p>
+        </div>
+        <div class="card-footer">
+            <!-- This should be commented out when interactions are implemented -->
+            <button class="btn btn-default" (click)="onLikePost(publication)" id="likeButtonPost"
+                [ngClass]="hasLiked ? 'has-liked' : ''">
+                <span> {{ publication.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir">
+                <span>Curtir</span>
+            </button>
+            <button class="btn btn-default" (click)="btncomments()" id="commenteButtonPost">
+                <span> {{ commentsLength.length }} </span><img src="/assets/comment-gray.svg" alt="Comentar">Comentar
+            </button>
+
+        </div>
+    </div>
+    <div class='commentsSection' *ngIf='isCommentsBtnClicked'>
+        <div>
+            <p class="commentsHeader"> Comentários </p>
+        </div>
+        <div *ngIf='!loadingComments && !nocomments'>
+
+            <div *ngFor='let comments of commentsArray'>
+                <div class='comment'>
+                    <!-- the comment itself-->
+                    <div class='row commentuser'>
+                        <div class='col-1'>
+                            <spinner *ngIf='!pubImgLoaded' class="comment-profile-picture"></spinner>
+                            <img *ngIf='pubImgLoaded' [src]="comments.userImg" target="_blank"
+                                [routerLink]="['/profiles/', comments.profileId]" alt="Foto de Perfil"
+                                class="comment-profile-picture">
+                        </div>
+                        <div class='col-6'>
+                            <a target="_blank" [routerLink]="['/profiles/', comments.profileId]"> {{ comments.userName
+                                }} </a>
+                        </div>
+                        <div class='col-5 date'>
+                            <p> {{ comments.publishedAt.seconds * 1000 | date: 'd MMM yy HH:mm'}} </p>
+                        </div>
+                    </div>
+                    <div class='commentcontent'>
+                        <p> {{ comments.content }} </p>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- Post text with text limiting pipe -->
-        <p class="card-text">
-            {{ publication.content | slice:0:limit  }}<span [hidden]="sMDisabled" (click)="showMore()">ver mais...</span>
-        </p>
-    </div>
-    <div class="card-footer">
-        <!-- This should be commented out when interactions are implemented -->
-        <!-- <button class="btn btn-default" (click)="onLikePost(publication.postId)">
-            <img src="/assets/like-gray.svg" alt="Curtir">Curtir
-        </button>
 
-        <button class="btn btn-default">
-            <img src="/assets/comment-gray.svg" alt="Comentar">Comentar
-        </button>
+        <div *ngIf='loadingComments'>
+            <spinner></spinner>
+        </div>
+        <div *ngIf='nocomments' class='nocomments'>
+            <p> Seja o primeiro a comentar</p>
+        </div>
+        <div class='comment-upload'>
 
-        <button class="btn btn-default">
-            <img src="/assets/share-gray.svg" alt="Compartilhar">Compartilhar
-        </button> -->
-        
+            <div class='comment-upload-content'>
+                <div class='comment-upload-title'>
+                    <p> Comentar:</p>
+                </div>
+                <form #form="ngForm" (ngSubmit)="comments(form)">
+                    <textarea class='form-control comment-input' [(ngModel)]='comment' name='commentarea'
+                        placeholder="Digite seu comentário aqui..." required></textarea>
+                    <button type="submit" class="btn btn-bouman">Postar</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+<div class="modal fade" id="deletePost" tabindex="-1" role="dialog" aria-labelledby="deletePost" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deletePost">Você deseja excluir esta publicação?</h5>
+            </div>
+            <div class="modal-body">
+                Ao clicar em "Excluir", a publicação seja excluída permanentemente.
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="close" class="btn btn-bouman" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-outline-danger" (click)="onDelete()"
+                    data-dismiss="modal">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Project card -->
+<ng-template #project>
+    <project-card [profileId]="profileId" [project]="publication" [userProfile]='userProfile'
+        (projectDeleted)="emitProjecDeleted($event)">
+    </project-card>
+</ng-template>

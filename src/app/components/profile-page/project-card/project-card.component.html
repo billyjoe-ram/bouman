@@ -1,0 +1,76 @@
+<!-- Project card -->
+<div class='margindiv'>
+    <div class="card">
+        <!-- Project content and user data -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-11 col-md-11 col-lg-11">
+                    <div class="profile-details">
+                        <!-- User informations -->
+                        <img [src]="profileImg" target="_blank" [routerLink]="['/profiles/', profileId]"
+                            alt="Foto de Perfil" class="profile-picture">
+                        <div class="profile-info">
+                            <a target="_blank" [routerLink]="['/profiles/', profileId]"> {{ profileName }} </a>
+                            <span>{{ project.publishedAt.seconds * 1000 | date: 'd MMM yy'}} </span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="profileId == userProfile" class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
+                    <button id="btnDeleteProject" data-toggle="modal" data-target="#deleteProject"
+                        (click)='deleteclick()' [ngClass]="'btnDelete'" [disabled]="profileId != userProfile">
+                        <img src="../../../../assets/trash.png" alt="Delete">
+                    </button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h1> {{ project.title }} </h1>
+                </div>
+                <div class="card-body">
+                    <!-- Project text with text limiting pipe -->
+                    <div class="card-text">
+                        <div id="div-to-render"></div>
+                        <span [hidden]="project.content.length < limit" (click)="showMore()">+ ver {{ sMDisabled ?
+                            'menos' :
+                            'mais' }}</span>
+                    </div>
+                </div>
+            </div>
+            <span class="badge badge-info keywords" *ngFor="let keyword of project.keywords"> {{ keyword }} </span>
+        </div>
+        <div class="card-footer">
+            <!-- This should be commented out when interactions are implemented -->
+            <button class="btn btn-default" (click)="onLikePost(project)" id="likeButtonProject"
+                [ngClass]="hasLiked ? 'has-liked' : ''">
+                <span> {{ project.likes.length }} </span> <img src="/assets/like-gray.svg"
+                    alt="Curtir"><span>Curtir</span>
+            </button>
+            <!-- <button class="btn btn-default">
+            <img src="/assets/comment-gray.svg" alt="Comentar">Comentar
+        </button>
+
+        <button class="btn btn-default">
+            <img src="/assets/share-gray.svg" alt="Compartilhar">Compartilhar
+        </button> -->
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProject"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Você deseja excluir esta publicação?</h5>
+            </div>
+            <div class="modal-body">
+                Ao clicar em "Excluir", a publicação seja excluída permanentemente.
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="close" class="btn btn-bouman" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-outline-danger" (click)="onDelete()"
+                    data-dismiss="modal">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>

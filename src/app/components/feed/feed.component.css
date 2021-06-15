@@ -20,17 +20,48 @@ content span {
 }
 
 .card-header {
-    justify-content: space-between;
+    padding: 0;
+    justify-content: space-around;
 }
 
 .card-body {
     padding: 0;
 }
 
-.card-body .textarea {
+.card-body textarea {
     resize: none;
 }
 
 .card-footer {
     justify-content: flex-end;
+}
+
+.modal-content .modal-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+.theresnothing{
+    /* font-style: inherit; */
+    font-size: 2rem;
+    /* font-family: monospace; */
+    text-align: center;
+}
+
+spinner{
+    margin: 0;
+    padding:0;
+    align-content: center;
+}
+
+.errorDelete{
+    background-color: rgb(44, 168, 186, 0.8);
+    color: black;
+    border-radius: 3rem;
+    padding: 1%;
+    position: absolute;
+    z-index: 5;
+    text-align: center;
+    font-weight: bold;
+    width: 95%;
+    filter: drop-shadow(0px 6px 5px rgba(0, 0, 0, 0.3));
 }

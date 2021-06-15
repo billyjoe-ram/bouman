@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProjectsComponent implements OnInit {
 
   public editMode: boolean = false;
+
+  public isCompany: boolean = false;
   
   constructor(private router: Router, private route: ActivatedRoute) { }
 
@@ -23,6 +25,10 @@ export class ProjectsComponent implements OnInit {
     }
 
     this.editMode = !this.editMode
+  }
+
+  togglePage(isCompanyStatus: boolean) {
+    this.isCompany = isCompanyStatus;
   }
 
 }

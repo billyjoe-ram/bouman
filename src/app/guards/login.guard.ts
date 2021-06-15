@@ -9,20 +9,18 @@ import { UsersService} from '../services/users.service';
 })
 export class LoginGuard implements CanActivate {
 
-  constructor(private ngAuth: AuthService, private router: Router, private userService : UsersService) {}
-  userdata : {name : string, desc : string, area : string} = {name: "", desc: "", area: ""};
+  constructor(private ngAuth: AuthService, private router: Router) {}
+  
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Promise(resolve => {
-      this.ngAuth.getAuth().onAuthStateChanged(user => {
+      this.ngAuth.getAuth().onAuthStateChanged(user => {        
         if (user) {
-          this.userdata = this.userService.getCollection(user.uid)
-          if (this.userdata.desc == "" || this.userdata.desc == undefined || this.userdata.desc == null) {
-            this.router.navigate(["/config"]);
-        
-          }else{
+          if (user.emailVerified) {
             this.router.navigate(["/feed"]);
+          } else {
+            this.router.navigate(["/config"]);
           }
           
         }

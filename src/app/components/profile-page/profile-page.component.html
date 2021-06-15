@@ -5,7 +5,10 @@
     <!-- Profile card and profile contacts -->
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5 offset-md-0 offset-lg-2">
         <!-- binding properties to reuse code -->
-        <profile-card [profileId]="profileId" [userId]="userId" [userData]="userData" [editMode]="sameUser"></profile-card>
+        <profile-card [profileId]="profileId" [userId]="userId" [userData]="userData" [editMode]="sameUser"
+            (content)="selectPage($event)" [publicSize]="userPosts.length" [projsSize]="userProjects.length"
+            [edictsSize]="userEdicts.length">
+        </profile-card>
     </div>
 
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5">
@@ -16,12 +19,33 @@
 </div>
 
 <div class="row justify-content-center align-items-start">
-    <div class="col-xs-10 col-sm-8 col-md-8 col-lg-6">
+    <div class="col-xs-12 col-sm-10 col-md-6 col-lg-4">
         <!-- Showing user posts -->
         <div class="profile-content">
-            <div class="post-item" *ngFor="let post of userPosts">
-                <publication-card [profileId]="post.profileId" [publication]="post"></publication-card>
+            <div class="posts" *ngIf="!pageSelected; else project">
+                <div class="post-item" *ngFor="let post of userPosts">
+                    <publication-card [profileId]="post.profileId" [publication]="post" [userProfile]="userProfileId">
+                    </publication-card>
+                </div>
+                <div class='theresnothing' *ngIf="userPosts.length == 0">
+                    <span>{{ userData.name }} não tem uma postagem.</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #project>
+    <div class="post-item" *ngFor="let project of userProjects">
+        <project-card [profileId]="project.profileId" [project]="project" [userProfile]="userProfileId"></project-card>
+    </div>
+    <div *ngIf="userEdicts.length">
+        <div class="post-item" *ngFor="let edict of userEdicts">
+            <edict-card [edict]="edict" [profileId]="edict.companyId"></edict-card>
+        </div>
+    </div>
+    <div class='theresnothing' *ngIf="userProjects.length == 0 && userEdicts.length == 0">
+        <span>{{ userData.name }} não tem um {{ isCompany === true ? 'edital' : '' }}{{ isCompany === false
+            ? 'projeto': '' }}.</span>
+    </div>
+</ng-template>

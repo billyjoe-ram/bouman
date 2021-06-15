@@ -1,8 +1,77 @@
-.aside-content {
-    display: flex;
-    flex-direction: column;    
+editor {
+    margin-top: 1.25rem;
 }
 
-.aside-content span {
+.aside-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.aside-content strong {
     margin: 1rem 0 ;
+}
+
+.aside-content .people-list-div {
+    margin: 1rem 0;
+}
+
+.aside-content .people-list-div .list-group-item {
+    cursor: context-menu;    
+}
+
+.aside-content button.btn-add-people {
+    background-color: #09a9c2;
+    border: 1px solid #07889B;
+    color: #FFFFFF;
+}
+
+.aside-content button.btn-add-people:hover {
+    background-color: #07889B;
+}
+
+.aside-content aside {
+    padding: 2%;
+    text-align: center;
+}
+
+.aside-content .btn-outline-danger {
+    margin: 2% 0;
+}
+
+/* Changing default bootstrap background color for active item */
+.list-group .list-group-item.active {
+    border-color: #eee;
+    background: linear-gradient(90.35deg, #2ca8ba 0.31%, #18adc4 99.86%);
+}
+
+/* Resume must be a visually separated item from list */
+.list-group .list-group-item#resume {
+    margin-bottom: 1rem;
+    border-radius: inherit;
+}
+
+/* Aplying styles in the second item as a first item */
+.list-group .list-group-item:nth-child(2) {
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: inherit;
+}
+
+/* Using bootstrap color */
+.list-group .list-group-item .dropdown-item {
+    color: var(--red);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-content .modal-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.list-group-item a {
+    color: black;
+}
+
+.modal-footer{
+    justify-content: space-between;
 }

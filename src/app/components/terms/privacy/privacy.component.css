@@ -1,0 +1,19 @@
+section:first-child {
+    margin: 2rem 0;
+}
+
+section {
+    padding: 0 5rem;
+}
+
+section p {
+    text-align: justify;
+}
+
+article section {
+    padding: 0;
+}
+
+section article {
+    margin: 1rem 0;
+}

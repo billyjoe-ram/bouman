@@ -15,11 +15,13 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Promise(resolve => {
       this.ngAuth.getAuth().onAuthStateChanged(user => {
-        if (!user) {
-          this.router.navigate(["/login"]);
-        }
+        if (user) {                  
+          if (!user.emailVerified) {
+            this.ngAuth.logout();
+          }
+        }        
 
-        resolve(user ? true : false);
+        resolve(user?.emailVerified ? true : false);
       });
     });
   }

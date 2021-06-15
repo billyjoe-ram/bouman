@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Post } from 'src/app/interfaces/posts';
 import { AuthService } from 'src/app/services/auth.service';
+import { EdictsService } from 'src/app/services/edicts.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from 'src/app/services/users.service';
+import { ProjectsService } from '../../services/projects.service';
 
 @Component({
   selector: 'profile-page',
@@ -15,24 +16,43 @@ import { UsersService } from 'src/app/services/users.service';
 export class ProfilePageComponent implements OnInit {
 
   public userPosts: any[] = [];
+
+  public userProjects: any[] = [];
+
+  public userEdicts: any[] = [];
+
   public profileId: string = "";
 
+  public userProfileId!: string;
+
   public userId: string | undefined = "";
+
   public userData: any = {};
 
   public sameUser: boolean = false;
 
+  public pageSelected: number = 0;
+
+  public isCompany: boolean | undefined = undefined;
+
   private paramsSubs!: Subscription;
+
   private postsSubs!: Subscription;
+
   private userSubs!: Subscription;
+
   private profileSubs!: Subscription;
-  
+
+  private edictsSubs!: Subscription;
+
   constructor(
     private posts: PostsService,
+    private projectsService: ProjectsService,
+    private edictsService: EdictsService,
     private route: ActivatedRoute,
     private usersServices: UsersService,
     private profileService: ProfileService,
-    private auth: AuthService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -43,30 +63,92 @@ export class ProfilePageComponent implements OnInit {
     this.loadData();
   }
 
-  async loadData() {
-    const user = await this.auth.getAuth().currentUser;
+  selectPage(pageSelected: string) {
+    switch (pageSelected) {
+      case "posts":
+        this.pageSelected = 0;
+        break;
+      case "projects":
+        this.pageSelected = 1;
+        break;
+      case "edicts":
+        this.pageSelected = 1;
+        break;
+      default:
+        this.pageSelected = 0;
+        break;
+    }
+  }
 
-    this.paramsSubs = this.route.params.subscribe((params) => {
+  async loadData() {
+    const user = await this.authService.getAuth().currentUser;
+
+    this.paramsSubs = this.route.params.subscribe(async (params) => {
       this.profileId = params['profid'];
 
-      this.userSubs = this.posts.listProfilePosts(this.profileId).subscribe(posts => {
-        this.userPosts = posts;
+      const checkCompany = await this.usersServices.checkusercompanyprofile(this.profileId);
+      if (checkCompany !== undefined) {
+        this.isCompany = true;
+      } else {
+        this.isCompany = false;
+      }
+
+      // Clearing arrays on changes
+      this.userPosts = [];
+      this.userProjects = [];
+      this.userEdicts = [];
+
+      this.posts.listProfilePosts(this.profileId).then((posts) => {
+        posts.forEach(post => {
+          this.userPosts.push(post.data());
+        });
+
+        // Ordering by date
+        this.userPosts.sort((a: any, b: any) => {
+          return a.publishedAt.seconds - b.publishedAt.seconds;
+        }).reverse();
       });
 
-      this.profileSubs = this.usersServices.getProfile(user?.uid).subscribe((data : any) => {
+      this.projectsService.listProfileProjects(this.profileId).then(projects => {
+        projects.forEach(project => {
+          this.userProjects.push(project.data());
+        });
 
+        // Ordering by date
+        this.userProjects.sort((a: any, b: any) => {
+          return a.publishedAt.seconds - b.publishedAt.seconds;
+        }).reverse();
+      });
+
+      this.edictsSubs = this.edictsService.listCompanyEdicts(this.profileId).subscribe((edicts) => {
+        let i = 0;
+
+        edicts.forEach((edict) => {
+          if (edict) {
+            this.userEdicts[i] = edict;
+          }
+          i++
+        });
+
+        // Ordering by date
+        this.userEdicts.sort((a: any, b: any) => {
+          return a.createdAt.seconds - b.createdAt.seconds;
+        }).reverse();
+      });
+
+      this.profileSubs = (await this.usersServices.getProfile(user?.uid)).subscribe((data: any) => {
+        this.userProfileId = data.profileId;
         if (this.profileId == data.profileId) {
           this.sameUser = true;
         } else {
           this.sameUser = false;
         }
-        
+
       });
 
       this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((profile: any) => {
         this.userData = profile;
       });
-
     });
 
   }
@@ -86,6 +168,10 @@ export class ProfilePageComponent implements OnInit {
 
     if (this.profileSubs) {
       this.profileSubs.unsubscribe();
+    }
+
+    if(this.edictsSubs) {
+      this.edictsSubs.unsubscribe();
     }
 
   }

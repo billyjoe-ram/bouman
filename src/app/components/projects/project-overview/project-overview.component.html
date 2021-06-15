@@ -2,16 +2,27 @@
     <div class="col-md-8">
         <!-- Listing user projects -->
         <ul class="list-group">
-            <li class="list-group-item" *ngFor="let project of projects" [routerLink]="['/projects', project.docId]" style="cursor: pointer;" >
+            <li class="list-group-item" *ngFor="let project of projects" [routerLink]="['/projects', project.docId]" style="cursor: pointer;">
                 
                 <div class="project-card">
                     <div class="project-header">
                         {{ project.title }}
                     </div>
-                    <div class="project-body">
+                    <div class="project-body" #projectsList>
                     </div>
                 </div>
         
+            </li>
+            <spinner *ngIf='!loaded'></spinner>
+            <li class="list-group-item" *ngIf="!projects.length && loaded">
+                <div class="project-card">
+                    <div class="project-header">
+                        Nenhum projeto... ainda!
+                    </div>
+                    <div>
+                        Parece que você ainda não começou a desenvolver seus projetos com o Bouman. Que tal começar hoje?
+                    </div>
+                </div>
             </li>
         </ul>
     </div>

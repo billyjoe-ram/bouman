@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { DocsService } from 'src/app/services/docs.service';
 
 @Component({
@@ -7,27 +7,41 @@ import { DocsService } from 'src/app/services/docs.service';
   styleUrls: ['./project-overview.component.css']
 })
 export class ProjectOverviewComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('projectsList') private pBody!: ElementRef;
   
   public projects: any[] = [];
-  
+  public loaded: any = false;
+
   constructor(private docServ: DocsService) { }
 
   ngOnInit(): void {
+    this.loaded = false;
     this.docServ.listProjects().then(data => {
       data.forEach((query) => {
         this.projects.push(query.data());
       });
+
+      // Ordering by date
+      this.projects.sort((a: any, b: any) => {
+        return a.lastEdit.seconds - b.lastEdit.seconds;
+      }).reverse();
+    }).finally(()=>{
+      this.loaded = true;
     });
-    
   }
 
   ngAfterViewInit() {
+    // Creating constant only after it's been created
+    if (this.pBody) {
+      // Acessing element itself
+      const pBody = this.pBody.nativeElement;
 
-    const pBody = document.querySelectorAll('.project-body');
-
-    for(let index = 0; index < this.projects.length; index++) {
-      pBody[index].innerHTML = this.projects[index].content;
-    }
+      // For eacth project, append to the list
+      for (let index = 0; index < this.projects.length; index++) {
+        pBody[index].innerHTML = this.projects[index].content;
+      }
+    }    
   }
 
 }

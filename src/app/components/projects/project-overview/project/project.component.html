@@ -1,53 +1,130 @@
-<div class="row">
-    <div class="col-md-8">
+<!-- *ngIf="projectMembers.length" -->
+<div class="row" >
+    <div class="col-sm-3 col-md-3 col-lg-3 aside-content">
+        <button class="btn btn-bouman-secondary" (click)="loadProject()">Visualizar projeto</button>
+
+        <strong>Capítulos: </strong>
+
+        <div class="list-group" role="tablist" #articleStructure>
+            <div class="list-group-item" data-toggle="list" id="resume">
+                Resumo
+            </div>
+            <div class="list-group-item" data-toggle="list">
+                Introdução
+            </div>
+            <div class="list-group-item" data-toggle="list">
+                Objetivos
+            </div>
+            <div class="list-group-item" data-toggle="list">
+                Metodologia
+            </div>
+            <div class="list-group-item" data-toggle="list">
+                Resultados
+            </div>
+            <div class="list-group-item" data-toggle="list">
+                Considerações
+            </div>
+            <div class="list-group-item" data-toggle="list">
+                Referências
+            </div>
+        </div>
+        <br>        
+        <button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#deleteProject"
+        *ngIf="!newProj && isOwner">Excluir</button>
+        
+        <aside>
+            Problemas com a formatação ABNT ?<br>
+            Veja esse <a target="_blank" href="https://artigocientifico.com.br/artigo-cientifico-abnt-pronto/">site</a>
+        </aside>
+    </div>
+
+    <div class="col-sm-6 col-md-6 col-lg-6">
         <!-- Project form -->
         <form (ngSubmit)="onSubmit()" #projForm="ngForm">
-            <div class="row">
-                <!-- Project informations -->
-                <div class="form-group col-xs-8">
-                    <input type="text" class="form-control" placeholder="Nome do seu projeto" name="title"
-                        [(ngModel)]="projTitle">
-                </div>
-
-                <div class="col-xs-4">
-                    <button class="btn btn-bouman-secondary" type="submit">Salvar</button>
-                    <button class="btn btn-danger" type="button" (click)="deleteProject()"
-                        [ngStyle]="{'display': newProj ? 'none' : 'inline-block' }">Excluir projeto</button>
-                </div>
-            </div>
-
-            <!-- Text editor -->
+            <!-- Project informations -->
             <div class="form-group">
-                <editor apiKey="o3i6lurtf2tfz1lcc7x48d1kyium2fjgo3fjsgz5utdjm5hu" [init]="{
-                        height: 500,
-                        menubar: false,
-                        plugins: [
-                        'advlist autolink lists link image charmap print preview anchor',
-                        'searchreplace visualblocks code fullscreen',
-                        'insertdatetime media table paste code help wordcount'
-                        ],
-                        toolbar:
-                        'undo redo | formatselect | bold italic backcolor | \
-                        alignleft aligncenter alignright alignjustify | \
-                        bullist numlist outdent indent | removeformat | help'
-                    }" [(ngModel)]="projContent" name="content">{{ projContent }}</editor>
-                <!-- <angular-editor placeholder="Digite aqui..." [config]="editorConfig" name="content"
-                    [(ngModel)]="projContent"></angular-editor> -->
+                <div class="row">
+                    <div class="col-sm-5 col-md-6 col-lg-8">
+                        <input type="text" class="form-control" placeholder="Nome do seu projeto" name="title" required
+                            [(ngModel)]="projTitle" minlength="5">
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-3">
+                        <button style="width: 80%;" class="btn btn-outline-success" type="submit" type="submit"
+                            [disabled]="!projForm.valid">Salvar</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <!-- Text editor -->
+                        <editor apiKey="o3i6lurtf2tfz1lcc7x48d1kyium2fjgo3fjsgz5utdjm5hu" [init]="tinyConfig"
+                            [(ngModel)]="editorText" name="content" minlength="15" required>{{ editorText }}</editor>
+                    </div>
+                </div>
             </div>
         </form>
+    </div>
 
+    <div class="modal fade" id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProject"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteProject">Excluir projeto</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Você deseja mesmo excluir permanentemente o seu projeto?</p>
+                    <span>Ao concordar, você está ciente de que todos os membros não poderão mais visualizar o
+                        projeto.</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" (click)="deleteProject()">Excluir</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Navigate page and contributors -->
-    <div class="col-md-4 aside-content">
+    <div class="col-sm-3 col-md-3 col-lg-3 aside-content">
         <button class="btn btn-bouman" (click)="myProjects()">Meus projetos</button>
 
-        <span>Pessoas neste projeto: </span>
-        <div class="list-group">
-            <div class="list-group-item">
-                Você
+        <div class="people-list-div">
+            <span>Pessoas neste projeto: </span>
+            <div class="list-group dropleft">
+                <div class="list-group-item" *ngFor="let profileName of projectMembersName; let i = index;" (contextmenu)="showMenu($event, i, projectMembers[i])" >
+                    
+                    <a [routerLink]="['/profiles/', projectMembers[i]]" target="_blank">{{ profileName }}</a>
+
+                    <div [ngClass]="i !== 0 ? 'dropdown-menu' : ''" [hidden]="i === 0">
+                        <a class="dropdown-item" (click)="removeProfileFromProject(projectMembers[i])">Remover pessoa</a>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <add-people (selectedProfile)="addProfileToProject($event)" *ngIf="isOwner"></add-people>
+
+    </div>
+
+    <!-- Modal Trigger -->
+    <button type="button" class="btn btn-bouman" data-toggle="modal" data-target="#errorModal" hidden
+        #modalTrigger></button>
+    <!-- Error message -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Algo não parece certo
+                </div>
+                <div class="modal-body">
+                    Por favor, adicione pelo menos um título e um conteúdo ao seu projeto...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submit" class="btn btn-bouman" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

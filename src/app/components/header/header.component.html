@@ -15,39 +15,36 @@
 
         <!-- Links to pages -->
         <ul class="nav navbar-nav">
-            <li>
+            <li routerLinkActive="active">
                 <a routerLink="/feed">
                     <img src="/assets/home.svg" alt="Página Inicial">
                     Início
                 </a>
             </li>
-            <li>
+            <li *ngIf="isCompany === false" routerLinkActive="active">
                 <a routerLink="/projects/overview">
                     <img src="/assets/testplan.svg" alt="Seus projetos">
                     Projetos
                 </a>
             </li>
-            <!-- <li>
-                <a>
-                    <img src="/assets/people.svg" alt="Apoio">
-                    Apoio
+            <li *ngIf="isCompany === true" routerLinkActive="active">
+                <a routerLink="/edicts">
+                    <img src="/assets/edict.svg" alt="Seus projetos">
+                    Editais
                 </a>
-            </li>
-            <li>
-                <a>
-                    <img src="/assets/notification.svg" alt="Notificação">
-                    Notificações
-                </a>
-            </li> -->
+            </li>            
         </ul>
 
         <!-- Search input -->
-        <form>
+        <form #form="ngForm">
             <div class="form-group">
                 <div class="dropdown">
-                        <input type="search" class="form-control" placeholder="Procure um perfil aqui" [(ngModel)]="search" (ngModelChange)="searching()" (focus)="togglesearch()" (blur)="togglesearch()">    
-                        <div class="dropdown-content" id="search" [ngStyle]="{ 'display': search ? 'block' : 'none'}">
-                            <a href="#" *ngFor="let prof of searchresult" [routerLink]="['/profiles', prof.id]" (click)="togglesearchclick()">{{prof.name}}</a>
+                        <input type="search" class="form-control" autocomplete="off" placeholder="Pesquise aqui" [(ngModel)]="search" (ngModelChange)="searching()" (focus)="togglesearch()" (blur)="togglesearch()" name="searchParam" (keydown)="onSendSearch($event)">
+                        <div *ngIf='profileResults[0] != undefined' class="dropdown-content" id="search" [ngStyle]="{ 'display': search ? 'block' : 'none'}">
+                            <a  href="#" *ngFor="let prof of profileResults" [routerLink]="['/profiles', prof.id]" (click)="toggleSearchClick()">
+                                <img id="profile-picture" [src]="prof.picture">
+                                <span>{{prof.name}}</span>
+                            </a>
                         </div>
                 </div>
             </div>
@@ -61,8 +58,9 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li class="nav-item"><a [routerLink]="['/profiles', profileId]" (click)="onSelect('profile')" class="nav-link">Perfil</a></li>
+                    <li class="nav-item"><a [routerLink]="['/profiles', profileId]" class="nav-link">Perfil</a></li>
                     <li class="nav-item"><a routerLink="/profile-config" class="nav-link">Configurações</a></li>
+                    <li class="nav-item"><a routerLink="/support" class="nav-link">Apoio</a></li>
                     <!-- <li class="nav-item"><a class="nav-link">Suporte</a></li> -->
                     <li class="nav-item"><a routerLink="/signup" (click)='logOut()' class="nav-link">Sair</a></li>
                 </ul>

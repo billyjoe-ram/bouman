@@ -35,6 +35,21 @@ import { environment } from 'src/environments/environment.prod';
 import { registerLocaleData } from '@angular/common';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ContactComponent } from './components/profile-page/contact/contact.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { PostProjectComponent } from './components/feed/post-project/post-project.component';
+import { ProjectCardComponent } from './components/profile-page/project-card/project-card.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { LicenseComponent } from './components/terms/license/license.component';
+import { PrivacyComponent } from './components/terms/privacy/privacy.component';
+import { AccountComponent } from './components/terms/account/account.component';
+import { AddPeopleComponent } from './components/projects/project-overview/project/add-people/add-people.component';
+import { EdictsComponent } from './components/edits/edits.component';
+import { EditComponent } from './components/edits/edit/edit.component';
+import { OverviewComponent } from './components/edits/overview/overview.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { EdictCardComponent } from './components/profile-page/edict-card/edict-card.component';
+import { SearchResultsComponent } from './components/header/search-results/search-results.component';
 
 registerLocaleData(ptBR);
 
@@ -57,6 +72,20 @@ registerLocaleData(ptBR);
     ProfileConfigComponent,
     NotFoundComponent,
     ContactComponent,
+    PostProjectComponent,
+    ProjectCardComponent,
+    FaqComponent,
+    TermsComponent,
+    PrivacyComponent,
+    AccountComponent,
+    LicenseComponent,
+    AddPeopleComponent,
+    EdictsComponent,
+    EditComponent,
+    OverviewComponent,
+    SpinnerComponent,
+    EdictCardComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +97,8 @@ registerLocaleData(ptBR);
     AngularFireAuthModule,
     AngularFirestoreModule,
     HttpClientModule,
-    EditorModule
+    EditorModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [ { provide: LOCALE_ID, useValue: "pt-BR" } ],
   bootstrap: [AppComponent],

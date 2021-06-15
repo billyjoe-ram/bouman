@@ -2,7 +2,7 @@
     <!-- Profile card content with background image -->
     <div class="card-body" [ngStyle]="{ 'background-image': 'url(' + wallpImg + ')' }">
 
-        
+
         <div class="profile-card-content">
             <!-- Profile picture -->
             <img [src]="profileImg" alt="Foto de perfil" class="profile-picture img-responsive">
@@ -10,7 +10,8 @@
             <div class="changeProfile" #btnPerfil *ngIf="esconder && editbutton">
                 <label for="fotoPerfil" id="labelPerfil">
                     Clique aqui para enviar uma foto de perfil
-                    <input type="file" id="fotoPerfil" class="fotoPerfil" accept="*.jpg.png" (change)="getProfileImg($event)">
+                    <input type="file" id="fotoPerfil" class="fotoPerfil" accept="*.jpg.png"
+                        (change)="getProfileImg($event)">
                 </label>
             </div>
 
@@ -24,33 +25,35 @@
             <div class="changeWall" #btnFundo *ngIf="esconder && editbutton">
                 <label for="fotoFundo" id="labelFundo">
                     Clique aqui para enviar um papel de parede
-                    <input type="file" id="fotoFundo" class="fotoFundo" accept="*.jpg.png" (change)="getWallpImg($event)"> 
+                    <input type="file" id="fotoFundo" class="fotoFundo" accept="*.jpg.png"
+                        (change)="getWallpImg($event)">
                 </label>
             </div>
 
             <!-- Edit or save picture -->
             <div id="btnFotos" *ngIf="editbutton; else followDiv">
                 <div *ngIf="!esconder; else elseBloco">
-                    <img role="button" (click)="esconder = !esconder"  id="editPen" src="../../../../assets/pen.svg">
+                    <img role="button" (click)="esconder = !esconder" id="editPen" src="../../../../assets/pen.svg">
                 </div>
                 <ng-template #elseBloco>
-                    <button class="btn btn-bouman" type="button" (click)="saveFotos()">Salvar</button>
+                    <button class="btn btn-bouman" type="button"
+                        (click)="saveFotos();esconder = !esconder" >Salvar</button>
                 </ng-template>
             </div>
 
             <!-- Follow or not div -->
             <ng-template #followDiv>
                 <div id="followProfile">
-                    <button class="btn btn-bouman" type="button" (click)="onFollow()" #btnFollow>Seguir</button>
+                    <button class="btn btn-bouman" hidden="true" type="button" (click)="onFollow()"
+                        #btnFollow>Seguir</button>
                 </div>
-            </ng-template>            
+            </ng-template>
         </div>
 
     </div>
     <div class="card-footer">
-        <!-- This should be commented out when you get the users activities to work -->
-        <!-- <p> <span>Artigos</span> 12 <p>
-        <p> <span>Contribuições </span> 347</p>
-        <p> <span> Outros Projetos </span> 3 </p> -->
+        <p (click)="listPosts()" class="clickable"> <span> Postagens </span> {{ publicSize }}
+        <p>
+        <p (click)="listProjects()" class="clickable"> <span> {{ isCompany === true ? 'Editais' : '' }} {{ isCompany === false ? 'Projetos': '' }} </span> {{ isCompany === true ? edictsSize : '' }} {{ isCompany === false ? projsSize : '' }} </p>
     </div>
 </div>
