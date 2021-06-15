@@ -58,6 +58,11 @@
 
 }
 
+.commentuser a,.commentuser a:link {
+    color: black; 
+
+}
+
 .card .card-body .card-text .publication-picture {
     width: 280px;
     height: 165px;
