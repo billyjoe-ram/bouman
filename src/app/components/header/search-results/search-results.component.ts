@@ -1,5 +1,6 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ProjectContent } from 'src/app/interfaces/projectContent';
 import { AuthService } from 'src/app/services/auth.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -10,7 +11,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.css']
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent implements OnInit, OnDestroy {
 
   @ViewChild('tabList') tabList!: ElementRef;
   
@@ -26,6 +27,8 @@ export class SearchResultsComponent implements OnInit {
 
   public selectedSect: string = "Projetos";
 
+  public routeSubs!: Subscription;
+
   @Output() public pageLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
@@ -36,17 +39,24 @@ export class SearchResultsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const routeParams = this.route.snapshot.queryParams["search"];
+    this.routeSubs = this.route.queryParams.subscribe((qParams) => {
+      const queryParams = qParams["search"];
 
-    this.loadProfile().then(() => {
-      this.addEvents();
+      console.log(queryParams)
+
+      this.searchService.attrSearch(queryParams);
       
-      this.searchService.searchProjects().then(() => {
-        this.projectsResults = this.searchService.searchResult;
+      this.loadProfile().then(() => {
+        this.addEvents();
+        
+        this.searchService.searchProjects().then(() => {
+          this.projectsResults = this.searchService.searchResult;
+        });
+  
+        this.profilesResults = this.searchService.profileResults;
       });
-
-      this.profilesResults = this.searchService.profileResults;
     });
+    // ["search"]    
   }
 
   loadProjectText(result: ProjectContent) {
@@ -106,6 +116,12 @@ export class SearchResultsComponent implements OnInit {
         });
       }
 
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.routeSubs) {
+      this.routeSubs.unsubscribe();
     }
   }
 
