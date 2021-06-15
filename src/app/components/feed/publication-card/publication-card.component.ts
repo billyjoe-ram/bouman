@@ -211,8 +211,8 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
   }
 
   deleteclick(){
-  document.getElementById('deleteProject')?.setAttribute('data-project', this.publication.postId);
-  document.getElementById('deleteProject')?.setAttribute('data-profileId', this.publication.profileId);
+  document.getElementById('deletePost')?.setAttribute('data-post', this.publication.postId);
+  document.getElementById('deletePost')?.setAttribute('data-profileId', this.publication.profileId);
 }
 
   async getCommentsLength(post: Post) {
