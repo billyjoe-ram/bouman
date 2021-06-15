@@ -39,6 +39,50 @@ export class PostsService {
     return posts;
   }
 
+  async addComment(userProfile: any, data: string, publication: Post) {
+    let newCom: any;
+    try {
+      //creating the comment itself
+      newCom = await this.postsCollection.doc(publication.profileId).collection('Posts').doc(publication.postId).collection('Comments').add(
+        {
+          profileId: userProfile,
+          content: data,
+          publishedAt: new Date()
+        }
+      );
+      this.postsCollection.doc(publication.profileId).collection('Posts').doc(publication.postId).collection('Comments').doc(newCom.id).update({
+        commentId: newCom.id
+      })
+    }
+    catch (error) {
+      //handling errors from the add function
+      if (newCom) {
+        //deletando caso ocorra um erro e ele crie o comentário, já que deu erro ele não deveria continuar lá, então eu deleto para que não de erro no HTML quotation.
+
+        try {
+          this.postsCollection.doc(publication.profileId).collection('Posts').doc(publication.postId).collection('Comments').doc(newCom.id).delete();
+        } catch (error) {
+          //handling errors from the delete function
+          console.error(error);
+        }
+      }
+      console.error(error);
+    }
+  }
+
+  async getEachComment(commentId: any, post: Post) {
+    return await this.postsCollection.doc(post.profileId).collection('Posts').doc(post.postId).collection('Comments').doc(commentId).ref.get();
+  }
+
+  async listsAllCommentsIds(pub: Post) {
+
+    try {
+      return (await this.postsCollection.doc(pub.profileId).collection('Posts').doc(pub.postId).collection('Comments').ref.get()).docs;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async addPost(profileId: string | undefined, content: string) {
     // Going inside the profile posts
     const userPosts = this.postsCollection.doc(profileId).collection('Posts');
