@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter ,Input, OnInit, Output, ViewChild, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PostedProject } from 'src/app/interfaces/postedProject';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -18,6 +18,8 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
 
   @Input('userProfile') public userProfile: string | undefined = "";
 
+  @Output('projectDeleted') projectDeleted: EventEmitter<string> = new EventEmitter<string>();
+
   @ViewChild('projectContent') public projectContent!: ElementRef;
 
   public button!: any;
@@ -35,6 +37,8 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   private profileSubs!: Subscription;
 
   private imageSubs!: Subscription;
+
+  public btnDeleteProject: any;
   
   constructor(private userService: UsersService,
     private profileService: ProfileService,
@@ -60,6 +64,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void{
     this.gettingId();
+    this.getProjectId();
   }
 
   showMore() {
@@ -114,8 +119,32 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     this.imageSubs.unsubscribe();
   }
 
-  onDelete(){
+  deleteclick(post:any){
+    document.getElementById('deleteProject')?.setAttribute('data-project', this.project.postId);
+    document.getElementById('deleteProject')?.setAttribute('data-profileId', this.project.profileId);
+  }
 
+  getProjectId(){
+    const btnDelete = <HTMLInputElement> document.getElementById('btnDelete');
+    if(btnDelete){
+      this.btnDeleteProject = btnDelete.setAttribute('id', 'delete' + this.project.postId);
+    }
+  }
+
+  async onDelete(){
+    try{
+      const delprojectid = document.getElementById('deleteProject')?.getAttribute('data-project');
+      const delprofileid = document.getElementById('deleteProject')?.getAttribute('data-profileId');
+      if (delprofileid != null && delprojectid != null){
+      await this.projectsService.deleteProject(delprofileid, delprojectid);
+      this.projectDeleted.emit(delprojectid);
+    }
+    } catch (error){
+      console.error(error);
+    } finally {
+      let close = document.getElementById('close');
+      close?.click();
+    }
   }
 
 }

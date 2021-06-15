@@ -209,3 +209,7 @@ button.btn-bouman-modal{
 button.btn-modal-form:hover{
     background: #DF660F;
 }
+.btnDelete{
+    background-color: transparent;
+    border: none;
+}

@@ -20,6 +20,12 @@
                         alt="Delete">
                 </button>
             </div>
+            <div class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
+                <button id="btnDeleteProject" data-toggle="modal" data-target="#deleteProject" (click)='deleteclick(project)'
+                [ngClass]="'btnDelete'">
+                    <img src="../../../../assets/trash.png" alt="Delete">
+                </button>
+            </div>
         </div>
         <div class="card">
             <div class="card-header">

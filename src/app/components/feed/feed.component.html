@@ -11,7 +11,8 @@
                     <div class="card">
                         <div class="card-header">
                             <post-project [projects]="userProjects" [profileId]="profileId"
-                                (projectPosted)="reloadData($event)" *ngIf="isCompany === false"></post-project>
+                            *ngIf="isCompany === false" (projectPosted)="reloadData($event)" (projectDeleted)="updateDataProject($event)">
+                        </post-project>
                         </div>
 
                         <div class="card-body">

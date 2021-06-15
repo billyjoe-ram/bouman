@@ -15,9 +15,8 @@
                 </div>
 
                 <div class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
-                    <button id="clear-btn">
-                        <img src="../../../../assets/trash.png" id="btnDelete" data-toggle="modal"
-                        data-target="#deletePost" alt="Delete">
+                    <button id="btnDelete" data-toggle="modal" data-target="#deletePost" [ngClass]="'btnDelete'">
+                        <img src="../../../../assets/trash.png" alt="Delete">
                     </button>
                 </div>
             </div>

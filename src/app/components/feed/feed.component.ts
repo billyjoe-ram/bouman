@@ -149,6 +149,12 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateDataProject(projectDeleted: string){
+    this.feedPosts = this.feedPosts.filter((project) => {
+      return project.data.postId != projectDeleted;
+    });
+  }
+
   updateDataPost(postDeleted: string){
     this.feedPosts = this.feedPosts.filter((post) => {
       console.log('updateDataPost');
