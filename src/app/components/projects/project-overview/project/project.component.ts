@@ -198,6 +198,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
         this.projForm.setValue({'title': project.data()?.title, 'content': this.projContent });
 
         this.loadProjectContent();
+      }).catch((error) => {
+        this.router.navigate(["/projects/overview"]);
       });
 
       // After loading, save a copy to compare it later to see if content changed;
@@ -260,7 +262,6 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   private loadProjectMembers() {
-    console.log("Loading project members");
     // For each profile / index
     this.projectMembers.forEach((profile, index) => {
       this.profileService.getProfilePromise(profile).then((profile: any) => {

@@ -34,6 +34,10 @@ editor {
     text-align: center;
 }
 
+.aside-content .btn-outline-danger {
+    margin: 2% 0;
+}
+
 /* Changing default bootstrap background color for active item */
 .list-group .list-group-item.active {
     border-color: #eee;
