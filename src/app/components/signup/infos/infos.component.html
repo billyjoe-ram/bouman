@@ -47,7 +47,7 @@
 
                     <label for="cnpj">CNPJ</label>
                     <input type="text" name="cnpj" id="cnpj" placeholder="Ex.: 11.222.333/4444-55" minlength='14'
-                        ngModel required #cnpj="ngModel" data-js="cnpj" mask="00.000.000/0000-00">
+                        ngModel required #cnpj="ngModel" data-js="cnpj">
                     <p *ngIf="!cnpj.valid && cnpj.touched" class="help-invalid">Por favor, insira um CNPJ
                         válido.</p>
 

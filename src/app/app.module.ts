@@ -98,7 +98,7 @@ registerLocaleData(ptBR);
     AngularFirestoreModule,
     HttpClientModule,
     EditorModule,
-    NgxMaskModule.forRoot(),
+    // NgxMaskModule.forRoot(),
   ],
   providers: [ { provide: LOCALE_ID, useValue: "pt-BR" } ],
   bootstrap: [AppComponent],
