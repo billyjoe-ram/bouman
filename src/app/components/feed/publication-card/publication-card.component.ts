@@ -53,6 +53,8 @@ export class PublicationCardComponent implements OnInit {
 
   public limit: number = 286;
 
+  public hasLiked: boolean = false;
+
   private userImage !: Subscription;
   
   public btnDeletePost: any;
@@ -70,6 +72,12 @@ export class PublicationCardComponent implements OnInit {
     this.getCommentsLength(this.publication);
     if (this.publication.content.length < this.limit) {
       this.sMDisabled = true;
+    }
+    
+    if (this.publication.likes.includes(this.userProfile)) {
+      this.hasLiked = true;
+    } else {
+      this.hasLiked = false;
     }
 
     this.profileSubs = this.profile.getProfile(this.profileId).subscribe((collec: any) => {
@@ -188,18 +196,19 @@ export class PublicationCardComponent implements OnInit {
   }
 
   async onLikePost(post: Post) {
+    const oldLikesQtd = this.publication.likes.length;
     const button = <HTMLInputElement>document.getElementById("likeButtonPost");
-    button.disabled = true;
+    // button.disabled = true;
     try {
       await this.post.likePost(post, this.userProfile);
       this.publication = await this.post.getSinglePost(post);
+      this.hasLiked = !this.hasLiked;
       button.disabled = false;
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err);
+      this.hasLiked = !this.hasLiked;
       button.disabled = false;
     }
-
   }
 
   emitProjecDeleted(project: string) {
