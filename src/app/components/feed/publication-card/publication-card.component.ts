@@ -222,6 +222,8 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
         this.commentOnLoad = true;
         if (form.valid && this.comment.length <= this.limit && this.comment.trim().length) {
           await this.post.addComment(this.userProfile, this.comment, this.publication);
+
+          this.reloadCmments();
         }
         else {
           //catch de algum erro.
@@ -231,6 +233,67 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
     }
     catch (error) {
       console.error(error);
+    }
+  }
+  
+  reloadCmments() {
+    if (this.loadingComments == false) {
+        this.loadingComments = true;
+        if (this.userImage) {
+          this.pubImgLoaded = false;
+          this.userImage.unsubscribe();
+        }
+        try {
+          this.nocomments = false;
+          this.post.listsAllCommentsIds(this.publication).then((res) => {
+            const idToGet = res;
+
+            if (idToGet.length == 0) {
+              this.loadingComments = false;
+              this.nocomments = true;
+            }
+            else {
+              this.getCommentsLength(this.publication);
+              idToGet.forEach((element: any, index: any) => {
+
+                this.post.getEachComment(element.id, this.publication);
+
+                this.post.getEachComment(element.id, this.publication).then((res: any) => {
+
+                  this.commentsArray[index] = res.data();
+
+                  this.profile.getProfilePromise(this.commentsArray[index].profileId).then((res: any) => {
+
+                    const tempData: any = res.data();
+
+                    this.commentsArray[index].userName = tempData.name;
+
+                    this.userImage = this.user.getProfilePicture(this.commentsArray[index].profileId).subscribe((res: any) => {
+
+                      this.commentsArray[index].userImg = res;
+                      
+                      this.pubImgLoaded = true;
+
+                    });
+                  }).catch((err) => {
+                    console.error(err)
+                    this.loadingComments = false;
+                  }).finally(() => {
+                    this.loadingComments = false;
+                  });
+                }).catch((err) => {
+                  console.error(err);
+                  this.loadingComments = false;
+                });
+              });
+            }
+          }).catch((err) => {
+            console.error(err)
+            this.loadingComments = false;
+          });
+        } catch (error) {
+          console.error(error);
+        }
     }
   }
 
