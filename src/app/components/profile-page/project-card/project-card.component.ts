@@ -114,4 +114,8 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     this.imageSubs.unsubscribe();
   }
 
+  onDelete(){
+
+  }
+
 }

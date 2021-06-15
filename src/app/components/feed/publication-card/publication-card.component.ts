@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, AfterViewInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Post } from 'src/app/interfaces/posts';
 import { PostsService } from 'src/app/services/posts.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -20,12 +21,15 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   @Input('userProfile') public userProfile!: string | undefined;
 
+  @Output('postDeleted') postDeleted: EventEmitter<string> = new EventEmitter<string>();
+
+
   public postComments: any = [];
 
-  public commentsLength :any = [];
+  public commentsLength: any = [];
 
   public pubImgLoaded: any = false;
-  
+
   public commentOnLoad: any = false;
 
   public commentsArray: any = [];
@@ -46,7 +50,9 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   public sMDisabled: boolean = false;
 
-  public nocomments: any  = false;
+  public nocomments: any = false;
+
+  public btnDeletePost: any;
 
   public limit: number = 286;
 
@@ -58,7 +64,8 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   constructor(private user: UsersService,
     private profile: ProfileService,
-    private post: PostsService) { }
+    private post: PostsService,
+    private store: AngularFirestore) { }
 
   ngOnInit(): void {
     this.getCommentsLength(this.publication);
@@ -79,13 +86,36 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.gettingId();
+    this.getPostId();
   }
 
+  async onDelete() {
+
+    try {
+      await this.post.deletePost(this.profileId, this.publication.postId);
+      this.postDeleted.emit(this.publication.postId);
+      console.log('onDelete:');
+      console.log(this.publication.postId, this.profileId);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      let close = document.getElementById('close');
+      close?.click();
+    }
+  }
 
   showMore() {
     this.limit = this.publication.content.length;
     this.sMDisabled = !this.sMDisabled;
   }
+
+  getPostId() {
+    const btnDelete = <HTMLInputElement>document.getElementById('btnDelete');
+    if (btnDelete) {
+      this.btnDeletePost = btnDelete.setAttribute('id', 'delete' + this.publication.postId);
+    }
+  }
+
 
   async btncomments() {
     //carrega os comentários e faz a troca do btn booleano.
@@ -103,48 +133,48 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
           this.post.listsAllCommentsIds(this.publication).then((res) => {
             const idToGet = res;
 
-            if (idToGet.length == 0){
-                this.loadingComments = false;
-                this.nocomments = true;
-                console.log(this.nocomments)
+            if (idToGet.length == 0) {
+              this.loadingComments = false;
+              this.nocomments = true;
+              console.log(this.nocomments)
             }
-            else{
-            this.getCommentsLength(this.publication);
-            idToGet.forEach((element: any, index: any) => {
+            else {
+              this.getCommentsLength(this.publication);
+              idToGet.forEach((element: any, index: any) => {
 
-              this.post.getEachComment(element.id, this.publication);
+                this.post.getEachComment(element.id, this.publication);
 
-              this.post.getEachComment(element.id, this.publication).then((res: any) => {
+                this.post.getEachComment(element.id, this.publication).then((res: any) => {
 
-                this.commentsArray[index] = res.data();
+                  this.commentsArray[index] = res.data();
 
-                this.profile.getProfilePromise(this.commentsArray[index].profileId).then((res: any) => {
+                  this.profile.getProfilePromise(this.commentsArray[index].profileId).then((res: any) => {
 
-                  const tempData: any = res.data();
+                    const tempData: any = res.data();
 
-                  this.commentsArray[index].userName = tempData.name;
+                    this.commentsArray[index].userName = tempData.name;
 
-                  this.userImage = this.user.getProfilePicture(this.commentsArray[index].profileId).subscribe((res: any) => {
+                    this.userImage = this.user.getProfilePicture(this.commentsArray[index].profileId).subscribe((res: any) => {
 
-                    this.commentsArray[index].userImg = res;
+                      this.commentsArray[index].userImg = res;
 
-                    console.log(this.loadingComments)
-                    this.pubImgLoaded = true;
+                      console.log(this.loadingComments)
+                      this.pubImgLoaded = true;
 
+                    });
+                  }).catch((err) => {
+                    console.error(err)
+                    this.loadingComments = false;
+                  }).finally(() => {
+                    this.loadingComments = false;
                   });
-                }).catch((err)=>{
-                  console.error(err)
-                  this.loadingComments = false;
-                }).finally(()=>{
+                }).catch((err) => {
+                  console.error(err);
                   this.loadingComments = false;
                 });
-              }).catch((err)=>{
-                console.error(err);                
-                this.loadingComments = false;
               });
-            });
             }
-          }).catch((err)=>{
+          }).catch((err) => {
             console.error(err)
             this.loadingComments = false;
           });
@@ -159,7 +189,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async getCommentsLength(post:Post){
+  async getCommentsLength(post: Post) {
     this.commentsLength = await this.post.listsAllCommentsIds(post);
   }
 
