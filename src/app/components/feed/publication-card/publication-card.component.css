@@ -92,6 +92,15 @@
     color: white;
 }
 
+.card .card-footer button.has-liked {
+    background-color: white;    
+}
+
+.card-footer button.has-liked span {
+    color: #FA902E;
+    font-weight: bold;
+}
+
 .card .card-footer img {
     margin: 0 1rem;
 }
