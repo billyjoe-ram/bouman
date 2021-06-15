@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ProjectContent } from 'src/app/interfaces/projectContent';
 import { AuthService } from 'src/app/services/auth.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -120,7 +121,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.routeSubs) {
-      this.routeSUbs.unsubscribe();
+      this.routeSubs.unsubscribe();
     }
   }
 
