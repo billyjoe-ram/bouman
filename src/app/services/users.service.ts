@@ -57,29 +57,11 @@ export class UsersService {
     return check;
   }
 
-  async findUserCompany(profileId: string | undefined) {
-    let collectionRef = this.store.collection('Users').ref;
-
-    const profileRef = await collectionRef.where("profileId", "==", profileId).get();
-
-    let profileDoc = "";
-    
-    const docs = profileRef.docs;
-
-    if (!docs.length) {
-      profileDoc = 'Companies';
-    } else {
-      profileDoc = 'Users';
-    }
-
-    return profileDoc;
-  }
-
   async checkusercompanyprofile(id: string | undefined) {
     let check = this.store.collection('Profiles').doc(id).ref.get().then((data: any) => {
-      let company = data.data();
-      if (company.cnpj != undefined || company.cnpj != null) {
-        return company.cnpj;
+      let teste = data.data();
+      if (teste.cnpj != undefined || teste.cnpj != null) {
+        return teste.cnpj
       }
       else {
         return undefined;

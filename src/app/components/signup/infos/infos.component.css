@@ -139,30 +139,23 @@
 }
 .button{
   padding: 5px 10px 5px 10px;
-  border-style:none;
-  background: none;
+  background: transparent;
   color:#d65900;
-  outline-width:1px;
-  outline-color:#df660f;
-  outline-style:solid;
+  border-color:#df660f;
+  border-width: 1px 1px 0 1px;
+  border-radius: 5px 5px 0 0;
 }
+
 .button:hover{
   outline-width:2px;
-  color:#ffae74;
+  background-color:#ffae74;
+  color: black;
   outline-color:#fd9a53;
 }
 
-.button:focus{
-  outline-style:solid;
-  outline-width:1px;
-  outline-color:#ff852e;
-}
 .btnselected{
   padding: 5px 10px 5px 10px;
   border-style:none;
   background:#ff6a00;
   color:aliceblue;
-  outline-width:1px;
-  outline-color:#ff852e;
-  outline-style:solid;
 }

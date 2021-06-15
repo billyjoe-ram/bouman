@@ -12,14 +12,10 @@
                 Seus projetos
             </div>
             <div class="modal-body">
-                <spinner *ngIf='!loaded'></spinner>
-                <div class="list-group" role="tablist" *ngIf='loaded'>                    
+                <div class="list-group" role="tablist">
                     <div class="list-group-item" data-toggle="list" *ngFor="let project of userProjects"
                         (click)="selectProject(project)">
                         {{ project.title }}
-                    </div>
-                    <div class='list-group' role='tablist' *ngIf='loaded && !userProjects.length'>
-                        <span> Você não tem nenhum projeto</span>
                     </div>
                 </div>
             </div>

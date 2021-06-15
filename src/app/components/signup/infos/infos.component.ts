@@ -74,6 +74,8 @@ export class InfosComponent implements OnInit {
             this.router.navigate(["/config"]);
 
             this.form.reset();
+
+            console.log("Vou cadastrar uma pessoa!");
           } catch (error) {
             switch (error.code) {
               case 'auth/network-request-failed':

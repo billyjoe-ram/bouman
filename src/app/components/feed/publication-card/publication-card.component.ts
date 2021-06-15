@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/interfaces/posts';
 import { PostsService } from 'src/app/services/posts.service';
@@ -10,7 +11,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './publication-card.component.html',
   styleUrls: ['./publication-card.component.css']
 })
-export class PublicationCardComponent implements OnInit, AfterViewInit {
+export class PublicationCardComponent implements OnInit {
 
   @Input('pubType') public pubType: string = "post";
 
@@ -20,7 +21,9 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   @Input('userProfile') public userProfile!: string | undefined;
 
-  public postComments: any = [];
+  @Output('postDeleted') postDeleted: EventEmitter<string> = new EventEmitter<string>();
+
+  @Output('projectDeleted') projectDeleted: EventEmitter<string> = new EventEmitter<string>();
 
   public commentsLength :any = [];
 
@@ -50,7 +53,9 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   public limit: number = 286;
 
-  public userImage !: Subscription;
+  private userImage !: Subscription;
+  
+  public btnDeletePost: any;
 
   private profileSubs!: Subscription;
 
@@ -58,7 +63,8 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
 
   constructor(private user: UsersService,
     private profile: ProfileService,
-    private post: PostsService) { }
+    private post: PostsService,
+    private store: AngularFirestore) { }
 
   ngOnInit(): void {
     this.getCommentsLength(this.publication);
@@ -78,9 +84,8 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.gettingId();
+    this.getPostId();
   }
-
 
   showMore() {
     this.limit = this.publication.content.length;
@@ -183,28 +188,76 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
   }
 
   async onLikePost(post: Post) {
-    this.button.disabled = true;
+    const button = <HTMLInputElement>document.getElementById("likeButtonPost");
+    button.disabled = true;
     try {
       await this.post.likePost(post, this.userProfile);
       this.publication = await this.post.getSinglePost(post);
-      this.button.disabled = false;
+      button.disabled = false;
     }
     catch (err) {
       console.error(err);
-      this.button.disabled = false;
+      button.disabled = false;
     }
 
-
   }
+
+  emitProjecDeleted(project: string) {
+    this.projectDeleted.emit(project);
+  }
+
   gettingId() {
     this.button = <HTMLInputElement>document.getElementById("likeButtonPost");
     this.button?.setAttribute('id', this.publication.postId);
   }
 
   ngOnDestroy() {
-    this.profileSubs.unsubscribe();
+    if (this.profileSubs) {
+      this.profileSubs.unsubscribe();
+    }
 
-    this.imageSubs.unsubscribe();
+    if (this.imageSubs) {
+      this.imageSubs.unsubscribe();
+    }
+
+    if (this.userImage) {
+      this.userImage.unsubscribe();
+    }
+    
+  }
+
+  deleteclick(post: any) {
+    document.getElementById('deletePost')?.setAttribute('data-post', this.publication.postId);
+    document.getElementById('deletePost')?.setAttribute('data-profileId', this.publication.profileId);
+  }
+
+  getPostId() {
+    const btnDelete = <HTMLInputElement>document.getElementById('btnDelete');
+    if (btnDelete) {
+      this.btnDeletePost = btnDelete.setAttribute('id', 'delete' + this.publication.postId);
+    }
+  }
+
+  async onDelete() {
+    // If the user is the user, then he can delete it
+    const delpostid = document.getElementById('deletePost')?.getAttribute('data-post');
+    const delprofileid = document.getElementById('deletePost')?.getAttribute('data-profileId');
+    
+    if (delprofileid == this.userProfile) {
+      try {
+        console.log(delpostid)
+        console.log(delprofileid)
+        if (delprofileid != null && delpostid != null) {
+          await this.post.deletePost(delprofileid, delpostid);
+          this.postDeleted.emit(delpostid);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        let close = document.getElementById('close');
+        close?.click();
+      }
+    }
   }
 
 }
