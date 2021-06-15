@@ -36,10 +36,10 @@
         </div>
         <span class="badge badge-info keywords" *ngFor="let keyword of project.keywords"> {{ keyword }} </span>
     </div>
-    <div class="card-footer" *ngIf='profileId != userProfile'>
+    <div class="card-footer">
         <!-- This should be commented out when interactions are implemented -->
-        <button class="btn btn-default" (click)="onLikePost(project)" id="likeButtonProject">
-            <span> {{ project.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir">Curtir
+        <button class="btn btn-default" (click)="onLikePost(project)" id="likeButtonProject" [ngClass]="hasLiked ? 'has-liked' : ''">
+            <span> {{ project.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir"><span>Curtir</span>
         </button>
         <!-- <button class="btn btn-default">
             <img src="/assets/comment-gray.svg" alt="Comentar">Comentar
