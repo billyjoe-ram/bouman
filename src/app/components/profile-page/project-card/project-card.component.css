@@ -1,8 +1,12 @@
-. .card-body .card {
+.card-body .card {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1));
     margin-bottom: 5vh;
 
     border: none;
+}
+
+.card {
+    margin-bottom: 5vh;
 }
 
 .card .profile-details {
