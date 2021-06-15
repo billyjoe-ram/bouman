@@ -27,13 +27,17 @@
                 Referências
             </div>
         </div>
+        <br>
         <aside>
+        <button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#deleteProject"
+        *ngIf="!newProj && isOwner">Excluir</button>
+
             Problemas com a formatação ABNT ?<br>
             Veja esse <a target="_blank" href="https://artigocientifico.com.br/artigo-cientifico-abnt-pronto/">site</a>
         </aside>
     </div>
 
-    <div class="col-sm-6 col-md-6 col-lg-6">
+    <div class="col-sm-6 col-md-7 col-lg-9">
         <!-- Project form -->
         <form (ngSubmit)="onSubmit()" #projForm="ngForm">
             <!-- Project informations -->
@@ -43,11 +47,9 @@
                         <input type="text" class="form-control" placeholder="Nome do seu projeto" name="title" required
                             [(ngModel)]="projTitle" minlength="5">
                     </div>
-                    <div class="col-sm-7 col-md-6 col-lg-4">
-                        <button class="btn btn-outline-success" type="submit"
+                    <div class="col-sm-6 col-md-5 col-lg-3">
+                        <button style="width: 80%;" class="btn btn-outline-success" type="submit" type="submit"
                             [disabled]="!projForm.valid">Salvar</button>
-                        <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteProject"
-                            *ngIf="!newProj && isOwner">Excluir</button>
                     </div>
                 </div>
 
