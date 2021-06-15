@@ -44,8 +44,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     this.routeSubs = this.route.queryParams.subscribe((qParams) => {
       const queryParams = qParams["search"];
 
-      console.log(queryParams)
-
       this.searchService.attrSearch(queryParams);
       
       this.loadProfile().then(() => {
@@ -58,8 +56,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         this.searchService.searchProjects().then(() => {
           this.projectsResults = this.searchService.searchResult;
         });
-  
-        // this.profilesResults = this.searchService.profileResults;
       });
     });
   }

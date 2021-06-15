@@ -155,7 +155,6 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
             if (idToGet.length == 0) {
               this.loadingComments = false;
               this.nocomments = true;
-              console.log(this.nocomments)
             }
             else {
               this.getCommentsLength(this.publication);
@@ -176,8 +175,7 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
                     this.userImage = this.user.getProfilePicture(this.commentsArray[index].profileId).subscribe((res: any) => {
 
                       this.commentsArray[index].userImg = res;
-
-                      console.log(this.loadingComments)
+                      
                       this.pubImgLoaded = true;
 
                     });
@@ -250,25 +248,6 @@ export class PublicationCardComponent implements OnInit, AfterViewInit {
       this.button.disabled = false;
     }
   }
-
-  /*
-   async onLikePost(post: Post) {
-const oldLikesQtd = this.publication.likes.length;
-const button = <HTMLInputElement>document.getElementById("likeButtonPost");
-// button.disabled = true;
-try {
-  await this.post.likePost(post, this.userProfile);
-  this.publication = await this.post.getSinglePost(post);
-  this.hasLiked = !this.hasLiked;
-  button.disabled = false;
-} catch (err) {
-  console.error(err);
-  this.hasLiked = !this.hasLiked;
-  button.disabled = false;
-}
-}
-  */
-
 
   gettingId() {
     this.button = <HTMLInputElement>document.getElementById("likeButtonPost");
