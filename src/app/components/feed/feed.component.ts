@@ -146,8 +146,6 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   updateDataPost(postDeleted: string){
-    console.log("About to delete postDeleted ", postDeleted);
-
     this.feedPosts = this.feedPosts.filter((post) => {
       return post.data.postId != postDeleted;
     });
