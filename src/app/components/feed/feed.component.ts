@@ -34,6 +34,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   public errorMsg: string = "";
 
+  public errorDelete: string = "";
+
   public isCompany: boolean | null = null;
 
   private userSubs!: Subscription;
@@ -150,16 +152,36 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   updateDataProject(projectDeleted: string){
-    this.feedPosts = this.feedPosts.filter((project) => {
-      return project.data.projectId != projectDeleted;
-    });
+    if(projectDeleted != "undefined"){
+      this.feedPosts = this.feedPosts.filter((project) => {
+        return project.data.projectId != projectDeleted;
+      });
+    } 
+    else{
+      this.errorDelete = "Ops, ocorreu um erro. Por favor, recarregue a página e tente novamente.";
+
+      setTimeout(() => {
+        this.errorDelete = "";
+      }, 5000);
+    }
+
     this.reloadData(true);
   }
 
-  updateDataPost(postDeleted: string){
-    this.feedPosts = this.feedPosts.filter((post) => {
-      return post.data.postId != postDeleted;
-    });
+  updateDataPost(postDeleted: string) {
+    if (postDeleted != "undefined") {
+      this.feedPosts = this.feedPosts.filter((post) => {
+        return post.data.postId != postDeleted;
+      });
+    }
+    else {
+      this.errorDelete = "Ops, ocorreu um erro. Por favor, recarregue a página e tente novamente.";
+
+      setTimeout(() => {
+        this.errorDelete = "";
+      }, 7000);
+    }
+
     this.reloadData(true);
   }
 
