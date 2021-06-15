@@ -118,3 +118,11 @@ button.btn-bouman-modal{
 button.btn-modal-form:hover{
     background: #DF660F;
 }
+.card .card-footer button.has-liked {
+    background-color: white;    
+}
+
+.card-footer button.has-liked span {
+    color: #FA902E;
+    font-weight: bold;
+}

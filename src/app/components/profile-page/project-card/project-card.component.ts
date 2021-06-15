@@ -32,6 +32,8 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
 
   public sMDisabled: boolean = false;
 
+  public hasLiked: boolean = false;
+
   public limit: number = 286;
 
   private profileSubs!: Subscription;
@@ -47,6 +49,12 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     if (this.project.content.length < this.limit) {
       this.sMDisabled = true;
+    }
+
+    if (this.project.likes.includes(this.userProfile)) {
+      this.hasLiked = true;
+    } else {
+      this.hasLiked = false;
     }
 
     this.profileSubs = this.profileService.getProfile(this.profileId).subscribe((collec: any) => {
@@ -100,10 +108,12 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     try{
     await this.projectsService.likeProject(project, this.userProfile);
     this.project = await this.projectsService.getSingleProject(project);
+    this.hasLiked = !this.hasLiked;
     this.button.disabled = false;
     }
     catch(err){
       console.log(err);
+      this.hasLiked = !this.hasLiked;
       this.button.disabled = false;
     }
   }
