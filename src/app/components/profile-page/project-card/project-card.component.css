@@ -4,6 +4,11 @@
 
     border: none;
 }
+.card {
+    margin-bottom: 5vh;
+
+    border: none; 
+}
 
 .card .profile-details {
     display: flex;    
