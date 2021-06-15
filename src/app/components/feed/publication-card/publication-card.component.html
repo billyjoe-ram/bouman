@@ -30,8 +30,8 @@
         </div>
         <div class="card-footer">
             <!-- This should be commented out when interactions are implemented -->
-            <button class="btn btn-default" (click)="onLikePost(publication)" id="likeButtonPost" [ngClass]="hasLiked ? 'has-liked' : ''">
-                <span> {{ publication.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir"> <span>Curtir</span>
+            <button class="btn btn-default" (click)="onLikePost(publication)" id="likeButtonPost">
+                <span> {{ publication.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir">Curtir
             </button>
             <button class="btn btn-default" (click)="btncomments()" id="commenteButtonPost">
                 <span> {{ commentsLength.length }} </span><img src="/assets/comment-gray.svg" alt="Comentar">Comentar
