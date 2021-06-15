@@ -73,6 +73,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   async loadData() {
     this.loadedPosts = false;
     this.loadedProj = false;
+    this.feedPosts = [];
     
     // Awaiting current user id for profile id    
     const user = await this.auth.getAuth().currentUser;
