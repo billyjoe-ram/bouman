@@ -14,7 +14,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class PublicationCardComponent implements OnInit {
 
   @Input('pubType') public pubType: string = "post";
-  
+
   @Input('publication') public publication!: any;
 
   @Input('profileId') public profileId!: string;
@@ -25,7 +25,7 @@ export class PublicationCardComponent implements OnInit {
 
   @Output('projectDeleted') projectDeleted: EventEmitter<string> = new EventEmitter<string>();
 
-  public profileName: any = "";  
+  public profileName: any = "";
 
   public profileImg: string = "";
 
@@ -40,13 +40,14 @@ export class PublicationCardComponent implements OnInit {
   private profileSubs!: Subscription;
 
   private imageSubs!: Subscription;
-  
+
   constructor(private user: UsersService,
     private profile: ProfileService,
-    private post: PostsService, 
+    private post: PostsService,
     private store: AngularFirestore) { }
 
   ngOnInit(): void {
+
     if (this.publication.content.length < this.limit) {
       this.sMDisabled = true;
     }
@@ -62,7 +63,7 @@ export class PublicationCardComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.getPostId();
   }
 
@@ -72,14 +73,14 @@ export class PublicationCardComponent implements OnInit {
   }
 
   async onLikePost(post: Post) {
-    const button = <HTMLInputElement> document.getElementById("likeButtonPost");
+    const button = <HTMLInputElement>document.getElementById("likeButtonPost");
     button.disabled = true;
-    try{
-    await this.post.likePost(post, this.userProfile);
-    this.publication = await this.post.getSinglePost(post);
-    button.disabled = false;  
+    try {
+      await this.post.likePost(post, this.userProfile);
+      this.publication = await this.post.getSinglePost(post);
+      button.disabled = false;
     }
-    catch(err){
+    catch (err) {
       console.error(err);
       button.disabled = false;
     }
@@ -96,41 +97,38 @@ export class PublicationCardComponent implements OnInit {
     this.imageSubs.unsubscribe();
   }
 
-  deleteclick(post:any){
+  deleteclick(post: any) {
     document.getElementById('deletePost')?.setAttribute('data-post', this.publication.postId);
     document.getElementById('deletePost')?.setAttribute('data-profileId', this.publication.profileId);
   }
 
-  getPostId(){
-    const btnDelete = <HTMLInputElement> document.getElementById('btnDelete');
-    if(btnDelete){
+  getPostId() {
+    const btnDelete = <HTMLInputElement>document.getElementById('btnDelete');
+    if (btnDelete) {
       this.btnDeletePost = btnDelete.setAttribute('id', 'delete' + this.publication.postId);
     }
   }
 
   async onDelete() {
     // If the user is the user, then he can delete it
-
-    console.log('oi');
-      const delpostid = document.getElementById('deletePost')?.getAttribute('data-post');
-      const delprofileid = document.getElementById('deletePost')?.getAttribute('data-profileId');
-      if ( delprofileid == this.profileId){
-        console.log('Tudo bem com todos?')
-      }
-      try{
-        console.log(delpostid);
-        console.log(delprofileid);
-        if (delprofileid != null && delpostid != null){
-        await this.post.deletePost(delprofileid, delpostid);
-        this.postDeleted.emit(delpostid);
-      }
-      } catch (error){
+    const delpostid = document.getElementById('deletePost')?.getAttribute('data-post');
+    const delprofileid = document.getElementById('deletePost')?.getAttribute('data-profileId');
+    
+    if (delprofileid == this.userProfile) {
+      try {
+        console.log(delpostid)
+        console.log(delprofileid)
+        if (delprofileid != null && delpostid != null) {
+          await this.post.deletePost(delprofileid, delpostid);
+          this.postDeleted.emit(delpostid);
+        }
+      } catch (error) {
         console.error(error);
       } finally {
         let close = document.getElementById('close');
         close?.click();
       }
-    }    
-  
+    }
+  }
 
 }
