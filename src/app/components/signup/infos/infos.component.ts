@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AreasService } from 'src/app/services/areas.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { cnpj } from 'cpf-cnpj-validator';
+// import { cnpj } from 'cpf-cnpj-validator';
 
 @Component({
   selector: 'sign-infos',
@@ -89,7 +89,7 @@ export class InfosComponent implements OnInit {
           }
       }
     } else {
-      if (cnpj.isValid(this.formEmpresa.value.cnpj)) {
+      if (this.formEmpresa.value.cnpj) {
         if (this.formEmpresa.valid && !user) {
           this.userRegister = {
             name: this.formEmpresa.value.name,
