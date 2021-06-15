@@ -110,13 +110,16 @@ export class PublicationCardComponent implements OnInit {
 
   async onDelete() {
     // If the user is the user, then he can delete it
-    console.log(this.profileId == this.userProfile);
-    console.log(this.profileId);
-    console.log(this.userProfile);
-    if (this.profileId == this.userProfile) {
+
+    console.log('oi');
+      const delpostid = document.getElementById('deletePost')?.getAttribute('data-post');
+      const delprofileid = document.getElementById('deletePost')?.getAttribute('data-profileId');
+      if ( delprofileid == this.profileId){
+        console.log('Tudo bem com todos?')
+      }
       try{
-        const delpostid = document.getElementById('deletePost')?.getAttribute('data-post');
-        const delprofileid = document.getElementById('deletePost')?.getAttribute('data-profileId');
+        console.log(delpostid);
+        console.log(delprofileid);
         if (delprofileid != null && delpostid != null){
         await this.post.deletePost(delprofileid, delpostid);
         this.postDeleted.emit(delpostid);
@@ -128,6 +131,6 @@ export class PublicationCardComponent implements OnInit {
         close?.click();
       }
     }    
-  }
+  
 
 }
