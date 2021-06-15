@@ -1,6 +1,6 @@
 <!-- Post card -->
-<div class='margindiv'>
-    <div class="card" *ngIf="pubType === 'post'; else project" (onload)="gettingId()">
+<div class='margindiv' *ngIf="pubType === 'post'; else project">
+    <div class="card" (onload)="gettingId()">
         <!-- Post content and user data -->
         <div class="card-body">
             <div class="row">
@@ -14,8 +14,8 @@
                     </div>
                 </div>
                 <div *ngIf="profileId == userProfile" class="col-sm-1 col-md-1 col-lg-1" style="padding: 0;">
-                    <button id="btnDelete" data-toggle="modal" data-target="#deletePost" (click)='deleteclick()' 
-                    [ngClass]="'btnDelete'" [disabled]="profileId != userProfile">
+                    <button id="btnDelete" data-toggle="modal" data-target="#deletePost" (click)='deleteclick()'
+                        [ngClass]="'btnDelete'" [disabled]="profileId != userProfile">
                         <img src="../../../../assets/trash.png" alt="Delete">
                     </button>
                 </div>
@@ -29,8 +29,10 @@
         </div>
         <div class="card-footer">
             <!-- This should be commented out when interactions are implemented -->
-            <button class="btn btn-default" (click)="onLikePost(publication)" id="likeButtonPost" [ngClass]="hasLiked ? 'has-liked' : ''">
-                <span> {{ publication.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir"> <span>Curtir</span>
+            <button class="btn btn-default" (click)="onLikePost(publication)" id="likeButtonPost"
+                [ngClass]="hasLiked ? 'has-liked' : ''">
+                <span> {{ publication.likes.length }} </span> <img src="/assets/like-gray.svg" alt="Curtir">
+                <span>Curtir</span>
             </button>
             <button class="btn btn-default" (click)="btncomments()" id="commenteButtonPost">
                 <span> {{ commentsLength.length }} </span><img src="/assets/comment-gray.svg" alt="Comentar">Comentar
@@ -105,7 +107,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="close" class="btn btn-bouman" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-outline-danger" (click)="onDelete()" data-dismiss="modal">Excluir</button>
+                <button type="submit" class="btn btn-outline-danger" (click)="onDelete()"
+                    data-dismiss="modal">Excluir</button>
             </div>
         </div>
     </div>
