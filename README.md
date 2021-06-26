@@ -1,5 +1,13 @@
 # Bouman
 
+![Bouman Feed](https://user-images.githubusercontent.com/67481026/123503877-24d86a80-d62c-11eb-9921-e2499a938eaf.png)
+Feed do Bouman
+
+![Bouman Landing Page](https://user-images.githubusercontent.com/67481026/123503812-babfc580-d62b-11eb-9303-de424148ab9a.png)
+Landing page e cadastro
+
+# Informações técnicas
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
 
 ## Development server
